@@ -2,47 +2,278 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Firebase Username Viewer</title>
+<title>EBH Team - Username Viewer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
-body{
-  background:#0f172a;
-  color:#e5e7eb;
-  font-family:Arial;
-  padding:20px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-h2{
-  text-align:center;
-  color:#22c55e;
+
+:root {
+  --primary: #22c55e;
+  --primary-dark: #16a34a;
+  --dark-bg: #0f172a;
+  --card-bg: #1e293b;
+  --text-light: #e5e7eb;
+  --text-gray: #94a3b8;
+  --border-color: #334155;
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
 }
-textarea{
-  width:100%;
-  height:420px;
-  background:#020617;
-  color:#22c55e;
-  border:1px solid #1f2937;
-  border-radius:8px;
-  padding:12px;
-  font-size:14px;
+
+body {
+  background: var(--dark-bg);
+  color: var(--text-light);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-button{
-  width:100%;
-  margin-top:12px;
-  padding:14px;
-  font-size:16px;
-  font-weight:bold;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#22c55e;
-  color:#020617;
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 }
-.info{
-  text-align:center;
-  font-size:12px;
-  color:#94a3b8;
-  margin-top:8px;
+
+.header {
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--primary);
+}
+
+.header h1 {
+  color: var(--primary);
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.header h1 i {
+  font-size: 2.2rem;
+}
+
+.header .subtitle {
+  color: var(--text-gray);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+.stats-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid var(--primary);
+}
+
+.stat {
+  text-align: center;
+  flex: 1;
+}
+
+.stat .number {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary);
+  display: block;
+}
+
+.stat .label {
+  font-size: 0.85rem;
+  color: var(--text-gray);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.divider {
+  width: 1px;
+  height: 40px;
+  background: var(--border-color);
+}
+
+.main-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  font-size: 1.4rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.refresh-btn {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.refresh-btn:hover {
+  background: var(--primary);
+  color: var(--dark-bg);
+}
+
+.textarea-container {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.textarea-container textarea {
+  width: 100%;
+  height: 320px;
+  background: #0f172a;
+  color: var(--primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 16px;
+  font-family: 'Courier New', monospace;
+  resize: vertical;
+  transition: border 0.3s;
+  line-height: 1.4;
+}
+
+.textarea-container textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.textarea-container .count {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  background: rgba(15, 23, 42, 0.8);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--text-gray);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s;
+  background: var(--primary);
+  color: var(--dark-bg);
+  margin-top: 10px;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--text-gray);
+  font-size: 0.85rem;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .stats-card {
+    padding: 12px 15px;
+  }
+  
+  .stat .number {
+    font-size: 1.6rem;
+  }
+  
+  .divider {
+    height: 35px;
+  }
+  
+  .textarea-container textarea {
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 15px;
+  }
+  
+  .header h1 {
+    font-size: 1.8rem;
+    gap: 10px;
+  }
+  
+  .header h1 i {
+    font-size: 1.8rem;
+  }
+  
+  .stats-card {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+  
+  .divider {
+    width: 100%;
+    height: 1px;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+  }
+  
+  .refresh-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
 }
 </style>
 
@@ -53,12 +284,46 @@ button{
 
 <body>
 
-<h2>🔥 EBH TEAM WORK 🔥</h2>
-
-<textarea id="output">Loading usernames...</textarea>
-<button onclick="copyAll()">📋 COPY ALL USERNAMES</button>
-
-<div class="info">Ctrl + A → Ctrl + C → Google Sheet</div>
+<div class="container">
+  <div class="header">
+    <h1><i class="fas fa-fire"></i> EBH TEAM WORK <i class="fas fa-users"></i></h1>
+    <div class="subtitle">Username Viewer</div>
+  </div>
+  
+  <div class="stats-card">
+    <div class="stat">
+      <span class="number" id="totalCount">0</span>
+      <span class="label">Total Usernames</span>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <span class="number" id="lastUpdate">-</span>
+      <span class="label">Last Updated</span>
+    </div>
+  </div>
+  
+  <div class="main-card">
+    <div class="card-header">
+      <h2 class="card-title"><i class="fas fa-user-circle"></i> Username List</h2>
+      <button class="refresh-btn" onclick="loadData()">
+        <i class="fas fa-sync-alt"></i> Refresh
+      </button>
+    </div>
+    
+    <div class="textarea-container">
+      <textarea id="output" placeholder="Loading usernames..."></textarea>
+      <div class="count" id="countDisplay">0 usernames</div>
+    </div>
+    
+    <button class="btn-primary" onclick="copyAll()">
+      <i class="fas fa-copy"></i> COPY ALL USERNAMES
+    </button>
+  </div>
+  
+  <div class="footer">
+    <p>EBH TEAM Username Viewer • EBH Team Work</p>
+  </div>
+</div>
 
 <script>
 const firebaseConfig = {
@@ -71,30 +336,88 @@ const firebaseConfig = {
   appId: "1:906293702680:web:bf8c2257e1e87964ded36d"
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
 const db = firebase.database();
 const output = document.getElementById("output");
+const totalCount = document.getElementById("totalCount");
+const countDisplay = document.getElementById("countDisplay");
+const lastUpdate = document.getElementById("lastUpdate");
 
-// ✅ সঠিক path
-db.ref("accounts/parvez").once("value")
-.then(snapshot=>{
-  let list=[];
-  snapshot.forEach(child=>{
-    const d = child.val();
-    if(d.username) list.push(d.username);
+function updateCount(usernames) {
+  const count = usernames.length;
+  totalCount.textContent = count;
+  countDisplay.textContent = `${count} usernames`;
+  
+  // Update last updated time
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  const dateStr = now.toLocaleDateString();
+  lastUpdate.textContent = `${timeStr}`;
+}
+
+function loadData() {
+  // Show loading state
+  output.value = "Loading usernames from Firebase...";
+  output.style.color = "#22c55e";
+  
+  // Fetch data from Firebase
+  db.ref("accounts/parvez").once("value")
+  .then(snapshot => {
+    let usernames = [];
+    snapshot.forEach(child => {
+      const d = child.val();
+      if (d.username) usernames.push(d.username);
+    });
+    
+    if (usernames.length === 0) {
+      output.value = "No usernames found in the database.";
+      output.style.color = "#ef4444";
+    } else {
+      output.value = usernames.join("\n");
+      output.style.color = "#22c55e";
+    }
+    
+    updateCount(usernames);
+    
+    // Auto-scroll to top
+    output.scrollTop = 0;
+  })
+  .catch(err => {
+    output.value = "Error: " + err.message;
+    output.style.color = "#ef4444";
+    console.error("Firebase error:", err);
   });
-  output.value = list.join("\n") || "No usernames found";
-})
-.catch(err=>{
-  output.value = "Error: " + err.message;
-});
+}
 
-function copyAll(){
+function copyAll() {
+  if (!output.value || output.value.includes("Loading") || output.value.includes("Error") || output.value.includes("No usernames")) {
+    alert("⚠️ No data to copy! Please wait for data to load or refresh.");
+    return;
+  }
+  
   output.select();
   document.execCommand("copy");
-  alert("✅ Copied!");
+  
+  // Visual feedback
+  const copyBtn = document.querySelector('.btn-primary');
+  const originalText = copyBtn.innerHTML;
+  copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED SUCCESSFULLY!';
+  copyBtn.style.background = "#16a34a";
+  
+  setTimeout(() => {
+    copyBtn.innerHTML = originalText;
+    copyBtn.style.background = "";
+  }, 2000);
 }
+
+// Load data on page load
+document.addEventListener('DOMContentLoaded', function() {
+  loadData();
+  
+  // Auto-refresh every 2 minutes
+  setInterval(loadData, 120000);
+});
 </script>
 
 </body>
