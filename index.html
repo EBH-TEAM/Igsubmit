@@ -18,6 +18,8 @@
 :root {
   --primary: #22c55e;
   --primary-dark: #16a34a;
+  --danger: #ef4444;
+  --danger-dark: #dc2626;
   --dark-bg: #0f172a;
   --card-bg: #1e293b;
   --text-light: #e5e7eb;
@@ -157,7 +159,7 @@ body {
 
 .textarea-container textarea {
   width: 100%;
-  height: 320px;
+  height: 300px;
   background: #0f172a;
   color: var(--primary);
   border: 1px solid var(--border-color);
@@ -201,12 +203,149 @@ body {
   transition: all 0.3s;
   background: var(--primary);
   color: var(--dark-bg);
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .btn-primary:hover {
   background: var(--primary-dark);
   transform: translateY(-2px);
+}
+
+.danger-section {
+  text-align: center;
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.danger-btn {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.danger-btn:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background: var(--card-bg);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  transform: translateY(-20px);
+  transition: transform 0.3s;
+}
+
+.modal-overlay.active .modal {
+  transform: translateY(0);
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-header i {
+  font-size: 3rem;
+  color: var(--danger);
+  margin-bottom: 15px;
+}
+
+.modal-header h2 {
+  color: var(--danger);
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.modal-body {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--text-gray);
+  line-height: 1.6;
+}
+
+.modal-body p {
+  margin-bottom: 10px;
+}
+
+.warning-text {
+  background: rgba(239, 68, 68, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid var(--danger);
+  margin-top: 15px;
+  text-align: left;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.modal-btn {
+  padding: 12px 30px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 120px;
+}
+
+.modal-btn-cancel {
+  background: transparent;
+  border: 1px solid var(--text-gray);
+  color: var(--text-gray);
+}
+
+.modal-btn-cancel:hover {
+  background: var(--text-gray);
+  color: var(--dark-bg);
+}
+
+.modal-btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.modal-btn-danger:hover {
+  background: var(--danger-dark);
 }
 
 .footer {
@@ -238,6 +377,18 @@ body {
   
   .textarea-container textarea {
     height: 280px;
+  }
+  
+  .modal {
+    padding: 20px;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .modal-btn {
+    width: 100%;
   }
 }
 
@@ -272,6 +423,11 @@ body {
   
   .refresh-btn {
     padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .danger-btn {
+    padding: 8px 15px;
     font-size: 0.85rem;
   }
 }
@@ -318,10 +474,41 @@ body {
     <button class="btn-primary" onclick="copyAll()">
       <i class="fas fa-copy"></i> COPY ALL USERNAMES
     </button>
+    
+    <div class="danger-section">
+      <button class="danger-btn" onclick="openDeleteModal()">
+        <i class="fas fa-trash-alt"></i> DELETE ALL DATA
+      </button>
+    </div>
   </div>
   
   <div class="footer">
     <p>EBH TEAM Username Viewer • EBH Team Work</p>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <div class="modal-header">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h2>Delete All Data</h2>
+    </div>
+    
+    <div class="modal-body">
+      <p>Are you sure you want to permanently delete all data from Firebase?</p>
+      <p>This action will delete <strong id="deleteCount">0</strong> usernames from the database.</p>
+      
+      <div class="warning-text">
+        <p><i class="fas fa-exclamation-circle"></i> <strong>Warning:</strong> This action cannot be undone.</p>
+        <p>Once deleted, all usernames will be permanently removed and cannot be recovered.</p>
+      </div>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">NO, CANCEL</button>
+      <button class="modal-btn modal-btn-danger" onclick="deleteAllData()">YES, DELETE</button>
+    </div>
   </div>
 </div>
 
@@ -343,16 +530,21 @@ const output = document.getElementById("output");
 const totalCount = document.getElementById("totalCount");
 const countDisplay = document.getElementById("countDisplay");
 const lastUpdate = document.getElementById("lastUpdate");
+const deleteModal = document.getElementById("deleteModal");
+const deleteCount = document.getElementById("deleteCount");
+
+let currentUsernames = [];
 
 function updateCount(usernames) {
+  currentUsernames = usernames;
   const count = usernames.length;
   totalCount.textContent = count;
   countDisplay.textContent = `${count} usernames`;
+  deleteCount.textContent = count;
   
   // Update last updated time
   const now = new Date();
   const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-  const dateStr = now.toLocaleDateString();
   lastUpdate.textContent = `${timeStr}`;
 }
 
@@ -410,6 +602,61 @@ function copyAll() {
     copyBtn.style.background = "";
   }, 2000);
 }
+
+// Modal Functions
+function openDeleteModal() {
+  if (currentUsernames.length === 0) {
+    alert("⚠️ No data to delete! The database is already empty.");
+    return;
+  }
+  
+  deleteCount.textContent = currentUsernames.length;
+  deleteModal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeDeleteModal() {
+  deleteModal.classList.remove("active");
+  document.body.style.overflow = "auto";
+}
+
+function deleteAllData() {
+  // Close modal first
+  closeDeleteModal();
+  
+  // Show deleting message
+  output.value = "Deleting all data from Firebase...";
+  output.style.color = "#ef4444";
+  
+  // Delete all data from Firebase
+  db.ref("accounts/parvez").remove()
+  .then(() => {
+    output.value = "✅ All data has been deleted successfully!\nThe database is now empty.";
+    output.style.color = "#22c55e";
+    
+    // Update counts
+    updateCount([]);
+    
+    // Show success message
+    setTimeout(() => {
+      alert("✅ All data has been permanently deleted from Firebase.");
+    }, 500);
+  })
+  .catch(err => {
+    output.value = "❌ Error deleting data: " + err.message;
+    output.style.color = "#ef4444";
+    console.error("Delete error:", err);
+    
+    alert("❌ Failed to delete data. Please check console for details.");
+  });
+}
+
+// Close modal when clicking outside
+deleteModal.addEventListener("click", function(e) {
+  if (e.target === deleteModal) {
+    closeDeleteModal();
+  }
+});
 
 // Load data on page load
 document.addEventListener('DOMContentLoaded', function() {
