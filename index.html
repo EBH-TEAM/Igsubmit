@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>EBH Team - Username & Password Viewer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- Web View এর জন্য স্পষ্টভাবে viewport সেট করুন -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
 <!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,6 +15,7 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
 }
 
 :root {
@@ -44,6 +46,7 @@ body {
   justify-content: flex-start;
   overflow-x: hidden;
   font-size: 15px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .container {
@@ -174,6 +177,8 @@ body {
   color: var(--text-light);
   font-size: 15px;
   height: 46px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .search-container input:focus {
@@ -198,6 +203,8 @@ body {
   font-weight: bold;
   font-size: 0.85rem;
   height: 36px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .search-btn:hover {
@@ -240,6 +247,8 @@ body {
   align-items: center;
   gap: 6px;
   font-size: 0.85rem;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .refresh-btn:hover {
@@ -308,12 +317,13 @@ body {
   justify-content: center;
   gap: 6px;
   min-height: 44px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .copy-usernames-btn {
   background: var(--primary);
   color: var(--dark-bg);
-  order: 1;
 }
 
 .copy-usernames-btn:hover {
@@ -323,20 +333,22 @@ body {
 .copy-passwords-btn {
   background: var(--secondary);
   color: white;
-  order: 2;
 }
 
 .copy-passwords-btn:hover {
   background: var(--secondary-dark);
 }
 
-/* Updated Delete Button Section - Centered and Smaller */
+/* Web View এর জন্য বিশেষভাবে Delete Button স্টাইল করুন */
 .danger-section {
   text-align: center;
   padding-top: 10px;
   border-top: 1px dashed var(--border-color);
   width: 100%;
   margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .danger-btn {
@@ -351,15 +363,60 @@ body {
   gap: 6px;
   font-size: 0.85rem;
   width: auto;
-  min-width: 200px;
+  min-width: 180px;
+  max-width: 80%;
   justify-content: center;
   transition: all 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  white-space: nowrap;
 }
 
 .danger-btn:hover {
   background: var(--danger);
   color: white;
   transform: scale(1.02);
+}
+
+/* Web View এর জন্য বিশেষ নিয়ম */
+@media (max-width: 768px) {
+  .danger-btn {
+    min-width: 160px;
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 480px) {
+  .danger-btn {
+    min-width: 140px;
+    max-width: 60%;
+    padding: 7px 14px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .danger-btn {
+    min-width: 120px;
+    max-width: 55%;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+/* iOS Web View এর জন্য বিশেষ স্টাইল */
+@supports (-webkit-touch-callout: none) {
+  .danger-btn {
+    -webkit-touch-callout: none;
+    min-width: 150px;
+  }
+}
+
+/* Android Web View এর জন্য */
+@supports not (-webkit-touch-callout: none) {
+  .danger-btn {
+    min-width: 160px;
+  }
 }
 
 /* Footer */
@@ -465,6 +522,8 @@ body {
   font-weight: bold;
   cursor: pointer;
   width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .modal-btn-cancel {
@@ -487,36 +546,6 @@ body {
   background: var(--danger-dark);
 }
 
-/* Mobile Specific Adjustments */
-@media (max-width: 360px) {
-  .header h1 {
-    font-size: 1.4rem;
-  }
-  
-  .copy-btn-half {
-    font-size: 13px;
-    padding: 10px 6px;
-  }
-  
-  .textarea-container textarea {
-    height: 250px;
-  }
-  
-  .danger-btn {
-    min-width: 180px;
-    padding: 7px 14px;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .danger-btn {
-    min-width: 160px;
-    padding: 8px 12px;
-    font-size: 0.8rem;
-  }
-}
-
 /* Landscape Mode */
 @media (max-height: 500px) and (orientation: landscape) {
   .textarea-container textarea {
@@ -533,7 +562,7 @@ body {
   
   .danger-btn {
     padding: 6px 12px;
-    min-width: 150px;
+    min-width: 130px;
   }
 }
 </style>
@@ -646,6 +675,34 @@ body {
 </div>
 
 <script>
+// Web View ডিটেক্ট করার জন্য
+const isWebView = /(Android|iPhone|iPad).*Version\/[0-9].*Safari|(wv|WebView)/i.test(navigator.userAgent);
+
+// Web View এর জন্য বিশেষ স্টাইল অ্যাপ্লাই করুন
+if (isWebView) {
+  document.documentElement.style.setProperty('--button-max-width', '60%');
+  
+  // বাটন স্টাইল অ্যাডজাস্ট করুন
+  const style = document.createElement('style');
+  style.textContent = `
+    .danger-btn {
+      min-width: 140px !important;
+      max-width: 60% !important;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 480px) {
+      .danger-btn {
+        min-width: 120px !important;
+        max-width: 55% !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  console.log('Web View detected, applying special styles');
+}
+
 const firebaseConfig = {
   apiKey: "AIzaSyDLh6Zg-K3ZZexFire0F6Wr4ciHqAs",
   authDomain: "teamwork-206ba.firebaseapp.com",
