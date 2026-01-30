@@ -291,7 +291,7 @@ body {
 .copy-buttons-row {
   display: flex;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
   width: 100%;
 }
 
@@ -310,54 +310,56 @@ body {
   min-height: 44px;
 }
 
-/* বাম পাশে: COPY USERNAMES */
 .copy-usernames-btn {
   background: var(--primary);
   color: var(--dark-bg);
-  order: 1; /* বাম পাশে */
+  order: 1;
 }
 
 .copy-usernames-btn:hover {
   background: var(--primary-dark);
 }
 
-/* ডান পাশে: COPY PASSWORDS */
 .copy-passwords-btn {
   background: var(--secondary);
   color: white;
-  order: 2; /* ডান পাশে */
+  order: 2;
 }
 
 .copy-passwords-btn:hover {
   background: var(--secondary-dark);
 }
 
-/* Danger Button */
+/* Updated Delete Button Section - Centered and Smaller */
 .danger-section {
   text-align: center;
-  padding-top: 12px;
+  padding-top: 10px;
   border-top: 1px dashed var(--border-color);
   width: 100%;
+  margin-top: 0;
 }
 
 .danger-btn {
   background: transparent;
   border: 1px solid var(--danger);
   color: var(--danger);
-  padding: 10px 16px;
+  padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 0.85rem;
-  width: 100%;
+  width: auto;
+  min-width: 200px;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .danger-btn:hover {
   background: var(--danger);
   color: white;
+  transform: scale(1.02);
 }
 
 /* Footer */
@@ -499,6 +501,20 @@ body {
   .textarea-container textarea {
     height: 250px;
   }
+  
+  .danger-btn {
+    min-width: 180px;
+    padding: 7px 14px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .danger-btn {
+    min-width: 160px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
 }
 
 /* Landscape Mode */
@@ -513,6 +529,11 @@ body {
   
   .stats-card {
     padding: 10px 12px;
+  }
+  
+  .danger-btn {
+    padding: 6px 12px;
+    min-width: 150px;
   }
 }
 </style>
@@ -586,6 +607,7 @@ body {
       </button>
     </div>
     
+    <!-- Updated Delete Button Section -->
     <div class="danger-section">
       <button class="danger-btn" onclick="openDeleteModal()">
         <i class="fas fa-trash-alt"></i> DELETE ALL DATA
