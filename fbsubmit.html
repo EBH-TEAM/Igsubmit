@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="bn">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>EBH TEAM FACEBOOK SUBMIT</title>
+  <title>EBH TEAM - COOKIE SYSTEM</title>
   <style>
+    /* ===== CSS সম্পূর্ণ অপরিবর্তিত ===== */
     :root {
       --bg: #0f172a;
       --panel: #111827;
@@ -42,7 +43,7 @@
       touch-action: manipulation;
     }
 
-    /* বড় হেডার লোগো */
+    /* হেডার */
     .header {
       background: rgba(17, 24, 39, 0.97);
       backdrop-filter: blur(20px);
@@ -124,7 +125,7 @@
       50% { transform: rotate(15deg) scale(1.15); }
     }
 
-    /* বড় লেআউট */
+    /* লেআউট */
     .layout {
       flex: 1;
       width: 100%;
@@ -140,7 +141,7 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /* তিনটি বড় ইনপুট বক্স */
+    /* তিনটি বক্স - ঠিক আগের মত, শুধু 2FA এর জায়গায় Cookie */
     .input-container {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -198,7 +199,7 @@
       line-height: 1.4;
     }
 
-    /* ডেট ইনফো - বড় */
+    /* ডেট ইনফো */
     .date-info {
       text-align: center;
       font-size: 14px;
@@ -223,7 +224,7 @@
       50% { transform: scale(1.1); }
     }
 
-    /* বড় সাবমিট বাটন */
+    /* সাবমিট বাটন */
     .submit-section {
       margin: 24px 0 16px 0;
       display: flex;
@@ -272,10 +273,6 @@
       box-shadow: 0 15px 35px rgba(34, 197, 94, 0.7);
     }
 
-    .submit-btn:hover::before {
-      opacity: 1;
-    }
-
     .submit-btn:disabled {
       opacity: 0.7;
       cursor: not-allowed;
@@ -283,7 +280,7 @@
       box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
     }
 
-    /* বড় আউটপুট বক্স - উন্নত এনিমেশন */
+    /* আউটপুট সেকশন */
     .output-section {
       background: linear-gradient(135deg, rgba(11, 18, 32, 0.9), rgba(17, 24, 39, 0.9));
       border: 2px solid var(--border);
@@ -367,7 +364,7 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* পপআপ মডেল */
+    /* পপআপ */
     .popup-overlay {
       position: fixed;
       top: 0;
@@ -532,50 +529,41 @@
       box-shadow: 0 8px 25px rgba(34, 197, 94, 0.6);
     }
 
-    /* মোবাইল অপ্টিমাইজেশন */
+    /* মোবাইল অপ্টিমাইজেশন - সম্পূর্ণ আগের মত */
     @media (max-width: 480px) {
       .header {
         padding: 18px 16px;
         min-height: 80px;
       }
-      
       .logo-icon {
         font-size: 32px;
       }
-      
       .logo-text {
         font-size: 30px;
       }
-      
       .input-container {
         gap: 8px;
       }
-      
       .input-box {
         min-height: 200px;
       }
-      
       .box-header {
         font-size: 15px;
         padding: 12px 14px;
       }
-      
       .box-textarea {
         font-size: 13px;
         padding: 14px;
       }
-      
       .submit-btn {
         padding: 20px 28px;
         font-size: 17px;
         max-width: 300px;
       }
-      
       .output-text {
         font-size: 28px;
         padding: 14px 24px;
       }
-      
       .popup-content {
         padding: 24px;
         max-width: 320px;
@@ -587,18 +575,15 @@
         grid-template-columns: 1fr;
         gap: 10px;
       }
-      
       .logo-text {
         font-size: 26px;
       }
-      
       .logo-badge {
         right: -30px;
         font-size: 11px;
       }
     }
 
-    /* স্ক্রোলবার */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -625,10 +610,10 @@
 </head>
 
 <body>
-  <!-- বড় হেডার লোগো -->
+  <!-- হেডার - অপরিবর্তিত -->
   <div class="header">
     <div class="logo-container">
-      <div class="logo-icon">⚡</div>
+      <div class="logo-icon">🍪</div>
       <div class="logo-text">
         EBH TEAM
         <div class="logo-badge">Is Best</div>
@@ -636,76 +621,72 @@
     </div>
   </div>
 
-  <!-- মূল কন্টেন্ট -->
+  <!-- মূল কন্টেন্ট - 3 বক্স, 2FA এর জায়গায় COOKIE -->
   <div class="layout">
-    <!-- তিনটি বড় ইনপুট বক্স -->
     <div class="input-container">
-      <!-- UID বক্স -->
+      <!-- UID বক্স (ঐচ্ছিক) -->
       <div class="input-box">
-        <div class="box-header">UID</div>
+        <div class="box-header">📱 UID</div>
         <textarea 
           class="box-textarea" 
           id="uidInput" 
-          placeholder="Enter Facebook UIDs (one per line)&#10;&#10;Example:&#10;61587432437149&#10;1000123456789"
+          placeholder="Enter Facebook UIDs (Optional)&#10;Auto-extract from Cookie&#10;Example:&#10;61588017421870"
           wrap="off"></textarea>
       </div>
 
-      <!-- PASSWORD বক্স -->
+      <!-- PASSWORD বক্স (ঐচ্ছিক) -->
       <div class="input-box">
-        <div class="box-header">PASSWORD</div>
+        <div class="box-header">🔑 PASSWORD</div>
         <textarea 
           class="box-textarea" 
           id="passwordInput" 
-          placeholder="Enter passwords (one per line)&#10;&#10;MUST contain today's date:&#10;Example:&#10;mypassword11&#10;pass11word"
+          placeholder="Enter passwords (Optional)&#10;Must contain today's date"
           wrap="off"></textarea>
       </div>
 
-      <!-- 2FA KEY বক্স -->
+      <!-- COOKIE বক্স - 2FA এর জায়গায় (বাধ্যতামূলক) -->
       <div class="input-box">
-        <div class="box-header">2FA KEY</div>
+        <div class="box-header">🍪 COOKIE</div>
         <textarea 
           class="box-textarea" 
-          id="twofaInput" 
-          placeholder="Enter 2FA keys (one per line)&#10;&#10;Format with spaces:&#10;XXXX XXXX XXXX XXXX"
+          id="cookieInput" 
+          placeholder="Enter Facebook Cookies (one per line)&#10;&#10;Must contain c_user and xs&#10;Example:&#10;datr=xxx; c_user=61588017421870; xs=50%3AyGWENyeN3F2rcA;"
           wrap="off"></textarea>
       </div>
     </div>
 
-    <!-- বড় ডেট ইনফো -->
+    <!-- ডেট ইনফো -->
     <div class="date-info">
-      Today's Date: <span class="current-date" id="currentDate">11</span> 
-      - Password must contain today's date
+      🗓️ Today's Date: <span class="current-date" id="currentDate">12</span> 
+      - Cookie must have valid c_user & xs
     </div>
 
-    <!-- বড় সাবমিট বাটন -->
+    <!-- সাবমিট বাটন -->
     <div class="submit-section">
       <button class="submit-btn" id="submitBtn">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M22 2L11 13"></path>
           <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
         </svg>
-        SUBMIT NOW
+        SUBMIT COOKIE ID
       </button>
     </div>
 
-    <!-- উন্নত এনিমেশন সহ আউটপুট বক্স -->
+    <!-- আউটপুট বক্স -->
     <div class="output-section">
       <div class="output-text">
-        FACEBOOK WORK
+        🍪 FACEBOOK WORK 
       </div>
     </div>
   </div>
 
-  <!-- পপআপ মডেল -->
+  <!-- পপআপ - অপরিবর্তিত -->
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-content">
       <div class="popup-header" id="popupTitle">Submission Result</div>
       <div class="popup-message" id="popupMessage"></div>
-      
       <div class="result-details" id="resultDetails"></div>
-      
       <div class="duplicate-list" id="popupDuplicateList"></div>
-      
       <div class="popup-buttons">
         <button class="popup-btn confirm" id="popupConfirm">OK</button>
       </div>
@@ -713,7 +694,9 @@
   </div>
 
   <script>
-    // Firebase Configuration
+    // -------------------------------
+    // FIREBASE কনফিগারেশন (আপনার দেওয়া)
+    // -------------------------------
     const firebaseConfig = {
       apiKey: "AIzaSyCI4HPJ_mqhqmDjKHQr3Cd302rO2Tud1Go",
       authDomain: "mtwork-fc469.firebaseapp.com",
@@ -725,22 +708,22 @@
       measurementId: "G-ET7141VPKM"
     };
 
-    // Initialize Firebase
+    // Firebase initialize
     try {
       firebase.initializeApp(firebaseConfig);
-      console.log("Firebase initialized successfully");
+      console.log("✅ Firebase initialized");
     } catch (error) {
-      console.error("Firebase initialization error:", error);
+      console.error("❌ Firebase init error:", error);
     }
 
     const db = firebase.database();
-    const SUBMISSIONS_PATH = "ebh_submissions";
-    const USED_UIDS_PATH = "ebh_used_uids";
+    const SUBMISSIONS_PATH = "ebh_cookie_submissions";
+    const USED_COOKIE_PATH = "ebh_used_cookies";
 
-    // DOM Elements
+    // DOM এলিমেন্টস
     const uidInput = document.getElementById('uidInput');
     const passwordInput = document.getElementById('passwordInput');
-    const twofaInput = document.getElementById('twofaInput');
+    const cookieInput = document.getElementById('cookieInput'); // 2FA → Cookie
     const submitBtn = document.getElementById('submitBtn');
     const currentDateElement = document.getElementById('currentDate');
     const popupOverlay = document.getElementById('popupOverlay');
@@ -750,417 +733,312 @@
     const popupDuplicateList = document.getElementById('popupDuplicateList');
     const popupConfirm = document.getElementById('popupConfirm');
 
-    // আজকের তারিখ পান (দিনের সংখ্যা)
+    // -------------------------------
+    // তারিখ সিস্টেম (আগের মত)
+    // -------------------------------
     function getTodayDate() {
-      const now = new Date();
-      return now.getDate().toString(); // শুধু দিনের সংখ্যা (১-৩১)
+      return new Date().getDate().toString();
     }
 
-    // সিস্টেম তারিখ আপডেট
-    function updateSystemDate() {
-      const today = getTodayDate();
-      currentDateElement.textContent = today;
-      
-      // পাসওয়ার্ড প্লেসহোল্ডার আপডেট
-      passwordInput.placeholder = `Enter passwords (one per line)\n\nMUST contain today's date:\nExample:\nmypassword${today}\npass${today}word`;
-      
-      return today;
+    const TODAY_DATE = getTodayDate();
+    currentDateElement.textContent = TODAY_DATE;
+
+    // -------------------------------
+    // কুকি পার্সার ও ভ্যালিডেটর
+    // -------------------------------
+    function parseCookieString(cookieStr) {
+      const cookies = {};
+      cookieStr.split(';').forEach(pair => {
+        const [key, ...valArr] = pair.trim().split('=');
+        if (key && valArr.length) cookies[key.trim()] = valArr.join('=').trim();
+      });
+      return cookies;
     }
 
-    // প্রথম লোডে তারিখ আপডেট
-    const TODAY_DATE = updateSystemDate();
+    function validateCookie(cookieStr) {
+      const cookies = parseCookieString(cookieStr);
+      const c_user = cookies.c_user || '';
+      const xs = cookies.xs || '';
+      
+      if (!c_user) return { valid: false, error: 'c_user missing' };
+      if (!xs) return { valid: false, error: 'xs missing' };
+      if (!/^\d{8,20}$/.test(c_user)) return { valid: false, error: `Invalid c_user: ${c_user}` };
+      
+      return { valid: true, c_user, xs, fullCookie: cookieStr };
+    }
 
-    // দ্রুত ডুপ্লিকেট চেক (ক্যাশ সহ)
-    let uidCache = new Set();
+    // -------------------------------
+    // ডুপ্লিকেট চেক (c_user|xs)
+    // -------------------------------
+    let cookieCache = new Set();
     let cacheTimestamp = 0;
-    const CACHE_DURATION = 30000; // 30 seconds
+    const CACHE_DURATION = 30000;
 
-    async function checkDuplicateUIDsFast(uids) {
+    async function checkDuplicateCookies(cookieEntries) {
       try {
         const now = Date.now();
-        
-        // ক্যাশ রিফ্রেশ প্রয়োজন হলে
-        if (now - cacheTimestamp > CACHE_DURATION || uidCache.size === 0) {
-          const snapshot = await db.ref(USED_UIDS_PATH).once('value');
-          const usedUIDs = snapshot.val() || {};
-          
-          uidCache = new Set(Object.keys(usedUIDs));
+        if (now - cacheTimestamp > CACHE_DURATION || cookieCache.size === 0) {
+          const snapshot = await db.ref(USED_COOKIE_PATH).once('value');
+          const used = snapshot.val() || {};
+          cookieCache = new Set(Object.keys(used).map(k => `${used[k].c_user}|${used[k].xs}`));
           cacheTimestamp = now;
-          
-          console.log("UID cache refreshed:", uidCache.size, "UIDs cached");
         }
         
-        const duplicates = [];
-        const uniqueUIDs = [];
-        
-        // ক্যাশ থেকে দ্রুত চেক
-        for (const uid of uids) {
-          if (uidCache.has(uid)) {
-            duplicates.push(uid);
-          } else {
-            uniqueUIDs.push(uid);
-          }
+        const unique = [], duplicates = [];
+        for (const entry of cookieEntries) {
+          const key = `${entry.c_user}|${entry.xs}`;
+          if (cookieCache.has(key)) duplicates.push(entry);
+          else { unique.push(entry); cookieCache.add(key); }
         }
-        
-        return { uniqueUIDs, duplicates, error: null };
-        
+        return { unique, duplicates, error: null };
       } catch (error) {
-        console.error("Error checking duplicates:", error);
-        return { uniqueUIDs: [], duplicates: [], error: error.message };
+        return { unique: [], duplicates: [], error: error.message };
       }
     }
 
-    // ইনপুট ভ্যালিডেশন (স্পেস সহ 2FA)
-    function validateInputs(uids, passwords, twofas) {
+    // -------------------------------
+    // সব ইনপুট ভ্যালিডেশন
+    // -------------------------------
+    function validateInputs(uids, passwords, cookieStrings) {
       const errors = [];
-      const validUIDs = [];
-      const validPasswords = [];
-      const validTwoFAs = [];
-      
-      // 1. UID ভ্যালিডেশন (8-16 ডিজিট)
-      for (let i = 0; i < uids.length; i++) {
-        const uid = uids[i];
-        
+
+      // UID (ঐচ্ছিক)
+      const validUIDs = uids.filter(uid => {
+        if (!uid) return false;
         if (!/^\d{8,16}$/.test(uid)) {
-          errors.push(`Line ${i+1}: UID must be 8-16 digits (got: ${uid})`);
-        } else {
-          validUIDs.push(uid);
+          errors.push(`Invalid UID: ${uid} (must be 8-16 digits)`);
+          return false;
         }
-      }
-      
-      // 2. Password ভ্যালিডেশন (আজকের তারিখ থাকতে হবে)
-      for (let i = 0; i < passwords.length; i++) {
-        const password = passwords[i];
-        
-        if (!password.includes(TODAY_DATE)) {
-          errors.push(`Line ${i+1}: Password must contain today's date (${TODAY_DATE})`);
-        } else {
-          validPasswords.push(password);
+        return true;
+      });
+
+      // Password (ঐচ্ছিক)
+      const validPasswords = passwords.filter(pwd => {
+        if (!pwd) return false;
+        if (!pwd.includes(TODAY_DATE)) {
+          errors.push(`Password must contain today's date (${TODAY_DATE})`);
+          return false;
         }
+        return true;
+      });
+
+      // Cookie (বাধ্যতামূলক)
+      if (cookieStrings.length === 0) {
+        errors.push('At least one cookie is required');
+        return { valid: false, errors, validUIDs, validPasswords, validCookies: [] };
       }
-      
-      // 3. 2FA Key ভ্যালিডেশন (স্পেস সহ 16-32 ক্যারেক্টার)
-      for (let i = 0; i < twofas.length; i++) {
-        const twofa = twofas[i];
-        
-        // ফাঁকা 2FA এপ্রুভ করবে
-        if (!twofa.trim()) {
-          validTwoFAs.push('');
-          continue;
-        }
-        
-        // স্পেস সহ ভ্যালিডেশন - সরকারি ফরম্যাট
-        const totalLength = twofa.replace(/\s+/g, '').length;
-        
-        if (totalLength < 16 || totalLength > 32) {
-          errors.push(`Line ${i+1}: 2FA Key must be 16-32 characters (with spaces)`);
-        } else if (!/^[A-Z0-9\s]{16,}$/i.test(twofa)) {
-          errors.push(`Line ${i+1}: 2FA Key must contain only letters, numbers and spaces`);
-        } else {
-          // সরকারি ফরম্যাটে রেখেই স্টোর করো
-          validTwoFAs.push(twofa);
-        }
-      }
-      
-      // 4. লাইন সংখ্যা চেক
-      if (uids.length !== passwords.length) {
-        errors.push(`UID count (${uids.length}) and Password count (${passwords.length}) must match`);
-      }
-      
-      if (twofas.length > 0 && uids.length !== twofas.length) {
-        errors.push(`UID count (${uids.length}) and 2FA Key count (${twofas.length}) must match`);
-      }
-      
+
+      const validCookies = [];
+      cookieStrings.forEach((cookie, i) => {
+        const res = validateCookie(cookie);
+        if (res.valid) validCookies.push(res);
+        else errors.push(`Cookie line ${i+1}: ${res.error}`);
+      });
+
+      if (validCookies.length === 0) errors.push('No valid cookies found');
+
       return {
         valid: errors.length === 0,
         errors,
         validUIDs,
         validPasswords,
-        validTwoFAs
+        validCookies
       };
     }
 
-    // Firebase-এ ডাটা সেভ (স্পেস সহ)
-    async function saveToFirebase(uids, passwords, twofas, uniqueUIDs) {
+    // -------------------------------
+    // Firebase-এ সেভ
+    // -------------------------------
+    async function saveToFirebase(validCookies, validUIDs, validPasswords) {
       try {
         const timestamp = new Date().toISOString();
         const batch = {};
-        const usedUIDsUpdate = {};
-        
+        const usedUpdate = {};
         let savedCount = 0;
 
-        for (let i = 0; i < uids.length; i++) {
-          const uid = uids[i];
+        validCookies.forEach((cookie, i) => {
+          const submissionId = `cookie_${Date.now()}_${cookie.c_user}_${i}`;
+          const path = `${SUBMISSIONS_PATH}/${submissionId}`;
           
-          if (uniqueUIDs.includes(uid)) {
-            const submissionId = `ebh_${Date.now()}_${uid}`;
-            const submissionPath = `${SUBMISSIONS_PATH}/${submissionId}`;
-            
-            // সরকারি ফরম্যাটে সেভ (স্পেস সহ)
-            batch[submissionPath] = {
-              uid: uid,
-              password: passwords[i],
-              twofa_key: twofas[i] || '', // স্পেস সহ সেভ
-              submitted_at: timestamp,
-              status: 'active',
-              source: 'EBH_TEAM_OFFICIAL',
-              date_used: TODAY_DATE,
-              format: 'official_with_spaces',
-              firebase_user: 'official_government_account'
-            };
+          const uidFromCookie = cookie.c_user;
+          const matchedUID = (validUIDs.length > i) ? validUIDs[i] : uidFromCookie;
+          const matchedPassword = (validPasswords.length > i) ? validPasswords[i] : '';
 
-            usedUIDsUpdate[`${USED_UIDS_PATH}/${uid}`] = {
-              used: true,
-              first_used: timestamp,
-              last_used: timestamp,
-              submission_id: submissionId
-            };
+          batch[path] = {
+            c_user: cookie.c_user,
+            xs: cookie.xs,
+            full_cookie: cookie.fullCookie,
+            uid: matchedUID,
+            password: matchedPassword,
+            submitted_at: timestamp,
+            date_used: TODAY_DATE,
+            source: 'EBH_COOKIE_MOBILE',
+            status: 'active',
+            user_agent: navigator.userAgent,
+            platform: navigator.platform
+          };
 
-            // ক্যাশে যোগ করো
-            uidCache.add(uid);
-            savedCount++;
-          }
-        }
+          const usedKey = `${cookie.c_user}|${cookie.xs}`.replace(/[.#$[\]]/g, '_');
+          usedUpdate[`${USED_COOKIE_PATH}/${usedKey}`] = {
+            c_user: cookie.c_user,
+            xs: cookie.xs,
+            first_used: timestamp,
+            last_used: timestamp,
+            submission_id: submissionId
+          };
 
-        if (Object.keys(batch).length > 0) {
-          // ব্যাচ রাইট (দ্রুত)
+          savedCount++;
+        });
+
+        if (savedCount > 0) {
           await Promise.all([
             db.ref().update(batch),
-            db.ref().update(usedUIDsUpdate)
+            db.ref().update(usedUpdate)
           ]);
-          
-          console.log(`Saved ${savedCount} entries to Firebase with spaces`);
-          return { success: true, savedCount, error: null };
-        } else {
-          return { success: false, savedCount: 0, error: "No unique UIDs to save" };
         }
 
+        return { success: true, savedCount };
       } catch (error) {
-        console.error("Firebase save error:", error);
         return { success: false, savedCount: 0, error: error.message };
       }
     }
 
-    // পপআপ শো
+    // -------------------------------
+    // পপআপ ফাংশন (আগের মত)
+    // -------------------------------
     function showPopup(type, title, message, details, duplicates = []) {
-      // পপআপ হেডার সেট
       popupTitle.textContent = title;
       popupTitle.className = 'popup-header ' + type;
-      
-      // পপআপ মেসেজ
       popupMessage.textContent = message;
       
-      // ডিটেইলস সেট
       if (details) {
         resultDetails.innerHTML = details;
         resultDetails.style.display = 'block';
-      } else {
-        resultDetails.style.display = 'none';
-      }
-      
-      // ডুপ্লিকেট লিস্ট
+      } else resultDetails.style.display = 'none';
+
       popupDuplicateList.innerHTML = '';
       if (duplicates.length > 0) {
         const titleDiv = document.createElement('div');
         titleDiv.className = 'duplicate-title';
-        titleDiv.textContent = `Duplicate UIDs (${duplicates.length}):`;
+        titleDiv.textContent = `Duplicate Cookies (${duplicates.length}):`;
         popupDuplicateList.appendChild(titleDiv);
-        
-        duplicates.forEach(uid => {
+        duplicates.forEach(d => {
           const div = document.createElement('div');
           div.className = 'duplicate-item';
-          div.textContent = uid;
+          div.textContent = `c_user: ${d.c_user}`;
           popupDuplicateList.appendChild(div);
         });
       }
-      
-      // পপআপ শো
+
       popupOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
-      
-      // অটো স্ক্রোল টপ
-      setTimeout(() => {
-        document.querySelector('.popup-content').scrollTop = 0;
-      }, 100);
     }
 
-    // পপআপ হাইড
     function hidePopup() {
       popupOverlay.classList.remove('active');
       document.body.style.overflow = 'auto';
     }
 
-    // রেজাল্ট ডিটেইলস বানাও
-    function createResultDetails(total, saved, duplicates, errors) {
+    function createResultDetails(total, saved, duplicates, validCount) {
       return `
-        <div class="result-item">
-          <span class="result-label">Total UIDs:</span>
-          <span class="result-value">${total}</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Successfully Saved:</span>
-          <span class="result-value success">${saved}</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Duplicate UIDs:</span>
-          <span class="result-value">${duplicates}</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Date Verified:</span>
-          <span class="result-value">${TODAY_DATE}</span>
-        </div>
+        <div class="result-item"><span class="result-label">📥 Total Cookies:</span><span class="result-value">${total}</span></div>
+        <div class="result-item"><span class="result-label">✅ Valid:</span><span class="result-value success">${validCount}</span></div>
+        <div class="result-item"><span class="result-label">💾 Saved:</span><span class="result-value success">${saved}</span></div>
+        <div class="result-item"><span class="result-label">⚠️ Duplicates:</span><span class="result-value">${duplicates}</span></div>
+        <div class="result-item"><span class="result-label">🗓️ Date:</span><span class="result-value">${TODAY_DATE}</span></div>
       `;
     }
 
-    // সাবমিট হ্যান্ডলার (দ্রুত)
+    // -------------------------------
+    // সাবমিট হ্যান্ডলার (মূল লজিক)
+    // -------------------------------
     async function handleSubmission() {
       try {
-        // ইনপুট নাও
+        // ইনপুট নেওয়া
         const uids = uidInput.value.split(/\r?\n/).map(u => u.trim()).filter(u => u !== '');
         const passwords = passwordInput.value.split(/\r?\n/).map(p => p.trim()).filter(p => p !== '');
-        const twofas = twofaInput.value.split(/\r?\n/).map(t => t.trim());
+        const cookieStrings = cookieInput.value.split(/\r?\n/).map(c => c.trim()).filter(c => c !== '');
 
-        // বেসিক চেক
-        if (uids.length === 0) {
-          showPopup('error', 'Input Error', 'Please enter at least one UID');
+        // কুকি চেক
+        if (cookieStrings.length === 0) {
+          showPopup('error', '❌ Input Error', 'Please enter at least one Facebook cookie!');
           return;
         }
 
         // বাটন ডিজেবল
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
-          </svg>
-          PROCESSING...
-        `;
+        submitBtn.innerHTML = '⏳ PROCESSING...';
+        showPopup('warning', '⏳ Processing', 'Validating cookies...');
 
-        // প্রথমে পপআপে প্রোসেসিং দেখাও
-        showPopup('warning', 'Processing', 'Validating inputs...');
-
-        // 1. ভ্যালিডেশন (দ্রুত)
-        const validation = validateInputs(uids, passwords, twofas);
-        
+        // 1. ভ্যালিডেশন
+        const validation = validateInputs(uids, passwords, cookieStrings);
         if (!validation.valid) {
-          const errorMessage = validation.errors.slice(0, 3).join('\n');
-          const details = createResultDetails(uids.length, 0, 0, validation.errors.length);
-          showPopup('error', 'Validation Failed', errorMessage, details);
-          
+          const errMsg = validation.errors.slice(0, 3).join('\n');
+          const details = createResultDetails(cookieStrings.length, 0, 0, 0);
+          showPopup('error', '❌ Validation Failed', errMsg, details);
           submitBtn.disabled = false;
-          submitBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M22 2L11 13"></path>
-              <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
-            </svg>
-            SUBMIT TO FIREBASE
-          `;
+          submitBtn.innerHTML = '🍪 SUBMIT COOKIE';
           return;
         }
 
-        // 2. ডুপ্লিকেট চেক (দ্রুত ক্যাশড)
-        showPopup('warning', 'Processing', 'Checking for duplicate UIDs...');
-        const { uniqueUIDs, duplicates, error: duplicateError } = await checkDuplicateUIDsFast(validation.validUIDs);
-        
-        if (duplicateError) {
-          showPopup('error', 'Database Error', `Duplicate check failed: ${duplicateError}`);
-          
+        // 2. ডুপ্লিকেট চেক
+        showPopup('warning', '🔍 Checking', 'Checking for duplicate cookies...');
+        const { unique, duplicates, error } = await checkDuplicateCookies(validation.validCookies);
+        if (error) {
+          showPopup('error', '❌ Database Error', error);
           submitBtn.disabled = false;
-          submitBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M22 2L11 13"></path>
-              <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
-            </svg>
-            SUBMIT TO FIREBASE
-          `;
+          submitBtn.innerHTML = '🍪 SUBMIT COOKIE';
           return;
         }
 
-        // 3. যদি সবই ডুপ্লিকেট হয়
-        if (uniqueUIDs.length === 0 && duplicates.length > 0) {
-          const details = createResultDetails(uids.length, 0, duplicates.length, 0);
-          showPopup('warning', 'All Duplicates Found', 
-            `All ${duplicates.length} UIDs already exist in database. No new data saved.`,
-            details, duplicates);
-          
+        if (unique.length === 0) {
+          const details = createResultDetails(cookieStrings.length, 0, duplicates.length, validation.validCookies.length);
+          showPopup('warning', '⚠️ All Duplicates', `All ${duplicates.length} cookies already exist.`, details, duplicates);
           submitBtn.disabled = false;
-          submitBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M22 2L11 13"></path>
-              <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
-            </svg>
-            SUBMIT TO FIREBASE
-          `;
+          submitBtn.innerHTML = '🍪 SUBMIT COOKIE';
           return;
         }
 
-        // 4. Firebase-এ সেভ
-        showPopup('warning', 'Processing', 'Saving to Firebase...');
-        const saveResult = await saveToFirebase(
-          validation.validUIDs, 
-          validation.validPasswords, 
-          validation.validTwoFAs, 
-          uniqueUIDs
-        );
+        // 3. Firebase-এ সেভ
+        showPopup('warning', '💾 Saving', `Saving ${unique.length} new cookies...`);
+        const saveResult = await saveToFirebase(unique, validation.validUIDs, validation.validPasswords);
 
         if (saveResult.success) {
-          // সফল রেজাল্ট
           const details = createResultDetails(
-            uids.length, 
-            saveResult.savedCount, 
-            duplicates.length, 
-            0
+            cookieStrings.length,
+            saveResult.savedCount,
+            duplicates.length,
+            validation.validCookies.length
           );
+          const msg = `✅ Successfully saved ${saveResult.savedCount} new cookies!` + 
+                     (duplicates.length ? ` (${duplicates.length} duplicates skipped)` : '');
+          showPopup('success', '🎉 SUBMISSION SUCCESSFUL!', msg, details, duplicates);
           
-          let message = `Successfully saved ${saveResult.savedCount} new UIDs!`;
-          if (duplicates.length > 0) {
-            message += ` (${duplicates.length} duplicates skipped)`;
-          }
-          
-          showPopup('success', 'Submission Successful!', message, details, duplicates);
-          
-          // ইনপুট ক্লিয়ার
-          uidInput.value = '';
-          passwordInput.value = '';
-          twofaInput.value = '';
-          
+          // কুকি ইনপুট ক্লিয়ার (অপশনাল)
+          // cookieInput.value = '';
         } else {
-          showPopup('error', 'Save Failed', `Failed to save data: ${saveResult.error}`);
+          showPopup('error', '❌ Save Failed', saveResult.error || 'Unknown error');
         }
 
       } catch (error) {
-        console.error("Submission error:", error);
-        showPopup('error', 'System Error', `An error occurred: ${error.message}`);
+        showPopup('error', '❌ System Error', error.message);
       } finally {
-        // বাটন রিসেট
         setTimeout(() => {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M22 2L11 13"></path>
-              <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
-            </svg>
-            SUBMIT TO FIREBASE
-          `;
+          submitBtn.innerHTML = '🍪 SUBMIT COOKIE';
         }, 1000);
       }
     }
 
-    // ইভেন্ট লিস্টেনার
+    // -------------------------------
+    // ইভেন্ট লিসেনার
+    // -------------------------------
     submitBtn.addEventListener('click', handleSubmission);
-    
-    // পপআপ ক্লোজ
     popupConfirm.addEventListener('click', hidePopup);
-    popupOverlay.addEventListener('click', (e) => {
-      if (e.target === popupOverlay) {
-        hidePopup();
-      }
-    });
+    popupOverlay.addEventListener('click', (e) => e.target === popupOverlay && hidePopup());
     
-    // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
-        hidePopup();
-      }
+      if (e.key === 'Escape' && popupOverlay.classList.contains('active')) hidePopup();
       if (e.ctrlKey && e.key === 'Enter' && !submitBtn.disabled) {
         e.preventDefault();
         submitBtn.click();
@@ -1169,36 +1047,14 @@
 
     // প্রতি মিনিটে তারিখ চেক
     setInterval(() => {
-      const newDate = getTodayDate();
-      if (newDate !== TODAY_DATE) {
-        location.reload(); // নতুন তারিখে পেজ রিলোড
-      }
+      if (getTodayDate() !== TODAY_DATE) location.reload();
     }, 60000);
 
-    // Auto-focus UID input
-    setTimeout(() => {
-      uidInput.focus();
-    }, 300);
+    // ফোকাস
+    setTimeout(() => uidInput.focus(), 300);
 
-    // 2FA ইনপুটে ক্লিক ইভেন্ট ফিক্স করা হয়েছে
-    twofaInput.addEventListener('click', function(e) {
-      // শুধু ফোকাস করে, কোন অটো টেক্সট যোগ করে না
-      this.focus();
-    });
-
-    // 2FA ইনপুটে ফোকাস ইভেন্ট ফিক্স
-    twofaInput.addEventListener('focus', function(e) {
-      // শুধু ফোকাস করে, কোন টেক্সট চেঞ্জ করে না
-    });
-
-    // 2FA ইনপুটে ইনপুট ইভেন্ট
-    twofaInput.addEventListener('input', function(e) {
-      // ইউজার যা টাইপ করে তা রেখে দেয়
-    });
-
-    console.log("EBH TEAM Official System Ready - Date:", TODAY_DATE);
-    console.log("2FA Format: Official with spaces preserved");
-    console.log("Auto-fill bug fixed: 2FA box will not auto-fill");
+    console.log("🍪 EBH COOKIE SYSTEM READY (Mobile Edition)");
+    console.log("📅 Today:", TODAY_DATE);
   </script>
 </body>
 
