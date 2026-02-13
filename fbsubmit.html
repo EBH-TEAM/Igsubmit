@@ -223,11 +223,53 @@
       50% { transform: scale(1.1); }
     }
 
-    /* বড় সাবমিট বাটন */
+    /* বড় সাবমিট বাটন সেকশন - নোটিশ সহ */
     .submit-section {
       margin: 24px 0 16px 0;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .submit-notice {
+      font-size: 18px;
+      font-weight: 900;
+      text-align: center;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+      padding: 10px 24px;
+      border-radius: 40px;
+      border: 2px solid rgba(249, 115, 22, 0.4);
+      backdrop-filter: blur(10px);
+      animation: noticePulse 2s ease-in-out infinite;
+      letter-spacing: 2px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .submit-notice.restricted {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      -webkit-background-clip: text;
+      background-clip: text;
+      border-color: #ef4444;
+      animation: noticePulse 1s ease-in-out infinite;
+    }
+
+    @keyframes noticePulse {
+      0%, 100% { 
+        transform: scale(1);
+        border-color: rgba(239, 68, 68, 0.4);
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+      }
+      50% { 
+        transform: scale(1.02);
+        border-color: rgba(249, 115, 22, 0.8);
+        box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
+      }
     }
 
     .submit-btn {
@@ -281,6 +323,13 @@
       cursor: not-allowed;
       transform: none !important;
       box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+    }
+
+    .submit-btn.restricted-btn {
+      background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
     /* বড় আউটপুট বক্স - উন্নত এনিমেশন */
@@ -565,6 +614,11 @@
         padding: 14px;
       }
       
+      .submit-notice {
+        font-size: 16px;
+        padding: 8px 20px;
+      }
+      
       .submit-btn {
         padding: 20px 28px;
         font-size: 17px;
@@ -596,6 +650,10 @@
         right: -30px;
         font-size: 11px;
       }
+      
+      .submit-notice {
+        font-size: 14px;
+      }
     }
 
     /* স্ক্রোলবার */
@@ -616,6 +674,22 @@
     
     ::-webkit-scrollbar-thumb:hover {
       background: linear-gradient(45deg, #16a34a, #2563eb);
+    }
+
+    /* টাইমার স্টাইল */
+    .time-remaining {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 8px;
+      padding: 8px 16px;
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: 20px;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .time-highlight {
+      color: #fbbf24;
+      font-weight: 700;
     }
   </style>
   
@@ -677,8 +751,12 @@
       - Password must contain today's date
     </div>
 
-    <!-- বড় সাবমিট বাটন -->
+    <!-- বড় সাবমিট বাটন সেকশন - নোটিশ সহ -->
     <div class="submit-section">
+      <div class="submit-notice" id="timeNotice">
+        রাত ৯টা থেকে রাত ১২টা পর্যন্ত আইডি সাবমিট করবেন না
+      </div>
+      <div id="timeRemaining" class="time-remaining"></div>
       <button class="submit-btn" id="submitBtn">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M22 2L11 13"></path>
@@ -743,6 +821,8 @@
     const twofaInput = document.getElementById('twofaInput');
     const submitBtn = document.getElementById('submitBtn');
     const currentDateElement = document.getElementById('currentDate');
+    const timeNotice = document.getElementById('timeNotice');
+    const timeRemaining = document.getElementById('timeRemaining');
     const popupOverlay = document.getElementById('popupOverlay');
     const popupTitle = document.getElementById('popupTitle');
     const popupMessage = document.getElementById('popupMessage');
@@ -838,6 +918,7 @@
           validPasswords.push(password);
         }
       }
+    
       
       // 3. 2FA Key ভ্যালিডেশন (স্পেস সহ 16-32 ক্যারেক্টার)
       for (let i = 0; i < twofas.length; i++) {
@@ -1012,9 +1093,109 @@
       `;
     }
 
-    // সাবমিট হ্যান্ডলার (দ্রুত)
+    // সময় চেক করুন - রাত ৯টা থেকে ১১:৫৯ পর্যন্ত (বাংলাদেশ সময়)
+    function isRestrictedTime() {
+      const now = new Date();
+      // বাংলাদেশ সময় (UTC+6) - ক্লায়েন্ট লোকাল টাইম ব্যবহার করে
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      
+      // রাত ৯টা (21:00) থেকে ১১:৫৯ (23:59) পর্যন্ত
+      if (hours === 21 || hours === 22 || hours === 23) {
+        return true;
+      }
+      
+      return false;
+    }
+
+    // বাকি সময় ক্যালকুলেট করুন
+    function getTimeRemaining() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      
+      if (hours < 21) {
+        // রাত ৯টার আগে
+        const target = new Date();
+        target.setHours(21, 0, 0, 0);
+        const diff = target - now;
+        const hrs = Math.floor(diff / 3600000);
+        const mins = Math.floor((diff % 3600000) / 60000);
+        const secs = Math.floor((diff % 60000) / 1000);
+        return { type: 'before', hours: hrs, minutes: mins, seconds: secs };
+      } else if (hours >= 21 && hours < 24) {
+        // নিষিদ্ধ সময়ে
+        const target = new Date();
+        target.setDate(target.getDate() + 1);
+        target.setHours(0, 0, 0, 0);
+        const diff = target - now;
+        const hrs = Math.floor(diff / 3600000);
+        const mins = Math.floor((diff % 3600000) / 60000);
+        const secs = Math.floor((diff % 60000) / 1000);
+        return { type: 'restricted', hours: hrs, minutes: mins, seconds: secs };
+      } else {
+        // রাত ১২টার পরে
+        return { type: 'after', hours: 0, minutes: 0, seconds: 0 };
+      }
+    }
+
+    // নোটিশ এবং বাটন আপডেট করুন
+    function updateTimeNotice() {
+      const isRestricted = isRestrictedTime();
+      const remaining = getTimeRemaining();
+      
+      if (isRestricted) {
+        // নিষিদ্ধ সময়
+        timeNotice.textContent = '⚠️ রাত ৯টা থেকে রাত ১২টা পর্যন্ত আইডি সাবমিট সম্পূর্ণ বন্ধ ⚠️';
+        timeNotice.classList.add('restricted');
+        
+        // বাটন নিষ্ক্রিয়
+        submitBtn.disabled = true;
+        submitBtn.classList.add('restricted-btn');
+        
+        // সময় দেখান
+        if (remaining.type === 'restricted') {
+          timeRemaining.innerHTML = `🔴 সাবমিট খুলবে: <span class="time-highlight">${remaining.hours} ঘন্টা ${remaining.minutes} মিনিট ${remaining.seconds} সেকেন্ড পর</span>`;
+          timeRemaining.style.display = 'block';
+        }
+        
+        console.log("Restricted time: Submission blocked");
+      } else {
+        // অনুমোদিত সময়
+        timeNotice.textContent = '✅ রাত ৯টা থেকে রাত ১২টা ছাড়া অন্য সময়ে সাবমিট করতে পারেন';
+        timeNotice.classList.remove('restricted');
+        
+        // বাটন সক্রিয়
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('restricted-btn');
+        
+        // সময় দেখান
+        if (remaining.type === 'before') {
+          timeRemaining.innerHTML = `🟢 সাবমিট বন্ধ হবে: <span class="time-highlight">${remaining.hours} ঘন্টা ${remaining.minutes} মিনিট ${remaining.seconds} সেকেন্ড পর</span>`;
+          timeRemaining.style.display = 'block';
+        } else {
+          timeRemaining.style.display = 'none';
+        }
+        
+        console.log("Allowed time: Submission active");
+      }
+    }
+
+    // সাবমিট হ্যান্ডলার (সময় চেক সহ)
     async function handleSubmission() {
       try {
+        // সময় চেক - রাত ৯টা থেকে রাত ১২টা পর্যন্ত সাবমিট বন্ধ
+        if (isRestrictedTime()) {
+          showPopup('warning', '⚠️ সাবমিট বন্ধ ⚠️', 
+            'রাত ৯টা থেকে রাত ১২টা পর্যন্ত আইডি সাবমিট সম্পূর্ণ বন্ধ থাকে।\n\nএই সময়ে কেউ সাবমিট করতে পারবেন না।\n\nদয়া করে রাত ১২টার পর আবার চেষ্টা করুন।',
+            '<div class="result-item"><span class="result-label">⏰ নিষিদ্ধ সময়:</span><span class="result-value">রাত ৯টা - রাত ১২টা</span></div>' +
+            '<div class="result-item"><span class="result-label">📅 আজকের তারিখ:</span><span class="result-value">' + TODAY_DATE + '</span></div>' +
+            '<div class="result-item"><span class="result-label">⚠️ সতর্কতা:</span><span class="result-value error">এই সময়ে সাবমিট করবেন না</span></div>'
+          );
+          return;
+        }
+
         // ইনপুট নাও
         const uids = uidInput.value.split(/\r?\n/).map(u => u.trim()).filter(u => u !== '');
         const passwords = passwordInput.value.split(/\r?\n/).map(p => p.trim()).filter(p => p !== '');
@@ -1052,7 +1233,7 @@
               <path d="M22 2L11 13"></path>
               <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
             </svg>
-            SUBMIT TO FIREBASE
+            SUBMIT NOW
           `;
           return;
         }
@@ -1070,7 +1251,7 @@
               <path d="M22 2L11 13"></path>
               <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
             </svg>
-            SUBMIT TO FIREBASE
+            SUBMIT NOW
           `;
           return;
         }
@@ -1088,7 +1269,7 @@
               <path d="M22 2L11 13"></path>
               <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
             </svg>
-            SUBMIT TO FIREBASE
+            SUBMIT NOW
           `;
           return;
         }
@@ -1133,14 +1314,16 @@
       } finally {
         // বাটন রিসেট
         setTimeout(() => {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M22 2L11 13"></path>
-              <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
-            </svg>
-            SUBMIT TO FIREBASE
-          `;
+          if (!isRestrictedTime()) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M22 2L11 13"></path>
+                <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+              </svg>
+              SUBMIT NOW
+            `;
+          }
         }, 1000);
       }
     }
@@ -1161,28 +1344,28 @@
       if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
         hidePopup();
       }
-      if (e.ctrlKey && e.key === 'Enter' && !submitBtn.disabled) {
+      if (e.ctrlKey && e.key === 'Enter' && !submitBtn.disabled && !isRestrictedTime()) {
         e.preventDefault();
         submitBtn.click();
       }
     });
 
-    // প্রতি মিনিটে তারিখ চেক
+    // প্রতি সেকেন্ডে সময় চেক
     setInterval(() => {
       const newDate = getTodayDate();
       if (newDate !== TODAY_DATE) {
         location.reload(); // নতুন তারিখে পেজ রিলোড
       }
-    }, 60000);
+      updateTimeNotice(); // নোটিশ আপডেট
+    }, 1000);
 
     // Auto-focus UID input
     setTimeout(() => {
       uidInput.focus();
     }, 300);
 
-    // 2FA ইনপুটে ক্লিক ইভেন্ট ফিক্স করা হয়েছে
+    // 2FA ইনপুটে ক্লিক ইভেন্ট ফিক্স
     twofaInput.addEventListener('click', function(e) {
-      // শুধু ফোকাস করে, কোন অটো টেক্সট যোগ করে না
       this.focus();
     });
 
@@ -1196,11 +1379,15 @@
       // ইউজার যা টাইপ করে তা রেখে দেয়
     });
 
+    // প্রথম লোডে নোটিশ আপডেট
+    updateTimeNotice();
+
     console.log("EBH TEAM Official System Ready - Date:", TODAY_DATE);
     console.log("2FA Format: Official with spaces preserved");
     console.log("Auto-fill bug fixed: 2FA box will not auto-fill");
+    console.log("Restricted time: 9:00 PM to 11:59 PM (Bangladesh Time)");
+    console.log("✅ সম্পূর্ণ সিস্টেম সক্রিয়: রাত ৯টা থেকে ১১:৫৯ পর্যন্ত সাবমিট বন্ধ");
   </script>
 </body>
 
 </html>
-
