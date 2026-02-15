@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="bn">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>EBH TEAM FACEBOOK SUBMIT</title>
+  <title>EBH TEAM - INSTAGRAM 2FA SUBMIT</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -17,6 +17,8 @@
       --error: #ef4444;
       --success: #10b981;
       --warning: #f59e0b;
+      --instagram: #d62976;
+      --facebook: #1877F2;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     }
 
@@ -29,7 +31,7 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.15), transparent 35%),
+      background: radial-gradient(circle at 20% 20%, rgba(214, 41, 118, 0.15), transparent 35%),
         radial-gradient(circle at 80% 0%, rgba(34, 197, 94, 0.12), transparent 30%),
         radial-gradient(circle at 60% 90%, rgba(249, 115, 22, 0.1), transparent 25%),
         var(--bg);
@@ -46,7 +48,7 @@
     .header {
       background: rgba(17, 24, 39, 0.97);
       backdrop-filter: blur(20px);
-      border-bottom: 2px solid rgba(34, 197, 94, 0.4);
+      border-bottom: 2px solid rgba(214, 41, 118, 0.4);
       padding: 20px 16px;
       position: sticky;
       top: 0;
@@ -68,23 +70,23 @@
     .logo-icon {
       font-size: 36px;
       animation: spinRotate 8s linear infinite;
-      background: linear-gradient(90deg, #22c55e, #3b82f6, #f97316, #22c55e);
+      background: linear-gradient(90deg, #d62976, #1877F2, #f97316, #d62976);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.5));
+      filter: drop-shadow(0 0 15px rgba(214, 41, 118, 0.5));
     }
 
     .logo-text {
       font-size: 34px;
       font-weight: 900;
-      background: linear-gradient(90deg, #22c55e, #3b82f6, #22c55e, #3b82f6);
+      background: linear-gradient(90deg, #d62976, #1877F2, #d62976, #1877F2);
       background-size: 300% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       letter-spacing: 2px;
-      text-shadow: 0 3px 20px rgba(34, 197, 94, 0.5);
+      text-shadow: 0 3px 20px rgba(214, 41, 118, 0.5);
       animation: gradientFlow 4s ease-in-out infinite;
       position: relative;
     }
@@ -94,7 +96,7 @@
       top: -10px;
       right: -35px;
       font-size: 12px;
-      background: linear-gradient(90deg, #f97316, #eab308, #f97316);
+      background: linear-gradient(90deg, #d62976, #eab308, #d62976);
       background-size: 200% 100%;
       color: #0f172a;
       padding: 3px 10px;
@@ -103,7 +105,7 @@
       letter-spacing: 1px;
       transform: rotate(15deg);
       animation: badgePulse 2s ease-in-out infinite;
-      box-shadow: 0 4px 20px rgba(249, 115, 22, 0.6);
+      box-shadow: 0 4px 20px rgba(214, 41, 118, 0.6);
     }
 
     @keyframes spinRotate {
@@ -168,10 +170,21 @@
       font-size: 16px;
       font-weight: 800;
       text-align: center;
-      color: var(--accent);
       border-bottom: 2px solid var(--border);
       text-transform: uppercase;
       letter-spacing: 0.5px;
+    }
+
+    .box-header:nth-child(1) {
+      color: #1877F2;
+    }
+    
+    .box-header:nth-child(2) {
+      color: #f97316;
+    }
+    
+    .box-header:nth-child(3) {
+      color: #d62976;
     }
 
     .box-textarea {
@@ -236,14 +249,14 @@
       font-size: 18px;
       font-weight: 900;
       text-align: center;
-      background: linear-gradient(135deg, #ef4444, #f97316);
+      background: linear-gradient(135deg, #d62976, #1877F2);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+      text-shadow: 0 0 20px rgba(214, 41, 118, 0.5);
       padding: 10px 24px;
       border-radius: 40px;
-      border: 2px solid rgba(249, 115, 22, 0.4);
+      border: 2px solid rgba(214, 41, 118, 0.4);
       backdrop-filter: blur(10px);
       animation: noticePulse 2s ease-in-out infinite;
       letter-spacing: 2px;
@@ -262,29 +275,29 @@
     @keyframes noticePulse {
       0%, 100% { 
         transform: scale(1);
-        border-color: rgba(239, 68, 68, 0.4);
-        box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+        border-color: rgba(214, 41, 118, 0.4);
+        box-shadow: 0 0 15px rgba(214, 41, 118, 0.3);
       }
       50% { 
         transform: scale(1.02);
         border-color: rgba(249, 115, 22, 0.8);
-        box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
+        box-shadow: 0 0 30px rgba(214, 41, 118, 0.5);
       }
     }
 
     .submit-btn {
       width: 100%;
       max-width: 320px;
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #3b82f6 100%);
+      background: linear-gradient(135deg, #d62976 0%, #c13584 50%, #1877F2 100%);
       border: none;
-      color: #0b1220;
+      color: white;
       padding: 22px 32px;
       border-radius: 18px;
       font-weight: 900;
       font-size: 18px;
       letter-spacing: 1.5px;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.5);
+      box-shadow: 0 10px 30px rgba(214, 41, 118, 0.5);
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
@@ -310,8 +323,8 @@
     .submit-btn:hover,
     .submit-btn:active {
       transform: translateY(-4px);
-      background: linear-gradient(135deg, #3b82f6 0%, #22c55e 50%, #16a34a 100%);
-      box-shadow: 0 15px 35px rgba(34, 197, 94, 0.7);
+      background: linear-gradient(135deg, #1877F2 0%, #d62976 50%, #c13584 100%);
+      box-shadow: 0 15px 35px rgba(214, 41, 118, 0.7);
     }
 
     .submit-btn:hover::before {
@@ -322,7 +335,7 @@
       opacity: 0.7;
       cursor: not-allowed;
       transform: none !important;
-      box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+      box-shadow: 0 5px 15px rgba(214, 41, 118, 0.3);
     }
 
     .submit-btn.restricted-btn {
@@ -358,9 +371,9 @@
       bottom: 0;
       background: linear-gradient(45deg, 
         transparent 0%, 
-        rgba(24, 119, 242, 0.1) 25%, 
-        rgba(37, 211, 102, 0.1) 50%, 
-        rgba(24, 119, 242, 0.1) 75%, 
+        rgba(214, 41, 118, 0.1) 25%, 
+        rgba(24, 119, 242, 0.1) 50%, 
+        rgba(214, 41, 118, 0.1) 75%, 
         transparent 100%);
       animation: shimmer 3s infinite linear;
       background-size: 200% 100%;
@@ -374,13 +387,13 @@
     .output-text {
       font-size: 32px;
       font-weight: 900;
-      background: linear-gradient(45deg, #1877F2, #25D366, #1877F2, #25D366);
+      background: linear-gradient(45deg, #d62976, #1877F2, #d62976, #1877F2);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       letter-spacing: 2px;
-      text-shadow: 0 4px 25px rgba(56, 189, 248, 0.5);
+      text-shadow: 0 4px 25px rgba(214, 41, 118, 0.5);
       animation: gradientFlow 3s ease-in-out infinite, textFloat 4s ease-in-out infinite;
       padding: 16px 30px;
       border-radius: 14px;
@@ -397,7 +410,7 @@
       bottom: 0;
       border: 3px solid transparent;
       border-radius: 14px;
-      background: linear-gradient(45deg, #1877F2, #25D366, #1877F2) border-box;
+      background: linear-gradient(45deg, #d62976, #1877F2, #d62976) border-box;
       -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
       mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: destination-out;
@@ -571,14 +584,14 @@
     }
 
     .popup-btn.confirm {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #0b1220;
-      box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+      background: linear-gradient(135deg, #d62976, #c13584);
+      color: white;
+      box-shadow: 0 6px 20px rgba(214, 41, 118, 0.4);
     }
 
     .popup-btn.confirm:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.6);
+      box-shadow: 0 8px 25px rgba(214, 41, 118, 0.6);
     }
 
     /* মোবাইল অপ্টিমাইজেশন */
@@ -668,12 +681,12 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(45deg, #22c55e, #3b82f6);
+      background: linear-gradient(45deg, #d62976, #1877F2);
       border-radius: 3px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(45deg, #16a34a, #2563eb);
+      background: linear-gradient(45deg, #c13584, #166fe5);
     }
 
     /* টাইমার স্টাইল */
@@ -702,10 +715,10 @@
   <!-- বড় হেডার লোগো -->
   <div class="header">
     <div class="logo-container">
-      <div class="logo-icon">⚡</div>
+      <div class="logo-icon">📱</div>
       <div class="logo-text">
-        EBH TEAM
-        <div class="logo-badge">Is Best</div>
+        INSTAGRAM 2FA
+        <div class="logo-badge">EBH TEAM</div>
       </div>
     </div>
   </div>
@@ -714,19 +727,19 @@
   <div class="layout">
     <!-- তিনটি বড় ইনপুট বক্স -->
     <div class="input-container">
-      <!-- UID বক্স -->
+      <!-- ইউজারনেম বক্স (পূর্বে UID) -->
       <div class="input-box">
-        <div class="box-header">UID</div>
+        <div class="box-header">ইউজারনেম</div>
         <textarea 
           class="box-textarea" 
-          id="uidInput" 
-          placeholder="Enter Facebook UIDs (one per line)&#10;&#10;Example:&#10;61587432437149&#10;1000123456789"
+          id="usernameInput" 
+          placeholder="Enter Instagram Usernames (one per line)&#10;&#10;Example:&#10;john_doe&#10;travel_photography&#10;fitness_guru"
           wrap="off"></textarea>
       </div>
 
       <!-- PASSWORD বক্স -->
       <div class="input-box">
-        <div class="box-header">PASSWORD</div>
+        <div class="box-header">পাসওয়ার্ড</div>
         <textarea 
           class="box-textarea" 
           id="passwordInput" 
@@ -734,27 +747,27 @@
           wrap="off"></textarea>
       </div>
 
-      <!-- COOKIES বক্স (পূর্বে 2FA KEY) -->
+      <!-- COOKIES বক্স -->
       <div class="input-box">
-        <div class="box-header">COOKIES</div>
+        <div class="box-header">কুকিজ</div>
         <textarea 
           class="box-textarea" 
           id="cookiesInput" 
-          placeholder="Enter Facebook Cookies (one per line)&#10;&#10;Paste full cookie string here:&#10;Example:&#10;c_user=123; xs=abc; fr=xyz; ..."
+          placeholder="Enter Instagram Cookies / Session (one per line)&#10;&#10;Paste full cookie string here:&#10;Example:&#10;sessionid=abc123; csrftoken=xyz; ds_user_id=12345; ..."
           wrap="off"></textarea>
       </div>
     </div>
 
     <!-- বড় ডেট ইনফো -->
     <div class="date-info">
-      Today's Date: <span class="current-date" id="currentDate">11</span> 
-      - Password must contain today's date
+      আজকের তারিখ: <span class="current-date" id="currentDate">11</span> 
+      - পাসওয়ার্ডে অবশ্যই আজকের তারিখ থাকতে হবে
     </div>
 
     <!-- বড় সাবমিট বাটন সেকশন - নোটিশ সহ -->
     <div class="submit-section">
       <div class="submit-notice" id="timeNotice">
-        রাত ৯টা থেকে রাত ১২টা পর্যন্ত আইডি সাবমিট করবেন না
+        রাত ৯টা থেকে রাত ১২টা পর্যন্ত সাবমিট করবেন না
       </div>
       <div id="timeRemaining" class="time-remaining"></div>
       <button class="submit-btn" id="submitBtn">
@@ -762,14 +775,14 @@
           <path d="M22 2L11 13"></path>
           <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
         </svg>
-        SUBMIT NOW
+        সাবমিট এখন
       </button>
     </div>
 
     <!-- উন্নত এনিমেশন সহ আউটপুট বক্স -->
     <div class="output-section">
       <div class="output-text">
-        FACEBOOK WORK
+        ইনস্টাগ্রাম টু এফএ
       </div>
     </div>
   </div>
@@ -777,7 +790,7 @@
   <!-- পপআপ মডেল -->
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-content">
-      <div class="popup-header" id="popupTitle">Submission Result</div>
+      <div class="popup-header" id="popupTitle">সাবমিট রেজাল্ট</div>
       <div class="popup-message" id="popupMessage"></div>
       
       <div class="result-details" id="resultDetails"></div>
@@ -785,7 +798,7 @@
       <div class="duplicate-list" id="popupDuplicateList"></div>
       
       <div class="popup-buttons">
-        <button class="popup-btn confirm" id="popupConfirm">OK</button>
+        <button class="popup-btn confirm" id="popupConfirm">ঠিক আছে</button>
       </div>
     </div>
   </div>
@@ -812,13 +825,13 @@
     }
 
     const db = firebase.database();
-    const SUBMISSIONS_PATH = "ebh_submissions";
-    const USED_UIDS_PATH = "ebh_used_uids";
+    const SUBMISSIONS_PATH = "instagram_2fa_submissions";
+    const USED_USERNAMES_PATH = "instagram_used_usernames";
 
     // DOM Elements
-    const uidInput = document.getElementById('uidInput');
+    const usernameInput = document.getElementById('usernameInput');
     const passwordInput = document.getElementById('passwordInput');
-    const cookiesInput = document.getElementById('cookiesInput'); // Changed from twofaInput
+    const cookiesInput = document.getElementById('cookiesInput');
     const submitBtn = document.getElementById('submitBtn');
     const currentDateElement = document.getElementById('currentDate');
     const timeNotice = document.getElementById('timeNotice');
@@ -851,60 +864,61 @@
     const TODAY_DATE = updateSystemDate();
 
     // দ্রুত ডুপ্লিকেট চেক (ক্যাশ সহ)
-    let uidCache = new Set();
+    let usernameCache = new Set();
     let cacheTimestamp = 0;
     const CACHE_DURATION = 30000; // 30 seconds
 
-    async function checkDuplicateUIDsFast(uids) {
+    async function checkDuplicateUsernamesFast(usernames) {
       try {
         const now = Date.now();
         
         // ক্যাশ রিফ্রেশ প্রয়োজন হলে
-        if (now - cacheTimestamp > CACHE_DURATION || uidCache.size === 0) {
-          const snapshot = await db.ref(USED_UIDS_PATH).once('value');
-          const usedUIDs = snapshot.val() || {};
+        if (now - cacheTimestamp > CACHE_DURATION || usernameCache.size === 0) {
+          const snapshot = await db.ref(USED_USERNAMES_PATH).once('value');
+          const usedUsernames = snapshot.val() || {};
           
-          uidCache = new Set(Object.keys(usedUIDs));
+          usernameCache = new Set(Object.keys(usedUsernames));
           cacheTimestamp = now;
           
-          console.log("UID cache refreshed:", uidCache.size, "UIDs cached");
+          console.log("Username cache refreshed:", usernameCache.size, "usernames cached");
         }
         
         const duplicates = [];
-        const uniqueUIDs = [];
+        const uniqueUsernames = [];
         
         // ক্যাশ থেকে দ্রুত চেক
-        for (const uid of uids) {
-          if (uidCache.has(uid)) {
-            duplicates.push(uid);
+        for (const username of usernames) {
+          if (usernameCache.has(username)) {
+            duplicates.push(username);
           } else {
-            uniqueUIDs.push(uid);
+            uniqueUsernames.push(username);
           }
         }
         
-        return { uniqueUIDs, duplicates, error: null };
+        return { uniqueUsernames, duplicates, error: null };
         
       } catch (error) {
         console.error("Error checking duplicates:", error);
-        return { uniqueUIDs: [], duplicates: [], error: error.message };
+        return { uniqueUsernames: [], duplicates: [], error: error.message };
       }
     }
 
-    // ইনপুট ভ্যালিডেশন (কুকিজের জন্য আপডেট করা হয়েছে)
-    function validateInputs(uids, passwords, cookies) {
+    // ইনপুট ভ্যালিডেশন
+    function validateInputs(usernames, passwords, cookies) {
       const errors = [];
-      const validUIDs = [];
+      const validUsernames = [];
       const validPasswords = [];
       const validCookies = [];
       
-      // 1. UID ভ্যালিডেশন (8-16 ডিজিট)
-      for (let i = 0; i < uids.length; i++) {
-        const uid = uids[i];
+      // 1. Username ভ্যালিডেশন (ইনস্টাগ্রাম ইউজারনেম ফরম্যাট)
+      for (let i = 0; i < usernames.length; i++) {
+        const username = usernames[i];
         
-        if (!/^\d{8,16}$/.test(uid)) {
-          errors.push(`Line ${i+1}: UID must be 8-16 digits (got: ${uid})`);
+        // ইন্সটাগ্রাম ইউজারনেম: অক্ষর, সংখ্যা, আন্ডারস্কোর, ডট - 1-30 ক্যারেক্টার
+        if (!/^[a-zA-Z0-9._]{1,30}$/.test(username)) {
+          errors.push(`Line ${i+1}: Username must be 1-30 characters and can only contain letters, numbers, dots and underscores`);
         } else {
-          validUIDs.push(uid);
+          validUsernames.push(username);
         }
       }
       
@@ -918,97 +932,91 @@
           validPasswords.push(password);
         }
       }
-    
       
-      // 3. Cookies ভ্যালিডেশন (যেকোনো নন-খালি স্ট্রিং গ্রহণ করা হবে)
+      // 3. Cookies ভ্যালিডেশন
       for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i];
         
-        // ফাঁকা কুকিজ অনুমোদিত নয় (অথবা আপনি চাইলে ফাঁকা রাখতে পারেন, নিচের লজিক দেখুন)
-        // বর্তমান নির্দেশনা: কুকিজ ফিল্ড আবশ্যক
         if (!cookie || cookie.trim() === '') {
           errors.push(`Line ${i+1}: Cookies cannot be empty. Please paste a valid cookie string.`);
         } else {
-          // খুব বেসিক চেক - সাধারণত কুকিজে = এবং ; থাকে
+          // বেসিক চেক - কুকিজে সাধারণত = এবং ; থাকে
           if (!cookie.includes('=') || !cookie.includes(';')) {
             errors.push(`Line ${i+1}: Cookie format seems invalid. Should contain key=value pairs.`);
           } else {
-            validCookies.push(cookie); // অরিজিনাল কুকি স্ট্রিং সংরক্ষণ
+            validCookies.push(cookie);
           }
         }
       }
       
       // 4. লাইন সংখ্যা চেক
-      if (uids.length !== passwords.length) {
-        errors.push(`UID count (${uids.length}) and Password count (${passwords.length}) must match`);
+      if (usernames.length !== passwords.length) {
+        errors.push(`Username count (${usernames.length}) and Password count (${passwords.length}) must match`);
       }
       
-      if (cookies.length > 0 && uids.length !== cookies.length) {
-        errors.push(`UID count (${uids.length}) and Cookie count (${cookies.length}) must match`);
+      if (cookies.length > 0 && usernames.length !== cookies.length) {
+        errors.push(`Username count (${usernames.length}) and Cookie count (${cookies.length}) must match`);
       }
       
       return {
         valid: errors.length === 0,
         errors,
-        validUIDs,
+        validUsernames,
         validPasswords,
-        validCookies // পূর্বে ছিল validTwoFAs
+        validCookies
       };
     }
 
-    // Firebase-এ ডাটা সেভ (কুকিজ সহ)
-    async function saveToFirebase(uids, passwords, cookies, uniqueUIDs) {
+    // Firebase-এ ডাটা সেভ
+    async function saveToFirebase(usernames, passwords, cookies, uniqueUsernames) {
       try {
         const timestamp = new Date().toISOString();
         const batch = {};
-        const usedUIDsUpdate = {};
+        const usedUsernamesUpdate = {};
         
         let savedCount = 0;
 
-        for (let i = 0; i < uids.length; i++) {
-          const uid = uids[i];
+        for (let i = 0; i < usernames.length; i++) {
+          const username = usernames[i];
           
-          if (uniqueUIDs.includes(uid)) {
-            const submissionId = `ebh_${Date.now()}_${uid}`;
+          if (uniqueUsernames.includes(username)) {
+            const submissionId = `ig_${Date.now()}_${username}`;
             const submissionPath = `${SUBMISSIONS_PATH}/${submissionId}`;
             
-            // কুকি সহ সেভ (পুরো স্ট্রিং)
             batch[submissionPath] = {
-              uid: uid,
+              username: username,
               password: passwords[i],
-              cookies: cookies[i] || '', // পুরো কুকি স্ট্রিং
+              cookies: cookies[i] || '',
               submitted_at: timestamp,
               status: 'active',
-              source: 'EBH_TEAM_OFFICIAL',
+              source: 'EBH_TEAM_INSTAGRAM',
               date_used: TODAY_DATE,
-              format: 'cookie_string',
-              firebase_user: 'official_government_account'
+              platform: 'instagram',
+              type: '2fa_submission'
             };
 
-            usedUIDsUpdate[`${USED_UIDS_PATH}/${uid}`] = {
+            usedUsernamesUpdate[`${USED_USERNAMES_PATH}/${username}`] = {
               used: true,
               first_used: timestamp,
               last_used: timestamp,
               submission_id: submissionId
             };
 
-            // ক্যাশে যোগ করো
-            uidCache.add(uid);
+            usernameCache.add(username);
             savedCount++;
           }
         }
 
         if (Object.keys(batch).length > 0) {
-          // ব্যাচ রাইট (দ্রুত)
           await Promise.all([
             db.ref().update(batch),
-            db.ref().update(usedUIDsUpdate)
+            db.ref().update(usedUsernamesUpdate)
           ]);
           
           console.log(`Saved ${savedCount} entries to Firebase with cookies`);
           return { success: true, savedCount, error: null };
         } else {
-          return { success: false, savedCount: 0, error: "No unique UIDs to save" };
+          return { success: false, savedCount: 0, error: "No unique usernames to save" };
         }
 
       } catch (error) {
@@ -1019,14 +1027,11 @@
 
     // পপআপ শো
     function showPopup(type, title, message, details, duplicates = []) {
-      // পপআপ হেডার সেট
       popupTitle.textContent = title;
       popupTitle.className = 'popup-header ' + type;
       
-      // পপআপ মেসেজ
       popupMessage.textContent = message;
       
-      // ডিটেইলস সেট
       if (details) {
         resultDetails.innerHTML = details;
         resultDetails.style.display = 'block';
@@ -1034,27 +1039,24 @@
         resultDetails.style.display = 'none';
       }
       
-      // ডুপ্লিকেট লিস্ট
       popupDuplicateList.innerHTML = '';
       if (duplicates.length > 0) {
         const titleDiv = document.createElement('div');
         titleDiv.className = 'duplicate-title';
-        titleDiv.textContent = `Duplicate UIDs (${duplicates.length}):`;
+        titleDiv.textContent = `ডুপ্লিকেট ইউজারনেম (${duplicates.length}):`;
         popupDuplicateList.appendChild(titleDiv);
         
-        duplicates.forEach(uid => {
+        duplicates.forEach(username => {
           const div = document.createElement('div');
           div.className = 'duplicate-item';
-          div.textContent = uid;
+          div.textContent = username;
           popupDuplicateList.appendChild(div);
         });
       }
       
-      // পপআপ শো
       popupOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
       
-      // অটো স্ক্রোল টপ
       setTimeout(() => {
         document.querySelector('.popup-content').scrollTop = 0;
       }, 100);
@@ -1070,30 +1072,28 @@
     function createResultDetails(total, saved, duplicates, errors) {
       return `
         <div class="result-item">
-          <span class="result-label">Total UIDs:</span>
+          <span class="result-label">মোট ইউজারনেম:</span>
           <span class="result-value">${total}</span>
         </div>
         <div class="result-item">
-          <span class="result-label">Successfully Saved:</span>
+          <span class="result-label">সফলভাবে সেভ হয়েছে:</span>
           <span class="result-value success">${saved}</span>
         </div>
         <div class="result-item">
-          <span class="result-label">Duplicate UIDs:</span>
+          <span class="result-label">ডুপ্লিকেট ইউজারনেম:</span>
           <span class="result-value">${duplicates}</span>
         </div>
         <div class="result-item">
-          <span class="result-label">Date Verified:</span>
+          <span class="result-label">আজকের তারিখ:</span>
           <span class="result-value">${TODAY_DATE}</span>
         </div>
       `;
     }
 
-    // সময় চেক করুন - রাত ৯টা থেকে ১১:৫৯ পর্যন্ত (বাংলাদেশ সময়)
+    // সময় চেক করুন - রাত ৯টা থেকে ১১:৫৯ পর্যন্ত
     function isRestrictedTime() {
       const now = new Date();
-      // বাংলাদেশ সময় (UTC+6) - ক্লায়েন্ট লোকাল টাইম ব্যবহার করে
       const hours = now.getHours();
-      const minutes = now.getMinutes();
       
       // রাত ৯টা (21:00) থেকে ১১:৫৯ (23:59) পর্যন্ত
       if (hours === 21 || hours === 22 || hours === 23) {
@@ -1107,11 +1107,8 @@
     function getTimeRemaining() {
       const now = new Date();
       const hours = now.getHours();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
       
       if (hours < 21) {
-        // রাত ৯টার আগে
         const target = new Date();
         target.setHours(21, 0, 0, 0);
         const diff = target - now;
@@ -1120,7 +1117,6 @@
         const secs = Math.floor((diff % 60000) / 1000);
         return { type: 'before', hours: hrs, minutes: mins, seconds: secs };
       } else if (hours >= 21 && hours < 24) {
-        // নিষিদ্ধ সময়ে
         const target = new Date();
         target.setDate(target.getDate() + 1);
         target.setHours(0, 0, 0, 0);
@@ -1130,7 +1126,6 @@
         const secs = Math.floor((diff % 60000) / 1000);
         return { type: 'restricted', hours: hrs, minutes: mins, seconds: secs };
       } else {
-        // রাত ১২টার পরে
         return { type: 'after', hours: 0, minutes: 0, seconds: 0 };
       }
     }
@@ -1141,15 +1136,12 @@
       const remaining = getTimeRemaining();
       
       if (isRestricted) {
-        // নিষিদ্ধ সময়
-        timeNotice.textContent = '⚠️ রাত ৯টা থেকে রাত ১২টা পর্যন্ত আইডি সাবমিট সম্পূর্ণ বন্ধ ⚠️';
+        timeNotice.textContent = '⚠️ রাত ৯টা থেকে রাত ১২টা পর্যন্ত সাবমিট সম্পূর্ণ বন্ধ ⚠️';
         timeNotice.classList.add('restricted');
         
-        // বাটন নিষ্ক্রিয়
         submitBtn.disabled = true;
         submitBtn.classList.add('restricted-btn');
         
-        // সময় দেখান
         if (remaining.type === 'restricted') {
           timeRemaining.innerHTML = `🔴 সাবমিট খুলবে: <span class="time-highlight">${remaining.hours} ঘন্টা ${remaining.minutes} মিনিট ${remaining.seconds} সেকেন্ড পর</span>`;
           timeRemaining.style.display = 'block';
@@ -1157,15 +1149,12 @@
         
         console.log("Restricted time: Submission blocked");
       } else {
-        // অনুমোদিত সময়
         timeNotice.textContent = '✅ রাত ৯টা থেকে রাত ১২টা ছাড়া অন্য সময়ে সাবমিট করতে পারেন';
         timeNotice.classList.remove('restricted');
         
-        // বাটন সক্রিয়
         submitBtn.disabled = false;
         submitBtn.classList.remove('restricted-btn');
         
-        // সময় দেখান
         if (remaining.type === 'before') {
           timeRemaining.innerHTML = `🟢 আজকের কাজ বন্ধ হবে: <span class="time-highlight">${remaining.hours} ঘন্টা ${remaining.minutes} মিনিট ${remaining.seconds} সেকেন্ড পর</span>`;
           timeRemaining.style.display = 'block';
@@ -1177,50 +1166,44 @@
       }
     }
 
-    // সাবমিট হ্যান্ডলার (সময় চেক সহ)
+    // সাবমিট হ্যান্ডলার
     async function handleSubmission() {
       try {
-        // সময় চেক - রাত ৯টা থেকে রাত ১২টা পর্যন্ত সাবমিট বন্ধ
         if (isRestrictedTime()) {
           showPopup('warning', '⚠️ সাবমিট বন্ধ ⚠️', 
-            'রাত ৯টা থেকে রাত ১২টা পর্যন্ত আইডি সাবমিট সম্পূর্ণ বন্ধ থাকে।\n\nএই সময়ে কেউ সাবমিট করতে পারবেন না।\n\nদয়া করে রাত ১২টার পর আবার চেষ্টা করুন।',
+            'রাত ৯টা থেকে রাত ১২টা পর্যন্ত সাবমিট সম্পূর্ণ বন্ধ থাকে।\n\nদয়া করে রাত ১২টার পর আবার চেষ্টা করুন।',
             '<div class="result-item"><span class="result-label">⏰ নিষিদ্ধ সময়:</span><span class="result-value">রাত ৯টা - রাত ১২টা</span></div>' +
-            '<div class="result-item"><span class="result-label">📅 আজকের তারিখ:</span><span class="result-value">' + TODAY_DATE + '</span></div>' +
-            '<div class="result-item"><span class="result-label">⚠️ সতর্কতা:</span><span class="result-value error">এই সময়ে সাবমিট করবেন না</span></div>'
+            '<div class="result-item"><span class="result-label">📅 আজকের তারিখ:</span><span class="result-value">' + TODAY_DATE + '</span></div>'
           );
           return;
         }
 
-        // ইনপুট নাও
-        const uids = uidInput.value.split(/\r?\n/).map(u => u.trim()).filter(u => u !== '');
+        const usernames = usernameInput.value.split(/\r?\n/).map(u => u.trim().toLowerCase()).filter(u => u !== '');
         const passwords = passwordInput.value.split(/\r?\n/).map(p => p.trim()).filter(p => p !== '');
-        const cookies = cookiesInput.value.split(/\r?\n/).map(c => c.trim()).filter(c => c !== ''); // cookies
+        const cookies = cookiesInput.value.split(/\r?\n/).map(c => c.trim()).filter(c => c !== '');
 
-        // বেসিক চেক
-        if (uids.length === 0) {
-          showPopup('error', 'Input Error', 'Please enter at least one UID');
+        if (usernames.length === 0) {
+          showPopup('error', 'ইনপুট ত্রুটি', 'দয়া করে অন্তত একটি ইউজারনেম দিন');
           return;
         }
 
-        // বাটন ডিজেবল
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
           </svg>
-          PROCESSING...
+          প্রসেসিং...
         `;
 
-        // প্রথমে পপআপে প্রোসেসিং দেখাও
-        showPopup('warning', 'Processing', 'Validating inputs...');
+        showPopup('warning', 'প্রসেসিং', 'ইনপুট ভ্যালিডেশন চলছে...');
 
-        // 1. ভ্যালিডেশন (দ্রুত) - cookies সহ আপডেটেড ফাংশন কল
-        const validation = validateInputs(uids, passwords, cookies);
+        // ভ্যালিডেশন
+        const validation = validateInputs(usernames, passwords, cookies);
         
         if (!validation.valid) {
           const errorMessage = validation.errors.slice(0, 3).join('\n');
-          const details = createResultDetails(uids.length, 0, 0, validation.errors.length);
-          showPopup('error', 'Validation Failed', errorMessage, details);
+          const details = createResultDetails(usernames.length, 0, 0, validation.errors.length);
+          showPopup('error', 'ভ্যালিডেশন ব্যর্থ', errorMessage, details);
           
           submitBtn.disabled = false;
           submitBtn.innerHTML = `
@@ -1228,17 +1211,17 @@
               <path d="M22 2L11 13"></path>
               <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
             </svg>
-            SUBMIT NOW
+            সাবমিট এখন
           `;
           return;
         }
 
-        // 2. ডুপ্লিকেট চেক (দ্রুত ক্যাশড)
-        showPopup('warning', 'Processing', 'Checking for duplicate UIDs...');
-        const { uniqueUIDs, duplicates, error: duplicateError } = await checkDuplicateUIDsFast(validation.validUIDs);
+        // ডুপ্লিকেট চেক
+        showPopup('warning', 'প্রসেসিং', 'ডুপ্লিকেট ইউজারনেম চেক করা হচ্ছে...');
+        const { uniqueUsernames, duplicates, error: duplicateError } = await checkDuplicateUsernamesFast(validation.validUsernames);
         
         if (duplicateError) {
-          showPopup('error', 'Database Error', `Duplicate check failed: ${duplicateError}`);
+          showPopup('error', 'ডাটাবেস ত্রুটি', `ডুপ্লিকেট চেক ব্যর্থ: ${duplicateError}`);
           
           submitBtn.disabled = false;
           submitBtn.innerHTML = `
@@ -1246,16 +1229,15 @@
               <path d="M22 2L11 13"></path>
               <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
             </svg>
-            SUBMIT NOW
+            সাবমিট এখন
           `;
           return;
         }
 
-        // 3. যদি সবই ডুপ্লিকেট হয়
-        if (uniqueUIDs.length === 0 && duplicates.length > 0) {
-          const details = createResultDetails(uids.length, 0, duplicates.length, 0);
-          showPopup('warning', 'All Duplicates Found', 
-            `All ${duplicates.length} UIDs already exist in database. No new data saved.`,
+        if (uniqueUsernames.length === 0 && duplicates.length > 0) {
+          const details = createResultDetails(usernames.length, 0, duplicates.length, 0);
+          showPopup('warning', 'সমস্ত ইউজারনেম ডুপ্লিকেট', 
+            `${duplicates.length} টি ইউজারনেম আগেই ডাটাবেসে আছে। কোন নতুন ডাটা সেভ হয়নি।`,
             details, duplicates);
           
           submitBtn.disabled = false;
@@ -1264,50 +1246,47 @@
               <path d="M22 2L11 13"></path>
               <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
             </svg>
-            SUBMIT NOW
+            সাবমিট এখন
           `;
           return;
         }
 
-        // 4. Firebase-এ সেভ (কুকিজ সহ)
-        showPopup('warning', 'Processing', 'Saving to Firebase...');
+        // Firebase-এ সেভ
+        showPopup('warning', 'প্রসেসিং', 'ফায়ারবেসে সেভ করা হচ্ছে...');
         const saveResult = await saveToFirebase(
-          validation.validUIDs, 
+          validation.validUsernames, 
           validation.validPasswords, 
-          validation.validCookies, // cookies array পাঠানো হচ্ছে
-          uniqueUIDs
+          validation.validCookies,
+          uniqueUsernames
         );
 
         if (saveResult.success) {
-          // সফল রেজাল্ট
           const details = createResultDetails(
-            uids.length, 
+            usernames.length, 
             saveResult.savedCount, 
             duplicates.length, 
             0
           );
           
-          let message = `Successfully saved ${saveResult.savedCount} new UIDs with cookies!`;
+          let message = `সফলভাবে ${saveResult.savedCount} টি নতুন ইউজারনেম কুকিজ সহ সেভ হয়েছে!`;
           if (duplicates.length > 0) {
-            message += ` (${duplicates.length} duplicates skipped)`;
+            message += ` (${duplicates.length} টি ডুপ্লিকেট বাদ দেওয়া হয়েছে)`;
           }
           
-          showPopup('success', 'Submission Successful!', message, details, duplicates);
+          showPopup('success', 'সাবমিট সফল হয়েছে!', message, details, duplicates);
           
-          // ইনপুট ক্লিয়ার
-          uidInput.value = '';
+          usernameInput.value = '';
           passwordInput.value = '';
-          cookiesInput.value = ''; // cookies ইনপুট ক্লিয়ার
+          cookiesInput.value = '';
           
         } else {
-          showPopup('error', 'Save Failed', `Failed to save data: ${saveResult.error}`);
+          showPopup('error', 'সেভ ব্যর্থ', `ডাটা সেভ করতে ব্যর্থ: ${saveResult.error}`);
         }
 
       } catch (error) {
         console.error("Submission error:", error);
-        showPopup('error', 'System Error', `An error occurred: ${error.message}`);
+        showPopup('error', 'সিস্টেম ত্রুটি', `একটি ত্রুটি ঘটেছে: ${error.message}`);
       } finally {
-        // বাটন রিসেট
         setTimeout(() => {
           if (!isRestrictedTime()) {
             submitBtn.disabled = false;
@@ -1316,7 +1295,7 @@
                 <path d="M22 2L11 13"></path>
                 <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
               </svg>
-              SUBMIT NOW
+              সাবমিট এখন
             `;
           }
         }, 1000);
@@ -1326,7 +1305,6 @@
     // ইভেন্ট লিস্টেনার
     submitBtn.addEventListener('click', handleSubmission);
     
-    // পপআপ ক্লোজ
     popupConfirm.addEventListener('click', hidePopup);
     popupOverlay.addEventListener('click', (e) => {
       if (e.target === popupOverlay) {
@@ -1334,7 +1312,6 @@
       }
     });
     
-    // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
         hidePopup();
@@ -1349,38 +1326,29 @@
     setInterval(() => {
       const newDate = getTodayDate();
       if (newDate !== TODAY_DATE) {
-        location.reload(); // নতুন তারিখে পেজ রিলোড
+        location.reload();
       }
-      updateTimeNotice(); // নোটিশ আপডেট
+      updateTimeNotice();
     }, 1000);
 
-    // Auto-focus UID input
     setTimeout(() => {
-      uidInput.focus();
+      usernameInput.focus();
     }, 300);
 
-    // Cookies ইনপুটে ক্লিক ইভেন্ট ফিক্স
     cookiesInput.addEventListener('click', function(e) {
       this.focus();
     });
 
-    // Cookies ইনপুটে ফোকাস ইভেন্ট ফিক্স
-    cookiesInput.addEventListener('focus', function(e) {
-      // শুধু ফোকাস করে, কোন টেক্সট চেঞ্জ করে না
-    });
+    cookiesInput.addEventListener('focus', function(e) {});
 
-    // Cookies ইনপুটে ইনপুট ইভেন্ট
-    cookiesInput.addEventListener('input', function(e) {
-      // ইউজার যা টাইপ করে তা রেখে দেয়
-    });
+    cookiesInput.addEventListener('input', function(e) {});
 
-    // প্রথম লোডে নোটিশ আপডেট
     updateTimeNotice();
 
-    console.log("EBH TEAM Official System Ready - Date:", TODAY_DATE);
-    console.log("2FA field replaced with COOKIES field. Full cookie strings will be saved.");
-    console.log("Restricted time: 9:00 PM to 11:59 PM (Bangladesh Time)");
-    console.log("✅ সম্পূর্ণ সিস্টেম সক্রিয়: রাত ৯টা থেকে ১১:৫৯ পর্যন্ত সাবমিট বন্ধ");
+    console.log("ইনস্টাগ্রাম ২এফএ সিস্টেম প্রস্তুত - তারিখ:", TODAY_DATE);
+    console.log("প্রথম বক্স এখন ইউজারনেম নিচ্ছে");
+    console.log("আউটপুট টেক্সট: ইনস্টাগ্রাম টু এফএ");
+    console.log("নিষিদ্ধ সময়: রাত ৯টা থেকে রাত ১২টা");
   </script>
 </body>
 
