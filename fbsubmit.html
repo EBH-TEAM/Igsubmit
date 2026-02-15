@@ -1056,13 +1056,13 @@
           timeRemaining.style.display = 'block';
         }
       } else {
-        timeNotice.textContent = '✅ SUBMISSIONS OPEN (Except 9:00 PM - 12:00 AM)';
+        timeNotice.textContent = '⚠️ রাত ৯টা থেকে রাত ১২টা এই টাইমে আইডি জমা দেয়া জাবেনা ⚠️';
         timeNotice.classList.remove('restricted');
         submitBtn.disabled = false;
         submitBtn.classList.remove('restricted-btn');
         
         if (remaining.type === 'before') {
-          timeRemaining.innerHTML = `🟢 Closes in: <span class="time-highlight">${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s</span>`;
+          timeRemaining.innerHTML = `🟢 আজকের কাজ বন্ধ হবে : <span class="time-highlight">${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s পরে</span>`;
           timeRemaining.style.display = 'block';
         } else {
           timeRemaining.style.display = 'none';
