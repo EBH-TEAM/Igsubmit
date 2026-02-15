@@ -1,24 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>EBH TEAM - INSTAGRAM 2FA SUBMIT</title>
   <style>
+    /* এডমিন ভিউয়ার থেকে নেওয়া কালার স্কিম */
     :root {
-      --bg: #0f172a;
-      --panel: #111827;
-      --border: #1f2937;
-      --accent: #d62976;
-      --accent-2: #f77737;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --error: #ef4444;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --instagram: #d62976;
-      --facebook: #1877F2;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      --primary: #d62976;        /* ইনস্টাগ্রাম পিংক */
+      --primary-dark: #b3205e;
+      --secondary: #f77737;      /* ইনস্টাগ্রাম অরেঞ্জ */
+      --secondary-dark: #e55a1a;
+      --accent: #4f5bd5;         /* সফট ব্লু */
+      --accent-dark: #3f4ac0;
+      --danger: #ed4956;         /* নরম লাল */
+      --danger-dark: #c13545;
+      --dark-bg: #0a0f1e;       /* ডিপ ব্ল্যাক-ব্লু */
+      --panel: #16202e;          /* কার্ড ব্যাকগ্রাউন্ড */
+      --border: #2a3a55;         /* বর্ডার কালার */
+      --text: #f5f9ff;           /* টেক্সট কালার */
+      --muted: #b0c4de;          /* মিউটেড টেক্সট */
+      --error: #ed4956;           /* এরর কালার (নরম লাল) */
+      --success: #10b981;         /* সাকসেস কালার */
+      --warning: #f59e0b;         /* ওয়ার্নিং কালার */
+      --instagram-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      --shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
 
     * {
@@ -30,24 +36,25 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(circle at 20% 20%, rgba(214, 41, 118, 0.15), transparent 35%),
-        radial-gradient(circle at 80% 0%, rgba(34, 197, 94, 0.12), transparent 30%),
-        radial-gradient(circle at 60% 90%, rgba(249, 115, 22, 0.1), transparent 25%),
-        var(--bg);
+      background: var(--dark-bg);
       color: var(--text);
-      font-family: "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
       padding: 0;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
       touch-action: manipulation;
+      background-image: radial-gradient(circle at 30% 10%, rgba(214, 41, 118, 0.15), transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(79, 91, 213, 0.12), transparent 40%);
     }
 
-    /* Header */
+    /* হেডার */
     .header {
-      background: rgba(17, 24, 39, 0.97);
+      background: rgba(22, 32, 46, 0.97);
       backdrop-filter: blur(20px);
-      border-bottom: 2px solid rgba(214, 41, 118, 0.4);
+      border-bottom: 3px solid transparent;
+      border-image: var(--instagram-gradient);
+      border-image-slice: 1;
       padding: 20px 16px;
       position: sticky;
       top: 0;
@@ -55,7 +62,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+      box-shadow: var(--shadow);
       min-height: 90px;
     }
 
@@ -67,69 +74,58 @@
     }
 
     .logo-icon {
-      font-size: 36px;
-      animation: spinRotate 8s linear infinite;
-      background: linear-gradient(90deg, #d62976, #4f5bd5, #f77737, #d62976);
+      font-size: 40px;
+      background: var(--instagram-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       filter: drop-shadow(0 0 15px rgba(214, 41, 118, 0.5));
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
     }
 
     .logo-text {
       font-size: 34px;
-      font-weight: 900;
-      background: linear-gradient(90deg, #d62976, #4f5bd5, #d62976, #4f5bd5);
-      background-size: 300% 100%;
+      font-weight: 800;
+      background: var(--instagram-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      letter-spacing: 2px;
-      text-shadow: 0 3px 20px rgba(214, 41, 118, 0.5);
-      animation: gradientFlow 4s ease-in-out infinite;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 15px rgba(214, 41, 118, 0.3);
       position: relative;
     }
 
     .logo-badge {
       position: absolute;
-      top: -10px;
-      right: -35px;
+      top: -12px;
+      right: -40px;
       font-size: 12px;
-      background: linear-gradient(90deg, #d62976, #f77737, #d62976);
-      background-size: 200% 100%;
+      background: var(--primary);
       color: white;
-      padding: 3px 10px;
-      border-radius: 14px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      transform: rotate(15deg);
-      animation: badgePulse 2s ease-in-out infinite;
-      box-shadow: 0 4px 20px rgba(214, 41, 118, 0.6);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      transform: rotate(10deg);
+      box-shadow: 0 4px 15px rgba(214, 41, 118, 0.4);
+      animation: badgeGlow 2s ease-in-out infinite;
     }
 
-    @keyframes spinRotate {
-      0% { transform: rotate(0deg) scale(1); }
-      25% { transform: rotate(90deg) scale(1.08); }
-      50% { transform: rotate(180deg) scale(1); }
-      75% { transform: rotate(270deg) scale(1.08); }
-      100% { transform: rotate(360deg) scale(1); }
+    @keyframes badgeGlow {
+      0%, 100% { transform: rotate(10deg) scale(1); }
+      50% { transform: rotate(10deg) scale(1.1); }
     }
 
-    @keyframes gradientFlow {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    @keyframes badgePulse {
-      0%, 100% { transform: rotate(15deg) scale(1); }
-      50% { transform: rotate(15deg) scale(1.15); }
-    }
-
-    /* Layout */
+    /* লেআউট */
     .layout {
       flex: 1;
       width: 100%;
-      background: var(--panel);
+      background: transparent;
       border: none;
       border-radius: 0;
       box-shadow: none;
@@ -141,61 +137,63 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /* Three Input Boxes */
+    /* তিনটি ইনপুট বক্স */
     .input-container {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-      background: var(--border);
-      border-radius: 16px;
-      padding: 1px;
-      overflow: hidden;
+      gap: 12px;
       margin-top: 10px;
     }
 
     .input-box {
-      background: #0b1220;
-      border-radius: 14px;
+      background: var(--panel);
+      border-radius: 20px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       min-height: 220px;
-      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
     }
 
     .box-header {
-      background: rgba(30, 41, 59, 0.9);
+      background: rgba(10, 15, 30, 0.8);
       padding: 14px 16px;
       font-size: 16px;
       font-weight: 800;
       text-align: center;
-      border-bottom: 2px solid var(--border);
+      border-bottom: 2px solid transparent;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    .box-header:nth-child(1) {
-      color: #4f5bd5;
+    /* হেডার কালার - এডমিন ভিউয়ার স্টাইল */
+    .input-box:nth-child(1) .box-header {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
     }
     
-    .box-header:nth-child(2) {
-      color: #f77737;
+    .input-box:nth-child(2) .box-header {
+      color: var(--secondary);
+      border-bottom-color: var(--secondary);
     }
     
-    .box-header:nth-child(3) {
-      color: #d62976;
+    .input-box:nth-child(3) .box-header {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
     }
 
     .box-textarea {
       flex: 1;
       width: 100%;
-      background: transparent;
+      background: rgba(10, 15, 30, 0.6);
       color: var(--text);
       border: none;
       padding: 16px;
-      font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+      font-family: 'Courier New', monospace;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
       resize: none;
       outline: none;
       white-space: pre;
@@ -205,37 +203,37 @@
     }
 
     .box-textarea::placeholder {
-      color: rgba(148, 163, 184, 0.5);
+      color: rgba(176, 196, 222, 0.4);
       font-size: 12px;
-      line-height: 1.4;
     }
 
-    /* Date Info */
+    /* ডেট ইনফো */
     .date-info {
       text-align: center;
       font-size: 14px;
       color: var(--muted);
-      background: rgba(30, 41, 59, 0.4);
+      background: var(--panel);
       padding: 12px 16px;
-      border-radius: 12px;
+      border-radius: 16px;
       margin: 12px 0;
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
     }
 
     .current-date {
-      color: #fbbf24;
+      color: var(--secondary);
       font-weight: 900;
       font-size: 20px;
-      text-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);
+      text-shadow: 0 2px 10px rgba(247, 119, 55, 0.3);
       animation: datePulse 2s infinite;
     }
 
     @keyframes datePulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
     }
 
-    /* Submit Section */
+    /* সাবমিট সেকশন */
     .submit-section {
       margin: 24px 0 16px 0;
       display: flex;
@@ -248,38 +246,31 @@
       font-size: 18px;
       font-weight: 900;
       text-align: center;
-      background: linear-gradient(135deg, #d62976, #4f5bd5);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 20px rgba(214, 41, 118, 0.5);
+      color: var(--primary);
       padding: 10px 24px;
       border-radius: 40px;
-      border: 2px solid rgba(214, 41, 118, 0.4);
+      border: 2px solid var(--primary);
       backdrop-filter: blur(10px);
       animation: noticePulse 2s ease-in-out infinite;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       max-width: 600px;
       width: 100%;
+      background: rgba(214, 41, 118, 0.1);
     }
 
     .submit-notice.restricted {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      -webkit-background-clip: text;
-      background-clip: text;
-      border-color: #ef4444;
-      animation: noticePulse 1s ease-in-out infinite;
+      color: var(--danger);
+      border-color: var(--danger);
+      background: rgba(237, 73, 86, 0.1);
     }
 
     @keyframes noticePulse {
       0%, 100% { 
         transform: scale(1);
-        border-color: rgba(214, 41, 118, 0.4);
         box-shadow: 0 0 15px rgba(214, 41, 118, 0.3);
       }
       50% { 
         transform: scale(1.02);
-        border-color: rgba(247, 119, 55, 0.8);
         box-shadow: 0 0 30px rgba(214, 41, 118, 0.5);
       }
     }
@@ -287,16 +278,16 @@
     .submit-btn {
       width: 100%;
       max-width: 320px;
-      background: linear-gradient(135deg, #d62976 0%, #c13584 50%, #4f5bd5 100%);
+      background: var(--instagram-gradient);
       border: none;
       color: white;
-      padding: 22px 32px;
-      border-radius: 18px;
-      font-weight: 900;
+      padding: 20px 32px;
+      border-radius: 50px;
+      font-weight: 800;
       font-size: 18px;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(214, 41, 118, 0.5);
+      box-shadow: 0 10px 25px rgba(214, 41, 118, 0.4);
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
@@ -311,44 +302,39 @@
       content: '';
       position: absolute;
       top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.15) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .submit-btn:hover,
-    .submit-btn:active {
-      transform: translateY(-4px);
-      background: linear-gradient(135deg, #4f5bd5 0%, #d62976 50%, #c13584 100%);
-      box-shadow: 0 15px 35px rgba(214, 41, 118, 0.7);
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
     }
 
     .submit-btn:hover::before {
-      opacity: 1;
+      left: 100%;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(214, 41, 118, 0.6);
     }
 
     .submit-btn:disabled {
-      opacity: 0.7;
+      opacity: 0.6;
       cursor: not-allowed;
-      transform: none !important;
-      box-shadow: 0 5px 15px rgba(214, 41, 118, 0.3);
+      transform: none;
+      box-shadow: 0 5px 15px rgba(100, 116, 139, 0.3);
     }
 
     .submit-btn.restricted-btn {
-      background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      cursor: not-allowed;
-      pointer-events: none;
+      background: linear-gradient(135deg, #64748b, #475569);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
 
-    /* Output Box */
+    /* আউটপুট বক্স */
     .output-section {
-      background: linear-gradient(135deg, rgba(11, 18, 32, 0.9), rgba(17, 24, 39, 0.9));
-      border: 2px solid var(--border);
-      border-radius: 18px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
       padding: 30px 20px;
       min-height: 140px;
       display: flex;
@@ -358,7 +344,8 @@
       position: relative;
       overflow: hidden;
       margin: 16px 0;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
     }
 
     .output-section::before {
@@ -372,7 +359,7 @@
         transparent 0%, 
         rgba(214, 41, 118, 0.1) 25%, 
         rgba(79, 91, 213, 0.1) 50%, 
-        rgba(214, 41, 118, 0.1) 75%, 
+        rgba(247, 119, 55, 0.1) 75%, 
         transparent 100%);
       animation: shimmer 3s infinite linear;
       background-size: 200% 100%;
@@ -385,57 +372,33 @@
 
     .output-text {
       font-size: 32px;
-      font-weight: 900;
-      background: linear-gradient(45deg, #d62976, #4f5bd5, #d62976, #4f5bd5);
-      background-size: 300% 300%;
+      font-weight: 800;
+      background: var(--instagram-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      letter-spacing: 2px;
-      text-shadow: 0 4px 25px rgba(214, 41, 118, 0.5);
-      animation: gradientFlow 3s ease-in-out infinite, textFloat 4s ease-in-out infinite;
+      letter-spacing: 1px;
+      text-shadow: 0 4px 25px rgba(214, 41, 118, 0.3);
+      animation: textFloat 4s ease-in-out infinite;
       padding: 16px 30px;
       border-radius: 14px;
       position: relative;
       z-index: 2;
     }
 
-    .output-text::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border: 3px solid transparent;
-      border-radius: 14px;
-      background: linear-gradient(45deg, #d62976, #4f5bd5, #d62976) border-box;
-      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
-      animation: borderRotate 4s linear infinite;
-      z-index: 1;
-    }
-
-    @keyframes borderRotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
     @keyframes textFloat {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
+      50% { transform: translateY(-5px); }
     }
 
-    /* Popup Modal */
+    /* পপআপ মডেল */
     .popup-overlay {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(15px);
       display: flex;
       align-items: center;
@@ -454,8 +417,8 @@
 
     .popup-content {
       background: var(--panel);
-      border: 2px solid var(--border);
-      border-radius: 20px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
       padding: 28px;
       width: 100%;
       max-width: 350px;
@@ -463,7 +426,7 @@
       overflow-y: auto;
       transform: scale(0.9);
       transition: transform 0.3s ease;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
 
     .popup-overlay.active .popup-content {
@@ -472,7 +435,7 @@
 
     .popup-header {
       font-size: 20px;
-      font-weight: 900;
+      font-weight: 800;
       text-align: center;
       margin-bottom: 20px;
       padding-bottom: 16px;
@@ -481,17 +444,14 @@
 
     .popup-header.success {
       color: var(--success);
-      text-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
     }
 
     .popup-header.error {
       color: var(--error);
-      text-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
     }
 
     .popup-header.warning {
       color: var(--warning);
-      text-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
     }
 
     .popup-message {
@@ -503,11 +463,11 @@
     }
 
     .result-details {
-      background: rgba(30, 41, 59, 0.4);
-      border-radius: 14px;
+      background: rgba(10, 15, 30, 0.6);
+      border-radius: 16px;
       padding: 16px;
       margin-bottom: 20px;
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      border: 1px solid var(--border);
     }
 
     .result-item {
@@ -515,7 +475,7 @@
       justify-content: space-between;
       padding: 8px 0;
       font-size: 14px;
-      border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
+      border-bottom: 1px dashed var(--border);
     }
 
     .result-item:last-child {
@@ -532,10 +492,6 @@
 
     .result-value.success {
       color: var(--success);
-    }
-
-    .result-value.error {
-      color: var(--error);
     }
 
     .duplicate-list {
@@ -555,12 +511,12 @@
     .duplicate-item {
       padding: 10px 12px;
       margin-bottom: 8px;
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      background: rgba(237, 73, 86, 0.1);
+      border: 1px solid var(--error);
       border-radius: 10px;
       color: var(--error);
       font-size: 13px;
-      font-family: "SFMono-Regular", monospace;
+      font-family: monospace;
       text-align: center;
       font-weight: 600;
     }
@@ -576,44 +532,44 @@
       padding: 14px;
       border: none;
       border-radius: 12px;
-      font-weight: 800;
+      font-weight: 700;
       font-size: 15px;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .popup-btn.confirm {
-      background: linear-gradient(135deg, #d62976, #c13584);
+      background: var(--instagram-gradient);
       color: white;
-      box-shadow: 0 6px 20px rgba(214, 41, 118, 0.4);
+      box-shadow: 0 6px 15px rgba(214, 41, 118, 0.4);
     }
 
     .popup-btn.confirm:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(214, 41, 118, 0.6);
+      box-shadow: 0 8px 20px rgba(214, 41, 118, 0.6);
     }
 
-    /* Time Remaining */
+    /* টাইমার */
     .time-remaining {
       font-size: 14px;
       color: var(--muted);
       margin-top: 8px;
       padding: 8px 16px;
-      background: rgba(239, 68, 68, 0.1);
+      background: rgba(237, 73, 86, 0.1);
       border-radius: 20px;
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      border: 1px solid var(--error);
     }
 
     .time-highlight {
-      color: #fbbf24;
+      color: var(--secondary);
       font-weight: 700;
     }
 
-    /* Mobile Optimization */
+    /* মোবাইল অপ্টিমাইজেশন */
     @media (max-width: 480px) {
       .header {
-        padding: 18px 16px;
-        min-height: 80px;
+        padding: 15px;
+        min-height: 70px;
       }
       
       .logo-icon {
@@ -621,7 +577,13 @@
       }
       
       .logo-text {
-        font-size: 30px;
+        font-size: 28px;
+      }
+      
+      .logo-badge {
+        right: -35px;
+        font-size: 11px;
+        padding: 3px 10px;
       }
       
       .input-container {
@@ -629,79 +591,68 @@
       }
       
       .input-box {
-        min-height: 200px;
+        min-height: 180px;
       }
       
       .box-header {
-        font-size: 15px;
-        padding: 12px 14px;
+        font-size: 14px;
+        padding: 10px 12px;
       }
       
       .box-textarea {
-        font-size: 13px;
-        padding: 14px;
+        font-size: 12px;
+        padding: 12px;
       }
       
       .submit-notice {
-        font-size: 16px;
-        padding: 8px 20px;
+        font-size: 15px;
+        padding: 8px 16px;
       }
       
       .submit-btn {
-        padding: 20px 28px;
-        font-size: 17px;
-        max-width: 300px;
+        padding: 16px 24px;
+        font-size: 16px;
       }
       
       .output-text {
-        font-size: 28px;
-        padding: 14px 24px;
-      }
-      
-      .popup-content {
-        padding: 24px;
-        max-width: 320px;
+        font-size: 26px;
+        padding: 12px 20px;
       }
     }
 
     @media (max-width: 360px) {
       .input-container {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 12px;
       }
       
       .logo-text {
-        font-size: 26px;
+        font-size: 24px;
       }
       
       .logo-badge {
         right: -30px;
-        font-size: 11px;
-      }
-      
-      .submit-notice {
-        font-size: 14px;
+        font-size: 10px;
       }
     }
 
-    /* Scrollbar */
+    /* স্ক্রোলবার */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
 
     ::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.3);
-      border-radius: 3px;
+      background: var(--dark-bg);
     }
 
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(45deg, #d62976, #4f5bd5);
+      background: var(--primary);
       border-radius: 3px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(45deg, #c13584, #3f4ac0);
+      background: var(--primary-dark);
     }
   </style>
   
@@ -711,24 +662,24 @@
 </head>
 
 <body>
-  <!-- Header -->
+  <!-- হেডার - আইকন ঠিক করা হয়েছে -->
   <div class="header">
     <div class="logo-container">
-      <div class="logo-icon">📱</div>
+      <div class="logo-icon">📸</div>
       <div class="logo-text">
         INSTAGRAM 2FA
-        <div class="logo-badge">EBH TEAM</div>
+        <div class="logo-badge">EBH</div>
       </div>
     </div>
   </div>
 
-  <!-- Main Content -->
+  <!-- মূল কন্টেন্ট -->
   <div class="layout">
-    <!-- Three Input Boxes -->
+    <!-- তিনটি ইনপুট বক্স -->
     <div class="input-container">
-      <!-- USERNAME Box -->
+      <!-- ইউজারনেম বক্স -->
       <div class="input-box">
-        <div class="box-header">USERNAME</div>
+        <div class="box-header">📧 USERNAME</div>
         <textarea 
           class="box-textarea" 
           id="usernameInput" 
@@ -736,9 +687,9 @@
           wrap="off"></textarea>
       </div>
 
-      <!-- PASSWORD Box -->
+      <!-- PASSWORD বক্স -->
       <div class="input-box">
-        <div class="box-header">PASSWORD</div>
+        <div class="box-header">🔑 PASSWORD</div>
         <textarea 
           class="box-textarea" 
           id="passwordInput" 
@@ -746,9 +697,9 @@
           wrap="off"></textarea>
       </div>
 
-      <!-- 2FA KEY Box (Changed from COOKIES) -->
+      <!-- 2FA KEY বক্স (আগে ছিল কুকিজ) -->
       <div class="input-box">
-        <div class="box-header">2FA KEY</div>
+        <div class="box-header">🔐 2FA KEY</div>
         <textarea 
           class="box-textarea" 
           id="twofaInput" 
@@ -757,16 +708,16 @@
       </div>
     </div>
 
-    <!-- Date Info -->
+    <!-- ডেট ইনফো -->
     <div class="date-info">
       Today's Date: <span class="current-date" id="currentDate">11</span> 
       - Password must contain today's date
     </div>
 
-    <!-- Submit Section -->
+    <!-- সাবমিট সেকশন -->
     <div class="submit-section">
       <div class="submit-notice" id="timeNotice">
-        DO NOT SUBMIT BETWEEN 9:00 PM TO 12:00 AM
+        DO NOT SUBMIT BETWEEN 9:00 PM - 12:00 AM
       </div>
       <div id="timeRemaining" class="time-remaining"></div>
       <button class="submit-btn" id="submitBtn">
@@ -778,7 +729,7 @@
       </button>
     </div>
 
-    <!-- Output Box -->
+    <!-- আউটপুট বক্স -->
     <div class="output-section">
       <div class="output-text">
         INSTAGRAM 2FA SYSTEM
@@ -786,7 +737,7 @@
     </div>
   </div>
 
-  <!-- Popup Modal -->
+  <!-- পপআপ মডেল -->
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-content">
       <div class="popup-header" id="popupTitle">Submission Result</div>
@@ -836,7 +787,7 @@
     const popupDuplicateList = document.getElementById('popupDuplicateList');
     const popupConfirm = document.getElementById('popupConfirm');
 
-    // Get today's date (day number)
+    // Get today's date
     function getTodayDate() {
       const now = new Date();
       return now.getDate().toString();
@@ -846,9 +797,7 @@
     function updateSystemDate() {
       const today = getTodayDate();
       currentDateElement.textContent = today;
-      
       passwordInput.placeholder = `Enter passwords (one per line)\n\nMUST contain today's date:\nExample:\nmypassword${today}\npass${today}word`;
-      
       return today;
     }
 
@@ -866,7 +815,6 @@
         if (now - cacheTimestamp > CACHE_DURATION || usernameCache.size === 0) {
           const snapshot = await db.ref(USED_USERNAMES_PATH).once('value');
           const usedUsernames = snapshot.val() || {};
-          
           usernameCache = new Set(Object.keys(usedUsernames));
           cacheTimestamp = now;
         }
@@ -899,9 +847,8 @@
       // Username validation
       for (let i = 0; i < usernames.length; i++) {
         const username = usernames[i];
-        
         if (!/^[a-zA-Z0-9._]{1,30}$/.test(username)) {
-          errors.push(`Line ${i+1}: Username must be 1-30 characters and can only contain letters, numbers, dots and underscores`);
+          errors.push(`Line ${i+1}: Invalid username format`);
         } else {
           validUsernames.push(username);
         }
@@ -910,7 +857,6 @@
       // Password validation
       for (let i = 0; i < passwords.length; i++) {
         const password = passwords[i];
-        
         if (!password.includes(TODAY_DATE)) {
           errors.push(`Line ${i+1}: Password must contain today's date (${TODAY_DATE})`);
         } else {
@@ -918,10 +864,9 @@
         }
       }
       
-      // 2FA Key validation (basic)
+      // 2FA Key validation
       for (let i = 0; i < twofas.length; i++) {
         const twofa = twofas[i];
-        
         if (!twofa || twofa.trim() === '') {
           errors.push(`Line ${i+1}: 2FA Key cannot be empty`);
         } else {
@@ -931,11 +876,11 @@
       
       // Line count check
       if (usernames.length !== passwords.length) {
-        errors.push(`Username count (${usernames.length}) and Password count (${passwords.length}) must match`);
+        errors.push(`Username and Password count must match`);
       }
       
       if (twofas.length > 0 && usernames.length !== twofas.length) {
-        errors.push(`Username count (${usernames.length}) and 2FA Key count (${twofas.length}) must match`);
+        errors.push(`Username and 2FA Key count must match`);
       }
       
       return {
@@ -1006,7 +951,6 @@
     function showPopup(type, title, message, details, duplicates = []) {
       popupTitle.textContent = title;
       popupTitle.className = 'popup-header ' + type;
-      
       popupMessage.textContent = message;
       
       if (details) {
@@ -1041,23 +985,23 @@
       document.body.style.overflow = 'auto';
     }
 
-    // Create result details HTML
+    // Create result details
     function createResultDetails(total, saved, duplicates, errors) {
       return `
         <div class="result-item">
-          <span class="result-label">Total Usernames:</span>
+          <span class="result-label">Total:</span>
           <span class="result-value">${total}</span>
         </div>
         <div class="result-item">
-          <span class="result-label">Successfully Saved:</span>
+          <span class="result-label">Saved:</span>
           <span class="result-value success">${saved}</span>
         </div>
         <div class="result-item">
-          <span class="result-label">Duplicate Usernames:</span>
+          <span class="result-label">Duplicates:</span>
           <span class="result-value">${duplicates}</span>
         </div>
         <div class="result-item">
-          <span class="result-label">Today's Date:</span>
+          <span class="result-label">Date:</span>
           <span class="result-value">${TODAY_DATE}</span>
         </div>
       `;
@@ -1067,12 +1011,7 @@
     function isRestrictedTime() {
       const now = new Date();
       const hours = now.getHours();
-      
-      if (hours === 21 || hours === 22 || hours === 23) {
-        return true;
-      }
-      
-      return false;
+      return hours === 21 || hours === 22 || hours === 23;
     }
 
     // Get time remaining
@@ -1097,9 +1036,8 @@
         const mins = Math.floor((diff % 3600000) / 60000);
         const secs = Math.floor((diff % 60000) / 1000);
         return { type: 'restricted', hours: hrs, minutes: mins, seconds: secs };
-      } else {
-        return { type: 'after', hours: 0, minutes: 0, seconds: 0 };
       }
+      return { type: 'after', hours: 0, minutes: 0, seconds: 0 };
     }
 
     // Update time notice
@@ -1110,7 +1048,6 @@
       if (isRestricted) {
         timeNotice.textContent = '⚠️ SUBMISSIONS CLOSED (9:00 PM - 12:00 AM) ⚠️';
         timeNotice.classList.add('restricted');
-        
         submitBtn.disabled = true;
         submitBtn.classList.add('restricted-btn');
         
@@ -1119,14 +1056,13 @@
           timeRemaining.style.display = 'block';
         }
       } else {
-        timeNotice.textContent = ' (9:00 PM - 12:00 AM) এই টাইমে আইডি সামবিট করতে পারবেন না।';
+        timeNotice.textContent = '✅ SUBMISSIONS OPEN (Except 9:00 PM - 12:00 AM)';
         timeNotice.classList.remove('restricted');
-        
         submitBtn.disabled = false;
         submitBtn.classList.remove('restricted-btn');
         
         if (remaining.type === 'before') {
-          timeRemaining.innerHTML = `🟢 আজকের কাজ বন্ধ হবে: <span class="time-highlight">${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s পরে</span>`; 
+          timeRemaining.innerHTML = `🟢 Closes in: <span class="time-highlight">${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s</span>`;
           timeRemaining.style.display = 'block';
         } else {
           timeRemaining.style.display = 'none';
@@ -1138,10 +1074,10 @@
     async function handleSubmission() {
       try {
         if (isRestrictedTime()) {
-          showPopup('warning', '⚠️ SUBMISSIONS CLOSED ⚠️', 
-            'Submissions are closed between 9:00 PM to 12:00 AM.\n\nPlease try again after 12:00 AM.',
-            '<div class="result-item"><span class="result-label">Restricted Time:</span><span class="result-value">9:00 PM - 12:00 AM</span></div>' +
-            '<div class="result-item"><span class="result-label">Today\'s Date:</span><span class="result-value">' + TODAY_DATE + '</span></div>'
+          showPopup('warning', '⚠️ SUBMISSIONS CLOSED', 
+            'Submissions are closed between 9:00 PM to 12:00 AM.\n\nPlease try after 12:00 AM.',
+            '<div class="result-item"><span class="result-label">Restricted:</span><span class="result-value">9PM - 12AM</span></div>' +
+            '<div class="result-item"><span class="result-label">Date:</span><span class="result-value">' + TODAY_DATE + '</span></div>'
           );
           return;
         }
@@ -1172,12 +1108,11 @@
           return;
         }
 
-        showPopup('warning', 'Processing', 'Checking for duplicate usernames...');
+        showPopup('warning', 'Processing', 'Checking duplicates...');
         const { uniqueUsernames, duplicates, error: duplicateError } = await checkDuplicateUsernamesFast(validation.validUsernames);
         
         if (duplicateError) {
           showPopup('error', 'Database Error', `Duplicate check failed: ${duplicateError}`);
-          
           submitBtn.disabled = false;
           submitBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg> SUBMIT NOW`;
           return;
@@ -1186,7 +1121,7 @@
         if (uniqueUsernames.length === 0 && duplicates.length > 0) {
           const details = createResultDetails(usernames.length, 0, duplicates.length, 0);
           showPopup('warning', 'All Usernames Duplicate', 
-            `All ${duplicates.length} usernames already exist in database. No new data saved.`,
+            `All ${duplicates.length} usernames already exist.`,
             details, duplicates);
           
           submitBtn.disabled = false;
@@ -1210,7 +1145,7 @@
             0
           );
           
-          let message = `Successfully saved ${saveResult.savedCount} new accounts with 2FA keys!`;
+          let message = `Successfully saved ${saveResult.savedCount} new accounts!`;
           if (duplicates.length > 0) {
             message += ` (${duplicates.length} duplicates skipped)`;
           }
@@ -1222,11 +1157,11 @@
           twofaInput.value = '';
           
         } else {
-          showPopup('error', 'Save Failed', `Failed to save data: ${saveResult.error}`);
+          showPopup('error', 'Save Failed', `Failed: ${saveResult.error}`);
         }
 
       } catch (error) {
-        showPopup('error', 'System Error', `An error occurred: ${error.message}`);
+        showPopup('error', 'System Error', `Error: ${error.message}`);
       } finally {
         setTimeout(() => {
           if (!isRestrictedTime()) {
@@ -1239,12 +1174,9 @@
 
     // Event Listeners
     submitBtn.addEventListener('click', handleSubmission);
-    
     popupConfirm.addEventListener('click', hidePopup);
     popupOverlay.addEventListener('click', (e) => {
-      if (e.target === popupOverlay) {
-        hidePopup();
-      }
+      if (e.target === popupOverlay) hidePopup();
     });
     
     document.addEventListener('keydown', (e) => {
@@ -1260,16 +1192,11 @@
     // Time check every second
     setInterval(() => {
       const newDate = getTodayDate();
-      if (newDate !== TODAY_DATE) {
-        location.reload();
-      }
+      if (newDate !== TODAY_DATE) location.reload();
       updateTimeNotice();
     }, 1000);
 
-    setTimeout(() => {
-      usernameInput.focus();
-    }, 300);
-
+    setTimeout(() => usernameInput.focus(), 300);
     updateTimeNotice();
   </script>
 </body>
