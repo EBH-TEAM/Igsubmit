@@ -2,28 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EBH Team - Instagram 2FA Admin Viewer</title>
+<title>EBH Team - Instagram Admin Viewer (Cookie Version)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
 :root {
-  --primary: #d62976;
-  --primary-dark: #b3205e;
-  --secondary: #f77737;
-  --secondary-dark: #e55a1a;
-  --accent: #4f5bd5;
-  --accent-dark: #3f4ac0;
-  --danger: #ed4956;
-  --danger-dark: #c13545;
+  --primary: #ff3385;      /* উজ্জ্বল গোলাপি */
+  --primary-dark: #e61a6b;
+  --secondary: #ff9933;     /* উজ্জ্বল কমলা */
+  --secondary-dark: #ff8014;
+  --accent: #6b5fff;        /* উজ্জ্বল নীল */
+  --accent-dark: #5445e6;
+  --danger: #ff4d6d;
+  --danger-dark: #e63e5a;
   --dark-bg: #0a0f1e;
   --card-bg: #16202e;
   --text-light: #f5f9ff;
   --text-gray: #b0c4de;
   --border-color: #2a3a55;
-  --shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
   --table-border: #2e405b;
-  --instagram-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  --instagram-gradient: linear-gradient(145deg, #ff3385, #ff9933, #6b5fff);
 }
 
 * {
@@ -38,32 +38,31 @@ body {
   color: var(--text-light);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   min-height: 100vh;
-  padding: 12px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-x: hidden;
-  font-size: 14px;
-  background-image: radial-gradient(circle at 30% 10%, rgba(214, 41, 118, 0.15), transparent 40%),
-                    radial-gradient(circle at 80% 70%, rgba(79, 91, 213, 0.12), transparent 40%);
+  font-size: 13px;
+  background-image: radial-gradient(circle at 30% 10%, rgba(255, 51, 133, 0.2), transparent 40%),
+                    radial-gradient(circle at 80% 70%, rgba(107, 95, 255, 0.15), transparent 40%);
 }
 
 .container {
   width: 100%;
-  max-width: 100%;
+  max-width: 480px; /* মোবাইলের জন্য সর্বোচ্চ প্রস্থ */
   margin: 0 auto;
 }
 
-/* Header */
+/* Header - ছোট করা হয়েছে */
 .header {
   text-align: center;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 3px solid transparent;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid transparent;
   border-image: var(--instagram-gradient);
   border-image-slice: 1;
   width: 100%;
-  position: relative;
 }
 
 .header h1 {
@@ -71,15 +70,15 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-size: 1.8rem;
-  margin-bottom: 8px;
+  font-size: 1.4rem;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .header h1 i {
@@ -87,32 +86,32 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .header .subtitle {
   color: var(--text-gray);
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   background: rgba(22, 32, 46, 0.7);
   display: inline-block;
-  padding: 5px 18px;
+  padding: 4px 15px;
   border-radius: 30px;
   border: 1px solid var(--primary);
 }
 
-/* Stats Card */
+/* Stats Card - ছোট */
 .stats-card {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 18px 20px;
-  margin-bottom: 18px;
+  border-radius: 14px;
+  padding: 12px 15px;
+  margin-bottom: 12px;
   box-shadow: var(--shadow);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-left: 5px solid var(--primary);
+  border-left: 4px solid var(--primary);
   width: 100%;
-  border: 1px solid rgba(214, 41, 118, 0.2);
+  border: 1px solid rgba(255, 51, 133, 0.2);
 }
 
 .stat {
@@ -121,7 +120,7 @@ body {
 }
 
 .stat .number {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 800;
   background: var(--instagram-gradient);
   -webkit-background-clip: text;
@@ -131,154 +130,144 @@ body {
 }
 
 .stat .label {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: var(--text-gray);
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
 }
 
 .divider {
   width: 1px;
-  height: 35px;
+  height: 30px;
   background: var(--border-color);
 }
 
-/* Search Section */
+/* Search Section - ছোট */
 .search-section {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 18px;
-  margin-bottom: 18px;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 12px;
   box-shadow: var(--shadow);
   width: 100%;
-  border: 1px solid rgba(247, 119, 55, 0.2);
+  border: 1px solid rgba(255, 153, 51, 0.2);
 }
 
 .search-container {
   position: relative;
-  margin-bottom: 10px;
 }
 
 .search-container input {
   width: 100%;
-  padding: 14px 18px;
-  padding-right: 85px;
-  border-radius: 12px;
+  padding: 12px 15px;
+  padding-right: 75px;
+  border-radius: 10px;
   border: 1px solid var(--border-color);
   background: rgba(10, 15, 30, 0.8);
   color: var(--text-light);
-  font-size: 15px;
-  height: 52px;
+  font-size: 14px;
+  height: 44px;
   transition: all 0.3s;
 }
 
 .search-container input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(214, 41, 118, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 51, 133, 0.2);
 }
 
 .search-btn {
   position: absolute;
-  right: 6px;
+  right: 5px;
   top: 50%;
   transform: translateY(-50%);
   background: var(--instagram-gradient);
   color: white;
   border: none;
-  padding: 10px 18px;
-  border-radius: 10px;
+  padding: 8px 14px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-weight: 700;
-  font-size: 0.85rem;
-  height: 40px;
+  font-size: 0.75rem;
+  height: 34px;
   transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(214, 41, 118, 0.3);
-}
-
-.search-btn:hover {
-  transform: translateY(-50%) scale(1.02);
+  box-shadow: 0 4px 10px rgba(255, 51, 133, 0.3);
 }
 
 /* Search Result Card */
 .search-stat {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 15px 20px;
-  margin-bottom: 18px;
+  border-radius: 14px;
+  padding: 12px 15px;
+  margin-bottom: 12px;
   box-shadow: var(--shadow);
   display: flex;
   justify-content: center;
   align-items: center;
-  border-left: 5px solid var(--secondary);
+  border-left: 4px solid var(--secondary);
   width: 100%;
-  border: 1px solid rgba(247, 119, 55, 0.2);
+  border: 1px solid rgba(255, 153, 51, 0.2);
 }
 
 /* Main Card */
 .main-card {
   background: var(--card-bg);
-  border-radius: 20px;
-  padding: 18px;
-  margin-bottom: 18px;
+  border-radius: 16px;
+  padding: 15px 12px;
+  margin-bottom: 15px;
   box-shadow: var(--shadow);
   width: 100%;
-  min-height: 400px;
-  border: 1px solid rgba(79, 91, 213, 0.2);
+  min-height: 350px;
+  border: 1px solid rgba(107, 95, 255, 0.2);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .card-title {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--text-light);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .card-title i {
   color: var(--primary);
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .refresh-btn {
   background: transparent;
   border: 1px solid var(--primary);
   color: var(--primary);
-  padding: 8px 14px;
-  border-radius: 10px;
+  padding: 6px 12px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
+  gap: 4px;
+  font-size: 0.75rem;
   transition: all 0.2s;
   font-weight: 600;
-}
-
-.refresh-btn:hover {
-  background: rgba(214, 41, 118, 0.15);
 }
 
 /* Accounts Container */
 .accounts-container {
   background: rgba(10, 15, 30, 0.6);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
-  margin-bottom: 15px;
-  max-height: 350px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  max-height: 280px;
   overflow-y: auto;
-  position: relative;
-  min-height: 200px;
+  min-height: 150px;
 }
 
 /* Table Container */
@@ -286,7 +275,6 @@ body {
   width: 100%;
   display: table;
   border-collapse: collapse;
-  min-height: 200px;
 }
 
 /* Table Header */
@@ -301,11 +289,11 @@ body {
 
 .header-cell {
   display: table-cell;
-  padding: 12px 10px;
+  padding: 10px 6px;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
   white-space: nowrap;
   position: sticky;
   top: 0;
@@ -330,15 +318,15 @@ body {
 }
 
 .account-row:hover {
-  background: rgba(214, 41, 118, 0.1);
+  background: rgba(255, 51, 133, 0.1);
 }
 
 .row-cell {
   display: table-cell;
-  padding: 12px 10px;
+  padding: 8px 6px;
   vertical-align: middle;
   border-right: 1px solid var(--table-border);
-  height: 50px;
+  height: 42px;
   position: relative;
   overflow: hidden;
 }
@@ -353,20 +341,20 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 12px 10px;
+  padding: 8px 6px;
   display: flex;
   align-items: center;
   overflow-x: auto;
   white-space: nowrap;
   font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
-/* Column Widths */
+/* Column Widths - ছোট করা হয়েছে মোবাইলের জন্য */
 .serial-cell {
-  width: 55px;
-  min-width: 55px;
-  max-width: 55px;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
   text-align: center;
   color: var(--text-gray);
   font-weight: 600;
@@ -377,41 +365,39 @@ body {
 }
 
 .username-cell {
-  width: 170px;
-  min-width: 170px;
-  max-width: 170px;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
   font-weight: 600;
   color: var(--primary);
 }
 
 .password-cell {
-  width: 170px;
-  min-width: 170px;
-  max-width: 170px;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
   font-weight: 600;
   color: var(--secondary);
 }
 
-.twofa-cell {
-  width: 280px;
-  min-width: 280px;
-  max-width: 280px;
-  font-size: 0.85rem;
+.cookie-cell {
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
+  font-size: 0.75rem;
   color: var(--accent);
 }
 
-.no-data {
-  display: table-row;
-}
-
-.no-data td, .no-data-cell {
-  padding: 50px 20px !important;
+/* No Data */
+.no-data-cell {
+  padding: 30px 15px !important;
   text-align: center;
   color: var(--text-gray);
   font-style: italic;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
+/* Loading */
 .loading-container {
   position: absolute;
   top: 50%;
@@ -420,20 +406,20 @@ body {
   text-align: center;
   z-index: 100;
   background: rgba(22, 32, 46, 0.98);
-  padding: 25px 30px;
-  border-radius: 20px;
-  min-width: 240px;
+  padding: 20px 25px;
+  border-radius: 16px;
+  min-width: 200px;
   border: 1px solid var(--primary);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .loading-spinner {
-  font-size: 2.5rem;
+  font-size: 2rem;
   background: var(--instagram-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   animation: spin 1s linear infinite;
 }
 
@@ -442,127 +428,141 @@ body {
   100% { transform: rotate(360deg); }
 }
 
+/* Count Display */
 .count-display {
   text-align: right;
-  padding: 10px 15px;
-  font-size: 0.8rem;
+  padding: 8px 12px;
+  font-size: 0.7rem;
   color: var(--text-gray);
   background: rgba(10, 15, 30, 0.8);
   border-top: 1px solid var(--border-color);
-  border-radius: 0 0 16px 16px;
-  font-weight: 500;
-  margin-bottom: 15px;
+  border-radius: 0 0 14px 14px;
+  margin-bottom: 12px;
 }
 
-/* ===== সুন্দর বাটন ডিজাইন ===== */
+/* ===== স্কয়ার বাটন (গোল থেকে পরিবর্তন) - মোবাইলের জন্য ===== */
 .copy-buttons-container {
   display: flex;
   justify-content: center;
-  gap: 25px;
-  margin: 20px 0;
-  padding: 10px 0;
+  gap: 15px;
+  margin: 15px 0 10px;
+  padding: 5px 0;
   flex-wrap: wrap;
 }
 
-.copy-btn-circle {
+.copy-btn-square {
   width: 70px;
   height: 70px;
-  border-radius: 50%;
+  border-radius: 16px; /* স্কয়ার কর্নার */
   border: none;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  font-size: 11px;
+  gap: 4px;
+  font-size: 10px;
   font-weight: 700;
   transition: all 0.3s;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(255, 255, 255, 0.2) inset;
   color: white;
   position: relative;
   overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transform: translateY(0);
 }
 
-.copy-btn-circle::before {
+/* থ্রিডি ইফেক্ট */
+.copy-btn-square::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s;
+  top: -30%;
+  left: -30%;
+  width: 160%;
+  height: 160%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
+  transform: rotate(45deg);
+  transition: all 0.5s;
+  opacity: 0;
 }
 
-.copy-btn-circle:hover::before {
-  left: 100%;
+.copy-btn-square:hover::before {
+  opacity: 1;
+  transform: rotate(45deg) translate(10%, 10%);
 }
 
-.copy-btn-circle:hover {
-  transform: translateY(-8px) scale(1.05);
+.copy-btn-square:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(255, 255, 255, 0.3) inset;
 }
 
-.copy-btn-circle i {
+.copy-btn-square:active {
+  transform: translateY(2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(255, 255, 255, 0.2) inset;
+}
+
+.copy-btn-square i {
   font-size: 24px;
   margin-bottom: 2px;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6));
 }
 
-/* বাটনের রং */
-.username-btn-circle {
-  background: linear-gradient(145deg, #4f5bd5, #3f4ac0);
-  box-shadow: 0 8px 20px rgba(79, 91, 213, 0.4);
+/* বাটনের রং - থ্রিডি গ্রেডিয়েন্ট (আগের মতই) */
+.username-btn-square {
+  background: radial-gradient(circle at 30% 30%, #8a7aff, #4a3aff);
+  box-shadow: 0 8px 0 #2a1faa, 0 8px 20px rgba(74, 58, 255, 0.5);
 }
 
-.password-btn-circle {
-  background: linear-gradient(145deg, #f77737, #e55a1a);
-  box-shadow: 0 8px 20px rgba(247, 119, 55, 0.4);
+.password-btn-square {
+  background: radial-gradient(circle at 30% 30%, #ffaa55, #ff7b1a);
+  box-shadow: 0 8px 0 #b35500, 0 8px 20px rgba(255, 123, 26, 0.5);
 }
 
-.twofa-btn-circle {
-  background: linear-gradient(145deg, #d62976, #b3205e);
-  box-shadow: 0 8px 20px rgba(214, 41, 118, 0.4);
+.cookie-btn-square {
+  background: radial-gradient(circle at 30% 30%, #ff6699, #d61a5e);
+  box-shadow: 0 8px 0 #991144, 0 8px 20px rgba(214, 26, 94, 0.5);
 }
 
 /* Delete Button */
 .delete-container {
   display: flex;
   justify-content: center;
-  margin: 15px 0 5px 0;
+  margin: 15px 0 5px;
   width: 100%;
 }
 
 .delete-btn {
   background: transparent;
-  border: 2px solid var(--danger);
+  border: 1.5px solid var(--danger);
   color: var(--danger);
-  padding: 12px 30px;
-  border-radius: 40px;
+  padding: 10px 25px;
+  border-radius: 30px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  font-size: 14px;
+  gap: 8px;
+  font-size: 13px;
   font-weight: 700;
   transition: all 0.2s;
-  min-width: 180px;
-  letter-spacing: 0.5px;
+  min-width: 160px;
+  letter-spacing: 0.3px;
 }
 
 .delete-btn:hover {
-  background: rgba(237, 73, 86, 0.1);
+  background: rgba(255, 77, 109, 0.1);
   transform: scale(1.02);
-  box-shadow: 0 5px 15px rgba(237, 73, 86, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
 }
 
 /* Footer */
 .footer {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 8px;
   color: var(--text-gray);
-  font-size: 0.8rem;
-  padding-top: 15px;
+  font-size: 0.7rem;
+  padding-top: 10px;
   border-top: 1px solid var(--border-color);
   width: 100%;
 }
@@ -593,10 +593,10 @@ body {
 
 .modal {
   background: var(--card-bg);
-  border-radius: 24px;
+  border-radius: 20px;
   width: 100%;
-  max-width: 420px;
-  padding: 25px;
+  max-width: 360px;
+  padding: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   border: 1px solid var(--danger);
   animation: modalFadeIn 0.3s ease;
@@ -605,7 +605,7 @@ body {
 @keyframes modalFadeIn {
   from {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
@@ -615,120 +615,86 @@ body {
 
 .modal-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .modal-header i {
-  font-size: 3rem;
+  font-size: 2.5rem;
   color: var(--danger);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .modal-header h2 {
   color: var(--danger);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 800;
 }
 
-.modal-body {
-  margin-bottom: 25px;
-  text-align: center;
-}
-
 .modal-body p {
-  margin-bottom: 12px;
-  line-height: 1.6;
-  font-size: 1rem;
+  margin-bottom: 10px;
+  line-height: 1.5;
+  font-size: 0.9rem;
 }
 
 .warning-text {
-  background: rgba(237, 73, 86, 0.1);
+  background: rgba(255, 77, 109, 0.1);
   border-left: 4px solid var(--danger);
-  padding: 15px;
+  padding: 12px;
   border-radius: 8px;
-  margin-top: 15px;
-  text-align: left;
-}
-
-.warning-text i {
-  color: var(--danger);
-  margin-right: 8px;
+  margin-top: 12px;
+  font-size: 0.85rem;
 }
 
 .modal-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .modal-btn {
-  padding: 14px 20px;
-  border-radius: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   font-weight: 700;
-  font-size: 0.9rem;
-  min-width: 140px;
+  font-size: 0.85rem;
+  min-width: 120px;
   transition: all 0.2s;
 }
 
 .modal-btn-cancel {
   background: transparent;
-  border: 2px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
   color: var(--text-light);
-}
-
-.modal-btn-cancel:hover {
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .modal-btn-danger {
   background: var(--danger);
   color: white;
-  border: 2px solid var(--danger);
+  border: 1.5px solid var(--danger);
 }
 
-.modal-btn-danger:hover {
-  background: var(--danger-dark);
-  transform: scale(1.02);
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  .header h1 {
-    font-size: 1.4rem;
-  }
+/* Extra Small Devices */
+@media (max-width: 380px) {
+  .username-cell { width: 100px; min-width: 100px; }
+  .password-cell { width: 100px; min-width: 100px; }
+  .cookie-cell { width: 150px; min-width: 150px; }
   
-  .stats-card {
-    padding: 12px 15px;
-  }
-  
-  .stat .number {
-    font-size: 1.5rem;
-  }
-  
-  .copy-btn-circle {
+  .copy-btn-square {
     width: 60px;
     height: 60px;
-    font-size: 10px;
+    font-size: 9px;
   }
   
-  .copy-btn-circle i {
+  .copy-btn-square i {
     font-size: 20px;
   }
-  
-  .delete-btn {
-    padding: 10px 25px;
-    font-size: 13px;
-    min-width: 160px;
-  }
-  
-  .twofa-cell {
-    width: 220px;
-    min-width: 220px;
-    max-width: 220px;
-  }
 }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--dark-bg); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 </style>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -739,19 +705,19 @@ body {
 
 <div class="container">
   <div class="header">
-    <h1><i class="fab fa-instagram"></i> EBH 2FA ADMIN <i class="fas fa-shield-alt"></i></h1>
-    <div class="subtitle">Username / Password / 2FA Key Viewer</div>
+    <h1><i class="fab fa-instagram"></i> EBH COOKIE ADMIN <i class="fas fa-cookie-bite"></i></h1>
+    <div class="subtitle">Username / Password / Cookie Data</div>
   </div>
   
   <div class="stats-card">
     <div class="stat">
       <span class="number" id="totalCount">0</span>
-      <span class="label">TOTAL ACCOUNTS</span>
+      <span class="label">TOTAL</span>
     </div>
     <div class="divider"></div>
     <div class="stat">
       <span class="number" id="lastUpdate">-</span>
-      <span class="label">LAST UPDATE</span>
+      <span class="label">UPDATED</span>
     </div>
   </div>
   
@@ -764,9 +730,9 @@ body {
   
   <div class="search-section">
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="🔍 Search by Username, Password or 2FA Key...">
+      <input type="text" id="searchInput" placeholder="🔍 Search by Username, Password or Cookie...">
       <button class="search-btn" onclick="searchData()">
-        <i class="fas fa-search"></i> SEARCH
+        <i class="fas fa-search"></i> FIND
       </button>
     </div>
   </div>
@@ -790,19 +756,19 @@ body {
     
     <div class="count-display" id="countDisplay">0 accounts</div>
     
-    <!-- সুন্দর গোল বাটন -->
+    <!-- স্কয়ার বাটন - ৩টি (ইউজারনেম, পাসওয়ার্ড, কুকিজ) একই সিরিয়ালে -->
     <div class="copy-buttons-container">
-      <button class="copy-btn-circle username-btn-circle" onclick="copyUsernames()" title="Copy Usernames">
+      <button class="copy-btn-square username-btn-square" onclick="copyUsernames()" title="Copy Usernames">
         <i class="fas fa-user"></i>
-        <span>USERNAME</span>
+        <span>USER</span>
       </button>
-      <button class="copy-btn-circle password-btn-circle" onclick="copyPasswords()" title="Copy Passwords">
+      <button class="copy-btn-square password-btn-square" onclick="copyPasswords()" title="Copy Passwords">
         <i class="fas fa-key"></i>
-        <span>PASSWORD</span>
+        <span>PASS</span>
       </button>
-      <button class="copy-btn-circle twofa-btn-circle" onclick="copyTwoFA()" title="Copy 2FA Keys">
-        <i class="fas fa-shield-alt"></i>
-        <span>2FA KEY</span>
+      <button class="copy-btn-square cookie-btn-square" onclick="copyCookies()" title="Copy Cookies">
+        <i class="fas fa-cookie-bite"></i>
+        <span>COOKIE</span>
       </button>
     </div>
     
@@ -815,7 +781,7 @@ body {
   </div>
   
   <div class="footer">
-    <p>EBH TEAM • INSTAGRAM 2FA SYSTEM • MTWork Database</p>
+    <p>EBH TEAM • COOKIE SYSTEM • MTWork Database</p>
   </div>
 </div>
 
@@ -851,8 +817,7 @@ const firebaseConfig = {
   projectId: "mtwork-fc469",
   storageBucket: "mtwork-fc469.firebasestorage.app",
   messagingSenderId: "351935919939",
-  appId: "1:351935919939:web:7ad33f6c3e6e4de26f21f6",
-  measurementId: "G-ET7141VPKM"
+  appId: "1:351935919939:web:7ad33f6c3e6e4de26f21f6"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -918,8 +883,8 @@ function renderAccountsTable(accounts) {
       <div class="table-container">
         <div class="no-data">
           <td colspan="4" class="no-data-cell">
-            <i class="fas fa-database" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
-            <p style="font-size: 1.1rem;">${noDataMessage}</p>
+            <i class="fas fa-database" style="font-size: 2.5rem; margin-bottom: 10px; opacity: 0.5;"></i>
+            <p style="font-size: 0.9rem;">${noDataMessage}</p>
           </td>
         </div>
       </div>
@@ -933,14 +898,14 @@ function renderAccountsTable(accounts) {
         <div class="header-cell serial-cell">#</div>
         <div class="header-cell username-cell">USERNAME</div>
         <div class="header-cell password-cell">PASSWORD</div>
-        <div class="header-cell twofa-cell">2FA KEY</div>
+        <div class="header-cell cookie-cell">COOKIE</div>
       </div>
   `;
   
   accounts.forEach((account, index) => {
     const username = account.username || account.uid || account.user || 'N/A';
     const password = account.password || account.pass || 'N/A';
-    const twofa = account.twofa_key || account.twofa || account.tfa || account['2fa'] || 'N/A';
+    const cookie = account.cookie || account.cookies || account.twofa_key || account.twofa || 'N/A';
     
     tableHTML += `
       <div class="account-row">
@@ -953,8 +918,8 @@ function renderAccountsTable(accounts) {
         <div class="row-cell password-cell">
           <div class="cell-content" title="${password}">${password}</div>
         </div>
-        <div class="row-cell twofa-cell">
-          <div class="cell-content" title="${twofa}">${twofa}</div>
+        <div class="row-cell cookie-cell">
+          <div class="cell-content" title="${cookie}">${cookie}</div>
         </div>
       </div>
     `;
@@ -975,7 +940,7 @@ function extractDataFromObject(obj) {
   }
   
   let password = "";
-  const passwordKeys = ['password', 'pass', 'pwd', 'secret', 'key'];
+  const passwordKeys = ['password', 'pass', 'pwd', 'secret'];
   for (const key of passwordKeys) {
     if (obj[key] && obj[key].toString().trim()) {
       password = obj[key].toString().trim();
@@ -983,16 +948,16 @@ function extractDataFromObject(obj) {
     }
   }
   
-  let twofa_key = "";
-  const twofaKeys = ['twofa_key', 'twofa', 'tfa', '2fa', 'twofa_key', 'totp', 'secret_key', '2fa_key'];
-  for (const key of twofaKeys) {
+  let cookie = "";
+  const cookieKeys = ['cookie', 'cookies', 'twofa_key', 'twofa', 'tfa', '2fa', 'totp', 'secret_key'];
+  for (const key of cookieKeys) {
     if (obj[key] && obj[key].toString().trim()) {
-      twofa_key = obj[key].toString().trim();
+      cookie = obj[key].toString().trim();
       break;
     }
   }
   
-  return { username, password, twofa_key };
+  return { username, password, cookie };
 }
 
 function loadData() {
@@ -1010,6 +975,7 @@ function loadData() {
     if (snapshot.exists()) {
       const data = snapshot.val();
       
+      // instagram_2fa_submissions পাথে খোঁজা
       if (data.instagram_2fa_submissions) {
         const submissions = data.instagram_2fa_submissions;
         
@@ -1017,12 +983,13 @@ function loadData() {
           const submissionData = submissions[key];
           const extracted = extractDataFromObject(submissionData);
           
-          if (extracted.username || extracted.password || extracted.twofa_key) {
+          if (extracted.username || extracted.password || extracted.cookie) {
             allAccounts.push(extracted);
           }
         });
       }
       
+      // ebh_submissions পাথে খোঁজা
       if (data.ebh_submissions) {
         const submissions = data.ebh_submissions;
         
@@ -1030,19 +997,20 @@ function loadData() {
           const submissionData = submissions[key];
           const extracted = extractDataFromObject(submissionData);
           
-          if (extracted.username || extracted.password || extracted.twofa_key) {
+          if (extracted.username || extracted.password || extracted.cookie) {
             allAccounts.push(extracted);
           }
         });
       }
       
+      // পুরো ডাটাবেসে খোঁজা
       if (allAccounts.length === 0) {
         function findAccounts(obj) {
           if (!obj) return;
           
           if (typeof obj === 'object') {
             const extracted = extractDataFromObject(obj);
-            if (extracted.username || extracted.password || extracted.twofa_key) {
+            if (extracted.username || extracted.password || extracted.cookie) {
               allAccounts.push(extracted);
             }
             
@@ -1056,11 +1024,12 @@ function loadData() {
       }
     }
     
+    // ডুপ্লিকেট রিমুভ
     allAccounts = allAccounts.filter((account, index, self) =>
       index === self.findIndex(a => 
         a.username === account.username && 
         a.password === account.password && 
-        a.twofa_key === account.twofa_key
+        a.cookie === account.cookie
       )
     );
     
@@ -1073,7 +1042,7 @@ function loadData() {
       <div class="table-container">
         <div class="no-data" style="color: #ed4956;">
           <td colspan="4" class="no-data-cell">
-            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+            <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
             <p>Error: ${err.message}</p>
           </td>
         </div>
@@ -1093,7 +1062,7 @@ function searchData() {
   filteredAccounts = allAccounts.filter(account => 
     (account.username && account.username.toLowerCase().includes(searchTerm)) ||
     (account.password && account.password.toLowerCase().includes(searchTerm)) ||
-    (account.twofa_key && account.twofa_key.toLowerCase().includes(searchTerm))
+    (account.cookie && account.cookie.toLowerCase().includes(searchTerm))
   );
   
   isSearching = true;
@@ -1115,9 +1084,9 @@ function copyUsernames() {
   
   navigator.clipboard.writeText(usernames)
     .then(() => {
-      const btn = document.querySelector('.username-btn-circle');
+      const btn = document.querySelector('.username-btn-square');
       const originalHTML = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-check"></i><span>COPIED!</span>';
+      btn.innerHTML = '<i class="fas fa-check"></i><span>DONE</span>';
       setTimeout(() => { btn.innerHTML = originalHTML; }, 1500);
     })
     .catch(err => alert("Copy failed"));
@@ -1135,15 +1104,15 @@ function copyPasswords() {
   
   navigator.clipboard.writeText(passwords)
     .then(() => {
-      const btn = document.querySelector('.password-btn-circle');
+      const btn = document.querySelector('.password-btn-square');
       const originalHTML = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-check"></i><span>COPIED!</span>';
+      btn.innerHTML = '<i class="fas fa-check"></i><span>DONE</span>';
       setTimeout(() => { btn.innerHTML = originalHTML; }, 1500);
     })
     .catch(err => alert("Copy failed"));
 }
 
-function copyTwoFA() {
+function copyCookies() {
   const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
   
   if (accountsToCopy.length === 0) {
@@ -1151,13 +1120,13 @@ function copyTwoFA() {
     return;
   }
   
-  const twofas = accountsToCopy.map(account => account.twofa_key || "N/A").join("\n");
+  const cookies = accountsToCopy.map(account => account.cookie || "N/A").join("\n");
   
-  navigator.clipboard.writeText(twofas)
+  navigator.clipboard.writeText(cookies)
     .then(() => {
-      const btn = document.querySelector('.twofa-btn-circle');
+      const btn = document.querySelector('.cookie-btn-square');
       const originalHTML = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-check"></i><span>COPIED!</span>';
+      btn.innerHTML = '<i class="fas fa-check"></i><span>DONE</span>';
       setTimeout(() => { btn.innerHTML = originalHTML; }, 1500);
     })
     .catch(err => alert("Copy failed"));
@@ -1203,7 +1172,7 @@ function deleteAllData() {
       <div class="table-container">
         <div class="no-data" style="color: #10b981;">
           <td colspan="4" class="no-data-cell">
-            <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+            <i class="fas fa-check-circle" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
             <p>All data deleted successfully!</p>
           </td>
         </div>
@@ -1239,7 +1208,7 @@ searchInput.addEventListener("input", function() {
 
 document.addEventListener('DOMContentLoaded', function() {
   loadData();
-  setInterval(loadData, 60000);
+  setInterval(loadData, 60000); // প্রতি ১ মিনিটে রিফ্রেশ
 });
 </script>
 
