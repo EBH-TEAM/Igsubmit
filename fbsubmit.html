@@ -754,6 +754,43 @@
         };
       }
 
+      // ডুপ্লিকেট ইউজারনেম চেক করার ফাংশন
+      async function checkDuplicateUsernames(usernames) {
+        try {
+          // ফায়ারবেস থেকে সব ইউজার রেফারেন্স নেওয়া
+          const usedUsernamesRef = db.ref('instagram_used_usernames');
+          const snapshot = await usedUsernamesRef.once('value');
+          const usedData = snapshot.val() || {};
+          
+          // ব্যবহৃত ইউজারনেমের সেট বানানো (কেস ইন্সেন্সিটিভ)
+          const usedUsernamesSet = new Set();
+          Object.values(usedData).forEach(item => {
+            if (item && item.username) {
+              usedUsernamesSet.add(item.username.toLowerCase().trim());
+            }
+          });
+
+          // ডুপ্লিকেট চেক করা
+          const duplicates = [];
+          const uniqueUsernames = [];
+          
+          for (const username of usernames) {
+            const normalizedUsername = username.toLowerCase().trim();
+            
+            if (usedUsernamesSet.has(normalizedUsername)) {
+              duplicates.push(username);
+            } else {
+              uniqueUsernames.push(username);
+            }
+          }
+          
+          return { duplicates, uniqueUsernames };
+        } catch (error) {
+          console.error("ডুপ্লিকেট চেক করতে ত্রুটি:", error);
+          throw error;
+        }
+      }
+
       // পপআপ ফাংশন
       function showPopup(type, title, message) {
         if (!popupTitle || !popupMessage || !popupOverlay) return;
@@ -798,7 +835,67 @@
           submitBtn.disabled = true;
           submitBtn.innerHTML = '⏳ প্রসেসিং...';
 
-          // Firebase এ সেভ
+          // ডুপ্লিকেট চেক
+          try {
+            const { duplicates, uniqueUsernames } = await checkDuplicateUsernames(usernames);
+            
+            // যদি সবগুলো ইউজারনেম ডুপ্লিকেট হয়
+            if (uniqueUsernames.length === 0) {
+              showPopup('warning', '⚠️ ডুপ্লিকেট', 'আপনার দেওয়া সবগুলো ইউজারনেম আগেই সাবমিট করা হয়েছে।');
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = 'জমা দিন';
+              return;
+            }
+            
+            // যদি কিছু ডুপ্লিকেট পাওয়া যায়
+            if (duplicates.length > 0) {
+              const duplicateList = duplicates.join('\n• ');
+              const confirmMessage = `⚠️ নিচের ইউজারনেমগুলো আগেই সাবমিট করা হয়েছে:\n• ${duplicateList}\n\nবাকি ${uniqueUsernames.length}টি অ্যাকাউন্ট কি সাবমিট করবেন?`;
+              
+              // ব্যবহারকারীর কাছ থেকে নিশ্চিতকরণ নেওয়া
+              if (!confirm(confirmMessage)) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'জমা দিন';
+                return;
+              }
+              
+              // ইউনিক ইউজারনেমগুলোর জন্য ইনডেক্স বের করা
+              const indicesToSubmit = [];
+              usernames.forEach((username, index) => {
+                if (uniqueUsernames.includes(username)) {
+                  indicesToSubmit.push(index);
+                }
+              });
+              
+              // শুধুমাত্র ইউনিক ইউজারনেমগুলোর ডাটা সাবমিট করা
+              await submitToFirebase(
+                indicesToSubmit.map(i => usernames[i]),
+                indicesToSubmit.map(i => passwords[i]),
+                indicesToSubmit.map(i => cookies[i])
+              );
+              
+              return;
+            }
+            
+            // যদি কোন ডুপ্লিকেট না থাকে, সবগুলো সাবমিট
+            await submitToFirebase(usernames, passwords, cookies);
+            
+          } catch (error) {
+            showPopup('error', '🔥 ত্রুটি', error.message || 'ডুপ্লিকেট চেক করতে সমস্যা হয়েছে');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'জমা দিন';
+          }
+
+        } catch (error) {
+          showPopup('error', '🔥 ত্রুটি', error.message || 'সাবমিট করতে সমস্যা হয়েছে');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'জমা দিন';
+        }
+      }
+
+      // ফায়ারবেসে ডাটা সাবমিট করার ফাংশন
+      async function submitToFirebase(usernames, passwords, cookies) {
+        try {
           const timestamp = new Date().toISOString();
           const timestamp_now = Date.now();
           const updates = {};
@@ -812,7 +909,7 @@
             updates[`instagram_2fa_submissions/${submissionId}`] = {
               username: username,
               password: passwords[i],
-              cookie: cookies[i], // কুকিজ বাধ্যতামূলক
+              cookie: cookies[i],
               submitted_at: timestamp,
               date_used: TODAY_DATE
             };
@@ -836,14 +933,10 @@
           cookieInput.value = '';
 
         } catch (error) {
-          showPopup('error', '🔥 ত্রুটি', error.message || 'সাবমিট করতে সমস্যা হয়েছে');
+          throw error;
         } finally {
-          setTimeout(() => {
-            if (!isRestrictedTime() && submitBtn) {
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = 'জমা দিন';
-            }
-          }, 1500);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'জমা দিন';
         }
       }
 
