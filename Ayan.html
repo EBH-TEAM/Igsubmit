@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>EBH TEAM - INSTAGRAM COOKIE (একক বক্স)</title>
+  <style>
+    /* পুরানো স্টাইল ঠিক রাখা হয়েছে - ব্রাইটনেস বাড়ানো */
+    :root {
+      --primary: #ff3385;      /* উজ্জ্বল গোলাপি */
+      --primary-dark: #e61a6b;
+      --secondary: #ff9933;     /* উজ্জ্বল কমলা */
+      --secondary-dark: #ff8014;
+      --accent: #6b5fff;        /* উজ্জ্বল নীল */
+      --accent-dark: #5445e6;
+      --danger: #ff4d6d;
+      --danger-dark: #e63e5a;
+      --dark-bg: #0a0f1e;
+      --panel: #16202e;
+      --border: #2a3a55;
+      --text: #f5f9ff;
+      --muted: #b0c4de;
+      --error: #ff4d6d;
+      --success: #2ecc71;
+      --warning: #f39c12;
+      --instagram-gradient: linear-gradient(45deg, #f09b4a 0%, #e67e4a 25%, #e05565 50%, #cc3b7a 75%, #bc2b9c 100%);
+      --shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--dark-bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      min-height: 100vh;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 30% 10%, rgba(255, 51, 133, 0.2), transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(107, 95, 255, 0.15), transparent 40%);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: rgba(22, 32, 46, 0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 3px solid transparent;
+      border-image: var(--instagram-gradient);
+      border-image-slice: 1;
+      padding: 15px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: var(--shadow);
+      min-height: 70px;
+      margin-bottom: 12px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .logo-icon {
+      font-size: 32px;
+      background: var(--instagram-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 15px rgba(255, 51, 133, 0.7));
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 800;
+      background: var(--instagram-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    .logo-badge {
+      position: absolute;
+      top: -10px;
+      right: -35px;
+      font-size: 10px;
+      background: var(--primary);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      transform: rotate(10deg);
+      box-shadow: 0 4px 15px rgba(255, 51, 133, 0.6);
+      animation: badgeGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes badgeGlow {
+      0%, 100% { transform: rotate(10deg) scale(1); }
+      50% { transform: rotate(10deg) scale(1.1); }
+    }
+
+    /* সিঙ্গেল ইনপুট বক্স - 300px হাইট করা হয়েছে */
+    .single-input-container {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .input-box {
+      background: var(--panel);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 300px;  /* 150px থেকে বাড়িয়ে 300px করা হয়েছে */
+      max-height: 380px;   /* সর্বোচ্চ হাইট */
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .box-header {
+      background: rgba(10, 15, 30, 0.8);
+      padding: 10px 12px;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+      border-bottom: 2px solid transparent;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    .box-header span {
+      background: var(--instagram-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+    }
+
+    .box-textarea {
+      flex: 1;
+      width: 100%;
+      background: rgba(10, 15, 30, 0.6);
+      color: var(--text);
+      border: none;
+      padding: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      resize: none;
+      outline: none;
+      white-space: pre;
+      overflow-y: auto;
+    }
+
+    .box-textarea::placeholder {
+      color: rgba(176, 196, 222, 0.4);
+      font-size: 13px;
+    }
+
+    /* তারিখ ইনফো */
+    .date-info {
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+      background: var(--panel);
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin: 12px 0 10px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      font-weight: 500;
+    }
+
+    .current-date {
+      color: var(--secondary);
+      font-weight: 900;
+      font-size: 18px;
+      animation: datePulse 2s infinite;
+      background: rgba(255, 153, 51, 0.15);
+      padding: 2px 8px;
+      border-radius: 30px;
+      display: inline-block;
+    }
+
+    @keyframes datePulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    /* এরর ইন্ডিকেটর */
+    .error-border {
+      border: 2px solid var(--error) !important;
+      box-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
+    }
+
+    .submit-section {
+      margin: 15px 0 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .submit-notice {
+      font-size: 15px;
+      font-weight: 800;
+      text-align: center;
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 30px;
+      border: 2px solid var(--primary);
+      backdrop-filter: blur(10px);
+      animation: noticePulse 2s ease-in-out infinite;
+      max-width: 500px;
+      width: 100%;
+      background: rgba(255, 51, 133, 0.15);
+    }
+
+    .submit-notice.restricted {
+      color: var(--danger);
+      border-color: var(--danger);
+      background: rgba(255, 77, 109, 0.15);
+      animation: none;
+    }
+
+    @keyframes noticePulse {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 15px rgba(255, 51, 133, 0.4);
+      }
+      50% { 
+        transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(255, 51, 133, 0.7);
+      }
+    }
+
+    .submit-btn {
+      width: 100%;
+      max-width: 280px;
+      background: var(--instagram-gradient);
+      border: none;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255, 51, 133, 0.5);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn.restricted-btn {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: grayscale(80%);
+      background: linear-gradient(45deg, #666, #888);
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .submit-btn:hover:not(.restricted-btn)::before {
+      left: 100%;
+    }
+
+    .submit-btn:hover:not(.restricted-btn) {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(255, 51, 133, 0.7);
+    }
+
+    .time-remaining {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 5px 15px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      margin-top: 3px;
+    }
+
+    .time-highlight {
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    .output-section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 15px;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin: 12px 0;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .output-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(255, 51, 133, 0.15) 25%, 
+        rgba(107, 95, 255, 0.15) 50%, 
+        rgba(255, 153, 51, 0.15) 75%, 
+        transparent 100%);
+      animation: shimmer 3s infinite linear;
+      background-size: 200% 100%;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .output-text {
+      font-size: 24px;
+      font-weight: 700;
+      background: var(--instagram-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: textFloat 4s ease-in-out infinite;
+      padding: 10px 20px;
+      border-radius: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes textFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+    }
+
+    /* পপআপ স্টাইল */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 15px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .popup-content {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      width: 100%;
+      max-width: 320px;
+      max-height: 80vh;
+      overflow-y: auto;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .popup-header {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .popup-header.warning { 
+      color: var(--warning); 
+      border-bottom-color: var(--warning);
+    }
+    .popup-header.error { 
+      color: var(--error); 
+      border-bottom-color: var(--error);
+    }
+    .popup-header.success { 
+      color: var(--success); 
+      border-bottom-color: var(--success);
+    }
+
+    .popup-message {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 500;
+      white-space: pre-line;
+    }
+
+    .popup-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .popup-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .popup-btn.confirm {
+      background: var(--instagram-gradient);
+      color: white;
+      box-shadow: 0 6px 15px rgba(255, 51, 133, 0.5);
+    }
+
+    .popup-btn.confirm:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 51, 133, 0.7);
+    }
+
+    /* মোবাইল রেস্পন্সিভ */
+    @media (max-width: 480px) {
+      .header { padding: 10px; min-height: 60px; }
+      .logo-icon { font-size: 28px; }
+      .logo-text { font-size: 24px; }
+      .logo-badge { right: -30px; font-size: 9px; padding: 2px 8px; }
+      .input-box { min-height: 250px; }  /* মোবাইলে একটু ছোট */
+      .box-header { font-size: 13px; padding: 8px 10px; }
+      .box-textarea { font-size: 13px; padding: 12px; }
+      .submit-notice { font-size: 13px; padding: 6px 12px; }
+      .submit-btn { padding: 12px 20px; font-size: 16px; max-width: 240px; }
+      .output-text { font-size: 20px; padding: 8px 15px; }
+      .popup-content { padding: 20px; }
+    }
+
+    @media (max-width: 360px) {
+      .logo-text { font-size: 20px; }
+      .logo-badge { right: -25px; font-size: 8px; }
+      .input-box { min-height: 220px; }
+    }
+
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: var(--dark-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+  </style>
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-container">
+        <div class="logo-icon">📸</div>
+        <div class="logo-text">
+          IG COOKIE
+          <div class="logo-badge">EBH</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- একটি মাত্র ইনপুট বক্স - 300px হাইট -->
+    <div class="single-input-container">
+      <div class="input-box">
+        <div class="box-header">📦 <span>সব একসাথে</span> ( ইউজারনেম | পাসওয়ার্ড | কুকিজ )</div>
+        <textarea class="box-textarea" id="bulkInput" 
+          placeholder='প্রতি লাইনে ইউজারনেম | পাসওয়ার্ড | কুকিজ লিখুন। যেমন: user1|pass123|cookie=data' wrap="off"></textarea>
+      </div>
+    </div>
+
+    <div class="date-info">
+      আজকের তারিখ: <span class="current-date" id="currentDate">16</span> 
+      - পাসওয়ার্ডে তারিখ আবশ্যক
+    </div>
+
+    <div class="submit-section">
+      <div class="submit-notice" id="timeNotice">রাত ৯টা থেকে ১২টা পর্যন্ত সাবমিশন বন্ধ</div>
+      <div id="timeRemaining" class="time-remaining"></div>
+      <button class="submit-btn" id="submitBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+        </svg>
+        জমা দিন
+      </button>
+    </div>
+
+    <div class="output-section">
+      <div class="output-text">AYAN INSTRAGRAM </div>
+    </div>
+  </div>
+
+  <!-- রেস্ট্রিক্টেড টাইম পপআপ (রাত ৯টা-১২টা) -->
+  <div class="popup-overlay" id="restrictedPopup">
+    <div class="popup-content">
+      <div class="popup-header warning">⏰ সাবমিশন বন্ধ</div>
+      <div class="popup-message" id="restrictedMessage">
+        🔴 রাত ৯টা থেকে ১২টা পর্যন্ত সাবমিশন দেওয়া যাবে না
+
+📁 আপনি সারাদিন যে কাজ করেছেন, সেই ফাইল এডমিনের কাছে জমা দিন
+      </div>
+      <div class="popup-buttons">
+        <button class="popup-btn confirm" id="closeRestrictedPopup">ঠিক আছে</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- রেজাল্ট পপআপ -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+      <div class="popup-header" id="popupTitle">ফলাফল</div>
+      <div class="popup-message" id="popupMessage"></div>
+      <div class="popup-buttons">
+        <button class="popup-btn confirm" id="popupConfirm">ঠিক আছে</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ফায়ারবেস কনফিগারেশন
+      const firebaseConfig = {
+        apiKey: "AIzaSyCI4HPJ_mqhqmDjKHQr3Cd302rO2Tud1Go",
+        authDomain: "mtwork-fc469.firebaseapp.com",
+        databaseURL: "https://mtwork-fc469-default-rtdb.firebaseio.com",
+        projectId: "mtwork-fc469",
+        storageBucket: "mtwork-fc469.firebasestorage.app",
+        messagingSenderId: "351935919939",
+        appId: "1:351935919939:web:7ad33f6c3e6e4de26f21f6"
+      };
+
+      // ফায়ারবেস শুরু
+      let db;
+      try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.database();
+        console.log("✅ Firebase সংযুক্ত");
+      } catch (e) {
+        console.error("❌ Firebase ত্রুটি:", e);
+      }
+
+      // ডোম এলিমেন্টস
+      const bulkInput = document.getElementById('bulkInput');
+      const submitBtn = document.getElementById('submitBtn');
+      const currentDateElement = document.getElementById('currentDate');
+      const timeNotice = document.getElementById('timeNotice');
+      const timeRemaining = document.getElementById('timeRemaining');
+      const restrictedPopup = document.getElementById('restrictedPopup');
+      const closeRestrictedPopup = document.getElementById('closeRestrictedPopup');
+      const popupOverlay = document.getElementById('popupOverlay');
+      const popupTitle = document.getElementById('popupTitle');
+      const popupMessage = document.getElementById('popupMessage');
+      const popupConfirm = document.getElementById('popupConfirm');
+
+      // আজকের তারিখ
+      const TODAY_DATE = new Date().getDate().toString();
+      if (currentDateElement) currentDateElement.textContent = TODAY_DATE;
+
+      // ফাংশন: রেস্ট্রিক্টেড টাইম চেক (রাত ৯টা-১২টা)
+      function isRestrictedTime() {
+        const hours = new Date().getHours();
+        return hours >= 21 && hours < 24;
+      }
+
+      // ফাংশন: টাইম রিমেইনিং (বাংলায়)
+      function getBanglaTimeRemaining() {
+        const now = new Date();
+        const hours = now.getHours();
+        
+        if (hours < 21) {
+          const target = new Date();
+          target.setHours(21, 0, 0, 0);
+          const diff = target - now;
+          const h = Math.floor(diff / 3600000);
+          const m = Math.floor((diff % 3600000) / 60000);
+          const s = Math.floor((diff % 60000) / 1000);
+          return { type: 'before', hours: h, minutes: m, seconds: s };
+        } else {
+          const target = new Date();
+          target.setDate(target.getDate() + 1);
+          target.setHours(0, 0, 0, 0);
+          const diff = target - now;
+          const h = Math.floor(diff / 3600000);
+          const m = Math.floor((diff % 3600000) / 60000);
+          const s = Math.floor((diff % 60000) / 1000);
+          return { type: 'restricted', hours: h, minutes: m, seconds: s };
+        }
+      }
+
+      // ফাংশন: টাইম নোটিশ আপডেট
+      function updateTimeNotice() {
+        const restricted = isRestrictedTime();
+        const remaining = getBanglaTimeRemaining();
+        
+        if (!timeNotice || !timeRemaining || !submitBtn) return;
+
+        if (restricted) {
+          timeNotice.textContent = '🔴 সাবমিশন বন্ধ (রাত ৯টা - ১২টা)';
+          timeNotice.classList.add('restricted');
+          submitBtn.classList.add('restricted-btn');
+          submitBtn.disabled = true;
+          timeRemaining.innerHTML = `📛 খুলতে: <span class="time-highlight">${remaining.hours}ঘ ${remaining.minutes}ম ${remaining.seconds}সে</span> বাকি`;
+          timeRemaining.style.display = 'block';
+        } else {
+          timeNotice.textContent = '🟢 আজকের কাজ চলছে - রাত ৯টায় বন্ধ হবে';
+          timeNotice.classList.remove('restricted');
+          submitBtn.classList.remove('restricted-btn');
+          submitBtn.disabled = false;
+          timeRemaining.innerHTML = `⏳ আজকের কাজ বন্ধ হবে: <span class="time-highlight">${remaining.hours}ঘ ${remaining.minutes}ম ${remaining.seconds}সে</span> পরে`;
+          timeRemaining.style.display = 'block';
+        }
+      }
+
+      // ফাংশন: বাল্ক ডাটা পার্স করা
+      function parseBulkData(inputText) {
+        const lines = inputText.split(/\r?\n/).map(line => line.trim()).filter(line => line !== '');
+        const parsedData = [];
+        const errors = [];
+
+        lines.forEach((line, index) => {
+          const parts = line.split('|').map(part => part.trim());
+          
+          if (parts.length < 3) {
+            errors.push(`❌ লাইন ${index + 1}: কমপক্ষে ৩টি অংশ (ইউজারনেম|পাসওয়ার্ড|কুকিজ) থাকতে হবে।`);
+            return;
+          }
+
+          const username = parts[0];
+          const password = parts[1];
+          const cookie = parts.slice(2).join('|');
+
+          if (!username || !password || !cookie) {
+            errors.push(`❌ লাইন ${index + 1}: ইউজারনেম, পাসওয়ার্ড বা কুকিজ ফাঁকা রাখা যাবে না।`);
+            return;
+          }
+
+          parsedData.push({
+            username,
+            password,
+            cookie,
+            line: index + 1
+          });
+        });
+
+        return { parsedData, errors };
+      }
+
+      // ফাংশন: ভ্যালিডেশন
+      function validateParsedData(parsedData) {
+        const errors = [];
+        const validData = [];
+
+        if (parsedData.length === 0) {
+          errors.push("❌ কোনো বৈধ ডাটা পাওয়া যায়নি।");
+          return { valid: false, validData: [], errors };
+        }
+
+        for (const item of parsedData) {
+          if (!item.password.includes(TODAY_DATE)) {
+            errors.push(`❌ লাইন ${item.line}: পাসওয়ার্ডে আজকের তারিখ (${TODAY_DATE}) থাকতে হবে।`);
+            continue;
+          }
+          validData.push(item);
+        }
+
+        if (validData.length === 0) {
+          errors.push("❌ তারিখ যাচাইয়ে কোনো ডাটা বৈধ নয়।");
+        }
+
+        return {
+          valid: validData.length > 0,
+          validData,
+          errors
+        };
+      }
+
+      // পপআপ ফাংশন
+      function showPopup(type, title, message) {
+        if (!popupTitle || !popupMessage || !popupOverlay) return;
+        popupTitle.textContent = title;
+        popupTitle.className = 'popup-header ' + type;
+        popupMessage.textContent = message;
+        popupOverlay.classList.add('active');
+      }
+
+      function hidePopup() {
+        if (popupOverlay) popupOverlay.classList.remove('active');
+      }
+
+      // সাবমিট হ্যান্ডলার
+      async function handleSubmission() {
+        try {
+          if (bulkInput) bulkInput.classList.remove('error-border');
+
+          if (isRestrictedTime()) {
+            return;
+          }
+
+          const rawInput = bulkInput.value.trim();
+          
+          if (!rawInput) {
+            bulkInput.classList.add('error-border');
+            showPopup('error', '❌ ভুল', 'ইনপুট বক্স ফাঁকা রাখা যাবে না।');
+            return;
+          }
+
+          const { parsedData, errors: parseErrors } = parseBulkData(rawInput);
+          
+          if (parseErrors.length > 0) {
+            bulkInput.classList.add('error-border');
+            showPopup('error', '❌ ফরম্যাট ভুল', parseErrors.join('\n'));
+            return;
+          }
+
+          const validation = validateParsedData(parsedData);
+          
+          if (!validation.valid) {
+            bulkInput.classList.add('error-border');
+            showPopup('error', '❌ যাচাই ব্যর্থ', validation.errors.join('\n'));
+            return;
+          }
+
+          if (!db) {
+            showPopup('error', '🔥 ত্রুটি', 'Firebase সংযোগ নেই। নেটওয়ার্ক চেক করুন।');
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '⏳ প্রসেসিং...';
+
+          const timestamp = new Date().toISOString();
+          const timestamp_now = Date.now();
+          const updates = {};
+          let savedCount = 0;
+
+          for (let i = 0; i < validation.validData.length; i++) {
+            const item = validation.validData[i];
+            const safeKey = item.username.replace(/[.#$\[\]\/]/g, '_');
+            const submissionId = `ig_${timestamp_now}_${safeKey}_${i}`;
+
+            updates[`instagram_2fa_submissions/${submissionId}`] = {
+              username: item.username,
+              password: item.password,
+              cookie: item.cookie,
+              submitted_at: timestamp,
+              date_used: TODAY_DATE
+            };
+
+            const usedId = `used_${timestamp_now}_${safeKey}_${i}`;
+            updates[`instagram_used_usernames/${usedId}`] = {
+              username: item.username,
+              submitted_at: timestamp,
+              submission_id: submissionId
+            };
+            savedCount++;
+          }
+
+          await db.ref().update(updates);
+          
+          showPopup('success', '✅ সফল!', `${savedCount}টি অ্যাকাউন্ট সংরক্ষিত হয়েছে`);
+          bulkInput.value = '';
+
+        } catch (error) {
+          showPopup('error', '🔥 ত্রুটি', error.message || 'সাবমিট করতে সমস্যা হয়েছে');
+        } finally {
+          setTimeout(() => {
+            if (!isRestrictedTime() && submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = 'জমা দিন';
+            }
+          }, 1500);
+        }
+      }
+
+      // ইভেন্ট লিসেনার
+      if (submitBtn) submitBtn.addEventListener('click', handleSubmission);
+      if (popupConfirm) popupConfirm.addEventListener('click', hidePopup);
+      if (closeRestrictedPopup) {
+        closeRestrictedPopup.addEventListener('click', () => {
+          restrictedPopup.classList.remove('active');
+        });
+      }
+      
+      if (popupOverlay) {
+        popupOverlay.addEventListener('click', (e) => {
+          if (e.target === popupOverlay) hidePopup();
+        });
+      }
+      
+      if (restrictedPopup) {
+        restrictedPopup.addEventListener('click', (e) => {
+          if (e.target === restrictedPopup) {
+            restrictedPopup.classList.remove('active');
+          }
+        });
+      }
+
+      updateTimeNotice();
+      setInterval(updateTimeNotice, 1000);
+
+      setTimeout(function() {
+        if (isRestrictedTime() && restrictedPopup) {
+          restrictedPopup.classList.add('active');
+        }
+      }, 1000);
+
+      console.log("✅ সিস্টেম লোড সম্পূর্ণ (300px হাইট)");
+    })();
+  </script>
+</body>
+</html>
