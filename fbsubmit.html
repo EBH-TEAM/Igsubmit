@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>EBH TEAM - INSTAGRAM COOKIE</title>
+  <title>EBH TEAM - INSTAGRAM 2FA </title>
   <style>
     /* পুরানো স্টাইল ঠিক রাখুন - ব্রাইটনেস বাড়ানো */
     :root {
@@ -531,7 +531,7 @@
       <div class="logo-container">
         <div class="logo-icon">📸</div>
         <div class="logo-text">
-          IG COOKIE
+          INSTRAGRAM 2FA
           <div class="logo-badge">EBH</div>
         </div>
       </div>
@@ -540,21 +540,21 @@
     <!-- তিনটি ইনপুট বক্স - সবকটি বাধ্যতামূলক -->
     <div class="input-container">
       <div class="input-box">
-        <div class="box-header">📧 ইউজারনেম</div>
+        <div class="box-header">📧 USERNAME</div>
         <textarea class="box-textarea" id="usernameInput" 
           placeholder="প্রতি লাইনে একটি ইউজারনেম লিখুন&#10;&#10;(বাধ্যতামূলক)" wrap="off"></textarea>
       </div>
 
       <div class="input-box">
-        <div class="box-header">🔑 পাসওয়ার্ড</div>
+        <div class="box-header">🔑 PASSWARD</div>
         <textarea class="box-textarea" id="passwordInput" 
           placeholder="প্রতি লাইনে একটি পাসওয়ার্ড লিখুন&#10;&#10;অবশ্যই আজকের তারিখ থাকতে হবে&#10;(বাধ্যতামূলক)" wrap="off"></textarea>
       </div>
 
       <div class="input-box">
-        <div class="box-header">🍪 কুকিজ</div>
+        <div class="box-header">🍪 2FA KAY</div>
         <textarea class="box-textarea" id="cookieInput" 
-          placeholder="প্রতি লাইনে কুকিজ লিখুন&#10;&#10;(বাধ্যতামূলক - ফাঁকা রাখা যাবে না)" wrap="off"></textarea>
+          placeholder="প্রতি লাইনে 2FA কুকিজ লিখুন&#10;&#10;(বাধ্যতামূলক - 2FA কুকি দিতেই হবে)" wrap="off"></textarea>
       </div>
     </div>
 
@@ -575,7 +575,7 @@
     </div>
 
     <div class="output-section">
-      <div class="output-text">EBH ইন্সটাগ্রাম সিস্টেম</div>
+      <div class="output-text">EBH_TEAM IS BEST</div>
     </div>
   </div>
 
@@ -601,6 +601,18 @@
       <div class="popup-message" id="popupMessage"></div>
       <div class="popup-buttons">
         <button class="popup-btn confirm" id="popupConfirm">ঠিক আছে</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ডুপ্লিকেট কনফার্মেশন পপআপ (নতুন) -->
+  <div class="popup-overlay" id="duplicatePopup">
+    <div class="popup-content">
+      <div class="popup-header warning" id="duplicatePopupTitle">⚠️ ডুপ্লিকেট ইউজারনেম</div>
+      <div class="popup-message" id="duplicatePopupMessage"></div>
+      <div class="popup-buttons">
+        <button class="popup-btn confirm" id="duplicateConfirm">শুধু নতুন গুলো সাবমিট করুন</button>
+        <button class="popup-btn confirm" id="duplicateCancel" style="background: #444;">বাতিল</button>
       </div>
     </div>
   </div>
@@ -642,6 +654,20 @@
       const popupTitle = document.getElementById('popupTitle');
       const popupMessage = document.getElementById('popupMessage');
       const popupConfirm = document.getElementById('popupConfirm');
+      
+      // নতুন ডুপ্লিকেট পপআপ এলিমেন্টস
+      const duplicatePopup = document.getElementById('duplicatePopup');
+      const duplicatePopupMessage = document.getElementById('duplicatePopupMessage');
+      const duplicateConfirm = document.getElementById('duplicateConfirm');
+      const duplicateCancel = document.getElementById('duplicateCancel');
+
+      // গ্লোবাল ভেরিয়েবল (ডুপ্লিকেট ডাটা রাখার জন্য)
+      let pendingSubmission = {
+        usernames: [],
+        passwords: [],
+        cookies: [],
+        uniqueIndices: []
+      };
 
       // আজকের তারিখ
       const TODAY_DATE = new Date().getDate().toString();
@@ -722,9 +748,9 @@
           passwordInput.classList.remove('error-border');
         }
         
-        // কুকিজ চেক - বাধ্যতামূলক
+        // কুকিজ চেক - বাধ্যতামূলক (2FA কুকি)
         if (cookies.length === 0) {
-          errors.push("❌ কুকিজ দিতে হবে (ফাঁকা রাখা যাবে না)");
+          errors.push("❌ 2FA কুকিজ দিতে হবে (ফাঁকা রাখা যাবে না)");
           cookieInput.classList.add('error-border');
         } else {
           cookieInput.classList.remove('error-border');
@@ -736,7 +762,7 @@
             errors.push(`❌ ইউজারনেম (${usernames.length}) এবং পাসওয়ার্ড (${passwords.length}) এর সংখ্যা একই হতে হবে`);
           }
           if (usernames.length !== cookies.length) {
-            errors.push(`❌ ইউজারনেম (${usernames.length}) এবং কুকিজ (${cookies.length}) এর সংখ্যা একই হতে হবে`);
+            errors.push(`❌ ইউজারনেম (${usernames.length}) এবং 2FA কুকিজ (${cookies.length}) এর সংখ্যা একই হতে হবে`);
           }
         }
         
@@ -754,7 +780,7 @@
         };
       }
 
-      // ডুপ্লিকেট ইউজারনেম চেক করার ফাংশন
+      // ফাংশন: ডুপ্লিকেট ইউজারনেম চেক করার ফাংশন (বিস্তারিত তথ্য সহ)
       async function checkDuplicateUsernames(usernames) {
         try {
           // ফায়ারবেস থেকে সব ইউজার রেফারেন্স নেওয়া
@@ -763,32 +789,71 @@
           const usedData = snapshot.val() || {};
           
           // ব্যবহৃত ইউজারনেমের সেট বানানো (কেস ইন্সেন্সিটিভ)
-          const usedUsernamesSet = new Set();
+          const usedUsernamesMap = new Map(); // ইউজারনেম -> টাইমস্ট্যাম্প
+          
           Object.values(usedData).forEach(item => {
             if (item && item.username) {
-              usedUsernamesSet.add(item.username.toLowerCase().trim());
+              const normalized = item.username.toLowerCase().trim();
+              usedUsernamesMap.set(normalized, {
+                original: item.username,
+                submitted_at: item.submitted_at || 'অজানা'
+              });
             }
           });
 
-          // ডুপ্লিকেট চেক করা
-          const duplicates = [];
+          // ডুপ্লিকেট চেক করা - বিস্তারিত তথ্য সহ
+          const duplicateDetails = [];
           const uniqueUsernames = [];
+          const duplicateIndices = [];
           
-          for (const username of usernames) {
+          usernames.forEach((username, index) => {
             const normalizedUsername = username.toLowerCase().trim();
             
-            if (usedUsernamesSet.has(normalizedUsername)) {
-              duplicates.push(username);
+            if (usedUsernamesMap.has(normalizedUsername)) {
+              const duplicateInfo = usedUsernamesMap.get(normalizedUsername);
+              duplicateDetails.push({
+                line: index + 1,
+                username: username,
+                originalUsername: duplicateInfo.original,
+                submitted_at: duplicateInfo.submitted_at
+              });
+              duplicateIndices.push(index);
             } else {
               uniqueUsernames.push(username);
             }
-          }
+          });
           
-          return { duplicates, uniqueUsernames };
+          return { 
+            duplicateDetails, 
+            uniqueUsernames,
+            duplicateIndices,
+            allDuplicates: duplicateIndices.length === usernames.length
+          };
         } catch (error) {
           console.error("ডুপ্লিকেট চেক করতে ত্রুটি:", error);
           throw error;
         }
+      }
+
+      // ফাংশন: ডুপ্লিকেট পপআপ দেখানো
+      function showDuplicatePopup(duplicateDetails, uniqueCount, totalCount) {
+        if (!duplicatePopup || !duplicatePopupMessage) return;
+        
+        // ডুপ্লিকেট ইউজারনেমের তালিকা তৈরি
+        let duplicateListHtml = '';
+        duplicateDetails.forEach(d => {
+          duplicateListHtml += `🔸 লাইন ${d.line}: "${d.username}"\n`;
+        });
+        
+        const message = `⚠️ নিচের ইউজারনেমগুলো আগেই সাবমিট করা হয়েছে:\n\n${duplicateListHtml}\n📊 মোট ${totalCount}টির মধ্যে ${duplicateDetails.length}টি ডুপ্লিকেট\n✅ বাকি ${uniqueCount}টি নতুন অ্যাকাউন্ট সাবমিট করা যাবে।\n\nআপনি কি শুধু নতুন ${uniqueCount}টি অ্যাকাউন্ট সাবমিট করতে চান?`;
+        
+        duplicatePopupMessage.textContent = message;
+        duplicatePopup.classList.add('active');
+      }
+
+      // ফাংশন: ডুপ্লিকেট পপআপ লুকানো
+      function hideDuplicatePopup() {
+        if (duplicatePopup) duplicatePopup.classList.remove('active');
       }
 
       // পপআপ ফাংশন
@@ -802,6 +867,47 @@
 
       function hidePopup() {
         if (popupOverlay) popupOverlay.classList.remove('active');
+      }
+
+      // ফাংশন: ফায়ারবেসে ডাটা সাবমিট করার ফাংশন
+      async function submitToFirebase(usernames, passwords, cookies) {
+        try {
+          const timestamp = new Date().toISOString();
+          const timestamp_now = Date.now();
+          const updates = {};
+          let savedCount = 0;
+          const failedUsernames = [];
+
+          for (let i = 0; i < usernames.length; i++) {
+            const username = usernames[i];
+            const safeKey = username.replace(/[.#$\[\]\/]/g, '_');
+            const submissionId = `ig_${timestamp_now}_${safeKey}_${i}`;
+
+            // 2FA কুকি সহ সেভ করা হচ্ছে
+            updates[`instagram_2fa_submissions/${submissionId}`] = {
+              username: username,
+              password: passwords[i],
+              cookie_2fa: cookies[i], // 2FA কুকি হিসেবে সংরক্ষণ
+              submitted_at: timestamp,
+              date_used: TODAY_DATE,
+              has_2fa: true
+            };
+
+            const usedId = `used_${timestamp_now}_${safeKey}_${i}`;
+            updates[`instagram_used_usernames/${usedId}`] = {
+              username: username,
+              submitted_at: timestamp,
+              submission_id: submissionId
+            };
+            savedCount++;
+          }
+
+          await db.ref().update(updates);
+          
+          return { success: true, savedCount, failedUsernames };
+        } catch (error) {
+          throw error;
+        }
       }
 
       // সাবমিট হ্যান্ডলার
@@ -837,51 +943,61 @@
 
           // ডুপ্লিকেট চেক
           try {
-            const { duplicates, uniqueUsernames } = await checkDuplicateUsernames(usernames);
+            const { duplicateDetails, uniqueUsernames, duplicateIndices, allDuplicates } = await checkDuplicateUsernames(usernames);
             
             // যদি সবগুলো ইউজারনেম ডুপ্লিকেট হয়
-            if (uniqueUsernames.length === 0) {
-              showPopup('warning', '⚠️ ডুপ্লিকেট', 'আপনার দেওয়া সবগুলো ইউজারনেম আগেই সাবমিট করা হয়েছে।');
+            if (allDuplicates) {
+              let duplicateList = '';
+              duplicateDetails.forEach(d => {
+                duplicateList += `• লাইন ${d.line}: ${d.username}\n`;
+              });
+              
+              showPopup('warning', '⚠️ সম্পূর্ণ ডুপ্লিকেট', 
+                `আপনার দেওয়া সবগুলো ইউজারনেম (${usernames.length}টি) আগেই সাবমিট করা হয়েছে:\n\n${duplicateList}`);
+              
               submitBtn.disabled = false;
               submitBtn.innerHTML = 'জমা দিন';
               return;
             }
             
             // যদি কিছু ডুপ্লিকেট পাওয়া যায়
-            if (duplicates.length > 0) {
-              const duplicateList = duplicates.join('\n• ');
-              const confirmMessage = `⚠️ নিচের ইউজারনেমগুলো আগেই সাবমিট করা হয়েছে:\n• ${duplicateList}\n\nবাকি ${uniqueUsernames.length}টি অ্যাকাউন্ট কি সাবমিট করবেন?`;
+            if (duplicateDetails.length > 0) {
+              // পেন্ডিং ডাটা সেভ করা
+              pendingSubmission = {
+                usernames: usernames,
+                passwords: passwords,
+                cookies: cookies,
+                uniqueIndices: usernames.reduce((indices, username, index) => {
+                  if (!duplicateIndices.includes(index)) {
+                    indices.push(index);
+                  }
+                  return indices;
+                }, [])
+              };
               
-              // ব্যবহারকারীর কাছ থেকে নিশ্চিতকরণ নেওয়া
-              if (!confirm(confirmMessage)) {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = 'জমা দিন';
-                return;
-              }
+              // ডুপ্লিকেট পপআপ দেখানো
+              showDuplicatePopup(duplicateDetails, uniqueUsernames.length, usernames.length);
               
-              // ইউনিক ইউজারনেমগুলোর জন্য ইনডেক্স বের করা
-              const indicesToSubmit = [];
-              usernames.forEach((username, index) => {
-                if (uniqueUsernames.includes(username)) {
-                  indicesToSubmit.push(index);
-                }
-              });
-              
-              // শুধুমাত্র ইউনিক ইউজারনেমগুলোর ডাটা সাবমিট করা
-              await submitToFirebase(
-                indicesToSubmit.map(i => usernames[i]),
-                indicesToSubmit.map(i => passwords[i]),
-                indicesToSubmit.map(i => cookies[i])
-              );
-              
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = 'জমা দিন';
               return;
             }
             
             // যদি কোন ডুপ্লিকেট না থাকে, সবগুলো সাবমিট
-            await submitToFirebase(usernames, passwords, cookies);
+            const result = await submitToFirebase(usernames, passwords, cookies);
+            
+            if (result.success) {
+              showPopup('success', '✅ সফল!', `${result.savedCount}টি অ্যাকাউন্ট সংরক্ষিত হয়েছে`);
+              
+              // ইনপুট ফিল্ড খালি
+              usernameInput.value = '';
+              passwordInput.value = '';
+              cookieInput.value = '';
+            }
             
           } catch (error) {
             showPopup('error', '🔥 ত্রুটি', error.message || 'ডুপ্লিকেট চেক করতে সমস্যা হয়েছে');
+          } finally {
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'জমা দিন';
           }
@@ -893,56 +1009,62 @@
         }
       }
 
-      // ফায়ারবেসে ডাটা সাবমিট করার ফাংশন
-      async function submitToFirebase(usernames, passwords, cookies) {
+      // ডুপ্লিকেট কনফার্ম হ্যান্ডলার - শুধু নতুন গুলো সাবমিট
+      async function handleDuplicateConfirm() {
         try {
-          const timestamp = new Date().toISOString();
-          const timestamp_now = Date.now();
-          const updates = {};
-          let savedCount = 0;
-
-          for (let i = 0; i < usernames.length; i++) {
-            const username = usernames[i];
-            const safeKey = username.replace(/[.#$\[\]\/]/g, '_');
-            const submissionId = `ig_${timestamp_now}_${safeKey}_${i}`;
-
-            updates[`instagram_2fa_submissions/${submissionId}`] = {
-              username: username,
-              password: passwords[i],
-              cookie: cookies[i],
-              submitted_at: timestamp,
-              date_used: TODAY_DATE
-            };
-
-            const usedId = `used_${timestamp_now}_${safeKey}_${i}`;
-            updates[`instagram_used_usernames/${usedId}`] = {
-              username: username,
-              submitted_at: timestamp,
-              submission_id: submissionId
-            };
-            savedCount++;
+          hideDuplicatePopup();
+          
+          const { usernames, passwords, cookies, uniqueIndices } = pendingSubmission;
+          
+          if (uniqueIndices.length === 0) {
+            showPopup('warning', '⚠️ কোন নতুন ডাটা নেই', 'সাবমিট করার মতো কোন নতুন অ্যাকাউন্ট নেই।');
+            return;
           }
-
-          await db.ref().update(updates);
           
-          showPopup('success', '✅ সফল!', `${savedCount}টি অ্যাকাউন্ট সংরক্ষিত হয়েছে`);
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '⏳ নতুন গুলো সাবমিট হচ্ছে...';
           
-          // ইনপুট ফিল্ড খালি
-          usernameInput.value = '';
-          passwordInput.value = '';
-          cookieInput.value = '';
-
+          // শুধু ইউনিক ইন্ডেক্সগুলোর ডাটা নেওয়া
+          const uniqueUsernames = uniqueIndices.map(i => usernames[i]);
+          const uniquePasswords = uniqueIndices.map(i => passwords[i]);
+          const uniqueCookies = uniqueIndices.map(i => cookies[i]);
+          
+          // নতুন গুলো সাবমিট
+          const result = await submitToFirebase(uniqueUsernames, uniquePasswords, uniqueCookies);
+          
+          if (result.success) {
+            showPopup('success', '✅ সফল!', 
+              `${result.savedCount}টি নতুন অ্যাকাউন্ট সংরক্ষিত হয়েছে\n(ডুপ্লিকেট ${usernames.length - uniqueIndices.length}টি বাদ দেওয়া হয়েছে)`);
+            
+            // ইনপুট ফিল্ড খালি
+            usernameInput.value = '';
+            passwordInput.value = '';
+            cookieInput.value = '';
+          }
+          
         } catch (error) {
-          throw error;
+          showPopup('error', '🔥 ত্রুটি', error.message || 'সাবমিট করতে সমস্যা হয়েছে');
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = 'জমা দিন';
+          pendingSubmission = { usernames: [], passwords: [], cookies: [], uniqueIndices: [] };
         }
+      }
+
+      // ডুপ্লিকেট ক্যান্সেল হ্যান্ডলার
+      function handleDuplicateCancel() {
+        hideDuplicatePopup();
+        pendingSubmission = { usernames: [], passwords: [], cookies: [], uniqueIndices: [] };
       }
 
       // ইভেন্ট লিসেনার
       if (submitBtn) submitBtn.addEventListener('click', handleSubmission);
       if (popupConfirm) popupConfirm.addEventListener('click', hidePopup);
+      
+      // ডুপ্লিকেট পপআপ ইভেন্ট
+      if (duplicateConfirm) duplicateConfirm.addEventListener('click', handleDuplicateConfirm);
+      if (duplicateCancel) duplicateCancel.addEventListener('click', handleDuplicateCancel);
+      
       if (closeRestrictedPopup) {
         closeRestrictedPopup.addEventListener('click', () => {
           restrictedPopup.classList.remove('active');
@@ -959,6 +1081,15 @@
         restrictedPopup.addEventListener('click', (e) => {
           if (e.target === restrictedPopup) {
             restrictedPopup.classList.remove('active');
+          }
+        });
+      }
+      
+      if (duplicatePopup) {
+        duplicatePopup.addEventListener('click', (e) => {
+          if (e.target === duplicatePopup) {
+            hideDuplicatePopup();
+            pendingSubmission = { usernames: [], passwords: [], cookies: [], uniqueIndices: [] };
           }
         });
       }
@@ -979,7 +1110,7 @@
         }
       }, 1000); // ১ সেকেন্ড পরে পপআপ দেখাবে
 
-      console.log("✅ সিস্টেম লোড সম্পূর্ণ");
+      console.log("✅ সিস্টেম লোড সম্পূর্ণ (2FA কুকি ও ডুপ্লিকেট ডিটেইল সহ)");
     })();
   </script>
 </body>
