@@ -79,7 +79,7 @@
         </div>
         
         <div class="input-wrapper">
-            <textarea id="usernames" class="username-input" placeholder="earningbyhabib&#10;coinbuyerebh&#10;faf90462"></textarea>
+            <textarea id="usernames" class="username-input" placeholder="username1&#10;username2&#10;username3"></textarea>
         </div>
 
         <div class="action-buttons">
@@ -97,24 +97,13 @@
     </div>
 
     <div class="stats-card">
-        <div class="stat-item total-stat">
-            <div class="stat-value" id="totalCount">0</div>
-            <div class="stat-label">মোট</div>
-        </div>
-        <div class="stat-item live-stat">
-            <div class="stat-value" id="liveCount">0</div>
-            <div class="stat-label">লাইভ</div>
-        </div>
-        <div class="stat-item dead-stat">
-            <div class="stat-value" id="deadCount">0</div>
-            <div class="stat-label">ডেড</div>
-        </div>
+        <div class="stat-item total-stat"><div class="stat-value" id="totalCount">0</div><div class="stat-label">মোট</div></div>
+        <div class="stat-item live-stat"><div class="stat-value" id="liveCount">0</div><div class="stat-label">লাইভ</div></div>
+        <div class="stat-item dead-stat"><div class="stat-value" id="deadCount">0</div><div class="stat-label">ডেড</div></div>
     </div>
 
     <div class="progress-container" id="progressContainer">
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
 
     <div class="status-bar" id="statusBar">
@@ -145,53 +134,41 @@ let checking = false;
 
 async function checkInstagramAccount(username) {
     try {
-        const url = `https://i.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(username)}`;
+        const apiUrl = `https://i.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(username)}`;
+        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
 
-        const response = await fetch(url, {
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0',
-                'Accept': 'application/json',
-                'Accept-Language': 'en-US,en;q=0.9',
-                'X-IG-App-ID': '936619743392459',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Referer': 'https://www.instagram.com/',
-                'Origin': 'https://www.instagram.com'
-            },
-            credentials: 'omit'
+        const response = await fetch(proxyUrl, {
+            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
         });
 
-        if (!response.ok) {
-            console.log(`${username} → HTTP Error: ${response.status}`);
-            return 'dead';
-        }
+        if (!response.ok) return 'dead';
 
-        const data = await response.json();
+        const text = await response.text();
+        const data = JSON.parse(text);
 
-        if (data && data.data && data.data.user && data.data.user !== null) {
+        if (data?.data?.user && data.data.user !== null) {
             console.log(`${username} → LIVE`);
             return 'live';
         } else {
-            console.log(`${username} → DEAD (user null or missing)`);
+            console.log(`${username} → DEAD`);
             return 'dead';
         }
-
-    } catch (err) {
-        console.error(`Error for ${username}:`, err.message);
+    } catch (e) {
+        console.error(username, e);
         return 'dead';
     }
 }
 
 async function checkAccounts() {
-    if (checking) return showStatus('চেক চলছে...', '⏳');
+    if (checking) return;
 
     const input = document.getElementById('usernames').value.trim();
-    const usernames = input.split('\n').map(u => u.trim()).filter(u => u);
+    const usernames = input.split('\n').map(u => u.trim()).filter(u => u.length > 0);
 
-    if (!usernames.length) return showStatus('ইউজারনেম লিখুন!', '⚠️');
+    if (usernames.length === 0) return showStatus('ইউজারনেম লিখুন!', '⚠️');
 
     checking = true;
-    liveList = [];
-    deadList = [];
+    liveList = []; deadList = [];
 
     document.getElementById('progressContainer').style.display = 'block';
     document.getElementById('statusBar').style.display = 'flex';
@@ -203,7 +180,7 @@ async function checkAccounts() {
 
     for (const username of usernames) {
         processed++;
-        const percent = Math.min(100, Math.round((processed / total) * 100));
+        const percent = Math.round((processed / total) * 100);
         document.getElementById('progressFill').style.width = percent + '%';
         document.getElementById('statusText').textContent = `\( {processed}/ \){total} - ${username}`;
 
@@ -219,8 +196,8 @@ async function checkAccounts() {
 
         updateStats();
 
-        // Anti-block delay: 2-4 seconds random
-        await new Promise(r => setTimeout(r, 2000 + Math.random() * 2000));
+        // স্লো + সেফ ডিলে (তোমার অনুরোধ অনুসারে)
+        await new Promise(r => setTimeout(r, 3500 + Math.random() * 1500));
     }
 
     checking = false;
@@ -230,20 +207,23 @@ async function checkAccounts() {
 }
 
 function addResult(username, status) {
-    const div = document.getElementById('results');
-    if (div.querySelector('.empty-state')) div.innerHTML = '';
+    const results = document.getElementById('results');
+    if (results.querySelector('.empty-state')) results.innerHTML = '';
 
     const item = document.createElement('div');
     item.className = 'result-item';
     item.innerHTML = `
         <div class="result-left">
-            <div class="result-icon \( {status === 'live' ? 'live-icon' : 'dead-icon'}"> \){status === 'live' ? '✅' : '❌'}</div>
+            <div class="result-icon ${status === 'live' ? 'live-icon' : 'dead-icon'}">
+                ${status === 'live' ? '✅' : '❌'}
+            </div>
             <span class="result-username">${username}</span>
         </div>
-        <div class="result-status-badge \( {status === 'live' ? 'live-badge' : 'dead-badge'}"> \){status === 'live' ? 'লাইভ' : 'ডেড'}</div>
+        <div class="result-status-badge ${status === 'live' ? 'live-badge' : 'dead-badge'}">
+            ${status === 'live' ? 'লাইভ' : 'ডেড'}
+        </div>
     `;
-    div.appendChild(item);
-    div.scrollTop = div.scrollHeight;
+    results.appendChild(item);
 }
 
 function updateStats() {
@@ -255,10 +235,7 @@ function updateStats() {
 function copyList(type) {
     const list = type === 'live' ? liveList : deadList;
     if (!list.length) return showStatus(`কোনো ${type} নেই!`, '⚠️');
-
-    navigator.clipboard.writeText(list.join('\n')).then(() => {
-        showStatus(`${list.length}টা ${type} কপি হয়েছে`, '✅');
-    }).catch(() => showStatus('কপি ফেল হয়েছে', '⚠️'));
+    navigator.clipboard.writeText(list.join('\n')).then(() => showStatus(`${list.length}টা ${type} কপি হয়েছে`, '✅'));
 }
 
 function showStatus(msg, icon) {
@@ -266,7 +243,7 @@ function showStatus(msg, icon) {
     document.getElementById('statusIcon').innerHTML = icon;
     document.getElementById('statusText').textContent = msg;
     bar.style.display = 'flex';
-    setTimeout(() => { if (!checking) bar.style.display = 'none'; }, 4000);
+    setTimeout(() => { if (!checking) bar.style.display = 'none'; }, 5000);
 }
 
 document.addEventListener('keydown', e => {
