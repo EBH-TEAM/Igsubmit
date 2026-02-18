@@ -2,342 +2,517 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Instagram Bulk Checker - Real Time</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Instagram Account Checker</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #fafafa;
-        padding: 20px;
+    * {
         margin: 0;
-    }
-    .container {
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        max-width: 700px;
-        margin: auto;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-        color: #262626;
-        margin: 0 0 20px 0;
-        border-bottom: 2px solid #dbdbdb;
-        padding-bottom: 10px;
-    }
-    textarea {
-        width: 100%;
-        height: 150px;
-        padding: 12px;
-        border: 1px solid #dbdbdb;
-        border-radius: 8px;
-        font-size: 14px;
+        padding: 0;
         box-sizing: border-box;
-        margin-bottom: 15px;
-        font-family: monospace;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
-    .button-group {
+    
+    body {
+        background: #121212;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+    
+    .app-container {
+        width: 100%;
+        max-width: 400px;
+        background: #ffffff;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    
+    /* হেডার */
+    .app-header {
+        background: linear-gradient(135deg, #f09433, #d62976, #962fbf);
+        padding: 20px 16px;
+        color: white;
+    }
+    
+    .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+    
+    .header-top h1 {
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: white;
+    }
+    
+    .instagram-icon {
+        font-size: 28px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+    
+    .header-sub {
+        font-size: 14px;
+        opacity: 0.9;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .dot {
+        width: 6px;
+        height: 6px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+    }
+    
+    /* ইনপুট সেকশন */
+    .input-section {
+        padding: 20px 16px 12px 16px;
+        background: white;
+    }
+    
+    .input-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #262626;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .input-label span {
+        color: #d62976;
+        font-size: 16px;
+    }
+    
+    .input-wrapper {
+        position: relative;
+        margin-bottom: 12px;
+    }
+    
+    .username-input {
+        width: 100%;
+        height: 110px;
+        background: #f8f9fa;
+        border: 1.5px solid #e0e0e0;
+        border-radius: 16px;
+        padding: 14px;
+        font-size: 14px;
+        font-family: 'Courier New', monospace;
+        resize: none;
+        transition: all 0.2s;
+    }
+    
+    .username-input:focus {
+        outline: none;
+        border-color: #d62976;
+        background: white;
+    }
+    
+    /* প্লেসহোল্ডার স্টাইল */
+    .username-input::placeholder {
+        color: #999;
+        font-size: 13px;
+        font-family: Arial, sans-serif;
+    }
+    
+    /* বাটন গ্রুপ */
+    .action-buttons {
         display: flex;
         gap: 10px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
+        margin-bottom: 12px;
     }
-    button {
-        padding: 12px 24px;
+    
+    .check-btn {
+        flex: 1;
+        background: linear-gradient(135deg, #f09433, #d62976, #962fbf);
+        color: white;
         border: none;
-        border-radius: 8px;
-        font-size: 14px;
+        border-radius: 40px;
+        padding: 16px 0;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(214, 41, 118, 0.3);
+        transition: all 0.2s;
+        letter-spacing: 0.5px;
+    }
+    
+    .check-btn:active {
+        transform: scale(0.97);
+        opacity: 0.9;
+    }
+    
+    /* কপি বাটন গ্রুপ */
+    .copy-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+    
+    .copy-btn {
+        flex: 1;
+        background: white;
+        border: 1.5px solid;
+        border-radius: 40px;
+        padding: 14px 0;
+        font-size: 15px;
         font-weight: 600;
         cursor: pointer;
-        transition: 0.2s;
-    }
-    .check-btn {
-        background: #0095f6;
-        color: white;
-    }
-    .check-btn:hover {
-        background: #1877f2;
-    }
-    .copy-live {
-        background: #00a86b;
-        color: white;
-    }
-    .copy-dead {
-        background: #ed4956;
-        color: white;
-    }
-    .clear-btn {
-        background: #8e8e8e;
-        color: white;
-    }
-    .stats {
         display: flex;
-        gap: 20px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s;
         background: #f8f9fa;
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 20px;
     }
+    
+    .copy-btn:active {
+        transform: scale(0.97);
+        background: #f0f0f0;
+    }
+    
+    .copy-live {
+        border-color: #00a86b;
+        color: #00a86b;
+    }
+    
+    .copy-live span {
+        font-size: 18px;
+    }
+    
+    .copy-dead {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+    
+    .copy-dead span {
+        font-size: 18px;
+    }
+    
+    /* স্ট্যাটস কার্ড */
+    .stats-card {
+        background: linear-gradient(145deg, #f8f9fa, #ffffff);
+        border-radius: 20px;
+        padding: 14px 16px;
+        margin: 8px 16px 16px 16px;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #f0f0f0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    
     .stat-item {
-        flex: 1;
         text-align: center;
+        flex: 1;
     }
+    
+    .stat-value {
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1.2;
+    }
+    
     .stat-label {
         font-size: 12px;
+        font-weight: 500;
         color: #8e8e8e;
-        margin-bottom: 5px;
+        margin-top: 2px;
     }
-    .stat-value {
-        font-size: 24px;
-        font-weight: bold;
-    }
-    .progress {
-        height: 4px;
-        background: #efefef;
-        border-radius: 2px;
-        margin: 15px 0;
-        overflow: hidden;
+    
+    .total-stat .stat-value { color: #262626; }
+    .live-stat .stat-value { color: #00a86b; }
+    .dead-stat .stat-value { color: #dc3545; }
+    
+    /* প্রোগ্রেস বার */
+    .progress-container {
+        padding: 0 16px;
+        margin-bottom: 12px;
         display: none;
     }
+    
     .progress-bar {
-        height: 100%;
-        background: #0095f6;
-        width: 0%;
-        transition: width 0.3s;
-    }
-    .results {
-        border: 1px solid #dbdbdb;
+        width: 100%;
+        height: 4px;
+        background: #f0f0f0;
         border-radius: 10px;
-        max-height: 400px;
-        overflow-y: auto;
+        overflow: hidden;
     }
-    .result-header {
-        display: grid;
-        grid-template-columns: 100px 1fr 100px;
-        padding: 12px 15px;
-        background: #f8f9fa;
-        border-bottom: 1px solid #dbdbdb;
-        font-weight: 600;
-        color: #262626;
+    
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #f09433, #d62976);
+        width: 0%;
+        transition: width 0.2s;
     }
-    .result-row {
-        display: grid;
-        grid-template-columns: 100px 1fr 100px;
-        padding: 10px 15px;
-        border-bottom: 1px solid #efefef;
+    
+    /* স্ট্যাটাস বার */
+    .status-bar {
+        background: #f0f7ff;
+        margin: 0 16px 12px 16px;
+        padding: 10px 14px;
+        border-radius: 40px;
+        display: flex;
         align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #0066cc;
+        display: none;
     }
-    .result-row:hover {
-        background: #fafafa;
+    
+    /* রেজাল্ট এরিয়া - ছোট সাইজ */
+    .results-area {
+        max-height: 250px;
+        overflow-y: auto;
+        padding: 0 16px 16px 16px;
     }
-    .status-badge {
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 600;
-        text-align: center;
+    
+    /* কমপ্যাক্ট রেজাল্ট আইটেম */
+    .result-item {
+        background: #f8f9fa;
+        border-radius: 30px;
+        padding: 8px 16px;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid #f0f0f0;
+        animation: fadeIn 0.2s ease;
     }
-    .status-live {
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .result-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+    }
+    
+    .result-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+    
+    .live-icon {
         background: #e8f5e9;
         color: #00a86b;
     }
-    .status-dead {
+    
+    .dead-icon {
         background: #ffebee;
-        color: #ed4956;
+        color: #dc3545;
     }
-    .checking {
-        background: #fff3e0;
-        color: #f2711c;
-    }
-    .username {
-        font-family: monospace;
+    
+    .result-username {
         font-weight: 600;
+        font-size: 14px;
+        color: #262626;
+        font-family: 'Courier New', monospace;
+        word-break: break-all;
     }
-    .info-text {
-        text-align: center;
-        color: #8e8e8e;
+    
+    .result-status-badge {
         font-size: 12px;
-        margin-top: 15px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 30px;
+        min-width: 55px;
+        text-align: center;
+    }
+    
+    .live-badge {
+        background: #e8f5e9;
+        color: #00a86b;
+    }
+    
+    .dead-badge {
+        background: #ffebee;
+        color: #dc3545;
+    }
+    
+    /* খালি স্টেট */
+    .empty-state {
+        text-align: center;
+        padding: 30px 20px;
+        color: #999;
+    }
+    
+    .empty-icon {
+        font-size: 40px;
+        margin-bottom: 8px;
+        opacity: 0.3;
+    }
+    
+    .empty-text {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    /* ফুটার */
+    .app-footer {
+        padding: 12px;
+        text-align: center;
+        border-top: 1px solid #f0f0f0;
+        background: #fafafa;
+    }
+    
+    .footer-text {
+        font-size: 11px;
+        color: #999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+    
+    .heart {
+        color: #d62976;
+        font-size: 12px;
     }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>📱 Instagram Real-Time Account Checker</h2>
-    
-    <textarea id="usernames" placeholder="প্রতি লাইনে একটি ইউজারনেম লিখুন&#10;যেমন:&#10;instagram&#10;facebook&#10;google"></textarea>
-
-    <div class="button-group">
-        <button class="check-btn" onclick="checkAccounts()">🔍 চেক করুন</button>
-        <button class="copy-live" onclick="copyResults('live')">✅ Live কপি</button>
-        <button class="copy-dead" onclick="copyResults('dead')">❌ Dead কপি</button>
-        <button class="clear-btn" onclick="clearAll()">🗑️ Clear</button>
+<div class="app-container">
+    <!-- হেডার -->
+    <div class="app-header">
+        <div class="header-top">
+            <h1>IG Checker</h1>
+            <div class="instagram-icon">📸</div>
+        </div>
+        <div class="header-sub">
+            <span class="dot"></span>
+            <span>শুধু Instagram একাউন্ট চেক করুন</span>
+        </div>
     </div>
 
-    <div class="stats">
-        <div class="stat-item">
-            <div class="stat-label">মোট ইউজার</div>
+    <!-- ইনপুট সেকশন -->
+    <div class="input-section">
+        <div class="input-label">
+            <span>📝</span> ইউজারনেম লিখুন
+        </div>
+        
+        <div class="input-wrapper">
+            <textarea id="usernames" class="username-input" placeholder="username-1&#10;username-2&#10;username-3"></textarea>
+        </div>
+
+        <!-- শুধু চেক বাটন (ছোট বাটন রিমুভ) -->
+        <div class="action-buttons">
+            <button class="check-btn" onclick="checkAccounts()">🔍 চেক করুন</button>
+        </div>
+
+        <!-- কপি বাটন (ক্লিয়ারলি বোঝা যায়) -->
+        <div class="copy-buttons">
+            <button class="copy-btn copy-live" onclick="copyList('live')">
+                <span>✅</span> লাইভ কপি করুন
+            </button>
+            <button class="copy-btn copy-dead" onclick="copyList('dead')">
+                <span>❌</span> ডেড কপি করুন
+            </button>
+        </div>
+    </div>
+
+    <!-- স্ট্যাটস -->
+    <div class="stats-card">
+        <div class="stat-item total-stat">
             <div class="stat-value" id="totalCount">0</div>
+            <div class="stat-label">মোট</div>
         </div>
-        <div class="stat-item">
-            <div class="stat-label">✅ Live</div>
+        <div class="stat-item live-stat">
             <div class="stat-value" id="liveCount">0</div>
+            <div class="stat-label">লাইভ</div>
         </div>
-        <div class="stat-item">
-            <div class="stat-label">❌ Dead</div>
+        <div class="stat-item dead-stat">
             <div class="stat-value" id="deadCount">0</div>
+            <div class="stat-label">ডেড</div>
         </div>
     </div>
 
-    <div class="progress" id="progress">
-        <div class="progress-bar" id="progressBar"></div>
+    <!-- প্রোগ্রেস বার -->
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
     </div>
 
-    <div class="results" id="results">
-        <div class="result-header">
-            <div>স্ট্যাটাস</div>
-            <div>ইউজারনেম</div>
-            <div>রেজাল্ট</div>
-        </div>
-        <div style="text-align: center; padding: 30px; color: #8e8e8e;">
-            ইউজারনেম লিখে "চেক করুন" বাটনে ক্লিক করুন
+    <!-- স্ট্যাটাস বার -->
+    <div class="status-bar" id="statusBar">
+        <span id="statusIcon">⏳</span>
+        <span id="statusText">চেক করা হচ্ছে...</span>
+    </div>
+
+    <!-- রেজাল্ট (কমপ্যাক্ট) -->
+    <div class="results-area" id="results">
+        <div class="empty-state">
+            <div class="empty-icon">📱</div>
+            <div class="empty-text">কোন রেজাল্ট নেই</div>
         </div>
     </div>
-    
-    <div class="info-text" id="info">⏱️ রিয়েল-টাইম Instagram API ব্যবহার করা হচ্ছে</div>
+
+    <!-- ফুটার -->
+    <div class="app-footer">
+        <div class="footer-text">
+            <span class="heart">❤️</span>
+            <span>Instagram Only • রিয়েল-টাইম চেক</span>
+            <span class="heart">❤️</span>
+        </div>
+    </div>
 </div>
 
 <script>
-let liveAccounts = [];
-let deadAccounts = [];
-let checkingActive = false;
+let liveList = [];
+let deadList = [];
+let checking = false;
 
-// Instagram API এন্ডপয়েন্ট
-const INSTAGRAM_API = 'https://www.instagram.com/api/v1/users/web_profile_info/';
-const INSTAGRAM_GRAPHQL = 'https://www.instagram.com/graphql/query/';
-
-// ইউজার এজেন্ট লিস্ট
-const USER_AGENTS = [
-    'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15'
-];
-
-// রিয়েল Instagram API কল
+// Instagram API
 async function checkInstagramAccount(username) {
     try {
-        // মেথড 1: Instagram Web Profile Info API
-        const result1 = await checkViaWebProfileInfo(username);
-        if (result1 === 'live') return 'live';
-        
-        // মেথড 2: Instagram GraphQL
-        const result2 = await checkViaGraphQL(username);
-        if (result2 === 'live') return 'live';
-        
-        // মেথড 3: Direct Profile Check
-        const result3 = await checkViaDirectProfile(username);
-        
-        return result3;
-        
-    } catch (error) {
-        console.error('Check error:', error);
-        return 'dead';
-    }
-}
-
-// মেথড 1: Web Profile Info API
-async function checkViaWebProfileInfo(username) {
-    try {
-        const response = await fetch(`${INSTAGRAM_API}?username=${username}`, {
-            headers: {
-                'User-Agent': USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)],
-                'Accept': 'application/json',
-                'X-IG-App-ID': '936619743392459',
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            if (data.data?.user?.id || data.user?.id) {
-                return 'live';
-            }
-        }
-        return 'dead';
-    } catch {
-        return 'dead';
-    }
-}
-
-// মেথড 2: GraphQL API
-async function checkViaGraphQL(username) {
-    try {
-        const response = await fetch(INSTAGRAM_GRAPHQL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'User-Agent': USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)],
-                'X-IG-App-ID': '936619743392459'
-            },
-            body: JSON.stringify({
-                query: `
-                    query {
-                        user(username: "${username}") {
-                            id
-                            username
-                            full_name
-                            is_private
-                            is_verified
-                            profile_pic_url
-                        }
-                    }
-                `
-            })
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            if (data.data?.user?.id) {
-                return 'live';
-            }
-        }
-        return 'dead';
-    } catch {
-        return 'dead';
-    }
-}
-
-// মেথড 3: Direct Profile Check
-async function checkViaDirectProfile(username) {
-    try {
+        // JSON API চেক
         const response = await fetch(`https://www.instagram.com/${username}/?__a=1&__d=1`, {
             headers: {
-                'User-Agent': USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)]
+                'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15',
+                'Accept': 'application/json'
             }
         });
         
+        if (response.ok) {
+            const data = await response.json();
+            if (data?.graphql?.user || data?.user) {
+                return 'live';
+            }
+        }
+        
+        // 404 চেক
         if (response.status === 404) {
             return 'dead';
         }
         
-        if (response.ok) {
-            const text = await response.text();
-            
-            // JSON পার্স করার চেষ্টা
-            try {
-                const data = JSON.parse(text);
-                if (data.graphql?.user?.id || data.user?.id) {
-                    return 'live';
-                }
-            } catch {
-                // JSON না হলে, HTML চেক করুন
-                if (text.includes('"id":') && text.includes('"username":"' + username + '"')) {
-                    return 'live';
-                }
+        // HTML চেক
+        const htmlResponse = await fetch(`https://www.instagram.com/${username}/`);
+        if (htmlResponse.ok) {
+            const html = await htmlResponse.text();
+            if (html.includes('"id":') && html.includes('"username":"' + username + '"')) {
+                return 'live';
             }
         }
         
-        // স্ট্যাটাস 200 OK কিন্তু কোন কন্টেন্ট নেই
         return 'dead';
         
     } catch {
@@ -345,189 +520,147 @@ async function checkViaDirectProfile(username) {
     }
 }
 
-// ইউজারের প্রোফাইল পিকচার চেক করুন
-async function checkProfilePicture(username) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        const timeout = setTimeout(() => {
-            img.src = '';
-            resolve('dead');
-        }, 3000);
-        
-        img.onload = () => {
-            clearTimeout(timeout);
-            resolve('live');
-        };
-        
-        img.onerror = () => {
-            clearTimeout(timeout);
-            resolve('dead');
-        };
-        
-        // হাই-রেজোলিউশন প্রোফাইল পিক URL
-        img.src = `https://www.instagram.com/${username}/?__a=1&_=${Date.now()}`;
-    });
-}
-
-// মেইন চেকিং ফাংশন
+// চেক করা শুরু
 async function checkAccounts() {
-    if (checkingActive) {
-        alert('চেকিং চলছে... দয়া করে অপেক্ষা করুন');
+    if (checking) {
+        showStatus('ইতিমধ্যে চেকিং চলছে...', '⏳');
         return;
     }
     
     const input = document.getElementById('usernames').value;
     const usernames = input.split('\n')
         .map(u => u.trim())
-        .filter(u => u && u.length > 0);
+        .filter(u => u.length > 0);
 
     if (usernames.length === 0) {
-        alert('কিছু ইউজারনেম লিখুন!');
+        showStatus('কিছু ইউজারনেম লিখুন!', '⚠️');
         return;
     }
 
-    // UI রিসেট
-    checkingActive = true;
-    liveAccounts = [];
-    deadAccounts = [];
+    checking = true;
+    liveList = [];
+    deadList = [];
     
-    document.getElementById('progress').style.display = 'block';
-    document.getElementById('info').innerHTML = 'চেকিং প্রক্রিয়াধীন... ⏳';
-    
-    // রেজাল্ট টেবিল রিসেট
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = `
-        <div class="result-header">
-            <div>স্ট্যাটাস</div>
-            <div>ইউজারনেম</div>
-            <div>রেজাল্ট</div>
-        </div>
-    `;
-    
-    // সব ইউজারকে "চেকিং" স্ট্যাটাসে দেখান
-    usernames.forEach(username => {
-        addResultRow(username, 'checking', 'চেকিং...');
-    });
+    // UI আপডেট
+    document.getElementById('progressContainer').style.display = 'block';
+    document.getElementById('statusBar').style.display = 'flex';
+    document.getElementById('results').innerHTML = '';
     
     updateStats();
     
     let processed = 0;
     const total = usernames.length;
     
-    // একে একে চেক করুন (প্যারালাল না করে)
+    // একে একে চেক
     for (let i = 0; i < usernames.length; i++) {
         const username = usernames[i];
         
         // প্রোগ্রেস আপডেট
         processed++;
-        const percentage = (processed / total) * 100;
-        document.getElementById('progressBar').style.width = percentage + '%';
-        document.getElementById('info').innerHTML = 
-            `চেকিং: ${processed}/${total} - ${username}`;
+        const percent = (processed / total) * 100;
+        document.getElementById('progressFill').style.width = percent + '%';
+        document.getElementById('statusText').innerHTML = `${processed}/${total} - ${username}`;
         
-        // একাউন্ট চেক করুন
+        // চেক
         const status = await checkInstagramAccount(username);
         
-        // রেজাল্ট আপডেট করুন
         if (status === 'live') {
-            liveAccounts.push(username);
-            updateResultRow(username, 'live', '✅ Live');
+            liveList.push(username);
+            addResult(username, 'live');
         } else {
-            deadAccounts.push(username);
-            updateResultRow(username, 'dead', '❌ Dead');
+            deadList.push(username);
+            addResult(username, 'dead');
         }
         
         updateStats();
         
-        // রেট লিমিট এড়াতে একটু বিরতি
+        // বিরতি
         if (i < usernames.length - 1) {
-            await new Promise(r => setTimeout(r, 500));
+            await new Promise(r => setTimeout(r, 200));
         }
     }
     
-    // সম্পন্ন
-    checkingActive = false;
-    document.getElementById('progress').style.display = 'none';
-    document.getElementById('info').innerHTML = 
-        `✅ চেকিং সম্পন্ন! ${liveAccounts.length}টি Live, ${deadAccounts.length}টি Dead পাওয়া গেছে`;
+    // শেষ
+    checking = false;
+    document.getElementById('progressContainer').style.display = 'none';
+    document.getElementById('statusBar').style.display = 'none';
+    
+    showStatus(`${liveList.length} লাইভ, ${deadList.length} ডেড পাওয়া গেছে`, '✅');
 }
 
-// রেজাল্ট রো যোগ করুন
-function addResultRow(username, status, statusText) {
+// কমপ্যাক্ট রেজাল্ট দেখান
+function addResult(username, status) {
     const resultsDiv = document.getElementById('results');
     
-    const row = document.createElement('div');
-    row.className = 'result-row';
-    row.id = `row-${username}`;
-    row.innerHTML = `
-        <div>
-            <span class="status-badge status-${status}">${statusText}</span>
-        </div>
-        <div class="username">${username}</div>
-        <div style="text-align: center;">-</div>
-    `;
+    // খালি স্টেট সরান
+    if (resultsDiv.querySelector('.empty-state')) {
+        resultsDiv.innerHTML = '';
+    }
     
-    resultsDiv.appendChild(row);
-}
-
-// রেজাল্ট রো আপডেট করুন
-function updateResultRow(username, status, statusText) {
-    const row = document.getElementById(`row-${username}`);
-    if (row) {
-        row.innerHTML = `
-            <div>
-                <span class="status-badge status-${status}">${statusText}</span>
-            </div>
-            <div class="username">${username}</div>
-            <div style="text-align: center;">
+    const item = document.createElement('div');
+    item.className = 'result-item';
+    item.innerHTML = `
+        <div class="result-left">
+            <div class="result-icon ${status === 'live' ? 'live-icon' : 'dead-icon'}">
                 ${status === 'live' ? '✅' : '❌'}
             </div>
-        `;
-    }
+            <span class="result-username">${username}</span>
+        </div>
+        <div class="result-status-badge ${status === 'live' ? 'live-badge' : 'dead-badge'}">
+            ${status === 'live' ? 'লাইভ' : 'ডেড'}
+        </div>
+    `;
+    
+    resultsDiv.appendChild(item);
 }
 
 function updateStats() {
-    document.getElementById('totalCount').textContent = liveAccounts.length + deadAccounts.length;
-    document.getElementById('liveCount').textContent = liveAccounts.length;
-    document.getElementById('deadCount').textContent = deadAccounts.length;
+    document.getElementById('totalCount').textContent = liveList.length + deadList.length;
+    document.getElementById('liveCount').textContent = liveList.length;
+    document.getElementById('deadCount').textContent = deadList.length;
 }
 
-function copyResults(type) {
-    const list = type === 'live' ? liveAccounts : deadAccounts;
+function copyList(type) {
+    const list = type === 'live' ? liveList : deadList;
     
     if (list.length === 0) {
-        alert(`কোনো ${type === 'live' ? 'Live' : 'Dead'} একাউন্ট নেই!`);
+        showStatus(`কোনো ${type === 'live' ? 'লাইভ' : 'ডেড'} আইডি নেই`, '⚠️');
         return;
     }
     
     const text = list.join('\n');
     navigator.clipboard.writeText(text).then(() => {
-        alert(`${list.length}টি ${type === 'live' ? 'Live' : 'Dead'} ইউজারনেম কপি হয়েছে!`);
+        showStatus(`${list.length}টি ${type === 'live' ? 'লাইভ' : 'ডেড'} আইডি কপি হয়েছে`, '✅');
     });
 }
 
-function clearAll() {
-    document.getElementById('usernames').value = '';
-    document.getElementById('results').innerHTML = `
-        <div class="result-header">
-            <div>স্ট্যাটাস</div>
-            <div>ইউজারনেম</div>
-            <div>রেজাল্ট</div>
-        </div>
-        <div style="text-align: center; padding: 30px; color: #8e8e8e;">
-            ইউজারনেম লিখে "চেক করুন" বাটনে ক্লিক করুন
-        </div>
-    `;
-    document.getElementById('progress').style.display = 'none';
-    document.getElementById('progressBar').style.width = '0%';
-    document.getElementById('info').innerHTML = '⏱️ রিয়েল-টাইম Instagram API ব্যবহার করা হচ্ছে';
+function showStatus(message, icon) {
+    document.getElementById('statusBar').style.display = 'flex';
+    document.getElementById('statusIcon').innerHTML = icon;
+    document.getElementById('statusText').innerHTML = message;
     
-    liveAccounts = [];
-    deadAccounts = [];
-    checkingActive = false;
-    
-    updateStats();
+    setTimeout(() => {
+        if (!checking) {
+            document.getElementById('statusBar').style.display = 'none';
+        }
+    }, 2000);
 }
+
+// ক্লিয়ার বাটনের জন্য (ঐচ্ছিক)
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.getElementById('usernames').value = '';
+        document.getElementById('results').innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📱</div>
+                <div class="empty-text">কোন রেজাল্ট নেই</div>
+            </div>
+        `;
+        liveList = [];
+        deadList = [];
+        updateStats();
+    }
+});
 </script>
 
 </body>
