@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>EBH TEAM - INSTAGRAM 2FA </title>
+  <title>EBH TEAM - INSTAGRAM 2FA</title>
   <style>
-    /* পুরানো স্টাইল ঠিক রাখুন - ব্রাইটনেস বাড়ানো */
+    /* পুরানো স্টাইল ঠিক রাখুন */
     :root {
-      --primary: #ff3385;      /* উজ্জ্বল গোলাপি */
+      --primary: #ff3385;
       --primary-dark: #e61a6b;
-      --secondary: #ff9933;     /* উজ্জ্বল কমলা */
+      --secondary: #ff9933;
       --secondary-dark: #ff8014;
-      --accent: #6b5fff;        /* উজ্জ্বল নীল */
+      --accent: #6b5fff;
       --accent-dark: #5445e6;
       --danger: #ff4d6d;
       --danger-dark: #e63e5a;
@@ -124,6 +124,151 @@
       50% { transform: rotate(10deg) scale(1.1); }
     }
 
+    /* System Status Bar */
+    .system-status-bar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .system-status-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .system-status-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 15px var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    .system-status-dot.off {
+      background: var(--danger);
+      box-shadow: 0 0 15px var(--danger);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    .system-status-text {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .system-status-text.on {
+      color: var(--success);
+    }
+
+    .system-status-text.off {
+      color: var(--danger);
+    }
+
+    /* Scrolling Message Ticker - ধীর স্পিড */
+    .message-ticker-container {
+      flex: 2;
+      min-width: 250px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 40px;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .message-ticker {
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+
+    .ticker-content {
+      display: inline-block;
+      animation: ticker-scroll 12s linear infinite; /* স্পিড কমিয়ে 12s করা হয়েছে */
+      font-size: 15px;
+      font-weight: 600;
+      background: var(--instagram-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(255, 51, 133, 0.5);
+      letter-spacing: 0.5px;
+      will-change: transform;
+    }
+
+    /* লেখাকে ডুপ্লিকেট করার জন্য স্পেশাল স্টাইল */
+    .ticker-content span {
+      display: inline-block;
+      margin-right: 30px;
+    }
+
+    .ticker-content.warning {
+      background: linear-gradient(45deg, #ff4d6d, #ff9933);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    @keyframes ticker-scroll {
+      0% { transform: translateX(0%); } /* 100% থেকে 0% করা হয়েছে */
+      100% { transform: translateX(-50%); } /* 50% সরালেই শেষ */
+      /* এতে লেখা শেষ হয়ে গেলে সাথে সাথে আবার শুরু হবে */
+    }
+
+    /* Hover effect - pause scrolling */
+    .message-ticker:hover .ticker-content {
+      animation-play-state: paused;
+    }
+
+    /* System Off Notice - বড় নোটিশ (আলাদা) */
+    .system-off-notice {
+      font-size: 20px;
+      font-weight: 900;
+      text-align: center;
+      padding: 25px 30px;
+      border-radius: 40px;
+      border: 3px solid var(--danger);
+      background: rgba(255, 77, 109, 0.2);
+      color: var(--danger);
+      max-width: 700px;
+      width: 100%;
+      margin: 15px auto;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 40px rgba(255, 77, 109, 0.4);
+      line-height: 1.8;
+      letter-spacing: 0.5px;
+      animation: noticePulse 2s infinite;
+    }
+
+    .system-off-notice i {
+      font-size: 28px;
+      margin-right: 15px;
+      color: var(--danger);
+    }
+
+    @keyframes noticePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 77, 109, 0.3); }
+      50% { transform: scale(1.02); box-shadow: 0 0 50px rgba(255, 77, 109, 0.6); }
+    }
+
     .input-container {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -188,7 +333,6 @@
       color: rgba(176, 196, 222, 0.4);
     }
 
-    /* এরর ইন্ডিকেটর */
     .error-border {
       border: 2px solid var(--error) !important;
       box-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
@@ -253,17 +397,6 @@
       animation: none;
     }
 
-    @keyframes noticePulse {
-      0%, 100% { 
-        transform: scale(1);
-        box-shadow: 0 0 15px rgba(255, 51, 133, 0.4);
-      }
-      50% { 
-        transform: scale(1.02);
-        box-shadow: 0 0 30px rgba(255, 51, 133, 0.7);
-      }
-    }
-
     .submit-btn {
       width: 100%;
       max-width: 320px;
@@ -287,7 +420,7 @@
       opacity: 1;
     }
 
-    .submit-btn.restricted-btn {
+    .submit-btn.system-off-btn {
       opacity: 0.5;
       cursor: not-allowed;
       filter: grayscale(80%);
@@ -307,11 +440,11 @@
       transition: left 0.5s;
     }
 
-    .submit-btn:hover:not(.restricted-btn)::before {
+    .submit-btn:hover:not(.system-off-btn)::before {
       left: 100%;
     }
 
-    .submit-btn:hover:not(.restricted-btn) {
+    .submit-btn:hover:not(.system-off-btn) {
       transform: translateY(-5px);
       box-shadow: 0 15px 30px rgba(255, 51, 133, 0.7);
     }
@@ -390,7 +523,6 @@
       50% { transform: translateY(-5px); }
     }
 
-    /* পপআপ স্টাইল */
     .popup-overlay {
       position: fixed;
       top: 0;
@@ -497,6 +629,8 @@
       .logo-icon { font-size: 32px; }
       .logo-text { font-size: 28px; }
       .logo-badge { right: -35px; font-size: 11px; padding: 3px 10px; }
+      .system-status-bar { flex-direction: column; align-items: flex-start; }
+      .message-ticker-container { width: 100%; }
       .input-container { gap: 8px; }
       .input-box { min-height: 180px; }
       .box-header { font-size: 14px; padding: 10px 12px; }
@@ -537,7 +671,29 @@
       </div>
     </div>
 
-    <!-- তিনটি ইনপুট বক্স - সবকটি বাধ্যতামূলক -->
+    <!-- System Status from Admin Panel -->
+    <div class="system-status-bar" id="systemStatusBar">
+      <div class="system-status-info">
+        <div class="system-status-dot" id="systemStatusDot"></div>
+        <div class="system-status-text" id="systemStatusText">সিস্টেম স্ট্যাটাস লোড হচ্ছে...</div>
+      </div>
+      
+      <!-- Scrolling Message Ticker (আলাদা) -->
+      <div class="message-ticker-container" id="messageTickerContainer">
+        <div class="message-ticker">
+          <div class="ticker-content" id="tickerContent">
+            <span>📢 EBH টিম থেকে নোটিশ লোড হচ্ছে...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Off Notice - বড় নোটিশ (আলাদা) -->
+    <div class="system-off-notice" id="systemOffNotice" style="display: none;">
+      <i>⚠️</i> <span id="systemOffMessage"></span>
+    </div>
+
+    <!-- তিনটি ইনপুট বক্স -->
     <div class="input-container">
       <div class="input-box">
         <div class="box-header">📧 USERNAME</div>
@@ -579,7 +735,7 @@
     </div>
   </div>
 
-  <!-- রেস্ট্রিক্টেড টাইম পপআপ (রাত ৯টা-১২টা) -->
+  <!-- রেস্ট্রিক্টেড টাইম পপআপ -->
   <div class="popup-overlay" id="restrictedPopup">
     <div class="popup-content">
       <div class="popup-header warning">⏰ সাবমিশন বন্ধ</div>
@@ -590,6 +746,17 @@
       </div>
       <div class="popup-buttons">
         <button class="popup-btn confirm" id="closeRestrictedPopup">ঠিক আছে</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Off Popup (Admin Control থেকে) -->
+  <div class="popup-overlay" id="systemOffPopup">
+    <div class="popup-content">
+      <div class="popup-header warning">⚠️ সিস্টেম বন্ধ</div>
+      <div class="popup-message" id="systemOffPopupMessage"></div>
+      <div class="popup-buttons">
+        <button class="popup-btn confirm" id="closeSystemOffPopup">ঠিক আছে</button>
       </div>
     </div>
   </div>
@@ -605,7 +772,7 @@
     </div>
   </div>
 
-  <!-- ডুপ্লিকেট কনফার্মেশন পপআপ (নতুন) -->
+  <!-- ডুপ্লিকেট কনফার্মেশন পপআপ -->
   <div class="popup-overlay" id="duplicatePopup">
     <div class="popup-content">
       <div class="popup-header warning" id="duplicatePopupTitle">⚠️ ডুপ্লিকেট ইউজারনেম</div>
@@ -655,31 +822,155 @@
       const popupMessage = document.getElementById('popupMessage');
       const popupConfirm = document.getElementById('popupConfirm');
       
-      // নতুন ডুপ্লিকেট পপআপ এলিমেন্টস
+      // System Control Elements
+      const systemStatusDot = document.getElementById('systemStatusDot');
+      const systemStatusText = document.getElementById('systemStatusText');
+      const tickerContent = document.getElementById('tickerContent');
+      const systemOffNotice = document.getElementById('systemOffNotice');
+      const systemOffMessage = document.getElementById('systemOffMessage');
+      const systemOffPopup = document.getElementById('systemOffPopup');
+      const systemOffPopupMessage = document.getElementById('systemOffPopupMessage');
+      const closeSystemOffPopup = document.getElementById('closeSystemOffPopup');
+      
+      // ডুপ্লিকেট পপআপ এলিমেন্টস
       const duplicatePopup = document.getElementById('duplicatePopup');
       const duplicatePopupMessage = document.getElementById('duplicatePopupMessage');
       const duplicateConfirm = document.getElementById('duplicateConfirm');
       const duplicateCancel = document.getElementById('duplicateCancel');
 
-      // গ্লোবাল ভেরিয়েবল (ডুপ্লিকেট ডাটা রাখার জন্য)
+      // গ্লোবাল ভেরিয়েবল
       let pendingSubmission = {
         usernames: [],
         passwords: [],
         cookies: [],
         uniqueIndices: []
       };
+      
+      // System Status Variables
+      let systemStatus = true; // true = ON, false = OFF
+      let systemOffReason = ""; // বড় নোটিশের জন্য
+      let systemTickerMessage = ""; // টিকার জন্য
 
       // আজকের তারিখ
       const TODAY_DATE = new Date().getDate().toString();
       if (currentDateElement) currentDateElement.textContent = TODAY_DATE;
 
-      // ফাংশন: রেস্ট্রিক্টেড টাইম চেক (রাত ৯টা-১২টা)
-      function isRestrictedTime() {
-        const hours = new Date().getHours();
-        return hours >= 21 && hours < 24; // 9pm (21) থেকে 12am (24) পর্যন্ত
+      // ফাংশন: System Status লোড করা (Admin Panel থেকে)
+      function loadSystemStatus() {
+        if (!db) return;
+        
+        db.ref("system_control").on("value", (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            systemStatus = data.status !== undefined ? data.status : true;
+            systemOffReason = data.off_reason || "";
+            systemTickerMessage = data.ticker_message || "";
+          } else {
+            systemStatus = true;
+            systemOffReason = "";
+            systemTickerMessage = "";
+          }
+          
+          // UI আপডেট
+          updateSystemUI();
+          console.log("System Status Updated:", systemStatus ? "ON" : "OFF");
+        }, (error) => {
+          console.error("System Status Load Error:", error);
+        });
       }
 
-      // ফাংশন: টাইম রিমেইনিং (বাংলায়)
+      // ফাংশন: System UI আপডেট
+      function updateSystemUI() {
+        // Status Dot and Text
+        if (systemStatus) {
+          // System ON
+          systemStatusDot.className = 'system-status-dot';
+          systemStatusText.className = 'system-status-text on';
+          systemStatusText.textContent = '✅ সিস্টেম চালু আছে';
+          
+          // System Off Notice লুকাও
+          systemOffNotice.style.display = 'none';
+          
+          // বাটন এনাবল
+          if (!isRestrictedTime()) {
+            submitBtn.classList.remove('system-off-btn');
+            submitBtn.disabled = false;
+          }
+          
+          // System Off Popup বন্ধ কর
+          if (systemOffPopup.classList.contains('active')) {
+            systemOffPopup.classList.remove('active');
+          }
+          
+          // টিকার স্টাইল
+          tickerContent.className = 'ticker-content';
+        } else {
+          // System OFF
+          systemStatusDot.className = 'system-status-dot off';
+          systemStatusText.className = 'system-status-text off';
+          systemStatusText.textContent = '🔴 সিস্টেম বন্ধ আছে';
+          
+          // System Off Notice দেখাও (বড় করে)
+          if (systemOffReason && systemOffReason.trim() !== '') {
+            systemOffMessage.textContent = systemOffReason;
+          } else {
+            systemOffMessage.textContent = 'এডমিন কর্তৃক সিস্টেম বন্ধ করা হয়েছে। পরে আবার চেষ্টা করুন।';
+          }
+          systemOffNotice.style.display = 'block';
+          
+          // বাটন ডিসএবল
+          submitBtn.classList.add('system-off-btn');
+          submitBtn.disabled = true;
+          
+          // টিকার স্টাইল
+          tickerContent.classList.add('warning');
+        }
+        
+        // টিকার কন্টেন্ট আপডেট (আলাদাভাবে)
+        updateTickerContent();
+      }
+
+      // ফাংশন: টিকার কন্টেন্ট আপডেট (শুধু টিকার জন্য)
+      function updateTickerContent() {
+        let message = systemTickerMessage && systemTickerMessage.trim() !== '' 
+          ? systemTickerMessage 
+          : '🔹 EBH TEAM - INSTAGRAM 2FA সিস্টেম 🔹';
+        
+        // লেখাকে ২ বার দেখানো হচ্ছে যাতে কন্টিনিউয়াস দেখায়
+        let displayMessage = `${message} 🔹 ${message} 🔹 ${message}`;
+        
+        // টিকারের HTML সেট করা
+        tickerContent.innerHTML = `<span>📢 ${displayMessage}</span>`;
+        
+        // লেখার দৈর্ঘ্য অনুযায়ী স্পিড অ্যাডজাস্ট
+        if (message.length > 50) {
+          tickerContent.style.animationDuration = '15s'; // ধীর
+        } else if (message.length < 20) {
+          tickerContent.style.animationDuration = '10s'; // মাঝারি
+        } else {
+          tickerContent.style.animationDuration = '12s'; // ধীর (ডিফল্ট)
+        }
+      }
+
+      // ফাংশন: System Off Popup দেখানো
+      function showSystemOffPopup() {
+        if (!systemStatus) {
+          if (systemOffReason && systemOffReason.trim() !== '') {
+            systemOffPopupMessage.textContent = systemOffReason;
+          } else {
+            systemOffPopupMessage.textContent = 'সিস্টেম বন্ধ রয়েছে। পরে আবার চেষ্টা করুন।';
+          }
+          systemOffPopup.classList.add('active');
+        }
+      }
+
+      // ফাংশন: রেস্ট্রিক্টেড টাইম চেক
+      function isRestrictedTime() {
+        const hours = new Date().getHours();
+        return hours >= 21 && hours < 24;
+      }
+
+      // ফাংশন: টাইম রিমেইনিং
       function getBanglaTimeRemaining() {
         const now = new Date();
         const hours = now.getHours();
@@ -714,25 +1005,35 @@
         if (restricted) {
           timeNotice.textContent = '🔴 সাবমিশন বন্ধ (রাত ৯টা - ১২টা)';
           timeNotice.classList.add('restricted');
-          submitBtn.classList.add('restricted-btn');
-          submitBtn.disabled = true;
+          
+          if (systemStatus) {
+            submitBtn.classList.add('system-off-btn');
+            submitBtn.disabled = true;
+          }
+          
           timeRemaining.innerHTML = `📛 খুলতে: <span class="time-highlight">${remaining.hours}ঘ ${remaining.minutes}ম ${remaining.seconds}সে</span> বাকি`;
           timeRemaining.style.display = 'block';
         } else {
           timeNotice.textContent = '🟢 আজকের কাজ চলছে - রাত ৯টায় বন্ধ হবে';
           timeNotice.classList.remove('restricted');
-          submitBtn.classList.remove('restricted-btn');
-          submitBtn.disabled = false;
+          
+          if (systemStatus) {
+            submitBtn.classList.remove('system-off-btn');
+            submitBtn.disabled = false;
+          } else {
+            submitBtn.classList.add('system-off-btn');
+            submitBtn.disabled = true;
+          }
+          
           timeRemaining.innerHTML = `⏳ আজকের কাজ বন্ধ হবে: <span class="time-highlight">${remaining.hours}ঘ ${remaining.minutes}ম ${remaining.seconds}সে</span> পরে`;
           timeRemaining.style.display = 'block';
         }
       }
 
-      // ফাংশন: ভ্যালিডেশন - সব বক্স বাধ্যতামূলক
+      // ফাংশন: ভ্যালিডেশন
       function validateAllInputs(usernames, passwords, cookies) {
         const errors = [];
         
-        // ইউজারনেম চেক
         if (usernames.length === 0) {
           errors.push("❌ ইউজারনেম দিতে হবে");
           usernameInput.classList.add('error-border');
@@ -740,7 +1041,6 @@
           usernameInput.classList.remove('error-border');
         }
         
-        // পাসওয়ার্ড চেক
         if (passwords.length === 0) {
           errors.push("❌ পাসওয়ার্ড দিতে হবে");
           passwordInput.classList.add('error-border');
@@ -748,15 +1048,13 @@
           passwordInput.classList.remove('error-border');
         }
         
-        // কুকিজ চেক - বাধ্যতামূলক (2FA কুকি)
         if (cookies.length === 0) {
-          errors.push("❌ 2FA কুকিজ দিতে হবে (ফাঁকা রাখা যাবে না)");
+          errors.push("❌ 2FA কুকিজ দিতে হবে");
           cookieInput.classList.add('error-border');
         } else {
           cookieInput.classList.remove('error-border');
         }
         
-        // সংখ্যা মিল চেক
         if (usernames.length > 0 && passwords.length > 0 && cookies.length > 0) {
           if (usernames.length !== passwords.length) {
             errors.push(`❌ ইউজারনেম (${usernames.length}) এবং পাসওয়ার্ড (${passwords.length}) এর সংখ্যা একই হতে হবে`);
@@ -766,7 +1064,6 @@
           }
         }
         
-        // পাসওয়ার্ডে তারিখ চেক
         for (let i = 0; i < passwords.length; i++) {
           if (!passwords[i].includes(TODAY_DATE)) {
             errors.push(`❌ লাইন ${i+1}: পাসওয়ার্ডে আজকের তারিখ (${TODAY_DATE}) থাকতে হবে`);
@@ -780,16 +1077,14 @@
         };
       }
 
-      // ফাংশন: ডুপ্লিকেট ইউজারনেম চেক করার ফাংশন (বিস্তারিত তথ্য সহ)
+      // ডুপ্লিকেট চেক ফাংশন
       async function checkDuplicateUsernames(usernames) {
         try {
-          // ফায়ারবেস থেকে সব ইউজার রেফারেন্স নেওয়া
           const usedUsernamesRef = db.ref('instagram_used_usernames');
           const snapshot = await usedUsernamesRef.once('value');
           const usedData = snapshot.val() || {};
           
-          // ব্যবহৃত ইউজারনেমের সেট বানানো (কেস ইন্সেন্সিটিভ)
-          const usedUsernamesMap = new Map(); // ইউজারনেম -> টাইমস্ট্যাম্প
+          const usedUsernamesMap = new Map();
           
           Object.values(usedData).forEach(item => {
             if (item && item.username) {
@@ -801,7 +1096,6 @@
             }
           });
 
-          // ডুপ্লিকেট চেক করা - বিস্তারিত তথ্য সহ
           const duplicateDetails = [];
           const uniqueUsernames = [];
           const duplicateIndices = [];
@@ -835,11 +1129,10 @@
         }
       }
 
-      // ফাংশন: ডুপ্লিকেট পপআপ দেখানো
+      // ডুপ্লিকেট পপআপ দেখানো
       function showDuplicatePopup(duplicateDetails, uniqueCount, totalCount) {
         if (!duplicatePopup || !duplicatePopupMessage) return;
         
-        // ডুপ্লিকেট ইউজারনেমের তালিকা তৈরি
         let duplicateListHtml = '';
         duplicateDetails.forEach(d => {
           duplicateListHtml += `🔸 লাইন ${d.line}: "${d.username}"\n`;
@@ -851,12 +1144,10 @@
         duplicatePopup.classList.add('active');
       }
 
-      // ফাংশন: ডুপ্লিকেট পপআপ লুকানো
       function hideDuplicatePopup() {
         if (duplicatePopup) duplicatePopup.classList.remove('active');
       }
 
-      // পপআপ ফাংশন
       function showPopup(type, title, message) {
         if (!popupTitle || !popupMessage || !popupOverlay) return;
         popupTitle.textContent = title;
@@ -869,25 +1160,23 @@
         if (popupOverlay) popupOverlay.classList.remove('active');
       }
 
-      // ফাংশন: ফায়ারবেসে ডাটা সাবমিট করার ফাংশন
+      // ফায়ারবেসে ডাটা সাবমিট
       async function submitToFirebase(usernames, passwords, cookies) {
         try {
           const timestamp = new Date().toISOString();
           const timestamp_now = Date.now();
           const updates = {};
           let savedCount = 0;
-          const failedUsernames = [];
 
           for (let i = 0; i < usernames.length; i++) {
             const username = usernames[i];
             const safeKey = username.replace(/[.#$\[\]\/]/g, '_');
             const submissionId = `ig_${timestamp_now}_${safeKey}_${i}`;
 
-            // 2FA কুকি সহ সেভ করা হচ্ছে
             updates[`instagram_2fa_submissions/${submissionId}`] = {
               username: username,
               password: passwords[i],
-              cookie_2fa: cookies[i], // 2FA কুকি হিসেবে সংরক্ষণ
+              cookie_2fa: cookies[i],
               submitted_at: timestamp,
               date_used: TODAY_DATE,
               has_2fa: true
@@ -904,7 +1193,7 @@
 
           await db.ref().update(updates);
           
-          return { success: true, savedCount, failedUsernames };
+          return { success: true, savedCount };
         } catch (error) {
           throw error;
         }
@@ -913,20 +1202,24 @@
       // সাবমিট হ্যান্ডলার
       async function handleSubmission() {
         try {
-          // এরর বর্ডার রিসেট
+          if (!systemStatus) {
+            showSystemOffPopup();
+            return;
+          }
+          
+          if (isRestrictedTime()) {
+            restrictedPopup.classList.add('active');
+            return;
+          }
+
           [usernameInput, passwordInput, cookieInput].forEach(input => {
             if (input) input.classList.remove('error-border');
           });
-
-          if (isRestrictedTime()) {
-            return; // বাটন ডিসেবল থাকায় এখানে আসবে না
-          }
 
           const usernames = usernameInput.value.split(/\r?\n/).map(u => u.trim()).filter(u => u !== '');
           const passwords = passwordInput.value.split(/\r?\n/).map(p => p.trim()).filter(p => p !== '');
           const cookies = cookieInput.value.split(/\r?\n/).map(c => c.trim()).filter(c => c !== '');
 
-          // ভ্যালিডেশন
           const validation = validateAllInputs(usernames, passwords, cookies);
           if (!validation.valid) {
             showPopup('error', '❌ ভুল', validation.errors.join('\n'));
@@ -941,11 +1234,9 @@
           submitBtn.disabled = true;
           submitBtn.innerHTML = '⏳ প্রসেসিং...';
 
-          // ডুপ্লিকেট চেক
           try {
             const { duplicateDetails, uniqueUsernames, duplicateIndices, allDuplicates } = await checkDuplicateUsernames(usernames);
             
-            // যদি সবগুলো ইউজারনেম ডুপ্লিকেট হয়
             if (allDuplicates) {
               let duplicateList = '';
               duplicateDetails.forEach(d => {
@@ -960,9 +1251,7 @@
               return;
             }
             
-            // যদি কিছু ডুপ্লিকেট পাওয়া যায়
             if (duplicateDetails.length > 0) {
-              // পেন্ডিং ডাটা সেভ করা
               pendingSubmission = {
                 usernames: usernames,
                 passwords: passwords,
@@ -975,7 +1264,6 @@
                 }, [])
               };
               
-              // ডুপ্লিকেট পপআপ দেখানো
               showDuplicatePopup(duplicateDetails, uniqueUsernames.length, usernames.length);
               
               submitBtn.disabled = false;
@@ -983,13 +1271,11 @@
               return;
             }
             
-            // যদি কোন ডুপ্লিকেট না থাকে, সবগুলো সাবমিট
             const result = await submitToFirebase(usernames, passwords, cookies);
             
             if (result.success) {
               showPopup('success', '✅ সফল!', `${result.savedCount}টি অ্যাকাউন্ট সংরক্ষিত হয়েছে`);
               
-              // ইনপুট ফিল্ড খালি
               usernameInput.value = '';
               passwordInput.value = '';
               cookieInput.value = '';
@@ -1009,7 +1295,7 @@
         }
       }
 
-      // ডুপ্লিকেট কনফার্ম হ্যান্ডলার - শুধু নতুন গুলো সাবমিট
+      // ডুপ্লিকেট কনফার্ম
       async function handleDuplicateConfirm() {
         try {
           hideDuplicatePopup();
@@ -1024,19 +1310,16 @@
           submitBtn.disabled = true;
           submitBtn.innerHTML = '⏳ নতুন গুলো সাবমিট হচ্ছে...';
           
-          // শুধু ইউনিক ইন্ডেক্সগুলোর ডাটা নেওয়া
           const uniqueUsernames = uniqueIndices.map(i => usernames[i]);
           const uniquePasswords = uniqueIndices.map(i => passwords[i]);
           const uniqueCookies = uniqueIndices.map(i => cookies[i]);
           
-          // নতুন গুলো সাবমিট
           const result = await submitToFirebase(uniqueUsernames, uniquePasswords, uniqueCookies);
           
           if (result.success) {
             showPopup('success', '✅ সফল!', 
               `${result.savedCount}টি নতুন অ্যাকাউন্ট সংরক্ষিত হয়েছে\n(ডুপ্লিকেট ${usernames.length - uniqueIndices.length}টি বাদ দেওয়া হয়েছে)`);
             
-            // ইনপুট ফিল্ড খালি
             usernameInput.value = '';
             passwordInput.value = '';
             cookieInput.value = '';
@@ -1051,7 +1334,6 @@
         }
       }
 
-      // ডুপ্লিকেট ক্যান্সেল হ্যান্ডলার
       function handleDuplicateCancel() {
         hideDuplicatePopup();
         pendingSubmission = { usernames: [], passwords: [], cookies: [], uniqueIndices: [] };
@@ -1061,13 +1343,18 @@
       if (submitBtn) submitBtn.addEventListener('click', handleSubmission);
       if (popupConfirm) popupConfirm.addEventListener('click', hidePopup);
       
-      // ডুপ্লিকেট পপআপ ইভেন্ট
       if (duplicateConfirm) duplicateConfirm.addEventListener('click', handleDuplicateConfirm);
       if (duplicateCancel) duplicateCancel.addEventListener('click', handleDuplicateCancel);
       
       if (closeRestrictedPopup) {
         closeRestrictedPopup.addEventListener('click', () => {
           restrictedPopup.classList.remove('active');
+        });
+      }
+      
+      if (closeSystemOffPopup) {
+        closeSystemOffPopup.addEventListener('click', () => {
+          systemOffPopup.classList.remove('active');
         });
       }
       
@@ -1085,6 +1372,14 @@
         });
       }
       
+      if (systemOffPopup) {
+        systemOffPopup.addEventListener('click', (e) => {
+          if (e.target === systemOffPopup) {
+            systemOffPopup.classList.remove('active');
+          }
+        });
+      }
+      
       if (duplicatePopup) {
         duplicatePopup.addEventListener('click', (e) => {
           if (e.target === duplicatePopup) {
@@ -1094,23 +1389,22 @@
         });
       }
 
-      // প্রতি সেকেন্ডে টাইম আপডেট
+      // System Status Load
+      loadSystemStatus();
+      
       updateTimeNotice();
       setInterval(updateTimeNotice, 1000);
 
-      // পেইজ লোডের সাথে সাথেই চেক করুন - রাত ৯টা-১২টা হলে পপআপ দেখান
       setTimeout(function() {
         if (isRestrictedTime()) {
           console.log("⏰ রেস্ট্রিক্টেড টাইম - পপআপ দেখানো হচ্ছে");
           if (restrictedPopup) {
             restrictedPopup.classList.add('active');
           }
-        } else {
-          console.log("✅ নরমাল টাইম - কোন পপআপ নাই");
         }
-      }, 1000); // ১ সেকেন্ড পরে পপআপ দেখাবে
+      }, 1000);
 
-      console.log("✅ সিস্টেম লোড সম্পূর্ণ (2FA কুকি ও ডুপ্লিকেট ডিটেইল সহ)");
+      console.log("✅ সিস্টেম লোড সম্পূর্ণ (দুটি আলাদা মেসেজ সিস্টেম সহ)");
     })();
   </script>
 </body>
