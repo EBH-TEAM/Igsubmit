@@ -16,6 +16,8 @@
   --accent-dark: #5445e6;
   --danger: #ff4d6d;
   --danger-dark: #e63e5a;
+  --success: #2ecc71;
+  --success-dark: #27ae60;
   --dark-bg: #0a0f1e;
   --card-bg: #16202e;
   --text-light: #f5f9ff;
@@ -312,7 +314,6 @@ body {
   background: rgba(255, 51, 133, 0.1);
 }
 
-/* Password Group Header - NEW STYLE */
 .password-group-header {
   display: table-row;
   background: rgba(255, 51, 133, 0.15);
@@ -571,6 +572,187 @@ body {
   box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
 }
 
+/* System Control Card */
+.system-control-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 15px 12px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.control-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.control-header i {
+  font-size: 1.3rem;
+  color: var(--success);
+}
+
+.control-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-light);
+  flex: 1;
+}
+
+.system-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 10px var(--success);
+}
+
+.status-dot.off {
+  background: var(--danger);
+  box-shadow: 0 0 10px var(--danger);
+}
+
+.status-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.status-text.on {
+  color: var(--success);
+}
+
+.status-text.off {
+  color: var(--danger);
+}
+
+.switch-btn {
+  background: linear-gradient(145deg, #2c3e50, #1a2632);
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.2s;
+  border: 1px solid var(--border-color);
+}
+
+.switch-btn.on {
+  background: linear-gradient(145deg, var(--success), var(--success-dark));
+  border-color: var(--success);
+  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+}
+
+.switch-btn.off {
+  background: linear-gradient(145deg, var(--danger), var(--danger-dark));
+  border-color: var(--danger);
+  box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+}
+
+/* Message Box Styles */
+.message-box {
+  background: rgba(10, 15, 30, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.message-box label {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.message-box textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-light);
+  font-size: 13px;
+  min-height: 80px;
+  resize: vertical;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+
+.message-box textarea:focus {
+  outline: none;
+  border-color: var(--success);
+  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+}
+
+.message-box textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.message-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.save-msg-btn {
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.save-msg-btn:hover {
+  transform: translateY(-2px);
+}
+
+.preview-msg {
+  background: rgba(46, 204, 113, 0.1);
+  border-left: 3px solid var(--success);
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.85rem;
+  color: var(--text-gray);
+  word-break: break-word;
+}
+
+.preview-msg strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
 .footer {
   text-align: center;
   margin-top: 8px;
@@ -702,6 +884,11 @@ body {
   .copy-btn-square i {
     font-size: 20px;
   }
+  
+  .system-status {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -794,6 +981,59 @@ body {
       </button>
     </div>
   </div>
+
+  <!-- System Control Card - দুটি আলাদা ইনপুট বক্স সহ -->
+  <div class="system-control-card">
+    <div class="control-header">
+      <i class="fas fa-power-off"></i>
+      <h3>SYSTEM CONTROL PANEL</h3>
+    </div>
+    
+    <div class="system-status">
+      <div class="status-badge">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-text" id="statusText">Loading...</span>
+      </div>
+      <button class="switch-btn" id="systemSwitchBtn" onclick="toggleSystemStatus()">
+        <i class="fas" id="switchIcon"></i>
+        <span id="switchText">Loading...</span>
+      </button>
+    </div>
+    
+    <!-- প্রথম ইনপুট বক্স - টিকার মেসেজ (স্ক্রলিং এর জন্য) -->
+    <div class="message-box" style="margin-bottom: 15px; border-left: 4px solid var(--secondary);">
+      <label style="color: var(--secondary);">
+        <i class="fas fa-scroll"></i> টিকার মেসেজ (স্ক্রলিং এর জন্য)
+      </label>
+      <textarea id="tickerMessage" placeholder="এখানে টিকারে দেখানোর মেসেজ লিখুন... এই লেখাটি সব সময় স্লাইড হবে"></textarea>
+      <div class="message-actions">
+        <button class="save-msg-btn" onclick="saveTickerMessage()" style="background: var(--secondary);">
+          <i class="fas fa-save"></i> টিকার মেসেজ সেভ করুন
+        </button>
+      </div>
+      <div class="preview-msg" style="border-left-color: var(--secondary);">
+        <strong style="color: var(--secondary);"><i class="fas fa-eye"></i> টিকার প্রিভিউ:</strong>
+        <span id="tickerPreview">কোন মেসেজ নেই</span>
+      </div>
+    </div>
+    
+    <!-- দ্বিতীয় ইনপুট বক্স - সিস্টেম বন্ধের কারণ (বড় নোটিশ) -->
+    <div class="message-box" style="border-left: 4px solid var(--danger);">
+      <label style="color: var(--danger);">
+        <i class="fas fa-exclamation-triangle"></i> সিস্টেম বন্ধের কারণ (বড় নোটিশ)
+      </label>
+      <textarea id="offReasonMessage" placeholder="এখানে সিস্টেম বন্ধ করার কারণ লিখুন... এই লেখাটি শুধু OFF অবস্থায় বড় করে দেখাবে"></textarea>
+      <div class="message-actions">
+        <button class="save-msg-btn" onclick="saveOffReasonMessage()" style="background: var(--danger);">
+          <i class="fas fa-save"></i> কারণ সেভ করুন
+        </button>
+      </div>
+      <div class="preview-msg" style="border-left-color: var(--danger);">
+        <strong style="color: var(--danger);"><i class="fas fa-eye"></i> কারণ প্রিভিউ:</strong>
+        <span id="offReasonPreview">কোন কারণ লেখা নেই</span>
+      </div>
+    </div>
+  </div>
   
   <div class="footer">
     <p>EBH TEAM • PASSWORD GROUPED 2FA SYSTEM • MTWork Database</p>
@@ -837,6 +1077,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+// DOM Elements
 const accountsContainer = document.getElementById("accountsContainer");
 const totalCount = document.getElementById("totalCount");
 const groupCount = document.getElementById("groupCount");
@@ -849,12 +1090,175 @@ const deleteModal = document.getElementById("deleteModal");
 const deleteCount = document.getElementById("deleteCount");
 const searchInput = document.getElementById("searchInput");
 
+// System Control Elements
+const statusDot = document.getElementById("statusDot");
+const statusText = document.getElementById("statusText");
+const systemSwitchBtn = document.getElementById("systemSwitchBtn");
+const switchIcon = document.getElementById("switchIcon");
+const switchText = document.getElementById("switchText");
+const tickerMessage = document.getElementById("tickerMessage");
+const tickerPreview = document.getElementById("tickerPreview");
+const offReasonMessage = document.getElementById("offReasonMessage");
+const offReasonPreview = document.getElementById("offReasonPreview");
+
+// Data Variables
 let allAccounts = [];
-let groupedAccounts = []; // Array of { password, accounts[] }
+let groupedAccounts = [];
 let filteredGroups = [];
 let isSearching = false;
 let currentSearchTerm = "";
 
+// System Status Variables
+let systemStatus = true; // true = ON, false = OFF
+let tickerMessageText = "";
+let offReasonText = "";
+
+// Load system status from Firebase
+function loadSystemStatus() {
+  db.ref("system_control").once("value")
+  .then(snapshot => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      systemStatus = data.status !== undefined ? data.status : true;
+      tickerMessageText = data.ticker_message || "";
+      offReasonText = data.off_reason || "";
+    } else {
+      // Default values
+      systemStatus = true;
+      tickerMessageText = "";
+      offReasonText = "";
+      db.ref("system_control").set({
+        status: true,
+        ticker_message: "",
+        off_reason: ""
+      });
+    }
+    
+    // Update UI
+    updateSystemUI();
+    tickerMessage.value = tickerMessageText;
+    offReasonMessage.value = offReasonText;
+    tickerPreview.textContent = tickerMessageText || "কোন মেসেজ নেই";
+    offReasonPreview.textContent = offReasonText || "কোন কারণ লেখা নেই";
+  })
+  .catch(err => {
+    console.error("Error loading system status:", err);
+    systemStatus = true;
+    tickerMessageText = "";
+    offReasonText = "";
+    updateSystemUI();
+  });
+}
+
+// Update System UI based on status
+function updateSystemUI() {
+  if (systemStatus) {
+    // System ON
+    statusDot.className = "status-dot";
+    statusText.className = "status-text on";
+    statusText.textContent = "SYSTEM IS ACTIVE (ON)";
+    
+    systemSwitchBtn.className = "switch-btn on";
+    switchIcon.className = "fas fa-power-off";
+    switchText.textContent = "TURN OFF";
+    
+    // OFF reason বক্স ডিসএবল
+    offReasonMessage.disabled = true;
+    offReasonMessage.placeholder = "System is ON - Reason will be shown when OFF";
+  } else {
+    // System OFF
+    statusDot.className = "status-dot off";
+    statusText.className = "status-text off";
+    statusText.textContent = "SYSTEM IS INACTIVE (OFF)";
+    
+    systemSwitchBtn.className = "switch-btn off";
+    switchIcon.className = "fas fa-power-off";
+    switchText.textContent = "TURN ON";
+    
+    // OFF reason বক্স এনাবল
+    offReasonMessage.disabled = false;
+    offReasonMessage.placeholder = "Write the reason for turning OFF the system...";
+  }
+  
+  // টিকার বক্স সব সময় এনাবল
+  tickerMessage.disabled = false;
+}
+
+// Toggle System Status
+function toggleSystemStatus() {
+  systemStatus = !systemStatus;
+  
+  updateSystemUI();
+  
+  db.ref("system_control/status").set(systemStatus)
+  .then(() => {
+    console.log("System status updated to:", systemStatus ? "ON" : "OFF");
+    
+    const btn = systemSwitchBtn;
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i><span>SAVED</span>';
+    setTimeout(() => { 
+      btn.innerHTML = originalHTML;
+      updateSystemUI();
+    }, 1500);
+  })
+  .catch(err => {
+    console.error("Error saving system status:", err);
+    alert("Failed to save status: " + err.message);
+    systemStatus = !systemStatus;
+    updateSystemUI();
+  });
+}
+
+// Save Ticker Message
+function saveTickerMessage() {
+  const message = tickerMessage.value.trim();
+  
+  db.ref("system_control/ticker_message").set(message)
+  .then(() => {
+    tickerMessageText = message;
+    tickerPreview.textContent = message || "কোন মেসেজ নেই";
+    
+    const btn = event.target;
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> SAVED';
+    setTimeout(() => { 
+      btn.innerHTML = originalHTML;
+    }, 1500);
+    
+    console.log("Ticker message saved:", message);
+  })
+  .catch(err => {
+    console.error("Error saving ticker message:", err);
+    alert("Failed to save ticker message: " + err.message);
+  });
+}
+
+// Save Off Reason Message
+function saveOffReasonMessage() {
+  const message = offReasonMessage.value.trim();
+  
+  db.ref("system_control/off_reason").set(message)
+  .then(() => {
+    offReasonText = message;
+    offReasonPreview.textContent = message || "কোন কারণ লেখা নেই";
+    
+    const btn = event.target;
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> SAVED';
+    setTimeout(() => { 
+      btn.innerHTML = originalHTML;
+    }, 1500);
+    
+    console.log("Off reason saved:", message);
+  })
+  .catch(err => {
+    console.error("Error saving off reason:", err);
+    alert("Failed to save off reason: " + err.message);
+  });
+}
+
+// Show loading
 function showLoading() {
   accountsContainer.innerHTML = `
     <div class="loading-container">
@@ -866,6 +1270,7 @@ function showLoading() {
   `;
 }
 
+// Group accounts by password
 function groupAccountsByPassword(accounts) {
   const groups = {};
   
@@ -877,19 +1282,18 @@ function groupAccountsByPassword(accounts) {
     groups[password].push(account);
   });
   
-  // Convert to array and sort by group size (largest first)
   const groupedArray = Object.keys(groups).map(password => ({
     password: password,
     accounts: groups[password],
     count: groups[password].length
   }));
   
-  // Sort by count descending (largest group first)
   groupedArray.sort((a, b) => b.count - a.count);
   
   return groupedArray;
 }
 
+// Update stats
 function updateStats() {
   const total = allAccounts.length;
   const groups = groupedAccounts.length;
@@ -914,6 +1318,7 @@ function updateStats() {
   lastUpdate.textContent = `${timeStr}`;
 }
 
+// Render accounts table
 function renderAccountsTable(groups) {
   if (groups.length === 0 || groups.every(g => g.accounts.length === 0)) {
     const noDataMessage = isSearching && currentSearchTerm 
@@ -946,7 +1351,6 @@ function renderAccountsTable(groups) {
   let globalIndex = 0;
   
   groups.forEach(group => {
-    // Add group header row
     tableHTML += `
       <div class="password-group-header">
         <div class="row-cell serial-cell">
@@ -968,7 +1372,6 @@ function renderAccountsTable(groups) {
       </div>
     `;
     
-    // Add accounts for this group
     group.accounts.forEach(account => {
       globalIndex++;
       tableHTML += `
@@ -994,37 +1397,7 @@ function renderAccountsTable(groups) {
   accountsContainer.innerHTML = tableHTML;
 }
 
-function extractDataFromObject(obj) {
-  let username = "";
-  const usernameKeys = ['username', 'user', 'uid', 'email', 'userId', 'id'];
-  for (const key of usernameKeys) {
-    if (obj[key] && obj[key].toString().trim()) {
-      username = obj[key].toString().trim();
-      break;
-    }
-  }
-  
-  let password = "";
-  const passwordKeys = ['password', 'pass', 'pwd', 'secret'];
-  for (const key of passwordKeys) {
-    if (obj[key] && obj[key].toString().trim()) {
-      password = obj[key].toString().trim();
-      break;
-    }
-  }
-  
-  let twofa = "";
-  const twofaKeys = ['twofa', 'cookie_2fa', 'cookie', 'cookies', 'twofa_key', 'tfa', '2fa', 'totp', 'secret_key'];
-  for (const key of twofaKeys) {
-    if (obj[key] && obj[key].toString().trim()) {
-      twofa = obj[key].toString().trim();
-      break;
-    }
-  }
-  
-  return { username, password, twofa };
-}
-
+// Load data from Firebase
 function loadData() {
   showLoading();
   
@@ -1033,7 +1406,6 @@ function loadData() {
   currentSearchTerm = "";
   searchResultCard.style.display = 'none';
   
-  // সরাসরি instagram_2fa_submissions পাথ থেকে ডাটা লোড করা হচ্ছে
   db.ref("instagram_2fa_submissions").once("value")
   .then(snapshot => {
     allAccounts = [];
@@ -1044,7 +1416,6 @@ function loadData() {
       Object.keys(submissions).forEach(key => {
         const submissionData = submissions[key];
         
-        // ডাটা থেকে ইউজারনেম, পাসওয়ার্ড এবং 2FA এক্সট্রাক্ট করা
         const username = submissionData.username || submissionData.user || 'N/A';
         const password = submissionData.password || submissionData.pass || 'N/A';
         const twofa = submissionData.cookie_2fa || submissionData.twofa || submissionData.cookie || submissionData['2fa'] || 'N/A';
@@ -1059,7 +1430,6 @@ function loadData() {
       });
     }
     
-    // ডুপ্লিকেট রিমুভ
     allAccounts = allAccounts.filter((account, index, self) =>
       index === self.findIndex(a => 
         a.username === account.username && 
@@ -1087,6 +1457,7 @@ function loadData() {
   });
 }
 
+// Search data
 function searchData() {
   const searchTerm = searchInput.value.trim().toLowerCase();
   
@@ -1095,10 +1466,8 @@ function searchData() {
     return;
   }
   
-  // Filter groups based on search term
   filteredGroups = groupedAccounts
     .map(group => {
-      // Filter accounts within group that match search
       const matchingAccounts = group.accounts.filter(account => 
         (account.username && account.username.toLowerCase().includes(searchTerm)) ||
         (account.password && account.password.toLowerCase().includes(searchTerm)) ||
@@ -1116,7 +1485,6 @@ function searchData() {
     })
     .filter(group => group !== null);
   
-  // Sort filtered groups by size (largest first)
   filteredGroups.sort((a, b) => b.count - a.count);
   
   isSearching = true;
@@ -1126,6 +1494,7 @@ function searchData() {
   updateStats();
 }
 
+// Copy functions
 function copyUsernames() {
   const groupsToCopy = isSearching ? filteredGroups : groupedAccounts;
   
@@ -1192,6 +1561,7 @@ function copyTwoFA() {
     .catch(err => alert("Copy failed"));
 }
 
+// Delete modal functions
 function openDeleteModal() {
   if (allAccounts.length === 0) {
     alert("No data to delete!");
@@ -1248,6 +1618,7 @@ function deleteAllData() {
   });
 }
 
+// Event Listeners
 deleteModal.addEventListener("click", function(e) {
   if (e.target === deleteModal) {
     closeDeleteModal();
@@ -1266,11 +1637,13 @@ searchInput.addEventListener("input", function() {
   }
 });
 
+// Initialize
 document.addEventListener('DOMContentLoaded', function() {
   loadData();
+  loadSystemStatus();
   setInterval(loadData, 60000);
 });
 </script>
 
 </body>
-</html>'
+</html>
