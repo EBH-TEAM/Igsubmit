@@ -749,6 +749,16 @@
     </div>
   </div>
 
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+      <div class="popup-header" id="popupTitle">MESSAGE</div>
+      <div class="popup-message" id="popupMessage"></div>
+      <div class="popup-buttons">
+        <button class="popup-btn confirm" id="popupConfirm">OK</button>
+      </div>
+    </div>
+  </div>
+
   <div class="popup-overlay" id="duplicatePopup">
     <div class="popup-content">
       <div class="popup-header warning">⚠️ DUPLICATE</div>
@@ -812,6 +822,9 @@
       const optionOffPopup = document.getElementById('optionOffPopup');
       const optionOffMessage = document.getElementById('optionOffMessage');
       const optionOffTitle = document.getElementById('optionOffTitle');
+      const popupOverlay = document.getElementById('popupOverlay');
+      const popupTitle = document.getElementById('popupTitle');
+      const popupMessage = document.getElementById('popupMessage');
       const duplicatePopup = document.getElementById('duplicatePopup');
       const duplicatePopupMessage = document.getElementById('duplicatePopupMessage');
       
@@ -819,6 +832,7 @@
       const closeRestricted = document.getElementById('closeRestrictedPopup');
       const closeSystemOff = document.getElementById('closeSystemOffPopup');
       const closeOptionOff = document.getElementById('closeOptionOffPopup');
+      const popupConfirm = document.getElementById('popupConfirm');
       const duplicateConfirm = document.getElementById('duplicateConfirm');
       const duplicateCancel = document.getElementById('duplicateCancel');
 
@@ -1117,9 +1131,6 @@
           }
         }
         
-        // 2FA/কুকির ফরম্যাট চেক করা হচ্ছে না - যা দেওয়া হবে তাই গ্রহণ
-        // শুধু খালি কিনা চেক করেছি উপরে
-        
         return { valid: errors.length === 0, errors };
       }
 
@@ -1172,6 +1183,16 @@
         }
         
         await db.ref().update(updates);
+        
+        return ids.length;
+      }
+
+      // Show Custom Popup (শুধু মেসেজ দেখাবে)
+      function showCustomPopup(type, title, message) {
+        popupTitle.textContent = title;
+        popupTitle.className = 'popup-header ' + type;
+        popupMessage.textContent = message;
+        popupOverlay.classList.add('active');
       }
 
       // Handle Submit
@@ -1208,7 +1229,7 @@
           // Validate (শুধু বাধ্যতামূলক চেক)
           const validation = validateInputs(ids, passwords, codes);
           if (!validation.valid) {
-            alert(validation.errors.join('\n'));
+            showCustomPopup('error', '❌ ERROR', validation.errors.join('\n'));
             return;
           }
           
@@ -1219,7 +1240,7 @@
           const { duplicates, unique, indices, allDuplicates } = await checkDuplicates(ids);
           
           if (allDuplicates) {
-            alert('⚠️ All IDs are already used!');
+            showCustomPopup('warning', '⚠️ DUPLICATE', 'All IDs are already used!');
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'SUBMIT';
             return;
@@ -1239,13 +1260,15 @@
           }
           
           // Save to Firebase
-          await saveToFirebase(ids, passwords, codes);
+          const savedCount = await saveToFirebase(ids, passwords, codes);
           
-          alert(`✅ ${ids.length} ID(s) submitted!`);
+          // শুধু সফল মেসেজ দেখাবে - কোন লিংক নয়
+          showCustomPopup('success', '✅ SUCCESS', `✅ ${savedCount} ID(s) submitted successfully!`);
+          
           input1.value = input2.value = input3.value = '';
           
         } catch (error) {
-          alert('🔥 Error: ' + error.message);
+          showCustomPopup('error', '🔥 ERROR', 'Error: ' + error.message);
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = 'SUBMIT';
@@ -1267,11 +1290,12 @@
         submitBtn.innerHTML = '⏳ SUBMITTING...';
         
         try {
-          await saveToFirebase(uniqueIds, uniquePasswords, uniqueCodes);
-          alert(`✅ ${uniqueIds.length} new ID(s) submitted!\n(Duplicates: ${ids.length - uniqueIndices.length} skipped)`);
+          const savedCount = await saveToFirebase(uniqueIds, uniquePasswords, uniqueCodes);
+          showCustomPopup('success', '✅ SUCCESS', 
+            `✅ ${savedCount} new ID(s) submitted!\n(Duplicates: ${ids.length - uniqueIndices.length} skipped)`);
           input1.value = input2.value = input3.value = '';
         } catch (error) {
-          alert('Error: ' + error.message);
+          showCustomPopup('error', '🔥 ERROR', 'Error: ' + error.message);
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = 'SUBMIT';
@@ -1289,9 +1313,10 @@
       closeRestricted.addEventListener('click', () => restrictedPopup.classList.remove('active'));
       closeSystemOff.addEventListener('click', () => systemOffPopup.classList.remove('active'));
       closeOptionOff.addEventListener('click', () => optionOffPopup.classList.remove('active'));
+      popupConfirm.addEventListener('click', () => popupOverlay.classList.remove('active'));
 
       // Click outside to close
-      [restrictedPopup, systemOffPopup, optionOffPopup, duplicatePopup].forEach(popup => {
+      [restrictedPopup, systemOffPopup, optionOffPopup, popupOverlay, duplicatePopup].forEach(popup => {
         popup.addEventListener('click', (e) => {
           if (e.target === popup) popup.classList.remove('active');
         });
@@ -1315,7 +1340,7 @@
       updateTimeNotice();
       setInterval(updateTimeNotice, 1000);
       
-      console.log("✅ System Ready - No 2FA format check");
+      console.log("✅ System Ready - No links in popups");
     })();
   </script>
 </body>
