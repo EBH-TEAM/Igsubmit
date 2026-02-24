@@ -3,30 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>EBH TEAM - INSTAGRAM 2FA (3D FIXED + 2FA VALIDATION)</title>
+  <title>EBH TEAM - 2FA SUBMISSION SYSTEM</title>
   <style>
-    /* পুরানো স্টাইল + 3D নিওব্রুটালিজম (ফিক্সড) */
+    /* আপডেটেড 3D স্টাইল - লাইটার কালার */
     :root {
-      --primary: #ff3385;
-      --primary-dark: #e61a6b;
-      --secondary: #ff9933;
-      --secondary-dark: #ff8014;
-      --accent: #6b5fff;
-      --accent-dark: #5445e6;
-      --danger: #ff4d6d;
-      --danger-dark: #e63e5a;
-      --dark-bg: #0a0f1e;
-      --panel: #16202e;
-      --border: #2a3a55;
-      --text: #f5f9ff;
-      --muted: #b0c4de;
-      --error: #ff4d6d;
-      --success: #2ecc71;
-      --warning: #f39c12;
-      --instagram-gradient: linear-gradient(45deg, #f09b4a 0%, #e67e4a 25%, #e05565 50%, #cc3b7a 75%, #bc2b9c 100%);
-      --shadow-3d: 0 10px 0 rgba(0, 0, 0, 0.5), 0 8px 20px rgba(255, 51, 133, 0.4);
-      --shadow-3d-hover: 0 15px 0 rgba(0, 0, 0, 0.5), 0 12px 30px rgba(255, 51, 133, 0.6);
-      --shadow-3d-pressed: 0 5px 0 rgba(0, 0, 0, 0.5), 0 8px 20px rgba(255, 51, 133, 0.4);
+      --primary: #ff66a3;
+      --primary-dark: #ff3385;
+      --secondary: #ffb366;
+      --secondary-dark: #ff9933;
+      --accent: #8a7aff;
+      --accent-dark: #6b5fff;
+      --danger: #ff6b8b;
+      --danger-dark: #ff4d6d;
+      --dark-bg: #0f1422;
+      --panel: #1e2a3a;
+      --border: #3a4a66;
+      --text: #ffffff;
+      --muted: #c0d0e5;
+      --error: #ff6b8b;
+      --success: #4cd964;
+      --warning: #ffcc66;
+      --instagram-gradient: linear-gradient(45deg, #ffb347 0%, #ff9966 25%, #ff7b8c 50%, #e65c99 75%, #cc4dcc 100%);
+      --shadow-3d: 0 10px 0 rgba(0, 0, 0, 0.4), 0 8px 20px rgba(255, 102, 163, 0.3);
+      --shadow-3d-hover: 0 15px 0 rgba(0, 0, 0, 0.4), 0 12px 30px rgba(255, 102, 163, 0.5);
     }
 
     * {
@@ -40,29 +39,27 @@
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
       min-height: 100vh;
-      padding: 12px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       overflow-x: hidden;
-      background-image: radial-gradient(circle at 30% 10%, rgba(255, 51, 133, 0.2), transparent 40%),
-                        radial-gradient(circle at 80% 70%, rgba(107, 95, 255, 0.15), transparent 40%);
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(255, 102, 163, 0.15), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(138, 122, 255, 0.1), transparent 40%);
     }
 
     .container {
       width: 100%;
-      max-width: 100%;
+      max-width: 480px;
       margin: 0 auto;
     }
 
-    /* 3D হেডার - ফিক্সড লোগো */
+    /* 3D হেডার */
     .header {
-      background: rgba(22, 32, 46, 0.97);
+      background: rgba(30, 42, 58, 0.97);
       backdrop-filter: blur(20px);
-      
-      border-image: var(--instagram-gradient);
-      border-image-slice: 1;
-      padding: 20px 16px;
+      padding: 16px 12px;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -70,37 +67,37 @@
       justify-content: center;
       align-items: center;
       box-shadow: var(--shadow-3d);
-      min-height: 90px;
-      margin-bottom: 20px;
+      min-height: 80px;
+      margin-bottom: 16px;
       transform: translateY(-3px);
       border-radius: 0 0 30px 30px;
+      border-bottom: 4px solid var(--primary);
     }
 
     .logo-container {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
       position: relative;
     }
 
     .logo-icon {
-      font-size: 40px;
+      font-size: 36px;
       background: var(--instagram-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      filter: drop-shadow(0 0 15px rgba(255, 51, 133, 0.7));
+      filter: drop-shadow(0 0 10px rgba(255, 102, 163, 0.5));
       animation: float 3s ease-in-out infinite;
-      transform: translateZ(20px);
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0px) translateZ(20px); }
-      50% { transform: translateY(-5px) translateZ(30px); }
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
     }
 
     .logo-text {
-      font-size: 34px;
+      font-size: 28px;
       font-weight: 800;
       background: var(--instagram-gradient);
       -webkit-background-clip: text;
@@ -109,94 +106,81 @@
       letter-spacing: 1px;
       position: relative;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-      transform: translateZ(15px);
     }
 
-    /* ফিক্সড লোগো ব্যাজ - এখন রাউন্ড শেপের সাথে মিলবে */
     .logo-badge {
       position: absolute;
-      top: -15px;
-      right: -45px;
-      font-size: 12px;
+      top: -12px;
+      right: -35px;
+      font-size: 11px;
       background: var(--primary);
       color: white;
-      padding: 4px 12px;
+      padding: 4px 10px;
       border-radius: 20px;
       font-weight: 700;
-      transform: rotate(10deg) translateZ(25px);
-      box-shadow: 0 4px 0 #b31f5c, 0 8px 15px rgba(255, 51, 133, 0.4);
+      transform: rotate(10deg);
+      box-shadow: 0 4px 0 #b3476b, 0 8px 15px rgba(255, 102, 163, 0.3);
       animation: badgeGlow 2s ease-in-out infinite;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-bottom: 4px solid #b31f5c;
-      z-index: 10;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-bottom: 4px solid #b3476b;
     }
 
-    @keyframes badgeGlow {
-      0%, 100% { transform: rotate(10deg) translateZ(25px) scale(1); }
-      50% { transform: rotate(10deg) translateZ(35px) scale(1.1); }
-    }
-
-    /* 3D সিস্টেম স্ট্যাটাস বার */
+    /* সিস্টেম স্ট্যাটাস বার */
     .system-status-bar {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 20px;
+      padding: 14px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       box-shadow: var(--shadow-3d);
       border-left: 4px solid var(--primary);
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       transform: translateY(-2px);
-      border-bottom: 4px solid #0e1522;
+      border-bottom: 4px solid #15202b;
     }
 
     .system-status-info {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex: 1;
-      min-width: 200px;
+      min-width: 160px;
     }
 
     .system-status-dot {
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       background: var(--success);
-      box-shadow: 0 0 15px var(--success), 0 2px 0 #1a8a4a;
+      box-shadow: 0 0 12px var(--success), 0 2px 0 #1a7a3a;
       animation: pulse 2s infinite;
-      border-bottom: 2px solid #1a8a4a;
+      border-bottom: 2px solid #1a7a3a;
     }
 
     .system-status-dot.off {
       background: var(--danger);
-      box-shadow: 0 0 15px var(--danger), 0 2px 0 #b31f3a;
-      border-bottom: 2px solid #b31f3a;
+      box-shadow: 0 0 12px var(--danger), 0 2px 0 #b33f5a;
+      border-bottom: 2px solid #b33f5a;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.2); }
-    }
-
-    /* ফিক্সড টিকার কন্টেইনার - এখন চিকন এবং স্লাইড করবে */
+    /* টিকার কন্টেইনার - ফিক্সড */
     .message-ticker-container {
       flex: 2;
-      min-width: 250px;
+      min-width: 200px;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 40px;
-      padding: 8px 16px;
+      padding: 6px 14px;
       border: 1px solid var(--border);
       overflow: hidden;
       position: relative;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 4px 0 #0a101a;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 4px 0 #0f1422;
       transform: translateY(-2px);
-      border-bottom: 3px solid #0a101a;
-      height: 40px;
+      border-bottom: 3px solid #0f1422;
+      height: 38px;
       display: flex;
       align-items: center;
     }
@@ -211,20 +195,19 @@
     .ticker-content {
       display: inline-block;
       animation: ticker-scroll 12s linear infinite;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       background: var(--instagram-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 10px rgba(255, 51, 133, 0.5);
+      text-shadow: 0 0 8px rgba(255, 102, 163, 0.4);
       letter-spacing: 0.5px;
-      will-change: transform;
       white-space: nowrap;
     }
 
     .ticker-content.warning {
-      background: linear-gradient(45deg, #ff4d6d, #ff9933);
+      background: linear-gradient(45deg, #ff6b8b, #ffb366);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -239,54 +222,90 @@
       animation-play-state: paused;
     }
 
-    /* 3D সিস্টেম অফ নোটিস */
+    /* সিস্টেম অফ নোটিস */
     .system-off-notice {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 900;
       text-align: center;
-      padding: 20px 25px;
+      padding: 16px 20px;
       border-radius: 40px;
       border: 3px solid var(--danger);
-      background: rgba(255, 77, 109, 0.2);
+      background: rgba(255, 107, 139, 0.15);
       color: var(--danger);
-      max-width: 700px;
+      max-width: 100%;
       width: 100%;
-      margin: 15px auto;
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow-3d), 0 0 40px rgba(255, 77, 109, 0.4);
-      line-height: 1.6;
-      letter-spacing: 0.5px;
-      animation: noticePulse 2s infinite;
+      margin: 12px auto;
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-3d), 0 0 30px rgba(255, 107, 139, 0.3);
+      line-height: 1.5;
+      transform: translateY(-2px);
+      border-bottom: 6px solid #b33f5a;
+    }
+
+    /* তিনটি অপশন কার্ড */
+    .options-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      margin: 12px 0 16px;
+    }
+
+    .option-card {
+      flex: 1;
+      background: var(--panel);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 10px 2px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      box-shadow: var(--shadow-3d);
+      transform: translateY(-2px);
+      border-bottom: 4px solid #15202b;
+    }
+
+    .option-card.selected {
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
       transform: translateY(-3px);
-      border-bottom: 6px solid #b31f3a;
+      border-bottom-color: var(--primary);
     }
 
-    @keyframes noticePulse {
-      0%, 100% { transform: translateY(-3px) scale(1); box-shadow: var(--shadow-3d), 0 0 30px rgba(255, 77, 109, 0.3); }
-      50% { transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow-3d-hover), 0 0 50px rgba(255, 77, 109, 0.6); }
+    .option-card.off {
+      opacity: 0.6;
+      filter: grayscale(40%);
     }
 
-    /* 3D ইনপুট কন্টেইনার */
+    .option-icon {
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+
+    .option-title {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* তিনটি ইনপুট বক্স */
     .input-container {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-      margin-top: 10px;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     .input-box {
       background: var(--panel);
-      border-radius: 20px;
+      border-radius: 18px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      min-height: 220px;
+      min-height: 180px;
       box-shadow: var(--shadow-3d);
       border: 1px solid var(--border);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
       transform: translateY(-2px);
-      border-bottom: 5px solid #0e1522;
-      transition: all 0.1s ease;
+      border-bottom: 5px solid #15202b;
     }
 
     .input-box:active {
@@ -295,14 +314,13 @@
     }
 
     .box-header {
-      background: rgba(10, 15, 30, 0.8);
-      padding: 14px 16px;
-      font-size: 16px;
+      background: rgba(15, 20, 34, 0.8);
+      padding: 10px 6px;
+      font-size: 14px;
       font-weight: 800;
       text-align: center;
       border-bottom: 2px solid transparent;
       text-transform: uppercase;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
 
     .input-box:nth-child(1) .box-header {
@@ -323,13 +341,13 @@
     .box-textarea {
       flex: 1;
       width: 100%;
-      background: rgba(10, 15, 30, 0.6);
+      background: rgba(15, 20, 34, 0.5);
       color: var(--text);
       border: none;
-      padding: 16px;
+      padding: 10px;
       font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 12px;
+      line-height: 1.4;
       resize: none;
       outline: none;
       white-space: pre;
@@ -338,157 +356,118 @@
 
     .error-border {
       border: 2px solid var(--error) !important;
-      box-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
+      box-shadow: 0 0 12px rgba(255, 107, 139, 0.5);
     }
 
-    /* 3D ডেট ইনফো */
+    /* তারিখ ইনফো */
     .date-info {
       text-align: center;
-      font-size: 16px;
+      font-size: 15px;
       color: var(--muted);
       background: var(--panel);
-      padding: 14px 18px;
+      padding: 12px 14px;
       border-radius: 16px;
-      margin: 15px 0;
+      margin: 12px 0;
       border: 1px solid var(--border);
       box-shadow: var(--shadow-3d);
       font-weight: 500;
       transform: translateY(-2px);
-      border-bottom: 4px solid #0e1522;
+      border-bottom: 4px solid #15202b;
     }
 
     .current-date {
       color: var(--secondary);
       font-weight: 900;
-      font-size: 22px;
-      animation: datePulse 2s infinite;
-      background: rgba(255, 153, 51, 0.15);
-      padding: 2px 10px;
+      font-size: 20px;
+      background: rgba(255, 179, 102, 0.1);
+      padding: 2px 8px;
       border-radius: 30px;
       display: inline-block;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
 
-    @keyframes datePulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
-    }
-
-    /* 3D সাবমিট সেকশন */
+    /* সাবমিট সেকশন */
     .submit-section {
-      margin: 20px 0 16px;
+      margin: 16px 0 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .submit-notice {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 900;
       text-align: center;
       color: var(--primary);
-      padding: 12px 24px;
+      padding: 10px 20px;
       border-radius: 40px;
       border: 2px solid var(--primary);
-      backdrop-filter: blur(10px);
-      animation: noticePulse 2s ease-in-out infinite;
-      max-width: 600px;
+      backdrop-filter: blur(8px);
+      max-width: 100%;
       width: 100%;
-      background: rgba(255, 51, 133, 0.15);
+      background: rgba(255, 102, 163, 0.1);
       box-shadow: var(--shadow-3d);
       transform: translateY(-2px);
-      border-bottom: 5px solid #b31f5c;
+      border-bottom: 5px solid #b3476b;
     }
 
     .submit-notice.restricted {
       color: var(--danger);
       border-color: var(--danger);
-      background: rgba(255, 77, 109, 0.15);
-      border-bottom-color: #b31f3a;
+      background: rgba(255, 107, 139, 0.1);
+      border-bottom-color: #b33f5a;
     }
 
-    /* ফিক্সড 3D বাটন - এখন স্পষ্ট 3D */
     .submit-btn {
       width: 100%;
-      max-width: 320px;
+      max-width: 280px;
       background: var(--instagram-gradient);
       border: none;
       color: white;
-      padding: 20px 32px;
+      padding: 16px 28px;
       border-radius: 50px;
       font-weight: 800;
-      font-size: 20px;
+      font-size: 18px;
       cursor: pointer;
       transition: all 0.1s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       text-transform: uppercase;
       position: relative;
       overflow: hidden;
-      opacity: 1;
-      
-      /* শক্তিশালী 3D ইফেক্ট */
-      box-shadow: 
-        0 10px 0 #b31f5c,
-        0 15px 25px rgba(255, 51, 133, 0.5);
-      transform: translateY(-5px);
+      box-shadow: 0 8px 0 #b3476b, 0 12px 20px rgba(255, 102, 163, 0.4);
+      transform: translateY(-4px);
       border: 2px solid rgba(255,255,255,0.2);
-      border-top: 1px solid rgba(255,255,255,0.4);
     }
 
-    .submit-btn:hover:not(.system-off-btn) {
-      transform: translateY(-8px);
-      box-shadow: 
-        0 13px 0 #b31f5c,
-        0 20px 30px rgba(255, 51, 133, 0.7);
-    }
-
-    .submit-btn:active:not(.system-off-btn) {
+    .submit-btn:active {
       transform: translateY(2px);
-      box-shadow: 
-        0 5px 0 #b31f5c,
-        0 10px 20px rgba(255, 51, 133, 0.5);
+      box-shadow: 0 4px 0 #b3476b, 0 8px 15px rgba(255, 102, 163, 0.4);
     }
 
     .submit-btn.system-off-btn {
-      opacity: 0.5;
+      opacity: 0.6;
       cursor: not-allowed;
-      filter: grayscale(80%);
-      background: linear-gradient(45deg, #666, #888);
-      box-shadow: 0 5px 0 #333, 0 8px 20px rgba(0,0,0,0.3);
+      filter: grayscale(60%);
+      background: linear-gradient(45deg, #888, #aaa);
+      box-shadow: 0 5px 0 #555, 0 8px 15px rgba(0,0,0,0.3);
       pointer-events: none;
       transform: translateY(-2px);
     }
 
-    .submit-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s;
-    }
-
-    .submit-btn:hover:not(.system-off-btn)::before {
-      left: 100%;
-    }
-
-    /* 3D টাইম রিমেইনিং */
+    /* টাইম রিমেইনিং */
     .time-remaining {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--muted);
-      padding: 8px 20px;
-      background: rgba(0, 0, 0, 0.4);
+      padding: 6px 18px;
+      background: rgba(0, 0, 0, 0.3);
       border-radius: 40px;
       border: 1px solid var(--border);
-      margin-top: 5px;
-      box-shadow: 0 4px 0 #0a101a;
+      margin-top: 4px;
+      box-shadow: 0 4px 0 #0f1422;
       transform: translateY(-2px);
     }
 
@@ -497,70 +476,42 @@
       font-weight: 700;
     }
 
-    /* 3D আউটপুট সেকশন */
+    /* আউটপুট সেকশন */
     .output-section {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 30px 20px;
-      min-height: 140px;
+      padding: 24px 16px;
+      min-height: 120px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       position: relative;
       overflow: hidden;
-      margin: 16px 0;
+      margin: 12px 0;
       box-shadow: var(--shadow-3d);
-      backdrop-filter: blur(10px);
-      transform: translateY(-3px);
-      border-bottom: 5px solid #0e1522;
-    }
-
-    .output-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(45deg, 
-        transparent 0%, 
-        rgba(255, 51, 133, 0.15) 25%, 
-        rgba(107, 95, 255, 0.15) 50%, 
-        rgba(255, 153, 51, 0.15) 75%, 
-        transparent 100%);
-      animation: shimmer 3s infinite linear;
-      background-size: 200% 100%;
-    }
-
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
+      backdrop-filter: blur(8px);
+      transform: translateY(-2px);
+      border-bottom: 5px solid #15202b;
     }
 
     .output-text {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 800;
       background: var(--instagram-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       animation: textFloat 4s ease-in-out infinite;
-      padding: 16px 30px;
+      padding: 12px 20px;
       border-radius: 14px;
       position: relative;
       z-index: 2;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-      transform: translateZ(20px);
     }
 
-    @keyframes textFloat {
-      0%, 100% { transform: translateY(0px) translateZ(20px); }
-      50% { transform: translateY(-5px) translateZ(30px); }
-    }
-
-    /* 3D পপআপ */
+    /* পপআপ স্টাইল */
     .popup-overlay {
       position: fixed;
       top: 0;
@@ -568,7 +519,7 @@
       right: 0;
       bottom: 0;
       background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(12px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -588,15 +539,15 @@
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 24px;
-      padding: 30px;
+      padding: 24px;
       width: 100%;
-      max-width: 380px;
+      max-width: 340px;
       max-height: 80vh;
       overflow-y: auto;
       transform: scale(0.9) translateY(0);
       transition: transform 0.3s ease;
       box-shadow: var(--shadow-3d);
-      border-bottom: 6px solid #0e1522;
+      border-bottom: 6px solid #15202b;
     }
 
     .popup-overlay.active .popup-content {
@@ -604,138 +555,79 @@
     }
 
     .popup-header {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       text-align: center;
-      margin-bottom: 20px;
-      padding-bottom: 15px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
       border-bottom: 2px solid var(--border);
     }
 
-    .popup-header.warning { 
-      color: var(--warning); 
-      border-bottom-color: var(--warning);
-    }
-    .popup-header.error { 
-      color: var(--error); 
-      border-bottom-color: var(--error);
-    }
-    .popup-header.success { 
-      color: var(--success); 
-      border-bottom-color: var(--success);
-    }
+    .popup-header.warning { color: var(--warning); border-bottom-color: var(--warning); }
+    .popup-header.error { color: var(--error); border-bottom-color: var(--error); }
+    .popup-header.success { color: var(--success); border-bottom-color: var(--success); }
 
     .popup-message {
-      font-size: 18px;
-      line-height: 1.7;
+      font-size: 16px;
+      line-height: 1.6;
       color: var(--text);
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       text-align: center;
-      font-weight: 500;
       white-space: pre-line;
     }
 
     .popup-buttons {
       display: flex;
-      gap: 15px;
-      margin-top: 25px;
+      gap: 12px;
+      margin-top: 20px;
     }
 
-    /* 3D পপআপ বাটন */
     .popup-btn {
       flex: 1;
-      padding: 16px;
+      padding: 14px;
       border: none;
       border-radius: 40px;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 16px;
       cursor: pointer;
       transition: all 0.1s ease;
       transform: translateY(-2px);
-      border-bottom: 4px solid #b31f5c;
-      box-shadow: 0 5px 0 #b31f5c;
+      border-bottom: 4px solid #b3476b;
+      box-shadow: 0 5px 0 #b3476b;
     }
 
     .popup-btn.confirm {
       background: var(--instagram-gradient);
       color: white;
-      box-shadow: 0 8px 0 #b31f5c, 0 8px 20px rgba(255, 51, 133, 0.5);
+      box-shadow: 0 6px 0 #b3476b, 0 6px 15px rgba(255, 102, 163, 0.4);
     }
 
-    .popup-btn.confirm:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 0 #b31f5c, 0 12px 25px rgba(255, 51, 133, 0.7);
-    }
-
-    .popup-btn.confirm:active {
-      transform: translateY(2px);
-      box-shadow: 0 4px 0 #b31f5c, 0 8px 20px rgba(255, 51, 133, 0.5);
-    }
-
-    /* মোবাইল রেস্পন্সিভ 3D */
+    /* মোবাইল রেস্পন্সিভ */
     @media (max-width: 480px) {
-      .header { 
-        padding: 15px; 
-        min-height: 70px;
-        transform: translateY(-2px);
-        border-bottom-width: 4px;
-      }
+      .header { padding: 12px; min-height: 70px; }
       .logo-icon { font-size: 32px; }
-      .logo-text { font-size: 28px; }
-      .logo-badge { 
-        right: -40px; 
-        font-size: 10px; 
-        padding: 3px 8px;
-        top: -12px;
-      }
-      .system-status-bar { transform: translateY(-1px); }
-      .message-ticker-container { height: 36px; }
-      .ticker-content { font-size: 12px; }
-      .input-container { gap: 8px; }
-      .input-box { 
-        min-height: 180px; 
-        transform: translateY(-1px);
-      }
-      .input-box:active { transform: translateY(1px); }
-      .box-header { font-size: 14px; padding: 10px 12px; }
-      .box-textarea { font-size: 12px; padding: 12px; }
-      .submit-notice { font-size: 15px; padding: 8px 16px; }
-      .submit-btn { 
-        padding: 16px 24px; 
-        font-size: 16px;
-        box-shadow: 0 8px 0 #b31f5c, 0 12px 25px rgba(255, 51, 133, 0.5);
-        transform: translateY(-4px);
-      }
-      .submit-btn:hover:not(.system-off-btn) {
-        transform: translateY(-6px);
-        box-shadow: 0 10px 0 #b31f5c, 0 15px 30px rgba(255, 51, 133, 0.7);
-      }
-      .submit-btn:active:not(.system-off-btn) {
-        transform: translateY(1px);
-        box-shadow: 0 4px 0 #b31f5c, 0 8px 20px rgba(255, 51, 133, 0.5);
-      }
-      .output-section { 
-        transform: translateY(-2px);
-        padding: 20px 15px;
-      }
-      .output-text { 
-        font-size: 26px; 
-        padding: 12px 20px;
-      }
-      .popup-content { padding: 25px; }
-      .popup-header { font-size: 22px; }
-      .popup-message { font-size: 16px; }
-      .popup-btn { padding: 14px; font-size: 16px; }
-    }
-
-    @media (max-width: 360px) {
-      .input-container { grid-template-columns: 1fr; gap: 12px; }
       .logo-text { font-size: 24px; }
-      .logo-badge { right: -35px; font-size: 9px; }
+      .logo-badge { right: -30px; font-size: 10px; padding: 3px 8px; top: -10px; }
+      
+      .options-container { gap: 4px; }
+      .option-card { padding: 8px 2px; }
+      .option-icon { font-size: 20px; }
+      .option-title { font-size: 11px; }
+      
+      .input-container { gap: 6px; }
+      .input-box { min-height: 160px; }
+      .box-header { font-size: 12px; padding: 8px 4px; }
+      .box-textarea { font-size: 11px; padding: 8px; }
+      
+      .submit-btn { padding: 14px 20px; font-size: 16px; }
+      .output-text { font-size: 24px; padding: 10px 16px; }
+      
+      .popup-content { padding: 20px; }
+      .popup-header { font-size: 20px; }
+      .popup-message { font-size: 14px; }
     }
 
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: var(--dark-bg); }
+    ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
   </style>
   
@@ -746,132 +638,131 @@
 
 <body>
   <div class="container">
+    <!-- হেডার -->
     <div class="header">
       <div class="logo-container">
-        <div class="logo-icon">📸</div>
+        <div class="logo-icon">📱</div>
         <div class="logo-text">
-          INSTRAGRAM 2FA
+          EBH_TEAM
           <div class="logo-badge">EBH</div>
         </div>
       </div>
     </div>
 
-    <!-- System Status from Admin Panel -->
-    <div class="system-status-bar" id="systemStatusBar">
+    <!-- সিস্টেম স্ট্যাটাস বার (টিকার সাথে) -->
+    <div class="system-status-bar">
       <div class="system-status-info">
         <div class="system-status-dot" id="systemStatusDot"></div>
-        <div class="system-status-text" id="systemStatusText">সিস্টেম স্ট্যাটাস লোড হচ্ছে...</div>
+        <div class="system-status-text" id="systemStatusText">Loading...</div>
       </div>
-      
-      <!-- Scrolling Message Ticker (ফিক্সড - এখন স্লাইড করবে) -->
-      <div class="message-ticker-container" id="messageTickerContainer">
+      <div class="message-ticker-container">
         <div class="message-ticker">
-          <div class="ticker-content" id="tickerContent">
-            <span>📢 EBH টিম থেকে নোটিশ লোড হচ্ছে...</span>
-          </div>
+          <div class="ticker-content" id="tickerContent">📢 Loading ticker message...</div>
         </div>
       </div>
     </div>
 
-    <!-- System Off Notice - বড় নোটিশ (আলাদা) -->
+    <!-- সিস্টেম অফ নোটিস (যখন পুরো সিস্টেম অফ) -->
     <div class="system-off-notice" id="systemOffNotice" style="display: none;">
-      <i>⚠️</i> <span id="systemOffMessage"></span>
+      <span id="systemOffMessage"></span>
+    </div>
+
+    <!-- তিনটি অপশন কার্ড -->
+    <div class="options-container">
+      <div class="option-card selected" id="optionInstagram">
+        <div class="option-icon">📷</div>
+        <div class="option-title">INSTAGRAM 2FA</div>
+      </div>
+      <div class="option-card" id="optionFacebook2FA">
+        <div class="option-icon">📘</div>
+        <div class="option-title">FACEBOOK 2FA</div>
+      </div>
+      <div class="option-card" id="optionFacebookCookie">
+        <div class="option-icon">🍪</div>
+        <div class="option-title">FACEBOOK COOKIE</div>
+      </div>
     </div>
 
     <!-- তিনটি ইনপুট বক্স -->
     <div class="input-container">
       <div class="input-box">
-        <div class="box-header">📧 USERNAME</div>
-        <textarea class="box-textarea" id="usernameInput" 
-          placeholder="প্রতি লাইনে একটি ইউজারনেম লিখুন&#10;&#10;(বাধ্যতামূলক)" wrap="off"></textarea>
+        <div class="box-header" id="header1">USERNAME</div>
+        <textarea class="box-textarea" id="input1" placeholder="One per line"></textarea>
       </div>
-
       <div class="input-box">
-        <div class="box-header">🔑 PASSWARD</div>
-        <textarea class="box-textarea" id="passwordInput" 
-          placeholder="প্রতি লাইনে একটি পাসওয়ার্ড লিখুন&#10;&#10;অবশ্যই আজকের তারিখ থাকতে হবে&#10;(বাধ্যতামূলক)" wrap="off"></textarea>
+        <div class="box-header" id="header2">PASSWORD</div>
+        <textarea class="box-textarea" id="input2" placeholder="One per line"></textarea>
       </div>
-
       <div class="input-box">
-        <div class="box-header">🍪 2FA KAY</div>
-        <textarea class="box-textarea" id="cookieInput" 
-          placeholder="প্রতি লাইনে 2FA কুকিজ লিখুন&#10;ফরম্যাট: XPMC UAZD STNC T2JS II7I 6U6V ZPJW HNMZ&#10;(৮ ব্লক × ৪ অক্ষর + স্পেস)" wrap="off"></textarea>
+        <div class="box-header" id="header3">2FA CODE</div>
+        <textarea class="box-textarea" id="input3" placeholder="One per line"></textarea>
       </div>
     </div>
 
+    <!-- তারিখ ইনফো -->
     <div class="date-info">
-      আজকের তারিখ: <span class="current-date" id="currentDate">16</span> 
-      - পাসওয়ার্ডে তারিখ আবশ্যক
+      Today: <span class="current-date" id="currentDate"></span> 
+      - Must include in password
     </div>
 
+    <!-- সাবমিট সেকশন -->
     <div class="submit-section">
-      <div class="submit-notice" id="timeNotice">রাত ৯টা থেকে ১২টা পর্যন্ত সাবমিশন বন্ধ</div>
+      <div class="submit-notice" id="timeNotice">Working Hours: 24/7</div>
       <div id="timeRemaining" class="time-remaining"></div>
-      <button class="submit-btn" id="submitBtn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
-        </svg>
-        জমা দিন
-      </button>
+      <button class="submit-btn" id="submitBtn">SUBMIT</button>
     </div>
 
+    <!-- আউটপুট সেকশন -->
     <div class="output-section">
-      <div class="output-text">EBH_TEAM IS BEST</div>
+      <div class="output-text">EBH_TEAM</div>
     </div>
   </div>
 
-  <!-- রেস্ট্রিক্টেড টাইম পপআপ -->
+  <!-- পপআপগুলো -->
   <div class="popup-overlay" id="restrictedPopup">
     <div class="popup-content">
-      <div class="popup-header warning">⏰ সাবমিশন বন্ধ</div>
-      <div class="popup-message" id="restrictedMessage">
-        🔴 রাত ৯টা থেকে ১২টা পর্যন্ত সাবমিশন দেওয়া যাবে না
-
-📁 আপনি সারাদিন যে কাজ করেছেন, সেই ফাইল এডমিনের কাছে জমা দিন
-      </div>
+      <div class="popup-header warning">⏰ CLOSED</div>
+      <div class="popup-message">🔴 9PM - 12AM</div>
       <div class="popup-buttons">
-        <button class="popup-btn confirm" id="closeRestrictedPopup">ঠিক আছে</button>
+        <button class="popup-btn confirm" id="closeRestrictedPopup">OK</button>
       </div>
     </div>
   </div>
 
-  <!-- System Off Popup (Admin Control থেকে) -->
   <div class="popup-overlay" id="systemOffPopup">
     <div class="popup-content">
-      <div class="popup-header warning">⚠️ সিস্টেম বন্ধ</div>
+      <div class="popup-header warning">⚠️ SYSTEM OFFLINE</div>
       <div class="popup-message" id="systemOffPopupMessage"></div>
       <div class="popup-buttons">
-        <button class="popup-btn confirm" id="closeSystemOffPopup">ঠিক আছে</button>
+        <button class="popup-btn confirm" id="closeSystemOffPopup">OK</button>
       </div>
     </div>
   </div>
 
-  <!-- রেজাল্ট পপআপ -->
-  <div class="popup-overlay" id="popupOverlay">
+  <div class="popup-overlay" id="optionOffPopup">
     <div class="popup-content">
-      <div class="popup-header" id="popupTitle">ফলাফল</div>
-      <div class="popup-message" id="popupMessage"></div>
+      <div class="popup-header warning" id="optionOffTitle">⚠️ UNAVAILABLE</div>
+      <div class="popup-message" id="optionOffMessage"></div>
       <div class="popup-buttons">
-        <button class="popup-btn confirm" id="popupConfirm">ঠিক আছে</button>
+        <button class="popup-btn confirm" id="closeOptionOffPopup">OK</button>
       </div>
     </div>
   </div>
 
-  <!-- ডুপ্লিকেট কনফার্মেশন পপআপ -->
   <div class="popup-overlay" id="duplicatePopup">
     <div class="popup-content">
-      <div class="popup-header warning" id="duplicatePopupTitle">⚠️ ডুপ্লিকেট ইউজারনেম</div>
+      <div class="popup-header warning">⚠️ DUPLICATE</div>
       <div class="popup-message" id="duplicatePopupMessage"></div>
       <div class="popup-buttons">
-        <button class="popup-btn confirm" id="duplicateConfirm">শুধু নতুন গুলো সাবমিট করুন</button>
-        <button class="popup-btn confirm" id="duplicateCancel" style="background: #444;">বাতিল</button>
+        <button class="popup-btn confirm" id="duplicateConfirm">NEW ONLY</button>
+        <button class="popup-btn confirm" id="duplicateCancel">CANCEL</button>
       </div>
     </div>
   </div>
 
   <script>
     (function() {
-      // ফায়ারবেস কনফিগারেশন
+      // Firebase Config
       const firebaseConfig = {
         apiKey: "AIzaSyCI4HPJ_mqhqmDjKHQr3Cd302rO2Tud1Go",
         authDomain: "mtwork-fc469.firebaseapp.com",
@@ -882,65 +773,75 @@
         appId: "1:351935919939:web:7ad33f6c3e6e4de26f21f6"
       };
 
-      // ফায়ারবেস শুরু
+      // Initialize Firebase
       let db;
       try {
         firebase.initializeApp(firebaseConfig);
         db = firebase.database();
-        console.log("✅ Firebase সংযুক্ত");
+        console.log("✅ Firebase Connected");
       } catch (e) {
-        console.error("❌ Firebase ত্রুটি:", e);
+        console.error("❌ Firebase Error:", e);
       }
 
-      // ডোম এলিমেন্টস
-      const usernameInput = document.getElementById('usernameInput');
-      const passwordInput = document.getElementById('passwordInput');
-      const cookieInput = document.getElementById('cookieInput');
+      // DOM Elements
+      const header1 = document.getElementById('header1');
+      const header2 = document.getElementById('header2');
+      const header3 = document.getElementById('header3');
+      const input1 = document.getElementById('input1');
+      const input2 = document.getElementById('input2');
+      const input3 = document.getElementById('input3');
       const submitBtn = document.getElementById('submitBtn');
       const currentDateElement = document.getElementById('currentDate');
-      const timeNotice = document.getElementById('timeNotice');
-      const timeRemaining = document.getElementById('timeRemaining');
-      const restrictedPopup = document.getElementById('restrictedPopup');
-      const closeRestrictedPopup = document.getElementById('closeRestrictedPopup');
-      const popupOverlay = document.getElementById('popupOverlay');
-      const popupTitle = document.getElementById('popupTitle');
-      const popupMessage = document.getElementById('popupMessage');
-      const popupConfirm = document.getElementById('popupConfirm');
       
-      // System Control Elements
+      // Option Elements
+      const optionInstagram = document.getElementById('optionInstagram');
+      const optionFacebook2FA = document.getElementById('optionFacebook2FA');
+      const optionFacebookCookie = document.getElementById('optionFacebookCookie');
+      
+      // Status Elements
       const systemStatusDot = document.getElementById('systemStatusDot');
       const systemStatusText = document.getElementById('systemStatusText');
       const tickerContent = document.getElementById('tickerContent');
       const systemOffNotice = document.getElementById('systemOffNotice');
       const systemOffMessage = document.getElementById('systemOffMessage');
+      
+      // Popup Elements
+      const restrictedPopup = document.getElementById('restrictedPopup');
       const systemOffPopup = document.getElementById('systemOffPopup');
       const systemOffPopupMessage = document.getElementById('systemOffPopupMessage');
-      const closeSystemOffPopup = document.getElementById('closeSystemOffPopup');
-      
-      // ডুপ্লিকেট পপআপ এলিমেন্টস
+      const optionOffPopup = document.getElementById('optionOffPopup');
+      const optionOffMessage = document.getElementById('optionOffMessage');
+      const optionOffTitle = document.getElementById('optionOffTitle');
       const duplicatePopup = document.getElementById('duplicatePopup');
       const duplicatePopupMessage = document.getElementById('duplicatePopupMessage');
+      
+      // Close Buttons
+      const closeRestricted = document.getElementById('closeRestrictedPopup');
+      const closeSystemOff = document.getElementById('closeSystemOffPopup');
+      const closeOptionOff = document.getElementById('closeOptionOffPopup');
       const duplicateConfirm = document.getElementById('duplicateConfirm');
       const duplicateCancel = document.getElementById('duplicateCancel');
 
-      // গ্লোবাল ভেরিয়েবল
-      let pendingSubmission = {
-        usernames: [],
-        passwords: [],
-        cookies: [],
-        uniqueIndices: []
-      };
-      
-      // System Status Variables
-      let systemStatus = true; // true = ON, false = OFF
-      let systemOffReason = ""; // বড় নোটিশের জন্য
-      let systemTickerMessage = ""; // টিকার জন্য
+      // Global Variables
+      let selectedOption = 'instagram';
+      let systemStatus = true;
+      let optionStatus = { instagram: true, facebook2fa: true, facebookcookie: true };
+      let optionMessages = { instagram: "", facebook2fa: "", facebookcookie: "" };
+      let tickerMessage = "";
+      let offReason = "";
+      let pendingSubmission = { ids: [], passwords: [], codes: [], uniqueIndices: [] };
 
-      // আজকের তারিখ
+      // Today's Date
       const TODAY_DATE = new Date().getDate().toString();
       if (currentDateElement) currentDateElement.textContent = TODAY_DATE;
 
-      // ফাংশন: System Status লোড করা (Admin Panel থেকে)
+      // Load All Data from Firebase
+      function loadAllData() {
+        loadSystemStatus();
+        loadOptionStatus();
+      }
+
+      // Load System Status (including ticker)
       function loadSystemStatus() {
         if (!db) return;
         
@@ -948,115 +849,208 @@
           if (snapshot.exists()) {
             const data = snapshot.val();
             systemStatus = data.status !== undefined ? data.status : true;
-            systemOffReason = data.off_reason || "";
-            systemTickerMessage = data.ticker_message || "";
+            tickerMessage = data.ticker_message || "";
+            offReason = data.off_reason || "";
           } else {
             systemStatus = true;
-            systemOffReason = "";
-            systemTickerMessage = "";
+            tickerMessage = "";
+            offReason = "";
           }
           
-          // UI আপডেট
           updateSystemUI();
-          console.log("System Status Updated:", systemStatus ? "ON" : "OFF");
         }, (error) => {
           console.error("System Status Load Error:", error);
+          systemStatus = true;
+          tickerMessage = "";
+          offReason = "";
+          updateSystemUI();
         });
       }
 
-      // ফাংশন: System UI আপডেট
-      function updateSystemUI() {
-        // Status Dot and Text
-        if (systemStatus) {
-          // System ON
-          systemStatusDot.className = 'system-status-dot';
-          systemStatusText.className = 'system-status-text on';
-          systemStatusText.textContent = '✅ সিস্টেম চালু আছে';
-          
-          // System Off Notice লুকাও
-          systemOffNotice.style.display = 'none';
-          
-          // বাটন এনাবল
-          if (!isRestrictedTime()) {
-            submitBtn.classList.remove('system-off-btn');
-            submitBtn.disabled = false;
-          }
-          
-          // System Off Popup বন্ধ কর
-          if (systemOffPopup.classList.contains('active')) {
-            systemOffPopup.classList.remove('active');
-          }
-          
-          // টিকার স্টাইল
-          tickerContent.className = 'ticker-content';
-        } else {
-          // System OFF
-          systemStatusDot.className = 'system-status-dot off';
-          systemStatusText.className = 'system-status-text off';
-          systemStatusText.textContent = '🔴 সিস্টেম বন্ধ আছে';
-          
-          // System Off Notice দেখাও (বড় করে)
-          if (systemOffReason && systemOffReason.trim() !== '') {
-            systemOffMessage.textContent = systemOffReason;
+      // Load Option Status (ON/OFF + Messages)
+      function loadOptionStatus() {
+        if (!db) return;
+        
+        db.ref("option_control").on("value", (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            
+            optionStatus.instagram = data.instagram?.status !== false;
+            optionStatus.facebook2fa = data.facebook2fa?.status !== false;
+            optionStatus.facebookcookie = data.facebookcookie?.status !== false;
+            
+            optionMessages.instagram = data.instagram?.message || "";
+            optionMessages.facebook2fa = data.facebook2fa?.message || "";
+            optionMessages.facebookcookie = data.facebookcookie?.message || "";
           } else {
-            systemOffMessage.textContent = 'এডমিন কর্তৃক সিস্টেম বন্ধ করা হয়েছে। পরে আবার চেষ্টা করুন।';
+            optionStatus = { instagram: true, facebook2fa: true, facebookcookie: true };
+            optionMessages = { instagram: "", facebook2fa: "", facebookcookie: "" };
           }
-          systemOffNotice.style.display = 'block';
           
-          // বাটন ডিসএবল
+          updateOptionUI();
+        }, (error) => {
+          console.error("Option Status Load Error:", error);
+          optionStatus = { instagram: true, facebook2fa: true, facebookcookie: true };
+          optionMessages = { instagram: "", facebook2fa: "", facebookcookie: "" };
+          updateOptionUI();
+        });
+      }
+
+      // Update System UI (status dot, ticker, off notice)
+      function updateSystemUI() {
+        // Update status dot and text
+        if (systemStatus) {
+          systemStatusDot.className = 'system-status-dot';
+          systemStatusText.textContent = '✅ ONLINE';
+          systemOffNotice.style.display = 'none';
+        } else {
+          systemStatusDot.className = 'system-status-dot off';
+          systemStatusText.textContent = '🔴 OFFLINE';
+          systemOffMessage.textContent = offReason || 'System is currently offline.';
+          systemOffNotice.style.display = 'block';
+        }
+        
+        // Update ticker (always show ticker message)
+        updateTicker();
+        
+        // Update submit button state
+        updateSubmitButtonState();
+      }
+
+      // Update Ticker Content
+      function updateTicker() {
+        if (tickerMessage && tickerMessage.trim() !== '') {
+          // Double the message for smooth scrolling
+          tickerContent.innerHTML = `📢 ${tickerMessage} 🔹 ${tickerMessage} 🔹 ${tickerMessage}`;
+        } else {
+          tickerContent.innerHTML = '📢 EBH TEAM - 2FA SUBMISSION SYSTEM 🔹 EBH TEAM - 2FA SUBMISSION SYSTEM';
+        }
+        
+        // Adjust animation speed based on message length
+        const msgLength = tickerMessage.length;
+        if (msgLength > 50) {
+          tickerContent.style.animationDuration = '15s';
+        } else if (msgLength < 20) {
+          tickerContent.style.animationDuration = '10s';
+        } else {
+          tickerContent.style.animationDuration = '12s';
+        }
+      }
+
+      // Update Option UI (add off class if needed)
+      function updateOptionUI() {
+        // Update option cards based on status
+        if (optionStatus.instagram) {
+          optionInstagram.classList.remove('off');
+        } else {
+          optionInstagram.classList.add('off');
+        }
+        
+        if (optionStatus.facebook2fa) {
+          optionFacebook2FA.classList.remove('off');
+        } else {
+          optionFacebook2FA.classList.add('off');
+        }
+        
+        if (optionStatus.facebookcookie) {
+          optionFacebookCookie.classList.remove('off');
+        } else {
+          optionFacebookCookie.classList.add('off');
+        }
+        
+        // If current selected option is off, select first available
+        if (!optionStatus[selectedOption]) {
+          if (optionStatus.instagram) {
+            selectOption('instagram');
+          } else if (optionStatus.facebook2fa) {
+            selectOption('facebook2fa');
+          } else if (optionStatus.facebookcookie) {
+            selectOption('facebookcookie');
+          }
+        }
+      }
+
+      // Select Option Function
+      function selectOption(option) {
+        selectedOption = option;
+        
+        // Remove selected class from all
+        optionInstagram.classList.remove('selected');
+        optionFacebook2FA.classList.remove('selected');
+        optionFacebookCookie.classList.remove('selected');
+        
+        // Add selected class to current
+        if (option === 'instagram') {
+          optionInstagram.classList.add('selected');
+          header1.textContent = 'USERNAME';
+          header2.textContent = 'PASSWORD';
+          header3.textContent = '2FA CODE';
+          input1.placeholder = 'One username per line\nExample: user123';
+          input2.placeholder = 'One password per line\nMust include ' + TODAY_DATE;
+          input3.placeholder = 'One 2FA code per line\nFormat: XXXX XXXX XXXX XXXX';
+        } 
+        else if (option === 'facebook2fa') {
+          optionFacebook2FA.classList.add('selected');
+          header1.textContent = 'UID';
+          header2.textContent = 'PASSWORD';
+          header3.textContent = '2FA CODE';
+          input1.placeholder = 'One UID per line\nExample: 61588557962792';
+          input2.placeholder = 'One password per line\nMust include ' + TODAY_DATE;
+          input3.placeholder = 'One 2FA code per line\nFormat: XXXX XXXX XXXX XXXX';
+        }
+        else if (option === 'facebookcookie') {
+          optionFacebookCookie.classList.add('selected');
+          header1.textContent = 'UID';
+          header2.textContent = 'PASSWORD';
+          header3.textContent = 'COOKIE';
+          input1.placeholder = 'One UID per line\nExample: 61588557962792';
+          input2.placeholder = 'One password per line\nMust include ' + TODAY_DATE;
+          input3.placeholder = 'One cookie per line\nFormat: c_user=xxx; xs=xxx;';
+        }
+      }
+
+      // Handle Option Click - Check if option is OFF and show custom message
+      function handleOptionClick(option) {
+        if (!optionStatus[option]) {
+          let optionName = '';
+          if (option === 'instagram') {
+            optionName = 'INSTAGRAM 2FA';
+          } else if (option === 'facebook2fa') {
+            optionName = 'FACEBOOK 2FA';
+          } else {
+            optionName = 'FACEBOOK COOKIE';
+          }
+          
+          // Show custom message from admin panel
+          const customMessage = optionMessages[option] || 'This option is currently unavailable.';
+          optionOffTitle.textContent = `⚠️ ${optionName} UNAVAILABLE`;
+          optionOffMessage.textContent = customMessage;
+          optionOffPopup.classList.add('active');
+          return;
+        }
+        
+        selectOption(option);
+      }
+
+      // Update Submit Button State based on system status and time
+      function updateSubmitButtonState() {
+        if (!systemStatus || isRestrictedTime()) {
           submitBtn.classList.add('system-off-btn');
           submitBtn.disabled = true;
-          
-          // টিকার স্টাইল
-          tickerContent.classList.add('warning');
-        }
-        
-        // টিকার কন্টেন্ট আপডেট (আলাদাভাবে)
-        updateTickerContent();
-      }
-
-      // ফাংশন: টিকার কন্টেন্ট আপডেট (শুধু টিকার জন্য)
-      function updateTickerContent() {
-        let message = systemTickerMessage && systemTickerMessage.trim() !== '' 
-          ? systemTickerMessage 
-          : '🔹 EBH TEAM - INSTAGRAM 2FA সিস্টেম 🔹';
-        
-        // লেখাকে ২ বার দেখানো হচ্ছে যাতে কন্টিনিউয়াস দেখায়
-        let displayMessage = `${message} 🔹 ${message} 🔹 ${message}`;
-        
-        // টিকারের HTML সেট করা
-        tickerContent.innerHTML = `<span>📢 ${displayMessage}</span>`;
-        
-        // লেখার দৈর্ঘ্য অনুযায়ী স্পিড অ্যাডজাস্ট
-        if (message.length > 50) {
-          tickerContent.style.animationDuration = '15s'; // ধীর
-        } else if (message.length < 20) {
-          tickerContent.style.animationDuration = '10s'; // মাঝারি
         } else {
-          tickerContent.style.animationDuration = '12s'; // ধীর (ডিফল্ট)
+          submitBtn.classList.remove('system-off-btn');
+          submitBtn.disabled = false;
         }
       }
 
-      // ফাংশন: System Off Popup দেখানো
-      function showSystemOffPopup() {
-        if (!systemStatus) {
-          if (systemOffReason && systemOffReason.trim() !== '') {
-            systemOffPopupMessage.textContent = systemOffReason;
-          } else {
-            systemOffPopupMessage.textContent = 'সিস্টেম বন্ধ রয়েছে। পরে আবার চেষ্টা করুন।';
-          }
-          systemOffPopup.classList.add('active');
-        }
-      }
-
-      // ফাংশন: রেস্ট্রিক্টেড টাইম চেক
+      // Check Restricted Time (9PM - 12AM)
       function isRestrictedTime() {
         const hours = new Date().getHours();
         return hours >= 21 && hours < 24;
       }
 
-      // ফাংশন: টাইম রিমেইনিং
-      function getBanglaTimeRemaining() {
+      // Get Time Remaining
+      function getTimeRemaining() {
         const now = new Date();
         const hours = now.getHours();
         
@@ -1080,433 +1074,260 @@
         }
       }
 
-      // ফাংশন: টাইম নোটিশ আপডেট
+      // Update Time Notice
       function updateTimeNotice() {
         const restricted = isRestrictedTime();
-        const remaining = getBanglaTimeRemaining();
+        const remaining = getTimeRemaining();
+        const timeNotice = document.getElementById('timeNotice');
+        const timeRemaining = document.getElementById('timeRemaining');
         
-        if (!timeNotice || !timeRemaining || !submitBtn) return;
-
+        if (!timeNotice || !timeRemaining) return;
+        
         if (restricted) {
-          timeNotice.textContent = '🔴 সাবমিশন বন্ধ (রাত ৯টা - ১২টা)';
+          timeNotice.textContent = '🔴 SUBMISSION CLOSED (9PM - 12AM)';
           timeNotice.classList.add('restricted');
-          
-          if (systemStatus) {
-            submitBtn.classList.add('system-off-btn');
-            submitBtn.disabled = true;
-          }
-          
-          timeRemaining.innerHTML = `📛 খুলতে: <span class="time-highlight">${remaining.hours}ঘ ${remaining.minutes}ম ${remaining.seconds}সে</span> বাকি`;
-          timeRemaining.style.display = 'block';
+          timeRemaining.innerHTML = `⏰ Opens in: <span class="time-highlight">${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s</span>`;
         } else {
-          timeNotice.textContent = '🟢 আজকের কাজ চলছে - রাত ৯টায় বন্ধ হবে';
+          timeNotice.textContent = '🟢 SUBMISSION OPEN 24/7';
           timeNotice.classList.remove('restricted');
-          
-          if (systemStatus) {
-            submitBtn.classList.remove('system-off-btn');
-            submitBtn.disabled = false;
-          } else {
-            submitBtn.classList.add('system-off-btn');
-            submitBtn.disabled = true;
-          }
-          
-          timeRemaining.innerHTML = `⏳ আজকের কাজ বন্ধ হবে: <span class="time-highlight">${remaining.hours}ঘ ${remaining.minutes}ম ${remaining.seconds}সে</span> পরে`;
-          timeRemaining.style.display = 'block';
+          timeRemaining.innerHTML = `⏳ Closes in: <span class="time-highlight">${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s</span>`;
         }
+        
+        updateSubmitButtonState();
       }
 
-      // ফাংশন: 2FA কী-এর ফরম্যাট চেক
-      function isValid2FAFormat(cookie) {
-        // ফরম্যাট: ৪ অক্ষর + স্পেস + ৪ অক্ষর + স্পেস + ... ৮ বার
-        // যেমন: XPMC UAZD STNC T2JS II7I 6U6V ZPJW HNMZ
-        const regex = /^[A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4}$/;
-        return regex.test(cookie);
-      }
-
-      // ফাংশন: ভ্যালিডেশন
-      function validateAllInputs(usernames, passwords, cookies) {
+      // Validate Inputs
+      function validateInputs(ids, passwords, codes) {
         const errors = [];
         
-        if (usernames.length === 0) {
-          errors.push("❌ ইউজারনেম দিতে হবে");
-          usernameInput.classList.add('error-border');
-        } else {
-          usernameInput.classList.remove('error-border');
+        if (ids.length === 0) errors.push("❌ ID/Username required");
+        if (passwords.length === 0) errors.push("❌ Password required");
+        if (codes.length === 0) errors.push("❌ 2FA/Cookie required");
+        
+        if (ids.length !== passwords.length || ids.length !== codes.length) {
+          errors.push("❌ All boxes must have same number of lines");
         }
         
-        if (passwords.length === 0) {
-          errors.push("❌ পাসওয়ার্ড দিতে হবে");
-          passwordInput.classList.add('error-border');
-        } else {
-          passwordInput.classList.remove('error-border');
-        }
-        
-        if (cookies.length === 0) {
-          errors.push("❌ 2FA কুকিজ দিতে হবে");
-          cookieInput.classList.add('error-border');
-        } else {
-          cookieInput.classList.remove('error-border');
-        }
-        
-        if (usernames.length > 0 && passwords.length > 0 && cookies.length > 0) {
-          if (usernames.length !== passwords.length) {
-            errors.push(`❌ ইউজারনেম (${usernames.length}) এবং পাসওয়ার্ড (${passwords.length}) এর সংখ্যা একই হতে হবে`);
-          }
-          if (usernames.length !== cookies.length) {
-            errors.push(`❌ ইউজারনেম (${usernames.length}) এবং 2FA কুকিজ (${cookies.length}) এর সংখ্যা একই হতে হবে`);
-          }
-        }
-        
-        // পাসওয়ার্ডে তারিখ চেক
+        // Check date in password
         for (let i = 0; i < passwords.length; i++) {
           if (!passwords[i].includes(TODAY_DATE)) {
-            errors.push(`❌ লাইন ${i+1}: পাসওয়ার্ডে আজকের তারিখ (${TODAY_DATE}) থাকতে হবে`);
-            passwordInput.classList.add('error-border');
+            errors.push(`❌ Line ${i+1}: Password must include ${TODAY_DATE}`);
           }
         }
         
-        // 2FA কী-এর ফরম্যাট চেক
-        for (let i = 0; i < cookies.length; i++) {
-          if (!isValid2FAFormat(cookies[i])) {
-            errors.push(`❌ লাইন ${i+1}: 2FA কী-এর ফরম্যাট ঠিক নয়\nফরম্যাট: XPMC UAZD STNC T2JS II7I 6U6V ZPJW HNMZ`);
-            cookieInput.classList.add('error-border');
+        // Format check based on option
+        if (selectedOption !== 'facebookcookie') {
+          const regex = /^[A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4}$/;
+          for (let i = 0; i < codes.length; i++) {
+            if (!regex.test(codes[i])) {
+              errors.push(`❌ Line ${i+1}: Invalid 2FA format (use: XXXX XXXX XXXX XXXX)`);
+            }
+          }
+        } else {
+          for (let i = 0; i < codes.length; i++) {
+            if (!codes[i].includes('c_user=') || !codes[i].includes('xs=')) {
+              errors.push(`❌ Line ${i+1}: Invalid cookie format (use: c_user=xxx; xs=xxx;)`);
+            }
           }
         }
         
-        return {
-          valid: errors.length === 0,
-          errors
-        };
+        return { valid: errors.length === 0, errors };
       }
 
-      // ডুপ্লিকেট চেক ফাংশন
-      async function checkDuplicateUsernames(usernames) {
-        try {
-          const usedUsernamesRef = db.ref('instagram_used_usernames');
-          const snapshot = await usedUsernamesRef.once('value');
-          const usedData = snapshot.val() || {};
-          
-          const usedUsernamesMap = new Map();
-          
-          Object.values(usedData).forEach(item => {
-            if (item && item.username) {
-              const normalized = item.username.toLowerCase().trim();
-              usedUsernamesMap.set(normalized, {
-                original: item.username,
-                submitted_at: item.submitted_at || 'অজানা'
-              });
-            }
-          });
-
-          const duplicateDetails = [];
-          const uniqueUsernames = [];
-          const duplicateIndices = [];
-          
-          usernames.forEach((username, index) => {
-            const normalizedUsername = username.toLowerCase().trim();
-            
-            if (usedUsernamesMap.has(normalizedUsername)) {
-              const duplicateInfo = usedUsernamesMap.get(normalizedUsername);
-              duplicateDetails.push({
-                line: index + 1,
-                username: username,
-                originalUsername: duplicateInfo.original,
-                submitted_at: duplicateInfo.submitted_at
-              });
-              duplicateIndices.push(index);
-            } else {
-              uniqueUsernames.push(username);
-            }
-          });
-          
-          return { 
-            duplicateDetails, 
-            uniqueUsernames,
-            duplicateIndices,
-            allDuplicates: duplicateIndices.length === usernames.length
-          };
-        } catch (error) {
-          console.error("ডুপ্লিকেট চেক করতে ত্রুটি:", error);
-          throw error;
-        }
-      }
-
-      // ডুপ্লিকেট পপআপ দেখানো
-      function showDuplicatePopup(duplicateDetails, uniqueCount, totalCount) {
-        if (!duplicatePopup || !duplicatePopupMessage) return;
+      // Check Duplicates
+      async function checkDuplicates(ids) {
+        const ref = db.ref('used_ids');
+        const snapshot = await ref.once('value');
+        const used = snapshot.val() || {};
         
-        let duplicateListHtml = '';
-        duplicateDetails.forEach(d => {
-          duplicateListHtml += `🔸 লাইন ${d.line}: "${d.username}"\n`;
+        const usedMap = new Map();
+        Object.values(used).forEach(item => {
+          if (item?.id) usedMap.set(item.id.toLowerCase().trim(), true);
         });
         
-        const message = `⚠️ নিচের ইউজারনেমগুলো আগেই সাবমিট করা হয়েছে:\n\n${duplicateListHtml}\n📊 মোট ${totalCount}টির মধ্যে ${duplicateDetails.length}টি ডুপ্লিকেট\n✅ বাকি ${uniqueCount}টি নতুন অ্যাকাউন্ট সাবমিট করা যাবে।\n\nআপনি কি শুধু নতুন ${uniqueCount}টি অ্যাকাউন্ট সাবমিট করতে চান?`;
+        const duplicates = [];
+        const unique = [];
+        const indices = [];
         
-        duplicatePopupMessage.textContent = message;
-        duplicatePopup.classList.add('active');
-      }
-
-      function hideDuplicatePopup() {
-        if (duplicatePopup) duplicatePopup.classList.remove('active');
-      }
-
-      function showPopup(type, title, message) {
-        if (!popupTitle || !popupMessage || !popupOverlay) return;
-        popupTitle.textContent = title;
-        popupTitle.className = 'popup-header ' + type;
-        popupMessage.textContent = message;
-        popupOverlay.classList.add('active');
-      }
-
-      function hidePopup() {
-        if (popupOverlay) popupOverlay.classList.remove('active');
-      }
-
-      // ফায়ারবেসে ডাটা সাবমিট
-      async function submitToFirebase(usernames, passwords, cookies) {
-        try {
-          const timestamp = new Date().toISOString();
-          const timestamp_now = Date.now();
-          const updates = {};
-          let savedCount = 0;
-
-          for (let i = 0; i < usernames.length; i++) {
-            const username = usernames[i];
-            const safeKey = username.replace(/[.#$\[\]\/]/g, '_');
-            const submissionId = `ig_${timestamp_now}_${safeKey}_${i}`;
-
-            updates[`instagram_2fa_submissions/${submissionId}`] = {
-              username: username,
-              password: passwords[i],
-              cookie_2fa: cookies[i],
-              submitted_at: timestamp,
-              date_used: TODAY_DATE,
-              has_2fa: true
-            };
-
-            const usedId = `used_${timestamp_now}_${safeKey}_${i}`;
-            updates[`instagram_used_usernames/${usedId}`] = {
-              username: username,
-              submitted_at: timestamp,
-              submission_id: submissionId
-            };
-            savedCount++;
+        ids.forEach((id, index) => {
+          if (usedMap.has(id.toLowerCase().trim())) {
+            duplicates.push({ line: index + 1, id });
+          } else {
+            unique.push(id);
+            indices.push(index);
           }
-
-          await db.ref().update(updates);
-          
-          return { success: true, savedCount };
-        } catch (error) {
-          throw error;
-        }
+        });
+        
+        return { duplicates, unique, indices, allDuplicates: duplicates.length === ids.length };
       }
 
-      // সাবমিট হ্যান্ডলার
-      async function handleSubmission() {
+      // Save to Firebase
+      async function saveToFirebase(ids, passwords, codes) {
+        const timestamp = Date.now();
+        const date = new Date().toISOString();
+        const updates = {};
+        
+        for (let i = 0; i < ids.length; i++) {
+          const id = `sub_${timestamp}_${i}`;
+          const data = {
+            id: ids[i],
+            password: passwords[i],
+            code: codes[i],
+            option: selectedOption,
+            submitted_at: date,
+            date_used: TODAY_DATE
+          };
+          
+          updates[`submissions/${selectedOption}/${id}`] = data;
+          updates[`used_ids/${id}`] = { id: ids[i], option: selectedOption };
+        }
+        
+        await db.ref().update(updates);
+      }
+
+      // Handle Submit
+      async function handleSubmit() {
         try {
+          // Check system status
           if (!systemStatus) {
-            showSystemOffPopup();
+            systemOffPopupMessage.textContent = offReason || 'System is currently offline.';
+            systemOffPopup.classList.add('active');
             return;
           }
           
+          // Check time
           if (isRestrictedTime()) {
             restrictedPopup.classList.add('active');
             return;
           }
-
-          [usernameInput, passwordInput, cookieInput].forEach(input => {
-            if (input) input.classList.remove('error-border');
-          });
-
-          const usernames = usernameInput.value.split(/\r?\n/).map(u => u.trim()).filter(u => u !== '');
-          const passwords = passwordInput.value.split(/\r?\n/).map(p => p.trim()).filter(p => p !== '');
-          const cookies = cookieInput.value.split(/\r?\n/).map(c => c.trim()).filter(c => c !== '');
-
-          const validation = validateAllInputs(usernames, passwords, cookies);
+          
+          // Check if selected option is available
+          if (!optionStatus[selectedOption]) {
+            // This should not happen because we prevent selection of off options
+            let name = selectedOption === 'instagram' ? 'INSTAGRAM 2FA' : 
+                      selectedOption === 'facebook2fa' ? 'FACEBOOK 2FA' : 'FACEBOOK COOKIE';
+            optionOffTitle.textContent = `⚠️ ${name} UNAVAILABLE`;
+            optionOffMessage.textContent = optionMessages[selectedOption] || 'This option is currently unavailable.';
+            optionOffPopup.classList.add('active');
+            return;
+          }
+          
+          // Get inputs
+          const ids = input1.value.split('\n').map(l => l.trim()).filter(l => l);
+          const passwords = input2.value.split('\n').map(l => l.trim()).filter(l => l);
+          const codes = input3.value.split('\n').map(l => l.trim()).filter(l => l);
+          
+          // Validate
+          const validation = validateInputs(ids, passwords, codes);
           if (!validation.valid) {
-            showPopup('error', '❌ ভুল', validation.errors.join('\n'));
+            alert(validation.errors.join('\n'));
             return;
           }
-
-          if (!db) {
-            showPopup('error', '🔥 ত্রুটি', 'Firebase সংযোগ নেই। নেটওয়ার্ক চেক করুন।');
-            return;
-          }
-
+          
           submitBtn.disabled = true;
-          submitBtn.innerHTML = '⏳ প্রসেসিং...';
-
-          try {
-            const { duplicateDetails, uniqueUsernames, duplicateIndices, allDuplicates } = await checkDuplicateUsernames(usernames);
-            
-            if (allDuplicates) {
-              let duplicateList = '';
-              duplicateDetails.forEach(d => {
-                duplicateList += `• লাইন ${d.line}: ${d.username}\n`;
-              });
-              
-              showPopup('warning', '⚠️ সম্পূর্ণ ডুপ্লিকেট', 
-                `আপনার দেওয়া সবগুলো ইউজারনেম (${usernames.length}টি) আগেই সাবমিট করা হয়েছে:\n\n${duplicateList}`);
-              
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = 'জমা দিন';
-              return;
-            }
-            
-            if (duplicateDetails.length > 0) {
-              pendingSubmission = {
-                usernames: usernames,
-                passwords: passwords,
-                cookies: cookies,
-                uniqueIndices: usernames.reduce((indices, username, index) => {
-                  if (!duplicateIndices.includes(index)) {
-                    indices.push(index);
-                  }
-                  return indices;
-                }, [])
-              };
-              
-              showDuplicatePopup(duplicateDetails, uniqueUsernames.length, usernames.length);
-              
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = 'জমা দিন';
-              return;
-            }
-            
-            const result = await submitToFirebase(usernames, passwords, cookies);
-            
-            if (result.success) {
-              showPopup('success', '✅ সফল!', `${result.savedCount}টি অ্যাকাউন্ট সংরক্ষিত হয়েছে`);
-              
-              usernameInput.value = '';
-              passwordInput.value = '';
-              cookieInput.value = '';
-            }
-            
-          } catch (error) {
-            showPopup('error', '🔥 ত্রুটি', error.message || 'ডুপ্লিকেট চেক করতে সমস্যা হয়েছে');
-          } finally {
+          submitBtn.textContent = '⏳ PROCESSING...';
+          
+          // Check duplicates
+          const { duplicates, unique, indices, allDuplicates } = await checkDuplicates(ids);
+          
+          if (allDuplicates) {
+            alert('⚠️ All IDs are already used!');
             submitBtn.disabled = false;
-            submitBtn.innerHTML = 'জমা দিন';
-          }
-
-        } catch (error) {
-          showPopup('error', '🔥 ত্রুটি', error.message || 'সাবমিট করতে সমস্যা হয়েছে');
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'জমা দিন';
-        }
-      }
-
-      // ডুপ্লিকেট কনফার্ম
-      async function handleDuplicateConfirm() {
-        try {
-          hideDuplicatePopup();
-          
-          const { usernames, passwords, cookies, uniqueIndices } = pendingSubmission;
-          
-          if (uniqueIndices.length === 0) {
-            showPopup('warning', '⚠️ কোন নতুন ডাটা নেই', 'সাবমিট করার মতো কোন নতুন অ্যাকাউন্ট নেই।');
+            submitBtn.innerHTML = 'SUBMIT';
             return;
           }
           
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '⏳ নতুন গুলো সাবমিট হচ্ছে...';
-          
-          const uniqueUsernames = uniqueIndices.map(i => usernames[i]);
-          const uniquePasswords = uniqueIndices.map(i => passwords[i]);
-          const uniqueCookies = uniqueIndices.map(i => cookies[i]);
-          
-          const result = await submitToFirebase(uniqueUsernames, uniquePasswords, uniqueCookies);
-          
-          if (result.success) {
-            showPopup('success', '✅ সফল!', 
-              `${result.savedCount}টি নতুন অ্যাকাউন্ট সংরক্ষিত হয়েছে\n(ডুপ্লিকেট ${usernames.length - uniqueIndices.length}টি বাদ দেওয়া হয়েছে)`);
+          if (duplicates.length > 0) {
+            pendingSubmission = { ids, passwords, codes, uniqueIndices: indices };
+            let msg = '⚠️ Duplicate IDs:\n';
+            duplicates.forEach(d => msg += `Line ${d.line}: ${d.id}\n`);
+            msg += `\n✅ Submit ${unique.length} new IDs only?`;
             
-            usernameInput.value = '';
-            passwordInput.value = '';
-            cookieInput.value = '';
+            duplicatePopupMessage.textContent = msg;
+            duplicatePopup.classList.add('active');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'SUBMIT';
+            return;
           }
           
+          // Save to Firebase
+          await saveToFirebase(ids, passwords, codes);
+          
+          alert(`✅ ${ids.length} ID(s) submitted!`);
+          input1.value = input2.value = input3.value = '';
+          
         } catch (error) {
-          showPopup('error', '🔥 ত্রুটি', error.message || 'সাবমিট করতে সমস্যা হয়েছে');
+          alert('🔥 Error: ' + error.message);
         } finally {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = 'জমা দিন';
-          pendingSubmission = { usernames: [], passwords: [], cookies: [], uniqueIndices: [] };
+          submitBtn.innerHTML = 'SUBMIT';
         }
       }
 
-      function handleDuplicateCancel() {
-        hideDuplicatePopup();
-        pendingSubmission = { usernames: [], passwords: [], cookies: [], uniqueIndices: [] };
-      }
+      // Handle Duplicate Confirm
+      duplicateConfirm.addEventListener('click', async () => {
+        duplicatePopup.classList.remove('active');
+        
+        const { ids, passwords, codes, uniqueIndices } = pendingSubmission;
+        if (uniqueIndices.length === 0) return;
+        
+        const uniqueIds = uniqueIndices.map(i => ids[i]);
+        const uniquePasswords = uniqueIndices.map(i => passwords[i]);
+        const uniqueCodes = uniqueIndices.map(i => codes[i]);
+        
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '⏳ SUBMITTING...';
+        
+        try {
+          await saveToFirebase(uniqueIds, uniquePasswords, uniqueCodes);
+          alert(`✅ ${uniqueIds.length} new ID(s) submitted!\n(Duplicates: ${ids.length - uniqueIndices.length} skipped)`);
+          input1.value = input2.value = input3.value = '';
+        } catch (error) {
+          alert('Error: ' + error.message);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'SUBMIT';
+          pendingSubmission = { ids: [], passwords: [], codes: [], uniqueIndices: [] };
+        }
+      });
 
-      // ইভেন্ট লিসেনার
-      if (submitBtn) submitBtn.addEventListener('click', handleSubmission);
-      if (popupConfirm) popupConfirm.addEventListener('click', hidePopup);
-      
-      if (duplicateConfirm) duplicateConfirm.addEventListener('click', handleDuplicateConfirm);
-      if (duplicateCancel) duplicateCancel.addEventListener('click', handleDuplicateCancel);
-      
-      if (closeRestrictedPopup) {
-        closeRestrictedPopup.addEventListener('click', () => {
-          restrictedPopup.classList.remove('active');
-        });
-      }
-      
-      if (closeSystemOffPopup) {
-        closeSystemOffPopup.addEventListener('click', () => {
-          systemOffPopup.classList.remove('active');
-        });
-      }
-      
-      if (popupOverlay) {
-        popupOverlay.addEventListener('click', (e) => {
-          if (e.target === popupOverlay) hidePopup();
-        });
-      }
-      
-      if (restrictedPopup) {
-        restrictedPopup.addEventListener('click', (e) => {
-          if (e.target === restrictedPopup) {
-            restrictedPopup.classList.remove('active');
-          }
-        });
-      }
-      
-      if (systemOffPopup) {
-        systemOffPopup.addEventListener('click', (e) => {
-          if (e.target === systemOffPopup) {
-            systemOffPopup.classList.remove('active');
-          }
-        });
-      }
-      
-      if (duplicatePopup) {
-        duplicatePopup.addEventListener('click', (e) => {
-          if (e.target === duplicatePopup) {
-            hideDuplicatePopup();
-            pendingSubmission = { usernames: [], passwords: [], cookies: [], uniqueIndices: [] };
-          }
-        });
-      }
+      // Handle Duplicate Cancel
+      duplicateCancel.addEventListener('click', () => {
+        duplicatePopup.classList.remove('active');
+        pendingSubmission = { ids: [], passwords: [], codes: [], uniqueIndices: [] };
+      });
 
-      // System Status Load
-      loadSystemStatus();
+      // Close Popups
+      closeRestricted.addEventListener('click', () => restrictedPopup.classList.remove('active'));
+      closeSystemOff.addEventListener('click', () => systemOffPopup.classList.remove('active'));
+      closeOptionOff.addEventListener('click', () => optionOffPopup.classList.remove('active'));
+
+      // Click outside to close
+      [restrictedPopup, systemOffPopup, optionOffPopup, duplicatePopup].forEach(popup => {
+        popup.addEventListener('click', (e) => {
+          if (e.target === popup) popup.classList.remove('active');
+        });
+      });
+
+      // Option click events
+      optionInstagram.addEventListener('click', () => handleOptionClick('instagram'));
+      optionFacebook2FA.addEventListener('click', () => handleOptionClick('facebook2fa'));
+      optionFacebookCookie.addEventListener('click', () => handleOptionClick('facebookcookie'));
+
+      // Submit button event
+      submitBtn.addEventListener('click', handleSubmit);
       
+      // Load all data
+      loadAllData();
+      
+      // Default select Instagram
+      selectOption('instagram');
+      
+      // Time update interval
       updateTimeNotice();
       setInterval(updateTimeNotice, 1000);
-
-      setTimeout(function() {
-        if (isRestrictedTime()) {
-          console.log("⏰ রেস্ট্রিক্টেড টাইম - পপআপ দেখানো হচ্ছে");
-          if (restrictedPopup) {
-            restrictedPopup.classList.add('active');
-          }
-        }
-      }, 1000);
-
-      console.log("✅ সিস্টেম লোড সম্পূর্ণ (3D ফিক্সড ভার্সন + 2FA ফরম্যাট চেক)");
+      
+      console.log("✅ System Ready - All features working");
     })();
   </script>
 </body>
