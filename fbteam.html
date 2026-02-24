@@ -592,35 +592,55 @@ body {
   box-shadow: 0 8px 0 #991144, 0 8px 20px rgba(214, 26, 94, 0.5);
 }
 
-.delete-container {
+/* Delete Buttons Container */
+.delete-buttons-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
   margin: 15px 0 5px;
   width: 100%;
+}
+
+.delete-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .delete-btn {
   background: transparent;
   border: 1.5px solid var(--danger);
   color: var(--danger);
-  padding: 10px 25px;
+  padding: 10px 18px;
   border-radius: 30px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   transition: all 0.2s;
-  min-width: 160px;
+  min-width: 140px;
   letter-spacing: 0.3px;
+  flex: 1;
 }
 
 .delete-btn:hover {
   background: rgba(255, 77, 109, 0.1);
   transform: scale(1.02);
   box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+}
+
+.delete-btn.danger-solid {
+  background: var(--danger);
+  color: white;
+  border-color: var(--danger);
+}
+
+.delete-btn.danger-solid:hover {
+  background: var(--danger-dark);
 }
 
 /* System Control Card */
@@ -1129,10 +1149,16 @@ body {
       </button>
     </div>
     
-    <div class="delete-container">
-      <button class="delete-btn" onclick="openDeleteModal()">
-        <i class="fas fa-trash-alt"></i> DELETE <span id="deleteOptionName">INSTAGRAM</span> DATA
-      </button>
+    <!-- Delete Buttons - আপডেট: আলাদা অপশন + অল ডাটা ডিলিট -->
+    <div class="delete-buttons-container">
+      <div class="delete-row">
+        <button class="delete-btn" onclick="openDeleteModal('current')">
+          <i class="fas fa-trash-alt"></i> DELETE <span id="deleteOptionName">INSTAGRAM</span>
+        </button>
+        <button class="delete-btn danger-solid" onclick="openDeleteModal('all')">
+          <i class="fas fa-database"></i> DELETE ALL DATA
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1268,11 +1294,11 @@ body {
   <div class="modal">
     <div class="modal-header">
       <i class="fas fa-exclamation-triangle"></i>
-      <h2>DELETE ALL <span id="deleteModalOption">INSTAGRAM</span> DATA?</h2>
+      <h2 id="deleteModalTitle">DELETE DATA?</h2>
     </div>
     
     <div class="modal-body">
-      <p>Are you sure you want to permanently delete all <strong id="deleteModalOptionName">INSTAGRAM 2FA</strong> data from Firebase?</p>
+      <p id="deleteModalMessage">Are you sure you want to delete?</p>
       <p><strong id="deleteCount">0</strong> accounts will be deleted.</p>
       
       <div class="warning-text">
@@ -1282,7 +1308,7 @@ body {
     
     <div class="modal-actions">
       <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">CANCEL</button>
-      <button class="modal-btn modal-btn-danger" onclick="deleteOptionData()">DELETE</button>
+      <button class="modal-btn modal-btn-danger" onclick="confirmDelete()">DELETE</button>
     </div>
   </div>
 </div>
@@ -1311,9 +1337,9 @@ const searchResultCard = document.getElementById("searchResultCard");
 const countDisplay = document.getElementById("countDisplay");
 const lastUpdate = document.getElementById("lastUpdate");
 const deleteModal = document.getElementById("deleteModal");
+const deleteModalTitle = document.getElementById("deleteModalTitle");
+const deleteModalMessage = document.getElementById("deleteModalMessage");
 const deleteCount = document.getElementById("deleteCount");
-const deleteModalOption = document.getElementById("deleteModalOption");
-const deleteModalOptionName = document.getElementById("deleteModalOptionName");
 const deleteOptionName = document.getElementById("deleteOptionName");
 const searchInput = document.getElementById("searchInput");
 const optionIcon = document.getElementById("optionIcon");
@@ -1367,6 +1393,7 @@ let filteredGroups = [];
 let currentOption = 'instagram';
 let isSearching = false;
 let currentSearchTerm = "";
+let deleteTarget = 'current'; // 'current' or 'all'
 
 // Firebase Listeners
 let instagramListener = null;
@@ -1777,8 +1804,6 @@ function updateUIBasedOnOption() {
     totalLabel.textContent = 'INSTA';
     groupLabel.textContent = 'GROUPS';
     deleteOptionName.textContent = 'INSTAGRAM';
-    deleteModalOption.textContent = 'INSTAGRAM';
-    deleteModalOptionName.textContent = 'INSTAGRAM 2FA';
   } else if (currentOption === 'facebook2fa') {
     optionIcon.className = 'fab fa-facebook';
     optionTitle.textContent = 'FACEBOOK 2FA ACCOUNTS';
@@ -1787,8 +1812,6 @@ function updateUIBasedOnOption() {
     totalLabel.textContent = 'FB2FA';
     groupLabel.textContent = 'GROUPS';
     deleteOptionName.textContent = 'FB 2FA';
-    deleteModalOption.textContent = 'FACEBOOK 2FA';
-    deleteModalOptionName.textContent = 'FACEBOOK 2FA';
   } else {
     optionIcon.className = 'fas fa-cookie-bite';
     optionTitle.textContent = 'FACEBOOK COOKIE ACCOUNTS';
@@ -1797,8 +1820,6 @@ function updateUIBasedOnOption() {
     totalLabel.textContent = 'COOKIE';
     groupLabel.textContent = 'GROUPS';
     deleteOptionName.textContent = 'FB COOKIE';
-    deleteModalOption.textContent = 'FACEBOOK COOKIE';
-    deleteModalOptionName.textContent = 'FACEBOOK COOKIE';
   }
 }
 
@@ -1855,7 +1876,6 @@ function updateStats() {
   }
   
   countDisplay.textContent = `${isSearching ? searchResults : total} accounts in ${isSearching ? filteredGroups.length : groups} groups`;
-  deleteCount.textContent = total;
 }
 
 // Render accounts table
@@ -1867,11 +1887,9 @@ function renderAccountsTable(groups) {
     
     accountsContainer.innerHTML = `
       <div class="table-container">
-        <div class="no-data">
-          <td colspan="4" class="no-data-cell">
-            <i class="fas fa-database" style="font-size: 2.5rem; margin-bottom: 10px; opacity: 0.5;"></i>
-            <p style="font-size: 0.9rem;">${noDataMessage}</p>
-          </td>
+        <div class="no-data-cell">
+          <i class="fas fa-database" style="font-size: 2.5rem; margin-bottom: 10px; opacity: 0.5;"></i>
+          <p style="font-size: 0.9rem;">${noDataMessage}</p>
         </div>
       </div>
     `;
@@ -2048,13 +2066,29 @@ function copyTwoFA() {
 }
 
 // Delete modal functions
-function openDeleteModal() {
-  if (allAccounts[currentOption].length === 0) {
-    alert("No data to delete!");
-    return;
+function openDeleteModal(target) {
+  deleteTarget = target; // 'current' or 'all'
+  
+  if (target === 'current') {
+    if (allAccounts[currentOption].length === 0) {
+      alert("No data to delete for this option!");
+      return;
+    }
+    deleteModalTitle.textContent = `DELETE ${currentOption.toUpperCase()} DATA?`;
+    deleteModalMessage.textContent = `Are you sure you want to permanently delete all ${currentOption} data?`;
+    deleteCount.textContent = allAccounts[currentOption].length;
+  } else {
+    // Calculate total accounts across all options
+    const total = allAccounts.instagram.length + allAccounts.facebook2fa.length + allAccounts.facebookcookie.length;
+    if (total === 0) {
+      alert("No data to delete!");
+      return;
+    }
+    deleteModalTitle.textContent = `DELETE ALL DATA?`;
+    deleteModalMessage.textContent = `Are you sure you want to permanently delete ALL accounts from all options?`;
+    deleteCount.textContent = total;
   }
   
-  deleteCount.textContent = allAccounts[currentOption].length;
   deleteModal.classList.add("active");
   document.body.style.overflow = "hidden";
 }
@@ -2064,9 +2098,17 @@ function closeDeleteModal() {
   document.body.style.overflow = "auto";
 }
 
-function deleteOptionData() {
+function confirmDelete() {
   closeDeleteModal();
   
+  if (deleteTarget === 'current') {
+    deleteCurrentOptionData();
+  } else {
+    deleteAllData();
+  }
+}
+
+function deleteCurrentOptionData() {
   accountsContainer.innerHTML = `
     <div class="loading-container">
       <div class="loading-spinner">
@@ -2085,12 +2127,76 @@ function deleteOptionData() {
     paths = ["facebook_cookie_submissions", "submissions/facebookcookie"];
   }
   
-  const deletePromises = paths.map(path => db.ref(path).remove());
+  // Also delete from used_ids (যাতে আবার সাবমিট করা যায়)
+  const usedIdsPath = "used_ids";
   
-  Promise.all(deletePromises)
+  // প্রথমে used_ids থেকে এই অপশনের আইডিগুলো রিমুভ করা
+  db.ref(usedIdsPath).once('value').then(snapshot => {
+    const updates = {};
+    if (snapshot.exists()) {
+      snapshot.forEach(child => {
+        const data = child.val();
+        if (data.option === currentOption) {
+          updates[`${usedIdsPath}/${child.key}`] = null;
+        }
+      });
+    }
+    
+    // তারপর মূল ডাটা ডিলিট করা
+    paths.forEach(path => {
+      updates[path] = null;
+    });
+    
+    return db.ref().update(updates);
+  })
   .then(() => {
     allAccounts[currentOption] = [];
     groupedAccounts[currentOption] = [];
+    filteredGroups = [];
+    isSearching = false;
+    currentSearchTerm = "";
+    searchResultCard.style.display = 'none';
+    searchInput.value = "";
+    
+    renderAccountsTable([]);
+    updateStats();
+  })
+  .catch(err => {
+    alert("Delete failed: " + err.message);
+    setupRealtimeListener(currentOption);
+  });
+}
+
+function deleteAllData() {
+  accountsContainer.innerHTML = `
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <p>Deleting ALL data...</p>
+    </div>
+  `;
+  
+  // সব পাথ
+  const allPaths = [
+    "instagram_2fa_submissions",
+    "facebook_2fa_submissions", 
+    "facebook_cookie_submissions",
+    "submissions/instagram",
+    "submissions/facebook2fa",
+    "submissions/facebookcookie",
+    "used_ids"
+  ];
+  
+  const updates = {};
+  allPaths.forEach(path => {
+    updates[path] = null;
+  });
+  
+  db.ref().update(updates)
+  .then(() => {
+    allAccounts = { instagram: [], facebook2fa: [], facebookcookie: [] };
+    groupedAccounts = { instagram: [], facebook2fa: [], facebookcookie: [] };
     filteredGroups = [];
     isSearching = false;
     currentSearchTerm = "";
