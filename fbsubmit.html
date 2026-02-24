@@ -985,27 +985,27 @@
           header1.textContent = 'USERNAME';
           header2.textContent = 'PASSWORD';
           header3.textContent = '2FA CODE';
-          input1.placeholder = 'One username per line\nExample: user123';
-          input2.placeholder = 'One password per line\nMust include ' + TODAY_DATE;
-          input3.placeholder = 'One 2FA code per line\nFormat: XXXX XXXX XXXX XXXX';
+          input1.placeholder = 'One username per line';
+          input2.placeholder = 'One password per line - Must include ' + TODAY_DATE;
+          input3.placeholder = 'One 2FA code per line';
         } 
         else if (option === 'facebook2fa') {
           optionFacebook2FA.classList.add('selected');
           header1.textContent = 'UID';
           header2.textContent = 'PASSWORD';
           header3.textContent = '2FA CODE';
-          input1.placeholder = 'One UID per line\nExample: 61588557962792';
-          input2.placeholder = 'One password per line\nMust include ' + TODAY_DATE;
-          input3.placeholder = 'One 2FA code per line\nFormat: XXXX XXXX XXXX XXXX';
+          input1.placeholder = 'One UID per line';
+          input2.placeholder = 'One password per line - Must include ' + TODAY_DATE;
+          input3.placeholder = 'One 2FA code per line';
         }
         else if (option === 'facebookcookie') {
           optionFacebookCookie.classList.add('selected');
           header1.textContent = 'UID';
           header2.textContent = 'PASSWORD';
           header3.textContent = 'COOKIE';
-          input1.placeholder = 'One UID per line\nExample: 61588557962792';
-          input2.placeholder = 'One password per line\nMust include ' + TODAY_DATE;
-          input3.placeholder = 'One cookie per line\nFormat: c_user=xxx; xs=xxx;';
+          input1.placeholder = 'One UID per line';
+          input2.placeholder = 'One password per line - Must include ' + TODAY_DATE;
+          input3.placeholder = 'One cookie per line';
         }
       }
 
@@ -1096,40 +1096,29 @@
         updateSubmitButtonState();
       }
 
-      // Validate Inputs
+      // Validate Inputs - শুধু বাধ্যতামূলক চেক
       function validateInputs(ids, passwords, codes) {
         const errors = [];
         
-        if (ids.length === 0) errors.push("❌ ID/Username required");
-        if (passwords.length === 0) errors.push("❌ Password required");
-        if (codes.length === 0) errors.push("❌ 2FA/Cookie required");
+        // সব বক্সে ডাটা আছে কিনা
+        if (ids.length === 0) errors.push("❌ Please enter IDs/Usernames");
+        if (passwords.length === 0) errors.push("❌ Please enter Passwords");
+        if (codes.length === 0) errors.push("❌ Please enter 2FA Codes/Cookies");
         
+        // সব বক্সে সমান সংখ্যক লাইন আছে কিনা
         if (ids.length !== passwords.length || ids.length !== codes.length) {
-          errors.push("❌ All boxes must have same number of lines");
+          errors.push("❌ All boxes must have the same number of lines");
         }
         
-        // Check date in password
+        // পাসওয়ার্ডে আজকের তারিখ আছে কিনা
         for (let i = 0; i < passwords.length; i++) {
           if (!passwords[i].includes(TODAY_DATE)) {
-            errors.push(`❌ Line ${i+1}: Password must include ${TODAY_DATE}`);
+            errors.push(`❌ Line ${i+1}: Password must include today's date (${TODAY_DATE})`);
           }
         }
         
-        // Format check based on option
-        if (selectedOption !== 'facebookcookie') {
-          const regex = /^[A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4} [A-Z0-9]{4}$/;
-          for (let i = 0; i < codes.length; i++) {
-            if (!regex.test(codes[i])) {
-              errors.push(`❌ Line ${i+1}: Invalid 2FA format (use: XXXX XXXX XXXX XXXX)`);
-            }
-          }
-        } else {
-          for (let i = 0; i < codes.length; i++) {
-            if (!codes[i].includes('c_user=') || !codes[i].includes('xs=')) {
-              errors.push(`❌ Line ${i+1}: Invalid cookie format (use: c_user=xxx; xs=xxx;)`);
-            }
-          }
-        }
+        // 2FA/কুকির ফরম্যাট চেক করা হচ্ছে না - যা দেওয়া হবে তাই গ্রহণ
+        // শুধু খালি কিনা চেক করেছি উপরে
         
         return { valid: errors.length === 0, errors };
       }
@@ -1203,7 +1192,6 @@
           
           // Check if selected option is available
           if (!optionStatus[selectedOption]) {
-            // This should not happen because we prevent selection of off options
             let name = selectedOption === 'instagram' ? 'INSTAGRAM 2FA' : 
                       selectedOption === 'facebook2fa' ? 'FACEBOOK 2FA' : 'FACEBOOK COOKIE';
             optionOffTitle.textContent = `⚠️ ${name} UNAVAILABLE`;
@@ -1217,7 +1205,7 @@
           const passwords = input2.value.split('\n').map(l => l.trim()).filter(l => l);
           const codes = input3.value.split('\n').map(l => l.trim()).filter(l => l);
           
-          // Validate
+          // Validate (শুধু বাধ্যতামূলক চেক)
           const validation = validateInputs(ids, passwords, codes);
           if (!validation.valid) {
             alert(validation.errors.join('\n'));
@@ -1327,7 +1315,7 @@
       updateTimeNotice();
       setInterval(updateTimeNotice, 1000);
       
-      console.log("✅ System Ready - All features working");
+      console.log("✅ System Ready - No 2FA format check");
     })();
   </script>
 </body>
