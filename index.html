@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EBH Team - Grouped Password Viewer</title>
+<title>EBH TEAM Admin Panel - Message Controller</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -30,6 +30,7 @@
   --border-color: #334155;
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   --table-border: #475569;
+  --message-bg: linear-gradient(90deg, #0b1220, #1a2a3a, #0b1220);
 }
 
 body {
@@ -221,7 +222,7 @@ body {
   background: rgba(34, 197, 94, 0.1);
 }
 
-/* Accounts Container - Google Sheet Style */
+/* Accounts Container */
 .accounts-container {
   background: #0f172a;
   border: 1px solid var(--border-color);
@@ -339,7 +340,7 @@ body {
   font-size: 0.85rem;
 }
 
-/* Scrollable cell content - FIXED WIDTH CONTAINERS */
+/* Scrollable cell content */
 .cell-content {
   position: absolute;
   top: 0;
@@ -374,7 +375,7 @@ body {
   opacity: 1;
 }
 
-/* Password Group Header - NEW STYLE */
+/* Password Group Header */
 .password-group-header {
   display: table-row;
   background: rgba(34, 197, 94, 0.15);
@@ -661,6 +662,184 @@ body {
   background: var(--danger-dark);
 }
 
+/* ============================================= */
+/* ADMIN MESSAGE CONTROLLER - MOVED TO BOTTOM */
+/* ============================================= */
+.admin-message-section {
+  background: linear-gradient(135deg, #1a2635, #0f172a);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.3);
+  width: 100%;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  color: var(--primary);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.admin-header i {
+  font-size: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+.admin-header h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.current-message-box {
+  background: var(--message-bg);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid var(--primary);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.current-message-box::-webkit-scrollbar {
+  height: 4px;
+}
+
+.current-message-box::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.current-message-text {
+  color: var(--primary);
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  display: inline-block;
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+.admin-textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  background: #0f172a;
+  color: var(--text-light);
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.admin-textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+}
+
+/* Three buttons in one line - perfectly aligned */
+.admin-buttons-line {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.admin-btn {
+  flex: 1;
+  padding: 12px 8px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-height: 44px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.admin-btn i {
+  font-size: 1rem;
+}
+
+.admin-btn.update {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--dark-bg);
+}
+
+.admin-btn.update:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(34, 197, 94, 0.5);
+}
+
+.admin-btn.preview {
+  background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+  color: white;
+}
+
+.admin-btn.preview:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.5);
+}
+
+.admin-btn.reset {
+  background: linear-gradient(135deg, var(--warning), var(--warning-dark));
+  color: var(--dark-bg);
+}
+
+.admin-btn.reset:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.5);
+}
+
+.admin-status {
+  padding: 10px;
+  border-radius: 6px;
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--text-gray);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 3px solid var(--primary);
+  margin-top: 10px;
+}
+
+.admin-status i {
+  color: var(--primary);
+}
+
+.admin-status.success {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--primary);
+}
+
+.admin-status.warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--warning);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .header h1 {
@@ -706,6 +885,16 @@ body {
     width: 200px;
     min-width: 200px;
     max-width: 200px;
+  }
+  
+  .admin-buttons-line {
+    flex-direction: row;
+    gap: 8px;
+  }
+  
+  .admin-btn {
+    font-size: 0.8rem;
+    padding: 10px 4px;
   }
 }
 
@@ -754,12 +943,35 @@ body {
     min-width: 180px;
     max-width: 180px;
   }
+  
+  .admin-buttons-line {
+    gap: 5px;
+  }
+  
+  .admin-btn {
+    font-size: 0.7rem;
+    padding: 8px 2px;
+    min-height: 38px;
+  }
+  
+  .admin-btn i {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 360px) {
   .copy-btn-third {
     font-size: 9px;
     padding: 5px 2px;
+  }
+  
+  .admin-buttons-line {
+    flex-wrap: wrap;
+  }
+  
+  .admin-btn {
+    flex: 1 1 auto;
+    min-width: 80px;
   }
 }
 </style>
@@ -772,8 +984,8 @@ body {
 
 <div class="container">
   <div class="header">
-    <h1><i class="fas fa-fire"></i> EBH TEAM WORK <i class="fas fa-users"></i></h1>
-    <div class="subtitle">Password Grouped Viewer (Largest Group First)</div>
+    <h1><i class="fas fa-crown"></i> EBH TEAM ADMIN PANEL <i class="fas fa-crown"></i></h1>
+    <div class="subtitle">Message Controller & Account Manager</div>
   </div>
   
   <div class="stats-card">
@@ -841,9 +1053,43 @@ body {
       </button>
     </div>
   </div>
+
+  <!-- ============================================= -->
+  <!-- ADMIN MESSAGE CONTROLLER - NOW AT THE BOTTOM -->
+  <!-- ============================================= -->
+  <div class="admin-message-section">
+    <div class="admin-header">
+      <i class="fas fa-bullhorn"></i>
+      <h3>📢 SCROLLING MESSAGE CONTROLLER</h3>
+    </div>
+    
+    <div class="current-message-box">
+      <span class="current-message-text" id="currentMessageDisplay">⚡ EBH TEAM IS BEST ⚡ 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗬 𝗛𝗔𝗕𝗜𝗕 ✦ PREMIUM ACCOUNTS ✦ INSTAGRAM WORKER ✦ JOIN US TODAY! ✦</span>
+    </div>
+    
+    <textarea id="messageInput" class="admin-textarea" placeholder="Write your scrolling message here... (e.g., 🔥 SPECIAL OFFER TODAY! 🔥)"></textarea>
+    
+    <!-- Three buttons in one line - perfectly aligned -->
+    <div class="admin-buttons-line">
+      <button class="admin-btn update" onclick="updateScrollingMessage()">
+        <i class="fas fa-paper-plane"></i> UPDATE
+      </button>
+      <button class="admin-btn preview" onclick="previewMessage()">
+        <i class="fas fa-eye"></i> PREVIEW
+      </button>
+      <button class="admin-btn reset" onclick="resetToDefaultMessage()">
+        <i class="fas fa-undo-alt"></i> RESET
+      </button>
+    </div>
+    
+    <div class="admin-status" id="messageStatus">
+      <i class="fas fa-info-circle"></i>
+      <span id="statusText">Ready to update message. Three buttons in one line.</span>
+    </div>
+  </div>
   
   <div class="footer">
-    <p>EBH TEAM Grouped Viewer • Passwords Grouped by Similarity</p>
+    <p>EBH TEAM Admin Panel • Message Controller at Bottom • Three Buttons in One Line</p>
   </div>
 </div>
 
@@ -873,7 +1119,7 @@ body {
 
 <script>
 const firebaseConfig = {
-  apiKey: "AIzaSyDLh6Zg-K3ZZexFire0F6Wr4ciHqAs",
+  apiKey: "AIzaSyDLh6Zg-K3ZZexLvLloRaR0F6Wr4ciHqAs",
   authDomain: "teamwork-206ba.firebaseapp.com",
   databaseURL: "https://teamwork-206ba-default-rtdb.firebaseio.com",
   projectId: "teamwork-206ba",
@@ -896,14 +1142,156 @@ const lastUpdate = document.getElementById("lastUpdate");
 const deleteModal = document.getElementById("deleteModal");
 const deleteCount = document.getElementById("deleteCount");
 const searchInput = document.getElementById("searchInput");
-const mainCard = document.querySelector('.main-card');
+
+// Message Control Elements
+const messageInput = document.getElementById("messageInput");
+const currentMessageDisplay = document.getElementById("currentMessageDisplay");
+const statusText = document.getElementById("statusText");
+const messageStatus = document.getElementById("messageStatus");
 
 let allAccounts = [];
-let groupedAccounts = []; // Array of { password, accounts[] }
+let groupedAccounts = [];
 let filteredGroups = [];
 let isSearching = false;
 let currentSearchTerm = "";
 
+// ============================================
+// MESSAGE SYSTEM - UPDATED FOR CROSS-BROWSER SYNC
+// ============================================
+const DEFAULT_MESSAGE = "⚡ EBH TEAM IS BEST ⚡ 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗬 𝗛𝗔𝗕𝗜𝗕 ✦ PREMIUM ACCOUNTS ✦ INSTAGRAM WORKER ✦ JOIN US TODAY! ✦";
+const MESSAGE_KEY = 'ebh_scrolling_message';
+
+// Load saved message on startup
+function loadSavedMessage() {
+  // First try localStorage
+  let savedMsg = localStorage.getItem(MESSAGE_KEY);
+  
+  if (savedMsg) {
+    currentMessageDisplay.innerHTML = savedMsg;
+  } else {
+    currentMessageDisplay.innerHTML = DEFAULT_MESSAGE;
+    localStorage.setItem(MESSAGE_KEY, DEFAULT_MESSAGE);
+  }
+  
+  // Also try to load from Firebase (if exists)
+  db.ref("settings/scrolling_message").once("value").then(snapshot => {
+    if (snapshot.exists() && snapshot.val().message) {
+      const fbMsg = snapshot.val().message;
+      currentMessageDisplay.innerHTML = fbMsg;
+      localStorage.setItem(MESSAGE_KEY, fbMsg);
+    }
+  }).catch(err => console.log("Firebase load error:", err));
+}
+
+// Update message in ALL locations
+function updateScrollingMessage() {
+  const newMessage = messageInput.value.trim();
+  
+  if (!newMessage) {
+    messageStatus.className = "admin-status warning";
+    statusText.innerHTML = "⚠️ Please enter a message first!";
+    return;
+  }
+  
+  // 1. Update display
+  currentMessageDisplay.innerHTML = newMessage;
+  
+  // 2. Save to localStorage (for current browser)
+  localStorage.setItem(MESSAGE_KEY, newMessage);
+  
+  // 3. Save to Firebase (for all browsers)
+  db.ref("settings/scrolling_message").set({
+    message: newMessage,
+    updated_at: new Date().toISOString(),
+    updated_by: "admin"
+  }).then(() => {
+    console.log("✅ Message saved to Firebase");
+  }).catch(err => {
+    console.warn("Firebase save error:", err);
+  });
+  
+  // 4. Trigger storage event for same browser
+  localStorage.setItem('_ebh_trigger', Date.now());
+  setTimeout(() => localStorage.removeItem('_ebh_trigger'), 100);
+  
+  // Clear input and show success
+  messageInput.value = '';
+  messageStatus.className = "admin-status success";
+  statusText.innerHTML = `✅ Message updated successfully!`;
+  
+  setTimeout(() => {
+    statusText.innerHTML = "Ready to update message. Three buttons in one line.";
+  }, 3000);
+}
+
+function previewMessage() {
+  const previewMsg = messageInput.value.trim();
+  
+  if (!previewMsg) {
+    messageStatus.className = "admin-status warning";
+    statusText.innerHTML = "⚠️ Enter a message to preview!";
+    return;
+  }
+  
+  // Temporarily show preview
+  const originalMessage = currentMessageDisplay.innerHTML;
+  currentMessageDisplay.innerHTML = previewMsg;
+  
+  messageStatus.className = "admin-status warning";
+  statusText.innerHTML = "👁️ Preview Mode - Message not saved yet";
+  
+  // Revert after 5 seconds
+  setTimeout(() => {
+    currentMessageDisplay.innerHTML = localStorage.getItem(MESSAGE_KEY) || DEFAULT_MESSAGE;
+    messageStatus.className = "admin-status";
+    statusText.innerHTML = "Preview ended. Click UPDATE to save message.";
+  }, 5000);
+}
+
+function resetToDefaultMessage() {
+  // 1. Update display
+  currentMessageDisplay.innerHTML = DEFAULT_MESSAGE;
+  
+  // 2. Save to localStorage
+  localStorage.setItem(MESSAGE_KEY, DEFAULT_MESSAGE);
+  
+  // 3. Save to Firebase
+  db.ref("settings/scrolling_message").set({
+    message: DEFAULT_MESSAGE,
+    updated_at: new Date().toISOString(),
+    updated_by: "admin (reset)"
+  }).catch(err => console.warn("Firebase reset error:", err));
+  
+  // 4. Trigger storage event
+  localStorage.setItem('_ebh_trigger', Date.now());
+  setTimeout(() => localStorage.removeItem('_ebh_trigger'), 100);
+  
+  messageInput.value = '';
+  messageStatus.className = "admin-status success";
+  statusText.innerHTML = "🔄 Default message restored!";
+  
+  setTimeout(() => {
+    statusText.innerHTML = "Ready to update message. Three buttons in one line.";
+  }, 3000);
+}
+
+// Load message on startup
+loadSavedMessage();
+
+// Listen for storage events (if admin open in multiple tabs)
+window.addEventListener('storage', (e) => {
+  if (e.key === MESSAGE_KEY) {
+    currentMessageDisplay.innerHTML = e.newValue;
+  } else if (e.key && e.key.startsWith('_ebh_trigger')) {
+    // Refresh from localStorage
+    const msg = localStorage.getItem(MESSAGE_KEY);
+    if (msg) currentMessageDisplay.innerHTML = msg;
+  }
+});
+
+// ============================================
+// EXISTING FUNCTIONS - UNCHANGED
+// ============================================
 function showLoading() {
   accountsContainer.innerHTML = `
     <div class="loading-container">
@@ -926,14 +1314,12 @@ function groupAccountsByPassword(accounts) {
     groups[password].push(account);
   });
   
-  // Convert to array and sort by group size (largest first)
   const groupedArray = Object.keys(groups).map(password => ({
     password: password,
     accounts: groups[password],
     count: groups[password].length
   }));
   
-  // Sort by count descending (largest group first)
   groupedArray.sort((a, b) => b.count - a.count);
   
   return groupedArray;
@@ -995,7 +1381,6 @@ function renderAccountsTable(groups) {
   let globalIndex = 0;
   
   groups.forEach(group => {
-    // Add group header row
     tableHTML += `
       <div class="password-group-header">
         <div class="row-cell serial-cell">
@@ -1017,7 +1402,6 @@ function renderAccountsTable(groups) {
       </div>
     `;
     
-    // Add accounts for this group
     group.accounts.forEach(account => {
       globalIndex++;
       tableHTML += `
@@ -1091,10 +1475,8 @@ function searchByPassword() {
     return;
   }
   
-  // Filter groups based on search term
   filteredGroups = groupedAccounts
     .map(group => {
-      // Filter accounts within group that match search
       const matchingAccounts = group.accounts.filter(account => 
         (account.password && account.password.toLowerCase().includes(searchTerm)) ||
         (account.username && account.username.toLowerCase().includes(searchTerm)) ||
@@ -1112,7 +1494,6 @@ function searchByPassword() {
     })
     .filter(group => group !== null);
   
-  // Sort filtered groups by size (largest first)
   filteredGroups.sort((a, b) => b.count - a.count);
   
   isSearching = true;
