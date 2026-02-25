@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EBH TEAM Admin Panel - Message Controller</title>
+<title>EBH TEAM Admin Panel - Message & Audio Controller</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -663,7 +663,7 @@ body {
 }
 
 /* ============================================= */
-/* ADMIN MESSAGE CONTROLLER - MOVED TO BOTTOM */
+/* ADMIN MESSAGE CONTROLLER - KEPT AS BEFORE */
 /* ============================================= */
 .admin-message-section {
   background: linear-gradient(135deg, #1a2635, #0f172a);
@@ -835,6 +835,171 @@ body {
   color: var(--warning);
 }
 
+/* ============================================= */
+/* NEW AUDIO CONTROLLER SECTION - ADDED HERE */
+/* ============================================= */
+.admin-audio-section {
+  background: linear-gradient(135deg, #1a2635, #0f172a);
+  border: 2px solid var(--secondary);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+  width: 100%;
+}
+
+.audio-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  color: var(--secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.audio-header i {
+  font-size: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+.audio-header h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.current-audio-box {
+  background: var(--message-bg);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid var(--secondary);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.current-audio-box::-webkit-scrollbar {
+  height: 4px;
+}
+
+.current-audio-box::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 2px;
+}
+
+.current-audio-text {
+  color: var(--secondary);
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  word-break: break-all;
+  white-space: normal;
+}
+
+.audio-textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  background: #0f172a;
+  color: var(--text-light);
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.audio-textarea:focus {
+  border-color: var(--secondary);
+  outline: none;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+}
+
+/* Two buttons for audio */
+.audio-buttons-line {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.audio-btn {
+  flex: 1;
+  padding: 12px 8px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-height: 44px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.audio-btn i {
+  font-size: 1rem;
+}
+
+.audio-btn.update-audio {
+  background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+  color: white;
+}
+
+.audio-btn.update-audio:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.5);
+}
+
+.audio-btn.reset-audio {
+  background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+  color: white;
+}
+
+.audio-btn.reset-audio:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.5);
+}
+
+.audio-status {
+  padding: 10px;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text-gray);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 3px solid var(--secondary);
+  margin-top: 10px;
+}
+
+.audio-status i {
+  color: var(--secondary);
+}
+
+.audio-status.success {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--secondary);
+}
+
+.audio-status.warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--warning);
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.8; transform: scale(1.1); }
@@ -893,6 +1058,16 @@ body {
   }
   
   .admin-btn {
+    font-size: 0.8rem;
+    padding: 10px 4px;
+  }
+
+  .audio-buttons-line {
+    flex-direction: row;
+    gap: 8px;
+  }
+  
+  .audio-btn {
     font-size: 0.8rem;
     padding: 10px 4px;
   }
@@ -957,6 +1132,20 @@ body {
   .admin-btn i {
     font-size: 0.8rem;
   }
+
+  .audio-buttons-line {
+    gap: 5px;
+  }
+  
+  .audio-btn {
+    font-size: 0.7rem;
+    padding: 8px 2px;
+    min-height: 38px;
+  }
+  
+  .audio-btn i {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 360px) {
@@ -973,6 +1162,15 @@ body {
     flex: 1 1 auto;
     min-width: 80px;
   }
+
+  .audio-buttons-line {
+    flex-wrap: wrap;
+  }
+  
+  .audio-btn {
+    flex: 1 1 auto;
+    min-width: 80px;
+  }
 }
 </style>
 
@@ -985,7 +1183,7 @@ body {
 <div class="container">
   <div class="header">
     <h1><i class="fas fa-crown"></i> EBH TEAM ADMIN PANEL <i class="fas fa-crown"></i></h1>
-    <div class="subtitle">Message Controller & Account Manager</div>
+    <div class="subtitle">Message & Audio Controller + Account Manager</div>
   </div>
   
   <div class="stats-card">
@@ -1055,7 +1253,7 @@ body {
   </div>
 
   <!-- ============================================= -->
-  <!-- ADMIN MESSAGE CONTROLLER - NOW AT THE BOTTOM -->
+  <!-- ADMIN MESSAGE CONTROLLER (KEPT AS BEFORE) -->
   <!-- ============================================= -->
   <div class="admin-message-section">
     <div class="admin-header">
@@ -1087,9 +1285,40 @@ body {
       <span id="statusText">Ready to update message. Three buttons in one line.</span>
     </div>
   </div>
+
+  <!-- ============================================= -->
+  <!-- NEW AUDIO CONTROLLER SECTION - ADDED HERE -->
+  <!-- ============================================= -->
+  <div class="admin-audio-section">
+    <div class="audio-header">
+      <i class="fas fa-music"></i>
+      <h3>🎵 AUDIO CONTROLLER (Background Music)</h3>
+    </div>
+    
+    <div class="current-audio-box">
+      <span class="current-audio-text" id="currentAudioDisplay">No audio URL set</span>
+    </div>
+    
+    <textarea id="audioInput" class="audio-textarea" placeholder="Enter direct audio file URL (e.g., https://example.com/song.mp3)"></textarea>
+    
+    <!-- Two buttons for audio -->
+    <div class="audio-buttons-line">
+      <button class="audio-btn update-audio" onclick="updateAudioUrl()">
+        <i class="fas fa-cloud-upload-alt"></i> UPDATE AUDIO
+      </button>
+      <button class="audio-btn reset-audio" onclick="resetAudioUrl()">
+        <i class="fas fa-trash-alt"></i> RESET AUDIO
+      </button>
+    </div>
+    
+    <div class="audio-status" id="audioStatus">
+      <i class="fas fa-info-circle"></i>
+      <span id="audioStatusText">Set an audio URL. It will play automatically on user panel.</span>
+    </div>
+  </div>
   
   <div class="footer">
-    <p>EBH TEAM Admin Panel • Message Controller at Bottom • Three Buttons in One Line</p>
+    <p>EBH TEAM Admin Panel • Message & Audio Controller</p>
   </div>
 </div>
 
@@ -1149,6 +1378,12 @@ const currentMessageDisplay = document.getElementById("currentMessageDisplay");
 const statusText = document.getElementById("statusText");
 const messageStatus = document.getElementById("messageStatus");
 
+// Audio Control Elements
+const audioInput = document.getElementById("audioInput");
+const currentAudioDisplay = document.getElementById("currentAudioDisplay");
+const audioStatusText = document.getElementById("audioStatusText");
+const audioStatus = document.getElementById("audioStatus");
+
 let allAccounts = [];
 let groupedAccounts = [];
 let filteredGroups = [];
@@ -1156,14 +1391,13 @@ let isSearching = false;
 let currentSearchTerm = "";
 
 // ============================================
-// MESSAGE SYSTEM - UPDATED FOR CROSS-BROWSER SYNC
+// MESSAGE SYSTEM - UNCHANGED
 // ============================================
 const DEFAULT_MESSAGE = "⚡ EBH TEAM IS BEST ⚡ 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗬 𝗛𝗔𝗕𝗜𝗕 ✦ PREMIUM ACCOUNTS ✦ INSTAGRAM WORKER ✦ JOIN US TODAY! ✦";
 const MESSAGE_KEY = 'ebh_scrolling_message';
 
 // Load saved message on startup
 function loadSavedMessage() {
-  // First try localStorage
   let savedMsg = localStorage.getItem(MESSAGE_KEY);
   
   if (savedMsg) {
@@ -1173,7 +1407,6 @@ function loadSavedMessage() {
     localStorage.setItem(MESSAGE_KEY, DEFAULT_MESSAGE);
   }
   
-  // Also try to load from Firebase (if exists)
   db.ref("settings/scrolling_message").once("value").then(snapshot => {
     if (snapshot.exists() && snapshot.val().message) {
       const fbMsg = snapshot.val().message;
@@ -1183,7 +1416,6 @@ function loadSavedMessage() {
   }).catch(err => console.log("Firebase load error:", err));
 }
 
-// Update message in ALL locations
 function updateScrollingMessage() {
   const newMessage = messageInput.value.trim();
   
@@ -1193,13 +1425,9 @@ function updateScrollingMessage() {
     return;
   }
   
-  // 1. Update display
   currentMessageDisplay.innerHTML = newMessage;
-  
-  // 2. Save to localStorage (for current browser)
   localStorage.setItem(MESSAGE_KEY, newMessage);
   
-  // 3. Save to Firebase (for all browsers)
   db.ref("settings/scrolling_message").set({
     message: newMessage,
     updated_at: new Date().toISOString(),
@@ -1210,11 +1438,9 @@ function updateScrollingMessage() {
     console.warn("Firebase save error:", err);
   });
   
-  // 4. Trigger storage event for same browser
   localStorage.setItem('_ebh_trigger', Date.now());
   setTimeout(() => localStorage.removeItem('_ebh_trigger'), 100);
   
-  // Clear input and show success
   messageInput.value = '';
   messageStatus.className = "admin-status success";
   statusText.innerHTML = `✅ Message updated successfully!`;
@@ -1233,14 +1459,12 @@ function previewMessage() {
     return;
   }
   
-  // Temporarily show preview
   const originalMessage = currentMessageDisplay.innerHTML;
   currentMessageDisplay.innerHTML = previewMsg;
   
   messageStatus.className = "admin-status warning";
   statusText.innerHTML = "👁️ Preview Mode - Message not saved yet";
   
-  // Revert after 5 seconds
   setTimeout(() => {
     currentMessageDisplay.innerHTML = localStorage.getItem(MESSAGE_KEY) || DEFAULT_MESSAGE;
     messageStatus.className = "admin-status";
@@ -1249,20 +1473,15 @@ function previewMessage() {
 }
 
 function resetToDefaultMessage() {
-  // 1. Update display
   currentMessageDisplay.innerHTML = DEFAULT_MESSAGE;
-  
-  // 2. Save to localStorage
   localStorage.setItem(MESSAGE_KEY, DEFAULT_MESSAGE);
   
-  // 3. Save to Firebase
   db.ref("settings/scrolling_message").set({
     message: DEFAULT_MESSAGE,
     updated_at: new Date().toISOString(),
     updated_by: "admin (reset)"
   }).catch(err => console.warn("Firebase reset error:", err));
   
-  // 4. Trigger storage event
   localStorage.setItem('_ebh_trigger', Date.now());
   setTimeout(() => localStorage.removeItem('_ebh_trigger'), 100);
   
@@ -1275,22 +1494,120 @@ function resetToDefaultMessage() {
   }, 3000);
 }
 
-// Load message on startup
 loadSavedMessage();
 
-// Listen for storage events (if admin open in multiple tabs)
 window.addEventListener('storage', (e) => {
   if (e.key === MESSAGE_KEY) {
     currentMessageDisplay.innerHTML = e.newValue;
   } else if (e.key && e.key.startsWith('_ebh_trigger')) {
-    // Refresh from localStorage
     const msg = localStorage.getItem(MESSAGE_KEY);
     if (msg) currentMessageDisplay.innerHTML = msg;
   }
 });
 
 // ============================================
-// EXISTING FUNCTIONS - UNCHANGED
+// NEW AUDIO FUNCTIONS
+// ============================================
+const DEFAULT_AUDIO_URL = ""; // ডিফল্ট হিসেবে খালি স্ট্রিং রাখলাম
+
+// লোড অডিও সেটিংস
+function loadAudioSettings() {
+  db.ref("settings/audio").once("value").then(snapshot => {
+    if (snapshot.exists() && snapshot.val().url) {
+      const audioUrl = snapshot.val().url;
+      currentAudioDisplay.innerHTML = audioUrl;
+      audioStatusText.innerHTML = "Current audio URL loaded from database.";
+    } else {
+      currentAudioDisplay.innerHTML = "No audio URL set";
+      audioStatusText.innerHTML = "No audio URL found in database.";
+    }
+  }).catch(err => {
+    console.error("Error loading audio settings:", err);
+    audioStatusText.innerHTML = "Error loading audio settings.";
+  });
+}
+
+// অডিও আপডেট ফাংশন
+function updateAudioUrl() {
+  const newAudioUrl = audioInput.value.trim();
+  
+  if (!newAudioUrl) {
+    audioStatus.className = "audio-status warning";
+    audioStatusText.innerHTML = "⚠️ Please enter an audio URL!";
+    return;
+  }
+
+  // ইউজারকে জানানো যে আপডেট হচ্ছে
+  currentAudioDisplay.innerHTML = newAudioUrl;
+  audioStatus.className = "audio-status";
+  audioStatusText.innerHTML = "⏳ Updating audio URL...";
+
+  // ফায়ারবেসে সেভ
+  db.ref("settings/audio").set({
+    url: newAudioUrl,
+    updated_at: new Date().toISOString(),
+    updated_by: "admin"
+  }).then(() => {
+    console.log("✅ Audio URL saved to Firebase");
+    audioStatus.className = "audio-status success";
+    audioStatusText.innerHTML = "✅ Audio URL updated successfully! It will now play on user panel.";
+    
+    // লোকাল স্টোরেজে ক্যাশে করা যায় (ঐচ্ছিক)
+    localStorage.setItem('ebh_audio_url', newAudioUrl);
+    
+    // ইনপুট ফিল্ড খালি করা
+    audioInput.value = '';
+    
+    // ৩ সেকেন্ড পর মেসেজ রিসেট করা
+    setTimeout(() => {
+      audioStatusText.innerHTML = "Set an audio URL. It will play automatically on user panel.";
+    }, 3000);
+  }).catch(err => {
+    console.error("Firebase save error:", err);
+    audioStatus.className = "audio-status warning";
+    audioStatusText.innerHTML = "❌ Error saving audio URL to Firebase!";
+  });
+}
+
+// অডিও রিসেট ফাংশন
+function resetAudioUrl() {
+  // কনফার্মেশন নেওয়া
+  if (!confirm("Are you sure you want to remove the audio? It will stop playing on user panel.")) {
+    return;
+  }
+
+  currentAudioDisplay.innerHTML = "No audio URL set";
+  audioStatus.className = "audio-status";
+  audioStatusText.innerHTML = "⏳ Resetting audio...";
+
+  // ফায়ারবেস থেকে ডাটা রিমুভ করা
+  db.ref("settings/audio").remove()
+  .then(() => {
+    console.log("✅ Audio settings removed from Firebase");
+    audioStatus.className = "audio-status success";
+    audioStatusText.innerHTML = "✅ Audio has been reset. No audio will play.";
+    
+    // লোকাল ক্যাশে রিমুভ
+    localStorage.removeItem('ebh_audio_url');
+    
+    // ইনপুট ফিল্ড খালি করা
+    audioInput.value = '';
+    
+    setTimeout(() => {
+      audioStatusText.innerHTML = "Set an audio URL. It will play automatically on user panel.";
+    }, 3000);
+  }).catch(err => {
+    console.error("Firebase remove error:", err);
+    audioStatus.className = "audio-status warning";
+    audioStatusText.innerHTML = "❌ Error resetting audio!";
+  });
+}
+
+// অডিও সেটিংস লোড করা
+loadAudioSettings();
+
+// ============================================
+// EXISTING FUNCTIONS - UNCHANGED (ACCOUNT MANAGEMENT)
 // ============================================
 function showLoading() {
   accountsContainer.innerHTML = `
