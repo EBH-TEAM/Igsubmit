@@ -3,29 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <title>EBH Team - Admin Panel</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!-- আপনার Original CSS (পুরোপুরি অপরিবর্তিত) -->
 <style>
 :root {
   --primary: #ff3385;
   --primary-dark: #e61a6b;
   --secondary: #ff9933;
-  --secondary-dark: #ff8014;
   --accent: #6b5fff;
-  --accent-dark: #5445e6;
   --danger: #ff4d6d;
-  --danger-dark: #e63e5a;
   --success: #2ecc71;
-  --success-dark: #27ae60;
   --dark-bg: #0a0f1e;
   --card-bg: #16202e;
   --text-light: #f5f9ff;
   --text-gray: #b0c4de;
   --border-color: #2a3a55;
   --shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-  --table-border: #2e405b;
   --instagram-gradient: linear-gradient(145deg, #ff3385, #ff9933, #6b5fff);
 }
 
@@ -33,28 +26,109 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background: var(--dark-bg);
   color: var(--text-light);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
   padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-x: hidden;
-  font-size: 13px;
-  background-image: radial-gradient(circle at 30% 10%, rgba(255, 51, 133, 0.2), transparent 40%),
-                    radial-gradient(circle at 80% 70%, rgba(107, 95, 255, 0.15), transparent 40%);
+  background-image: radial-gradient(circle at 30% 10%, rgba(255, 51, 133, 0.2), transparent 40%);
 }
 
-.container {
+/* Login Page Styles */
+.login-container {
+  max-width: 400px;
+  margin: 50px auto;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 30px 25px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 51, 133, 0.3);
+  display: block;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-header h1 {
+  background: var(--instagram-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.login-header p {
+  color: var(--text-gray);
+  font-size: 0.9rem;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-gray);
+  font-size: 0.9rem;
+}
+
+.input-group input {
   width: 100%;
+  padding: 15px;
+  background: rgba(10, 15, 30, 0.8);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-light);
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(255, 51, 133, 0.2);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--instagram-gradient);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 0 #b3476b;
+  transform: translateY(-2px);
+}
+
+.login-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #b3476b;
+}
+
+.error-msg {
+  color: var(--danger);
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.9rem;
+  display: none;
+}
+
+/* Admin Panel Styles */
+.admin-container {
   max-width: 500px;
   margin: 0 auto;
+  display: none;
 }
 
 .header {
@@ -64,7 +138,7 @@ body {
   border-bottom: 2px solid transparent;
   border-image: var(--instagram-gradient);
   border-image-slice: 1;
-  width: 100%;
+  position: relative;
 }
 
 .header h1 {
@@ -73,35 +147,29 @@ body {
   background-clip: text;
   color: transparent;
   font-size: 1.4rem;
-  margin-bottom: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   flex-wrap: wrap;
-  font-weight: 800;
-  letter-spacing: 0.5px;
 }
 
-.header h1 i {
-  background: var(--instagram-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-size: 1.5rem;
-}
-
-.header .subtitle {
-  color: var(--text-gray);
+.logout-btn {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 6px 15px;
+  border-radius: 20px;
+  cursor: pointer;
   font-size: 0.8rem;
-  background: rgba(22, 32, 46, 0.7);
-  display: inline-block;
-  padding: 4px 15px;
-  border-radius: 30px;
-  border: 1px solid var(--primary);
+  font-weight: 600;
+  margin-left: 10px;
 }
 
-/* Option Tabs */
+.logout-btn:hover {
+  background: rgba(255, 77, 109, 0.1);
+}
+
 .option-tabs {
   display: flex;
   gap: 6px;
@@ -127,12 +195,7 @@ body {
   justify-content: center;
   gap: 4px;
   cursor: pointer;
-  transition: all 0.2s;
   border: 1px solid transparent;
-}
-
-.option-tab i {
-  font-size: 14px;
 }
 
 .option-tab.active {
@@ -140,16 +203,6 @@ body {
   color: var(--primary);
   border-color: var(--primary);
   box-shadow: 0 0 15px rgba(255, 51, 133, 0.3);
-}
-
-.option-tab[data-option="instagram"]:hover {
-  color: var(--primary);
-}
-.option-tab[data-option="facebook2fa"]:hover {
-  color: var(--secondary);
-}
-.option-tab[data-option="facebookcookie"]:hover {
-  color: var(--accent);
 }
 
 .stats-card {
@@ -162,7 +215,6 @@ body {
   justify-content: space-between;
   align-items: center;
   border-left: 4px solid var(--primary);
-  width: 100%;
   border: 1px solid rgba(255, 51, 133, 0.2);
 }
 
@@ -185,7 +237,6 @@ body {
   font-size: 0.65rem;
   color: var(--text-gray);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .divider {
@@ -200,7 +251,6 @@ body {
   padding: 12px;
   margin-bottom: 12px;
   box-shadow: var(--shadow);
-  width: 100%;
   border: 1px solid rgba(255, 153, 51, 0.2);
 }
 
@@ -218,7 +268,6 @@ body {
   color: var(--text-light);
   font-size: 14px;
   height: 44px;
-  transition: all 0.3s;
 }
 
 .search-container input:focus {
@@ -244,22 +293,7 @@ body {
   font-weight: 700;
   font-size: 0.75rem;
   height: 34px;
-  transition: all 0.2s;
   box-shadow: 0 4px 10px rgba(255, 51, 133, 0.3);
-}
-
-.search-stat {
-  background: var(--card-bg);
-  border-radius: 14px;
-  padding: 12px 15px;
-  margin-bottom: 12px;
-  box-shadow: var(--shadow);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-left: 4px solid var(--secondary);
-  width: 100%;
-  border: 1px solid rgba(255, 153, 51, 0.2);
 }
 
 .main-card {
@@ -268,8 +302,6 @@ body {
   padding: 15px 12px;
   margin-bottom: 15px;
   box-shadow: var(--shadow);
-  width: 100%;
-  min-height: 350px;
   border: 1px solid rgba(107, 95, 255, 0.2);
 }
 
@@ -282,7 +314,6 @@ body {
 
 .card-title {
   font-size: 1rem;
-  color: var(--text-light);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -304,7 +335,6 @@ body {
   align-items: center;
   gap: 4px;
   font-size: 0.75rem;
-  transition: all 0.2s;
   font-weight: 600;
 }
 
@@ -329,7 +359,6 @@ body {
   background: rgba(22, 32, 46, 0.95);
   position: sticky;
   top: 0;
-  z-index: 10;
   border-bottom: 2px solid var(--primary);
 }
 
@@ -339,7 +368,6 @@ body {
   font-weight: 700;
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   white-space: nowrap;
   position: sticky;
   top: 0;
@@ -359,7 +387,6 @@ body {
 .account-row {
   display: table-row;
   border-bottom: 1px solid var(--table-border);
-  transition: background-color 0.2s;
 }
 
 .account-row:hover {
@@ -372,18 +399,6 @@ body {
   border-bottom: 2px solid var(--primary);
   border-top: 2px solid var(--primary);
   font-weight: bold;
-}
-
-.password-group-header .row-cell {
-  background: transparent;
-  border-right: none;
-  padding: 8px 6px;
-}
-
-.password-group-header .serial-cell {
-  font-size: 0.8rem;
-  color: var(--text-gray);
-  font-weight: normal;
 }
 
 .group-count {
@@ -468,7 +483,6 @@ body {
   text-align: center;
   color: var(--text-gray);
   font-style: italic;
-  font-size: 0.9rem;
 }
 
 .loading-container {
@@ -477,13 +491,11 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 100;
   background: rgba(22, 32, 46, 0.98);
   padding: 20px 25px;
   border-radius: 16px;
   min-width: 200px;
   border: 1px solid var(--primary);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .loading-spinner {
@@ -517,7 +529,6 @@ body {
   justify-content: center;
   gap: 15px;
   margin: 15px 0 10px;
-  padding: 5px 0;
   flex-wrap: wrap;
 }
 
@@ -537,69 +548,29 @@ body {
   transition: all 0.3s;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(255, 255, 255, 0.2) inset;
   color: white;
-  position: relative;
-  overflow: hidden;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transform: translateY(0);
-}
-
-.copy-btn-square::before {
-  content: '';
-  position: absolute;
-  top: -30%;
-  left: -30%;
-  width: 160%;
-  height: 160%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
-  transform: rotate(45deg);
-  transition: all 0.5s;
-  opacity: 0;
-}
-
-.copy-btn-square:hover::before {
-  opacity: 1;
-  transform: rotate(45deg) translate(10%, 10%);
-}
-
-.copy-btn-square:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(255, 255, 255, 0.3) inset;
-}
-
-.copy-btn-square:active {
-  transform: translateY(2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(255, 255, 255, 0.2) inset;
-}
-
-.copy-btn-square i {
-  font-size: 24px;
-  margin-bottom: 2px;
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6));
 }
 
 .username-btn-square {
   background: radial-gradient(circle at 30% 30%, #8a7aff, #4a3aff);
-  box-shadow: 0 8px 0 #2a1faa, 0 8px 20px rgba(74, 58, 255, 0.5);
+  box-shadow: 0 8px 0 #2a1faa;
 }
 
 .password-btn-square {
   background: radial-gradient(circle at 30% 30%, #ffaa55, #ff7b1a);
-  box-shadow: 0 8px 0 #b35500, 0 8px 20px rgba(255, 123, 26, 0.5);
+  box-shadow: 0 8px 0 #b35500;
 }
 
 .twofa-btn-square {
   background: radial-gradient(circle at 30% 30%, #ff6699, #d61a5e);
-  box-shadow: 0 8px 0 #991144, 0 8px 20px rgba(214, 26, 94, 0.5);
+  box-shadow: 0 8px 0 #991144;
 }
 
-/* Delete Buttons Container */
 .delete-buttons-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin: 15px 0 5px;
-  width: 100%;
 }
 
 .delete-row {
@@ -622,16 +593,12 @@ body {
   gap: 8px;
   font-size: 12px;
   font-weight: 700;
-  transition: all 0.2s;
   min-width: 140px;
-  letter-spacing: 0.3px;
   flex: 1;
 }
 
 .delete-btn:hover {
   background: rgba(255, 77, 109, 0.1);
-  transform: scale(1.02);
-  box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
 }
 
 .delete-btn.danger-solid {
@@ -640,18 +607,12 @@ body {
   border-color: var(--danger);
 }
 
-.delete-btn.danger-solid:hover {
-  background: var(--danger-dark);
-}
-
-/* System Control Card */
 .system-control-card {
   background: var(--card-bg);
   border-radius: 16px;
   padding: 15px 12px;
   margin-bottom: 15px;
   box-shadow: var(--shadow);
-  width: 100%;
   border: 1px solid rgba(46, 204, 113, 0.3);
 }
 
@@ -676,7 +637,60 @@ body {
   flex: 1;
 }
 
-/* Option Control Cards */
+.system-wide-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10, 15, 30, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--success);
+}
+
+.system-wide-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.system-wide-info i {
+  font-size: 24px;
+  color: var(--success);
+}
+
+.system-wide-info span {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.system-switch-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-light);
+  padding: 10px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.system-switch-btn.on {
+  background: rgba(46, 204, 113, 0.2);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.system-switch-btn.off {
+  background: rgba(255, 77, 109, 0.2);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
 .option-controls {
   display: flex;
   flex-direction: column;
@@ -737,7 +751,6 @@ body {
   gap: 6px;
   font-size: 12px;
   font-weight: 600;
-  transition: all 0.2s;
 }
 
 .option-switch-btn.on {
@@ -778,11 +791,6 @@ body {
   box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 
-.option-message-box textarea:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .option-message-actions {
   display: flex;
   gap: 8px;
@@ -800,11 +808,6 @@ body {
   gap: 4px;
   font-size: 11px;
   font-weight: 600;
-  transition: all 0.2s;
-}
-
-.save-option-msg-btn:hover {
-  transform: translateY(-2px);
 }
 
 .option-preview {
@@ -824,7 +827,6 @@ body {
   font-size: 0.75rem;
 }
 
-/* System Wide Messages */
 .system-messages {
   margin-top: 20px;
 }
@@ -857,17 +859,6 @@ body {
   font-family: inherit;
 }
 
-.message-box textarea:focus {
-  outline: none;
-  border-color: var(--success);
-  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
-}
-
-.message-box textarea:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .message-actions {
   display: flex;
   gap: 10px;
@@ -885,11 +876,6 @@ body {
   gap: 5px;
   font-size: 12px;
   font-weight: 600;
-  transition: all 0.2s;
-}
-
-.save-msg-btn:hover {
-  transform: translateY(-2px);
 }
 
 .preview-msg {
@@ -915,7 +901,6 @@ body {
   font-size: 0.7rem;
   padding-top: 10px;
   border-top: 1px solid var(--border-color);
-  width: 100%;
 }
 
 .modal-overlay {
@@ -949,18 +934,6 @@ body {
   padding: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   border: 1px solid var(--danger);
-  animation: modalFadeIn 0.3s ease;
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .modal-header {
@@ -992,7 +965,6 @@ body {
   padding: 12px;
   border-radius: 8px;
   margin-top: 12px;
-  font-size: 0.85rem;
 }
 
 .modal-actions {
@@ -1010,7 +982,6 @@ body {
   font-weight: 700;
   font-size: 0.85rem;
   min-width: 120px;
-  transition: all 0.2s;
 }
 
 .modal-btn-cancel {
@@ -1025,290 +996,9 @@ body {
   border: 1.5px solid var(--danger);
 }
 
-@media (max-width: 380px) {
-  .username-cell { width: 100px; min-width: 100px; }
-  .password-cell { width: 100px; min-width: 100px; }
-  .twofa-cell { width: 150px; min-width: 150px; }
-  
-  .copy-btn-square {
-    width: 60px;
-    height: 60px;
-    font-size: 9px;
-  }
-  
-  .copy-btn-square i {
-    font-size: 20px;
-  }
-  
-  .option-tab {
-    font-size: 11px;
-  }
-  
-  .option-tab i {
-    font-size: 12px;
-  }
-}
-
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: var(--dark-bg); }
 ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
-</style>
-
-<!-- লগইন পেজের জন্য অতিরিক্ত CSS -->
-<style>
-/* Login Page CSS */
-.login-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  width: 100%;
-}
-
-.login-container {
-  width: 100%;
-  max-width: 380px;
-}
-
-.login-card {
-  background: var(--card-bg);
-  border-radius: 24px;
-  padding: 30px 25px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 51, 133, 0.3);
-  backdrop-filter: blur(10px);
-  animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.login-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.login-header .logo {
-  font-size: 3rem;
-  background: var(--instagram-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin-bottom: 15px;
-}
-
-.login-header h1 {
-  background: var(--instagram-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-size: 1.8rem;
-  margin-bottom: 8px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.login-header .subtitle {
-  color: var(--text-gray);
-  font-size: 0.85rem;
-  background: rgba(22, 32, 46, 0.7);
-  display: inline-block;
-  padding: 5px 15px;
-  border-radius: 30px;
-  border: 1px solid var(--primary);
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.input-group {
-  position: relative;
-}
-
-.input-group i {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-gray);
-  font-size: 1.1rem;
-  transition: all 0.3s;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 15px 15px 15px 45px;
-  background: rgba(10, 15, 30, 0.8);
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
-  color: var(--text-light);
-  font-size: 0.95rem;
-  transition: all 0.3s;
-}
-
-.input-group input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(255, 51, 133, 0.2);
-}
-
-.input-group input:focus + i {
-  color: var(--primary);
-}
-
-.input-group input::placeholder {
-  color: var(--text-gray);
-  opacity: 0.7;
-}
-
-.login-btn {
-  background: var(--instagram-gradient);
-  color: white;
-  border: none;
-  padding: 16px;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: all 0.3s;
-  margin-top: 10px;
-  box-shadow: 0 8px 20px rgba(255, 51, 133, 0.3);
-}
-
-.login-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(255, 51, 133, 0.5);
-}
-
-.login-btn:active {
-  transform: translateY(0);
-}
-
-.login-btn i {
-  font-size: 1.1rem;
-}
-
-.login-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.error-message {
-  background: rgba(255, 77, 109, 0.1);
-  border-left: 4px solid var(--danger);
-  padding: 12px 15px;
-  border-radius: 8px;
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.9rem;
-  color: var(--danger);
-  animation: shake 0.3s ease;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-.error-message i {
-  font-size: 1.2rem;
-}
-
-.login-footer {
-  text-align: center;
-  margin-top: 25px;
-  color: var(--text-gray);
-  font-size: 0.75rem;
-  border-top: 1px solid var(--border-color);
-  padding-top: 20px;
-}
-
-.login-footer p {
-  margin: 5px 0;
-}
-
-.login-footer .email-hint {
-  background: rgba(255, 51, 133, 0.1);
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px dashed var(--primary);
-  color: var(--primary);
-  font-size: 0.8rem;
-  margin-top: 10px;
-}
-
-.spinner {
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255,255,255,.3);
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 1s ease-in-out infinite;
-}
-
-/* Logout Button */
-.logout-btn {
-  background: transparent;
-  border: 1.5px solid var(--danger);
-  color: var(--danger);
-  padding: 6px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  transition: all 0.2s;
-  margin-left: auto;
-}
-
-.logout-btn:hover {
-  background: rgba(255, 77, 109, 0.1);
-  transform: scale(1.05);
-}
-
-.logout-btn i {
-  font-size: 0.8rem;
-}
-
-/* Admin Header with Logout */
-.admin-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.admin-header .header {
-  flex: 1;
-  margin-bottom: 0;
-}
-
-.admin-header .logout-btn {
-  margin-left: 10px;
-}
 </style>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -1318,288 +1008,282 @@ body {
 
 <body>
 
-<!-- লগইন সেকশন (শুরুতে দেখা যাবে) -->
-<div id="loginSection" style="display: flex; width: 100%;">
-  <div class="login-wrapper">
-    <div class="login-container">
-      <div class="login-card">
-        <div class="login-header">
-          <div class="logo">
-            <i class="fas fa-crown"></i>
-          </div>
-          <h1>EBH ADMIN</h1>
-          <div class="subtitle">Secure Access • Authorized Only</div>
+<!-- Login Section -->
+<div id="loginSection" class="login-container">
+  <div class="login-header">
+    <h1><i class="fas fa-crown"></i> EBH ADMIN</h1>
+    <p>Enter your credentials to access panel</p>
+  </div>
+  
+  <div class="input-group">
+    <label>Email</label>
+    <input type="email" id="email" value="52662800jh@gmail.com" placeholder="admin@ebh.com">
+  </div>
+  
+  <div class="input-group">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="••••••••">
+  </div>
+  
+  <button class="login-btn" onclick="login()">
+    <i class="fas fa-sign-in-alt"></i> LOGIN
+  </button>
+  
+  <div class="error-msg" id="errorMsg">Invalid credentials</div>
+  
+  <div class="footer" style="margin-top: 20px;">
+    <p>EBH TEAM • Admin Access Only</p>
+  </div>
+</div>
+
+<!-- Admin Panel Section -->
+<div id="adminSection" class="admin-container">
+  <div class="header">
+    <h1>
+      <i class="fas fa-crown"></i> EBH ADMIN PANEL <i class="fas fa-shield-alt"></i>
+      <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> LOGOUT</button>
+    </h1>
+    <div class="subtitle">Dual Path Support • Old + New Data</div>
+  </div>
+  
+  <!-- Option Tabs -->
+  <div class="option-tabs">
+    <button class="option-tab active" data-option="instagram" onclick="switchOption('instagram')">
+      <i class="fab fa-instagram"></i> INSTAGRAM 2FA
+    </button>
+    <button class="option-tab" data-option="facebook2fa" onclick="switchOption('facebook2fa')">
+      <i class="fab fa-facebook"></i> FACEBOOK 2FA
+    </button>
+    <button class="option-tab" data-option="facebookcookie" onclick="switchOption('facebookcookie')">
+      <i class="fas fa-cookie-bite"></i> FACEBOOK COOKIE
+    </button>
+  </div>
+  
+  <!-- Stats Card -->
+  <div class="stats-card">
+    <div class="stat">
+      <span class="number" id="totalCount">0</span>
+      <span class="label" id="totalLabel">TOTAL</span>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <span class="number" id="groupCount">0</span>
+      <span class="label" id="groupLabel">GROUPS</span>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <span class="number" id="lastUpdate">-</span>
+      <span class="label">UPDATED</span>
+    </div>
+  </div>
+  
+  <!-- Search Result Card -->
+  <div id="searchResultCard" class="stats-card" style="display: none; border-left-color: var(--secondary);">
+    <div class="stat">
+      <span class="number" id="searchCount">0</span>
+      <span class="label" id="searchLabel">Search Results</span>
+    </div>
+  </div>
+  
+  <!-- Search Section -->
+  <div class="search-section">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="🔍 Search by Username, Password or 2FA/Cookie...">
+      <button class="search-btn" onclick="searchData()">
+        <i class="fas fa-search"></i> FIND
+      </button>
+    </div>
+  </div>
+  
+  <!-- Main Data Card -->
+  <div class="main-card">
+    <div class="card-header">
+      <h2 class="card-title">
+        <i class="fas" id="optionIcon"></i> 
+        <span id="optionTitle">INSTAGRAM 2FA ACCOUNTS</span>
+      </h2>
+      <button class="refresh-btn" onclick="refreshCurrentOption()">
+        <i class="fas fa-sync-alt"></i> REFRESH
+      </button>
+    </div>
+    
+    <div class="accounts-container" id="accountsContainer">
+      <div class="loading-container">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
         </div>
-        
-        <form class="login-form" onsubmit="handleLogin(event)">
-          <div class="input-group">
-            <i class="fas fa-envelope"></i>
-            <input type="email" id="email" placeholder="Email Address" value="52662800jh@gmail.com" required>
+        <p>Loading from Firebase...</p>
+      </div>
+    </div>
+    
+    <div class="count-display" id="countDisplay">0 accounts in 0 groups</div>
+    
+    <!-- Copy Buttons -->
+    <div class="copy-buttons-container">
+      <button class="copy-btn-square username-btn-square" onclick="copyUsernames()">
+        <i class="fas fa-user"></i>
+        <span id="copyUserLabel">USER</span>
+      </button>
+      <button class="copy-btn-square password-btn-square" onclick="copyPasswords()">
+        <i class="fas fa-key"></i>
+        <span>PASS</span>
+      </button>
+      <button class="copy-btn-square twofa-btn-square" onclick="copyTwoFA()">
+        <i class="fas fa-shield-alt"></i>
+        <span id="copyCodeLabel">2FA</span>
+      </button>
+    </div>
+    
+    <!-- Delete Buttons -->
+    <div class="delete-buttons-container">
+      <div class="delete-row">
+        <button class="delete-btn" onclick="openDeleteModal('current')">
+          <i class="fas fa-trash-alt"></i> DELETE <span id="deleteOptionName">INSTAGRAM</span>
+        </button>
+        <button class="delete-btn danger-solid" onclick="openDeleteModal('all')">
+          <i class="fas fa-database"></i> DELETE ALL DATA
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Control Card -->
+  <div class="system-control-card">
+    <div class="control-header">
+      <i class="fas fa-toggle-on"></i>
+      <h3>SYSTEM CONTROL (User Panel ON/OFF)</h3>
+    </div>
+    
+    <!-- System Wide ON/OFF Switch -->
+    <div class="system-wide-switch">
+      <div class="system-wide-info">
+        <i class="fas fa-power-off"></i>
+        <span>SYSTEM WIDE STATUS</span>
+      </div>
+      <button class="system-switch-btn" id="systemSwitchBtn" onclick="toggleSystemStatus()">
+        <i class="fas" id="systemSwitchIcon"></i>
+        <span id="systemSwitchText">Loading...</span>
+      </button>
+    </div>
+    
+    <!-- Option Controls -->
+    <div class="option-controls">
+      <!-- Instagram Control -->
+      <div class="option-control-card" data-option="instagram">
+        <div class="option-control-header">
+          <div class="option-title instagram-title">
+            <i class="fab fa-instagram"></i> INSTAGRAM 2FA
           </div>
-          
-          <div class="input-group">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="password" placeholder="Password" required>
-          </div>
-          
-          <button type="submit" class="login-btn" id="loginBtn">
-            <i class="fas fa-sign-in-alt"></i>
-            <span>LOGIN TO DASHBOARD</span>
+          <button class="option-switch-btn" id="instagramSwitchBtn" onclick="toggleOptionStatus('instagram')">
+            <i class="fas" id="instagramSwitchIcon"></i>
+            <span id="instagramSwitchText">Loading...</span>
           </button>
-        </form>
-        
-        <div id="errorContainer" style="display: none;" class="error-message">
-          <i class="fas fa-exclamation-circle"></i>
-          <span id="errorText">Invalid email or password</span>
         </div>
-        
-        <div class="login-footer">
-          <p><i class="fas fa-shield-alt"></i> Authorized Access Only</p>
-          <p class="email-hint">
-            <i class="fas fa-info-circle"></i> Only: 52662800jh@gmail.com
-          </p>
+        <div class="option-message-box">
+          <textarea id="instagramMessage" placeholder="মেসেজ লিখুন (যখন অফ থাকবে তখন ইউজারকে দেখাবে)"></textarea>
+          <div class="option-message-actions">
+            <button class="save-option-msg-btn" onclick="saveOptionMessage('instagram')" style="background: var(--primary);">
+              <i class="fas fa-save"></i> সেভ করুন
+            </button>
+          </div>
+          <div class="option-preview" id="instagramPreview">
+            <strong><i class="fas fa-eye"></i> প্রিভিউ:</strong>
+            <span id="instagramPreviewText">কোন মেসেজ নেই</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Facebook 2FA Control -->
+      <div class="option-control-card" data-option="facebook2fa">
+        <div class="option-control-header">
+          <div class="option-title facebook2fa-title">
+            <i class="fab fa-facebook"></i> FACEBOOK 2FA
+          </div>
+          <button class="option-switch-btn" id="facebook2faSwitchBtn" onclick="toggleOptionStatus('facebook2fa')">
+            <i class="fas" id="facebook2faSwitchIcon"></i>
+            <span id="facebook2faSwitchText">Loading...</span>
+          </button>
+        </div>
+        <div class="option-message-box">
+          <textarea id="facebook2faMessage" placeholder="মেসেজ লিখুন (যখন অফ থাকবে তখন ইউজারকে দেখাবে)"></textarea>
+          <div class="option-message-actions">
+            <button class="save-option-msg-btn" onclick="saveOptionMessage('facebook2fa')" style="background: var(--secondary);">
+              <i class="fas fa-save"></i> সেভ করুন
+            </button>
+          </div>
+          <div class="option-preview" id="facebook2faPreview">
+            <strong><i class="fas fa-eye"></i> প্রিভিউ:</strong>
+            <span id="facebook2faPreviewText">কোন মেসেজ নেই</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Facebook Cookie Control -->
+      <div class="option-control-card" data-option="facebookcookie">
+        <div class="option-control-header">
+          <div class="option-title facebookcookie-title">
+            <i class="fas fa-cookie-bite"></i> FACEBOOK COOKIE
+          </div>
+          <button class="option-switch-btn" id="facebookcookieSwitchBtn" onclick="toggleOptionStatus('facebookcookie')">
+            <i class="fas" id="facebookcookieSwitchIcon"></i>
+            <span id="facebookcookieSwitchText">Loading...</span>
+          </button>
+        </div>
+        <div class="option-message-box">
+          <textarea id="facebookcookieMessage" placeholder="মেসেজ লিখুন (যখন অফ থাকবে তখন ইউজারকে দেখাবে)"></textarea>
+          <div class="option-message-actions">
+            <button class="save-option-msg-btn" onclick="saveOptionMessage('facebookcookie')" style="background: var(--accent);">
+              <i class="fas fa-save"></i> সেভ করুন
+            </button>
+          </div>
+          <div class="option-preview" id="facebookcookiePreview">
+            <strong><i class="fas fa-eye"></i> প্রিভিউ:</strong>
+            <span id="facebookcookiePreviewText">কোন মেসেজ নেই</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- System Wide Messages -->
+    <div class="system-messages">
+      <!-- টিকার মেসেজ -->
+      <div class="message-box" style="border-left: 4px solid var(--secondary);">
+        <label style="color: var(--secondary);">
+          <i class="fas fa-scroll"></i> টিকার মেসেজ (স্ক্রলিং এর জন্য)
+        </label>
+        <textarea id="tickerMessage" placeholder="এখানে টিকারে দেখানোর মেসেজ লিখুন..."></textarea>
+        <div class="message-actions">
+          <button class="save-msg-btn" onclick="saveTickerMessage()" style="background: var(--secondary);">
+            <i class="fas fa-save"></i> টিকার মেসেজ সেভ করুন
+          </button>
+        </div>
+        <div class="preview-msg" style="border-left-color: var(--secondary);">
+          <strong style="color: var(--secondary);"><i class="fas fa-eye"></i> টিকার প্রিভিউ:</strong>
+          <span id="tickerPreview">কোন মেসেজ নেই</span>
+        </div>
+      </div>
+      
+      <!-- সিস্টেম বন্ধের কারণ -->
+      <div class="message-box" style="border-left: 4px solid var(--danger);">
+        <label style="color: var(--danger);">
+          <i class="fas fa-exclamation-triangle"></i> সিস্টেম বন্ধের কারণ (বড় নোটিশ)
+        </label>
+        <textarea id="offReasonMessage" placeholder="এখানে সিস্টেম বন্ধ করার কারণ লিখুন..."></textarea>
+        <div class="message-actions">
+          <button class="save-msg-btn" onclick="saveOffReasonMessage()" style="background: var(--danger);">
+            <i class="fas fa-save"></i> কারণ সেভ করুন
+          </button>
+        </div>
+        <div class="preview-msg" style="border-left-color: var(--danger);">
+          <strong style="color: var(--danger);"><i class="fas fa-eye"></i> কারণ প্রিভিউ:</strong>
+          <span id="offReasonPreview">কোন কারণ লেখা নেই</span>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- অ্যাডমিন প্যানেল সেকশন (লগইনের পর দেখা যাবে) - আপনার Original HTML লগআউট বাটন সহ -->
-<div id="adminSection" style="display: none;">
-  <div class="container">
-    <!-- Admin Header with Logout -->
-    <div class="admin-header">
-      <div class="header">
-        <h1><i class="fas fa-crown"></i> EBH ADMIN PANEL <i class="fas fa-shield-alt"></i></h1>
-        <div class="subtitle"> </div>
-      </div>
-      <button class="logout-btn" onclick="handleLogout()" title="Logout">
-        <i class="fas fa-sign-out-alt"></i> EXIT
-      </button>
-    </div>
-    
-    <!-- Option Tabs -->
-    <div class="option-tabs">
-      <button class="option-tab active" data-option="instagram" onclick="switchOption('instagram')">
-        <i class="fab fa-instagram"></i> INSTAGRAM 2FA
-      </button>
-      <button class="option-tab" data-option="facebook2fa" onclick="switchOption('facebook2fa')">
-        <i class="fab fa-facebook"></i> FACEBOOK 2FA
-      </button>
-      <button class="option-tab" data-option="facebookcookie" onclick="switchOption('facebookcookie')">
-        <i class="fas fa-cookie-bite"></i> FACEBOOK COOKIE
-      </button>
-    </div>
-    
-    <!-- Stats Card -->
-    <div class="stats-card">
-      <div class="stat">
-        <span class="number" id="totalCount">0</span>
-        <span class="label" id="totalLabel">TOTAL</span>
-      </div>
-      <div class="divider"></div>
-      <div class="stat">
-        <span class="number" id="groupCount">0</span>
-        <span class="label" id="groupLabel">GROUPS</span>
-      </div>
-      <div class="divider"></div>
-      <div class="stat">
-        <span class="number" id="lastUpdate">-</span>
-        <span class="label">UPDATED</span>
-      </div>
-    </div>
-    
-    <div id="searchResultCard" class="search-stat" style="display: none;">
-      <div class="stat">
-        <span class="number" id="searchCount">0</span>
-        <span class="label" id="searchLabel">Search Results</span>
-      </div>
-    </div>
-    
-    <div class="search-section">
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="🔍 Search by Username, Password or 2FA/Cookie...">
-        <button class="search-btn" onclick="searchData()">
-          <i class="fas fa-search"></i> FIND
-        </button>
-      </div>
-    </div>
-    
-    <div class="main-card">
-      <div class="card-header">
-        <h2 class="card-title">
-          <i class="fas" id="optionIcon"></i> 
-          <span id="optionTitle">INSTAGRAM 2FA ACCOUNTS</span>
-        </h2>
-        <button class="refresh-btn" onclick="refreshCurrentOption()">
-          <i class="fas fa-sync-alt"></i> REFRESH
-        </button>
-      </div>
-      
-      <div class="accounts-container" id="accountsContainer">
-        <div class="loading-container">
-          <div class="loading-spinner">
-            <i class="fas fa-spinner fa-spin"></i>
-          </div>
-          <p>Loading from Firebase...</p>
-        </div>
-      </div>
-      
-      <div class="count-display" id="countDisplay">0 accounts in 0 groups</div>
-      
-      <div class="copy-buttons-container">
-        <button class="copy-btn-square username-btn-square" onclick="copyUsernames()" title="Copy Usernames/UIDs">
-          <i class="fas fa-user"></i>
-          <span id="copyUserLabel">USER</span>
-        </button>
-        <button class="copy-btn-square password-btn-square" onclick="copyPasswords()" title="Copy Passwords">
-          <i class="fas fa-key"></i>
-          <span>PASS</span>
-        </button>
-        <button class="copy-btn-square twofa-btn-square" onclick="copyTwoFA()" title="Copy 2FA/Cookies">
-          <i class="fas fa-shield-alt"></i>
-          <span id="copyCodeLabel">2FA</span>
-        </button>
-      </div>
-      
-      <!-- Delete Buttons -->
-      <div class="delete-buttons-container">
-        <div class="delete-row">
-          <button class="delete-btn" onclick="openDeleteModal('current')">
-            <i class="fas fa-trash-alt"></i> DELETE <span id="deleteOptionName">INSTAGRAM</span>
-          </button>
-          <button class="delete-btn danger-solid" onclick="openDeleteModal('all')">
-            <i class="fas fa-database"></i> DELETE ALL DATA
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Option Control Cards -->
-    <div class="system-control-card">
-      <div class="control-header">
-        <i class="fas fa-toggle-on"></i>
-        <h3>OPTION CONTROL (User Panel ON/OFF)</h3>
-      </div>
-      
-      <div class="option-controls">
-        <!-- Instagram Control -->
-        <div class="option-control-card" data-option="instagram">
-          <div class="option-control-header">
-            <div class="option-title instagram-title">
-              <i class="fab fa-instagram"></i> INSTAGRAM 2FA
-            </div>
-            <button class="option-switch-btn" id="instagramSwitchBtn" onclick="toggleOptionStatus('instagram')">
-              <i class="fas" id="instagramSwitchIcon"></i>
-              <span id="instagramSwitchText">Loading...</span>
-            </button>
-          </div>
-          <div class="option-message-box">
-            <textarea id="instagramMessage" placeholder="মেসেজ লিখুন (যখন অফ থাকবে তখন ইউজারকে দেখাবে)"></textarea>
-            <div class="option-message-actions">
-              <button class="save-option-msg-btn" onclick="saveOptionMessage('instagram')" style="background: var(--primary);">
-                <i class="fas fa-save"></i> সেভ করুন
-              </button>
-            </div>
-            <div class="option-preview" id="instagramPreview">
-              <strong><i class="fas fa-eye"></i> প্রিভিউ:</strong>
-              <span id="instagramPreviewText">কোন মেসেজ নেই</span>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Facebook 2FA Control -->
-        <div class="option-control-card" data-option="facebook2fa">
-          <div class="option-control-header">
-            <div class="option-title facebook2fa-title">
-              <i class="fab fa-facebook"></i> FACEBOOK 2FA
-            </div>
-            <button class="option-switch-btn" id="facebook2faSwitchBtn" onclick="toggleOptionStatus('facebook2fa')">
-              <i class="fas" id="facebook2faSwitchIcon"></i>
-              <span id="facebook2faSwitchText">Loading...</span>
-            </button>
-          </div>
-          <div class="option-message-box">
-            <textarea id="facebook2faMessage" placeholder="মেসেজ লিখুন (যখন অফ থাকবে তখন ইউজারকে দেখাবে)"></textarea>
-            <div class="option-message-actions">
-              <button class="save-option-msg-btn" onclick="saveOptionMessage('facebook2fa')" style="background: var(--secondary);">
-                <i class="fas fa-save"></i> সেভ করুন
-              </button>
-            </div>
-            <div class="option-preview" id="facebook2faPreview">
-              <strong><i class="fas fa-eye"></i> প্রিভিউ:</strong>
-              <span id="facebook2faPreviewText">কোন মেসেজ নেই</span>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Facebook Cookie Control -->
-        <div class="option-control-card" data-option="facebookcookie">
-          <div class="option-control-header">
-            <div class="option-title facebookcookie-title">
-              <i class="fas fa-cookie-bite"></i> FACEBOOK COOKIE
-            </div>
-            <button class="option-switch-btn" id="facebookcookieSwitchBtn" onclick="toggleOptionStatus('facebookcookie')">
-              <i class="fas" id="facebookcookieSwitchIcon"></i>
-              <span id="facebookcookieSwitchText">Loading...</span>
-            </button>
-          </div>
-          <div class="option-message-box">
-            <textarea id="facebookcookieMessage" placeholder="মেসেজ লিখুন (যখন অফ থাকবে তখন ইউজারকে দেখাবে)"></textarea>
-            <div class="option-message-actions">
-              <button class="save-option-msg-btn" onclick="saveOptionMessage('facebookcookie')" style="background: var(--accent);">
-                <i class="fas fa-save"></i> সেভ করুন
-              </button>
-            </div>
-            <div class="option-preview" id="facebookcookiePreview">
-              <strong><i class="fas fa-eye"></i> প্রিভিউ:</strong>
-              <span id="facebookcookiePreviewText">কোন মেসেজ নেই</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- System Wide Messages -->
-      <div class="system-messages">
-        <!-- টিকার মেসেজ -->
-        <div class="message-box" style="border-left: 4px solid var(--secondary);">
-          <label style="color: var(--secondary);">
-            <i class="fas fa-scroll"></i> টিকার মেসেজ (স্ক্রলিং এর জন্য)
-          </label>
-          <textarea id="tickerMessage" placeholder="এখানে টিকারে দেখানোর মেসেজ লিখুন..."></textarea>
-          <div class="message-actions">
-            <button class="save-msg-btn" onclick="saveTickerMessage()" style="background: var(--secondary);">
-              <i class="fas fa-save"></i> টিকার মেসেজ সেভ করুন
-            </button>
-          </div>
-          <div class="preview-msg" style="border-left-color: var(--secondary);">
-            <strong style="color: var(--secondary);"><i class="fas fa-eye"></i> টিকার প্রিভিউ:</strong>
-            <span id="tickerPreview">কোন মেসেজ নেই</span>
-          </div>
-        </div>
-        
-        <!-- সিস্টেম বন্ধের কারণ -->
-        <div class="message-box" style="border-left: 4px solid var(--danger);">
-          <label style="color: var(--danger);">
-            <i class="fas fa-exclamation-triangle"></i> সিস্টেম বন্ধের কারণ (বড় নোটিশ)
-          </label>
-          <textarea id="offReasonMessage" placeholder="এখানে সিস্টেম বন্ধ করার কারণ লিখুন..."></textarea>
-          <div class="message-actions">
-            <button class="save-msg-btn" onclick="saveOffReasonMessage()" style="background: var(--danger);">
-              <i class="fas fa-save"></i> কারণ সেভ করুন
-            </button>
-          </div>
-          <div class="preview-msg" style="border-left-color: var(--danger);">
-            <strong style="color: var(--danger);"><i class="fas fa-eye"></i> কারণ প্রিভিউ:</strong>
-            <span id="offReasonPreview">কোন কারণ লেখা নেই</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="footer">
-      <p>EBH TEAM • ADMIN PANEL • Dual Path Support</p>
-    </div>
+  
+  <div class="footer">
+    <p>EBH TEAM • ADMIN PANEL • Dual Path Support</p>
   </div>
 </div>
 
@@ -1628,7 +1312,7 @@ body {
 </div>
 
 <script>
-// Firebase Configuration
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCI4HPJ_mqhqmDjKHQr3Cd302rO2Tud1Go",
   authDomain: "mtwork-fc469.firebaseapp.com",
@@ -1647,259 +1331,233 @@ const db = firebase.database();
 // DOM Elements
 const loginSection = document.getElementById('loginSection');
 const adminSection = document.getElementById('adminSection');
-const loginBtn = document.getElementById('loginBtn');
-const errorContainer = document.getElementById('errorContainer');
-const errorText = document.getElementById('errorText');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
+const errorMsg = document.getElementById('errorMsg');
 
-// Check if user is already logged in
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    if (user.email === '52662800jh@gmail.com') {
-      showAdminPanel();
-      initializeAdminPanel();
-    } else {
-      auth.signOut();
-      showLoginPanel('Unauthorized email address');
-    }
+// Check authentication status
+auth.onAuthStateChanged(user => {
+  if (user && user.email === '52662800jh@gmail.com') {
+    // Show admin panel
+    loginSection.style.display = 'none';
+    adminSection.style.display = 'block';
+    loadAllData();
   } else {
-    showLoginPanel();
+    // Show login
+    loginSection.style.display = 'block';
+    adminSection.style.display = 'none';
   }
 });
 
-// Handle Login
-function handleLogin(event) {
-  event.preventDefault();
-  
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
+// Login function
+function login() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
   
   if (!email || !password) {
-    showError('Please enter email and password');
+    errorMsg.textContent = 'Please enter email and password';
+    errorMsg.style.display = 'block';
     return;
   }
-  
-  if (email !== '52662800jh@gmail.com') {
-    showError('Unauthorized email address');
-    return;
-  }
-  
-  loginBtn.disabled = true;
-  loginBtn.innerHTML = '<div class="spinner"></div><span>LOGGING IN...</span>';
-  hideError();
   
   auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      console.log('Login successful');
-    })
-    .catch((error) => {
-      console.error('Login error:', error);
-      loginBtn.disabled = false;
-      loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>LOGIN TO DASHBOARD</span>';
-      
-      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-        showError('Invalid email or password');
-      } else if (error.code === 'auth/too-many-requests') {
-        showError('Too many failed attempts. Please try again later.');
+    .then(userCredential => {
+      if (userCredential.user.email === '52662800jh@gmail.com') {
+        errorMsg.style.display = 'none';
       } else {
-        showError('Login failed: ' + error.message);
+        auth.signOut();
+        errorMsg.textContent = 'Unauthorized email';
+        errorMsg.style.display = 'block';
       }
-    });
-}
-
-// Handle Logout
-function handleLogout() {
-  auth.signOut()
-    .then(() => {
-      showLoginPanel('Successfully logged out');
     })
-    .catch((error) => {
-      console.error('Logout error:', error);
-      alert('Logout failed: ' + error.message);
+    .catch(error => {
+      errorMsg.textContent = error.message;
+      errorMsg.style.display = 'block';
     });
 }
 
-// Show/Hide Functions
-function showAdminPanel() {
-  loginSection.style.display = 'none';
-  adminSection.style.display = 'block';
-  document.body.style.overflow = 'auto';
+// Logout function
+function logout() {
+  auth.signOut();
 }
 
-function showLoginPanel(message = null) {
-  loginSection.style.display = 'flex';
-  adminSection.style.display = 'none';
-  loginBtn.disabled = false;
-  loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>LOGIN TO DASHBOARD</span>';
+// DOM Elements for Admin Panel
+const accountsContainer = document.getElementById("accountsContainer");
+const totalCount = document.getElementById("totalCount");
+const groupCount = document.getElementById("groupCount");
+const searchCount = document.getElementById("searchCount");
+const searchLabel = document.getElementById("searchLabel");
+const searchResultCard = document.getElementById("searchResultCard");
+const countDisplay = document.getElementById("countDisplay");
+const lastUpdate = document.getElementById("lastUpdate");
+const deleteModal = document.getElementById("deleteModal");
+const deleteModalTitle = document.getElementById("deleteModalTitle");
+const deleteModalMessage = document.getElementById("deleteModalMessage");
+const deleteCount = document.getElementById("deleteCount");
+const deleteOptionName = document.getElementById("deleteOptionName");
+const searchInput = document.getElementById("searchInput");
+const optionIcon = document.getElementById("optionIcon");
+const optionTitle = document.getElementById("optionTitle");
+const copyUserLabel = document.getElementById("copyUserLabel");
+const copyCodeLabel = document.getElementById("copyCodeLabel");
+const totalLabel = document.getElementById("totalLabel");
+const groupLabel = document.getElementById("groupLabel");
+
+// Option Tabs
+const optionTabs = document.querySelectorAll('.option-tab');
+
+// System Switch Elements
+const systemSwitchBtn = document.getElementById("systemSwitchBtn");
+const systemSwitchIcon = document.getElementById("systemSwitchIcon");
+const systemSwitchText = document.getElementById("systemSwitchText");
+
+// Option Control Elements
+const instagramSwitchBtn = document.getElementById("instagramSwitchBtn");
+const instagramSwitchIcon = document.getElementById("instagramSwitchIcon");
+const instagramSwitchText = document.getElementById("instagramSwitchText");
+const instagramMessage = document.getElementById("instagramMessage");
+const instagramPreviewText = document.getElementById("instagramPreviewText");
+
+const facebook2faSwitchBtn = document.getElementById("facebook2faSwitchBtn");
+const facebook2faSwitchIcon = document.getElementById("facebook2faSwitchIcon");
+const facebook2faSwitchText = document.getElementById("facebook2faSwitchText");
+const facebook2faMessage = document.getElementById("facebook2faMessage");
+const facebook2faPreviewText = document.getElementById("facebook2faPreviewText");
+
+const facebookcookieSwitchBtn = document.getElementById("facebookcookieSwitchBtn");
+const facebookcookieSwitchIcon = document.getElementById("facebookcookieSwitchIcon");
+const facebookcookieSwitchText = document.getElementById("facebookcookieSwitchText");
+const facebookcookieMessage = document.getElementById("facebookcookieMessage");
+const facebookcookiePreviewText = document.getElementById("facebookcookiePreviewText");
+
+// System Wide Elements
+const tickerMessage = document.getElementById("tickerMessage");
+const tickerPreview = document.getElementById("tickerPreview");
+const offReasonMessage = document.getElementById("offReasonMessage");
+const offReasonPreview = document.getElementById("offReasonPreview");
+
+// Data Variables
+let allAccounts = {
+  instagram: [],
+  facebook2fa: [],
+  facebookcookie: []
+};
+let groupedAccounts = {
+  instagram: [],
+  facebook2fa: [],
+  facebookcookie: []
+};
+let filteredGroups = [];
+
+let currentOption = 'instagram';
+let isSearching = false;
+let currentSearchTerm = "";
+let deleteTarget = 'current';
+
+// Option Status Variables
+let systemStatus = true;
+let optionStatus = {
+  instagram: true,
+  facebook2fa: true,
+  facebookcookie: true
+};
+
+let optionMessages = {
+  instagram: "",
+  facebook2fa: "",
+  facebookcookie: ""
+};
+
+let tickerMessageText = "";
+let offReasonText = "";
+
+// Load All Data
+function loadAllData() {
+  loadSystemStatus();
+  loadOptionStatus();
+  setupRealtimeListener(currentOption);
+}
+
+// Load Data from Multiple Paths
+async function loadDataFromPaths(option) {
+  let newData = [];
   
-  if (message) {
-    showError(message);
+  let newPath = `submissions/${option}`;
+  let oldPath = "";
+  
+  if (option === 'instagram') {
+    oldPath = "instagram_2fa_submissions";
+  } else if (option === 'facebook2fa') {
+    oldPath = "facebook_2fa_submissions";
+  } else {
+    oldPath = "facebook_cookie_submissions";
   }
-}
-
-function showError(message) {
-  errorText.textContent = message;
-  errorContainer.style.display = 'flex';
-}
-
-function hideError() {
-  errorContainer.style.display = 'none';
-}
-
-// এখান থেকে আপনার Original JavaScript Code শুরু
-function initializeAdminPanel() {
-  // DOM Elements
-  const accountsContainer = document.getElementById("accountsContainer");
-  const totalCount = document.getElementById("totalCount");
-  const groupCount = document.getElementById("groupCount");
-  const searchCount = document.getElementById("searchCount");
-  const searchLabel = document.getElementById("searchLabel");
-  const searchResultCard = document.getElementById("searchResultCard");
-  const countDisplay = document.getElementById("countDisplay");
-  const lastUpdate = document.getElementById("lastUpdate");
-  const deleteModal = document.getElementById("deleteModal");
-  const deleteModalTitle = document.getElementById("deleteModalTitle");
-  const deleteModalMessage = document.getElementById("deleteModalMessage");
-  const deleteCount = document.getElementById("deleteCount");
-  const deleteOptionName = document.getElementById("deleteOptionName");
-  const searchInput = document.getElementById("searchInput");
-  const optionIcon = document.getElementById("optionIcon");
-  const optionTitle = document.getElementById("optionTitle");
-  const copyUserLabel = document.getElementById("copyUserLabel");
-  const copyCodeLabel = document.getElementById("copyCodeLabel");
-  const totalLabel = document.getElementById("totalLabel");
-  const groupLabel = document.getElementById("groupLabel");
-
-  // Option Tabs
-  const optionTabs = document.querySelectorAll('.option-tab');
-
-  // Option Control Elements
-  const instagramSwitchBtn = document.getElementById("instagramSwitchBtn");
-  const instagramSwitchIcon = document.getElementById("instagramSwitchIcon");
-  const instagramSwitchText = document.getElementById("instagramSwitchText");
-  const instagramMessage = document.getElementById("instagramMessage");
-  const instagramPreviewText = document.getElementById("instagramPreviewText");
-
-  const facebook2faSwitchBtn = document.getElementById("facebook2faSwitchBtn");
-  const facebook2faSwitchIcon = document.getElementById("facebook2faSwitchIcon");
-  const facebook2faSwitchText = document.getElementById("facebook2faSwitchText");
-  const facebook2faMessage = document.getElementById("facebook2faMessage");
-  const facebook2faPreviewText = document.getElementById("facebook2faPreviewText");
-
-  const facebookcookieSwitchBtn = document.getElementById("facebookcookieSwitchBtn");
-  const facebookcookieSwitchIcon = document.getElementById("facebookcookieSwitchIcon");
-  const facebookcookieSwitchText = document.getElementById("facebookcookieSwitchText");
-  const facebookcookieMessage = document.getElementById("facebookcookieMessage");
-  const facebookcookiePreviewText = document.getElementById("facebookcookiePreviewText");
-
-  // System Wide Elements
-  const tickerMessage = document.getElementById("tickerMessage");
-  const tickerPreview = document.getElementById("tickerPreview");
-  const offReasonMessage = document.getElementById("offReasonMessage");
-  const offReasonPreview = document.getElementById("offReasonPreview");
-
-  // Data Variables
-  let allAccounts = {
-    instagram: [],
-    facebook2fa: [],
-    facebookcookie: []
-  };
-  let groupedAccounts = {
-    instagram: [],
-    facebook2fa: [],
-    facebookcookie: []
-  };
-  let filteredGroups = [];
-
-  let currentOption = 'instagram';
-  let isSearching = false;
-  let currentSearchTerm = "";
-  let deleteTarget = 'current';
-
-  // Firebase Listeners
-  let instagramListener = null;
-  let facebook2faListener = null;
-  let facebookcookieListener = null;
-
-  // Option Status Variables
-  let optionStatus = {
-    instagram: true,
-    facebook2fa: true,
-    facebookcookie: true
-  };
-
-  let optionMessages = {
-    instagram: "",
-    facebook2fa: "",
-    facebookcookie: ""
-  };
-
-  // System Wide Status
-  let systemStatus = true;
-  let tickerMessageText = "";
-  let offReasonText = "";
-
-  // Load All Data
-  function loadAllData() {
-    loadSystemStatus();
-    loadOptionStatus();
-    setupRealtimeListener(currentOption);
-  }
-
-  // Load Data from Multiple Paths
-  async function loadDataFromPaths(option) {
-    let newData = [];
-    
-    let newPath = `submissions/${option}`;
-    let oldPath = "";
-    
-    if (option === 'instagram') {
-      oldPath = "instagram_2fa_submissions";
-    } else if (option === 'facebook2fa') {
-      oldPath = "facebook_2fa_submissions";
-    } else {
-      oldPath = "facebook_cookie_submissions";
+  
+  try {
+    const newSnapshot = await db.ref(newPath).once('value');
+    if (newSnapshot.exists()) {
+      const submissions = newSnapshot.val();
+      Object.keys(submissions).forEach(key => {
+        const data = submissions[key];
+        newData.push({
+          username: data.id || data.username || data.uid || 'N/A',
+          password: data.password || 'N/A',
+          code: data.code || data.cookie || data.twofa || 'N/A'
+        });
+      });
     }
     
-    try {
-      const newSnapshot = await db.ref(newPath).once('value');
-      if (newSnapshot.exists()) {
-        const submissions = newSnapshot.val();
-        Object.keys(submissions).forEach(key => {
-          const data = submissions[key];
-          newData.push({
-            username: data.id || data.username || data.uid || 'N/A',
-            password: data.password || 'N/A',
-            code: data.code || data.cookie || data.twofa || 'N/A'
-          });
+    const oldSnapshot = await db.ref(oldPath).once('value');
+    if (oldSnapshot.exists()) {
+      const submissions = oldSnapshot.val();
+      Object.keys(submissions).forEach(key => {
+        const data = submissions[key];
+        newData.push({
+          username: data.username || data.uid || data.user || data.id || 'N/A',
+          password: data.password || data.pass || 'N/A',
+          code: data.cookie_2fa || data.twofa || data.cookie || data.code || data['2fa'] || 'N/A'
         });
-      }
-      
-      const oldSnapshot = await db.ref(oldPath).once('value');
-      if (oldSnapshot.exists()) {
-        const submissions = oldSnapshot.val();
-        Object.keys(submissions).forEach(key => {
-          const data = submissions[key];
-          newData.push({
-            username: data.username || data.uid || data.user || data.id || 'N/A',
-            password: data.password || data.pass || 'N/A',
-            code: data.cookie_2fa || data.twofa || data.cookie || data.code || data['2fa'] || 'N/A'
-          });
-        });
-      }
-      
-    } catch (error) {
-      console.error("Error loading data:", error);
+      });
     }
     
-    return newData;
+  } catch (error) {
+    console.error("Error loading data:", error);
   }
+  
+  return newData;
+}
 
-  // Setup Realtime Listener
-  function setupRealtimeListener(option) {
-    showLoading();
+// Setup Realtime Listener
+function setupRealtimeListener(option) {
+  showLoading();
+  
+  loadDataFromPaths(option).then(data => {
+    allAccounts[option] = data;
     
+    allAccounts[option] = allAccounts[option].filter((account, index, self) =>
+      index === self.findIndex(a => 
+        a.username === account.username && 
+        a.password === account.password && 
+        a.code === account.code
+      )
+    );
+    
+    groupedAccounts[option] = groupAccountsByPassword(allAccounts[option]);
+    
+    if (!isSearching) {
+      filteredGroups = [...groupedAccounts[option]];
+    }
+    
+    updateUIBasedOnOption();
+    renderAccountsTable(filteredGroups);
+    updateStats();
+    
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+    lastUpdate.textContent = `${timeStr}`;
+  });
+  
+  let newPath = `submissions/${option}`;
+  
+  db.ref(newPath).on('value', () => {
     loadDataFromPaths(option).then(data => {
       allAccounts[option] = data;
       
@@ -1915,9 +1573,10 @@ function initializeAdminPanel() {
       
       if (!isSearching) {
         filteredGroups = [...groupedAccounts[option]];
+      } else {
+        searchData(false);
       }
       
-      updateUIBasedOnOption();
       renderAccountsTable(filteredGroups);
       updateStats();
       
@@ -1925,382 +1584,355 @@ function initializeAdminPanel() {
       const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
       lastUpdate.textContent = `${timeStr}`;
     });
-    
-    let newPath = `submissions/${option}`;
-    
-    if (option === 'instagram' && instagramListener) {
-      db.ref(newPath).off('value', instagramListener);
-    } else if (option === 'facebook2fa' && facebook2faListener) {
-      db.ref(newPath).off('value', facebook2faListener);
-    } else if (option === 'facebookcookie' && facebookcookieListener) {
-      db.ref(newPath).off('value', facebookcookieListener);
+  });
+}
+
+// Refresh current option
+function refreshCurrentOption() {
+  setupRealtimeListener(currentOption);
+}
+
+// Load System Status
+function loadSystemStatus() {
+  db.ref("system_control").on("value", (snapshot) => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      systemStatus = data.status !== undefined ? data.status : true;
+      tickerMessageText = data.ticker_message || "";
+      offReasonText = data.off_reason || "";
     }
     
-    const listener = db.ref(newPath).on('value', () => {
-      loadDataFromPaths(option).then(data => {
-        allAccounts[option] = data;
-        
-        allAccounts[option] = allAccounts[option].filter((account, index, self) =>
-          index === self.findIndex(a => 
-            a.username === account.username && 
-            a.password === account.password && 
-            a.code === account.code
-          )
-        );
-        
-        groupedAccounts[option] = groupAccountsByPassword(allAccounts[option]);
-        
-        if (!isSearching) {
-          filteredGroups = [...groupedAccounts[option]];
-        } else {
-          searchData(false);
-        }
-        
-        renderAccountsTable(filteredGroups);
-        updateStats();
-        
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-        lastUpdate.textContent = `${timeStr}`;
-      });
-    });
+    tickerMessage.value = tickerMessageText;
+    offReasonMessage.value = offReasonText;
+    tickerPreview.textContent = tickerMessageText || "কোন মেসেজ নেই";
+    offReasonPreview.textContent = offReasonText || "কোন কারণ লেখা নেই";
     
-    if (option === 'instagram') {
-      instagramListener = listener;
-    } else if (option === 'facebook2fa') {
-      facebook2faListener = listener;
-    } else {
-      facebookcookieListener = listener;
-    }
-  }
+    updateSystemSwitch(systemStatus);
+  });
+}
 
-  function refreshCurrentOption() {
-    setupRealtimeListener(currentOption);
+// Update System Switch UI
+function updateSystemSwitch(status) {
+  if (status) {
+    systemSwitchBtn.className = 'system-switch-btn on';
+    systemSwitchIcon.className = 'fas fa-toggle-on';
+    systemSwitchText.textContent = 'SYSTEM ON';
+  } else {
+    systemSwitchBtn.className = 'system-switch-btn off';
+    systemSwitchIcon.className = 'fas fa-toggle-off';
+    systemSwitchText.textContent = 'SYSTEM OFF';
   }
+}
 
-  function loadSystemStatus() {
-    db.ref("system_control").on("value", (snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        systemStatus = data.status !== undefined ? data.status : true;
-        tickerMessageText = data.ticker_message || "";
-        offReasonText = data.off_reason || "";
-      }
+// Toggle System Status
+function toggleSystemStatus() {
+  systemStatus = !systemStatus;
+  
+  updateSystemSwitch(systemStatus);
+  
+  db.ref("system_control").update({
+    status: systemStatus,
+    ticker_message: tickerMessageText,
+    off_reason: offReasonText
+  })
+  .then(() => {
+    console.log("System status updated to:", systemStatus);
+    setTimeout(() => { 
+      updateSystemSwitch(systemStatus);
+    }, 500);
+  })
+  .catch(err => {
+    console.error("Error saving system status:", err);
+    alert("Failed to save status: " + err.message);
+    systemStatus = !systemStatus;
+    updateSystemSwitch(systemStatus);
+  });
+}
+
+// Load Option Status
+function loadOptionStatus() {
+  db.ref("option_control").on("value", (snapshot) => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
       
-      tickerMessage.value = tickerMessageText;
-      offReasonMessage.value = offReasonText;
-      tickerPreview.textContent = tickerMessageText || "কোন মেসেজ নেই";
-      offReasonPreview.textContent = offReasonText || "কোন কারণ লেখা নেই";
-    });
-  }
-
-  function loadOptionStatus() {
-    db.ref("option_control").on("value", (snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        
-        optionStatus.instagram = data.instagram?.status !== false;
-        optionStatus.facebook2fa = data.facebook2fa?.status !== false;
-        optionStatus.facebookcookie = data.facebookcookie?.status !== false;
-        
-        optionMessages.instagram = data.instagram?.message || "";
-        optionMessages.facebook2fa = data.facebook2fa?.message || "";
-        optionMessages.facebookcookie = data.facebookcookie?.message || "";
-      }
+      optionStatus.instagram = data.instagram?.status !== false;
+      optionStatus.facebook2fa = data.facebook2fa?.status !== false;
+      optionStatus.facebookcookie = data.facebookcookie?.status !== false;
       
-      updateOptionUI();
-    });
-  }
-
-  function updateOptionUI() {
-    updateOptionSwitch('instagram', optionStatus.instagram);
-    instagramMessage.value = optionMessages.instagram;
-    instagramPreviewText.textContent = optionMessages.instagram || "কোন মেসেজ নেই";
-    
-    updateOptionSwitch('facebook2fa', optionStatus.facebook2fa);
-    facebook2faMessage.value = optionMessages.facebook2fa;
-    facebook2faPreviewText.textContent = optionMessages.facebook2fa || "কোন মেসেজ নেই";
-    
-    updateOptionSwitch('facebookcookie', optionStatus.facebookcookie);
-    facebookcookieMessage.value = optionMessages.facebookcookie;
-    facebookcookiePreviewText.textContent = optionMessages.facebookcookie || "কোন মেসেজ নেই";
-  }
-
-  function updateOptionSwitch(option, status) {
-    let btn, icon, text;
-    
-    if (option === 'instagram') {
-      btn = instagramSwitchBtn;
-      icon = instagramSwitchIcon;
-      text = instagramSwitchText;
-    } else if (option === 'facebook2fa') {
-      btn = facebook2faSwitchBtn;
-      icon = facebook2faSwitchIcon;
-      text = facebook2faSwitchText;
-    } else {
-      btn = facebookcookieSwitchBtn;
-      icon = facebookcookieSwitchIcon;
-      text = facebookcookieSwitchText;
+      optionMessages.instagram = data.instagram?.message || "";
+      optionMessages.facebook2fa = data.facebook2fa?.message || "";
+      optionMessages.facebookcookie = data.facebookcookie?.message || "";
     }
     
-    if (status) {
-      btn.className = 'option-switch-btn on';
-      icon.className = 'fas fa-toggle-on';
-      text.textContent = 'ON';
-    } else {
-      btn.className = 'option-switch-btn off';
-      icon.className = 'fas fa-toggle-off';
-      text.textContent = 'OFF';
-    }
-  }
+    updateOptionUI();
+  });
+}
 
-  function toggleOptionStatus(option) {
-    optionStatus[option] = !optionStatus[option];
-    
-    updateOptionSwitch(option, optionStatus[option]);
-    
-    db.ref(`option_control/${option}`).update({
-      status: optionStatus[option],
-      message: optionMessages[option] || ""
-    })
-    .then(() => {
-      console.log(`${option} status updated to:`, optionStatus[option]);
-      
-      const btn = option === 'instagram' ? instagramSwitchBtn :
-                  option === 'facebook2fa' ? facebook2faSwitchBtn : facebookcookieSwitchBtn;
-      
-      const originalHTML = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-check"></i><span>SAVED</span>';
-      setTimeout(() => { 
-        updateOptionSwitch(option, optionStatus[option]);
-      }, 1500);
-    })
-    .catch(err => {
-      console.error("Error saving option status:", err);
-      alert("Failed to save status: " + err.message);
-      optionStatus[option] = !optionStatus[option];
+// Update Option UI
+function updateOptionUI() {
+  updateOptionSwitch('instagram', optionStatus.instagram);
+  instagramMessage.value = optionMessages.instagram;
+  instagramPreviewText.textContent = optionMessages.instagram || "কোন মেসেজ নেই";
+  
+  updateOptionSwitch('facebook2fa', optionStatus.facebook2fa);
+  facebook2faMessage.value = optionMessages.facebook2fa;
+  facebook2faPreviewText.textContent = optionMessages.facebook2fa || "কোন মেসেজ নেই";
+  
+  updateOptionSwitch('facebookcookie', optionStatus.facebookcookie);
+  facebookcookieMessage.value = optionMessages.facebookcookie;
+  facebookcookiePreviewText.textContent = optionMessages.facebookcookie || "কোন মেসেজ নেই";
+}
+
+// Update Option Switch UI
+function updateOptionSwitch(option, status) {
+  let btn, icon, text;
+  
+  if (option === 'instagram') {
+    btn = instagramSwitchBtn;
+    icon = instagramSwitchIcon;
+    text = instagramSwitchText;
+  } else if (option === 'facebook2fa') {
+    btn = facebook2faSwitchBtn;
+    icon = facebook2faSwitchIcon;
+    text = facebook2faSwitchText;
+  } else {
+    btn = facebookcookieSwitchBtn;
+    icon = facebookcookieSwitchIcon;
+    text = facebookcookieSwitchText;
+  }
+  
+  if (status) {
+    btn.className = 'option-switch-btn on';
+    icon.className = 'fas fa-toggle-on';
+    text.textContent = 'ON';
+  } else {
+    btn.className = 'option-switch-btn off';
+    icon.className = 'fas fa-toggle-off';
+    text.textContent = 'OFF';
+  }
+}
+
+// Toggle Option Status
+function toggleOptionStatus(option) {
+  optionStatus[option] = !optionStatus[option];
+  
+  updateOptionSwitch(option, optionStatus[option]);
+  
+  db.ref(`option_control/${option}`).update({
+    status: optionStatus[option],
+    message: optionMessages[option] || ""
+  })
+  .then(() => {
+    console.log(`${option} status updated to:`, optionStatus[option]);
+    setTimeout(() => { 
       updateOptionSwitch(option, optionStatus[option]);
-    });
-  }
+    }, 500);
+  })
+  .catch(err => {
+    console.error("Error saving option status:", err);
+    alert("Failed to save status: " + err.message);
+    optionStatus[option] = !optionStatus[option];
+    updateOptionSwitch(option, optionStatus[option]);
+  });
+}
 
-  function saveOptionMessage(option) {
-    let message = '';
-    
-    if (option === 'instagram') {
-      message = instagramMessage.value.trim();
-      optionMessages.instagram = message;
-      instagramPreviewText.textContent = message || "কোন মেসেজ নেই";
-    } else if (option === 'facebook2fa') {
-      message = facebook2faMessage.value.trim();
-      optionMessages.facebook2fa = message;
-      facebook2faPreviewText.textContent = message || "কোন মেসেজ নেই";
+// Save Option Message
+function saveOptionMessage(option) {
+  let message = '';
+  
+  if (option === 'instagram') {
+    message = instagramMessage.value.trim();
+    optionMessages.instagram = message;
+    instagramPreviewText.textContent = message || "কোন মেসেজ নেই";
+  } else if (option === 'facebook2fa') {
+    message = facebook2faMessage.value.trim();
+    optionMessages.facebook2fa = message;
+    facebook2faPreviewText.textContent = message || "কোন মেসেজ নেই";
+  } else {
+    message = facebookcookieMessage.value.trim();
+    optionMessages.facebookcookie = message;
+    facebookcookiePreviewText.textContent = message || "কোন মেসেজ নেই";
+  }
+  
+  db.ref(`option_control/${option}/message`).set(message)
+  .then(() => {
+    console.log(`${option} message saved:`, message);
+    alert('Message saved successfully!');
+  })
+  .catch(err => {
+    console.error("Error saving option message:", err);
+    alert("Failed to save message: " + err.message);
+  });
+}
+
+// Save Ticker Message
+function saveTickerMessage() {
+  const message = tickerMessage.value.trim();
+  
+  db.ref("system_control/ticker_message").set(message)
+  .then(() => {
+    tickerMessageText = message;
+    tickerPreview.textContent = message || "কোন মেসেজ নেই";
+    alert('Ticker message saved successfully!');
+    console.log("Ticker message saved:", message);
+  })
+  .catch(err => {
+    console.error("Error saving ticker message:", err);
+    alert("Failed to save ticker message: " + err.message);
+  });
+}
+
+// Save Off Reason Message
+function saveOffReasonMessage() {
+  const message = offReasonMessage.value.trim();
+  
+  db.ref("system_control/off_reason").set(message)
+  .then(() => {
+    offReasonText = message;
+    offReasonPreview.textContent = message || "কোন কারণ লেখা নেই";
+    alert('Off reason saved successfully!');
+    console.log("Off reason saved:", message);
+  })
+  .catch(err => {
+    console.error("Error saving off reason:", err);
+    alert("Failed to save off reason: " + err.message);
+  });
+}
+
+// Switch Option
+function switchOption(option) {
+  if (option === currentOption) return;
+  
+  currentOption = option;
+  
+  optionTabs.forEach(tab => {
+    if (tab.dataset.option === option) {
+      tab.classList.add('active');
     } else {
-      message = facebookcookieMessage.value.trim();
-      optionMessages.facebookcookie = message;
-      facebookcookiePreviewText.textContent = message || "কোন মেসেজ নেই";
+      tab.classList.remove('active');
     }
-    
-    db.ref(`option_control/${option}/message`).set(message)
-    .then(() => {
-      console.log(`${option} message saved:`, message);
-      
-      const btn = option === 'instagram' ? 
-                  document.querySelector('#instagramMessage + .option-message-actions .save-option-msg-btn') :
-                  option === 'facebook2fa' ?
-                  document.querySelector('#facebook2faMessage + .option-message-actions .save-option-msg-btn') :
-                  document.querySelector('#facebookcookieMessage + .option-message-actions .save-option-msg-btn');
-      
-      const originalHTML = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-check"></i> SAVED';
-      setTimeout(() => { 
-        btn.innerHTML = originalHTML;
-      }, 1500);
-    })
-    .catch(err => {
-      console.error("Error saving option message:", err);
-      alert("Failed to save message: " + err.message);
-    });
-  }
+  });
+  
+  updateUIBasedOnOption();
+  
+  isSearching = false;
+  currentSearchTerm = "";
+  searchInput.value = "";
+  searchResultCard.style.display = 'none';
+  
+  setupRealtimeListener(option);
+}
 
-  function saveTickerMessage() {
-    const message = tickerMessage.value.trim();
-    
-    db.ref("system_control/ticker_message").set(message)
-    .then(() => {
-      tickerMessageText = message;
-      tickerPreview.textContent = message || "কোন মেসেজ নেই";
-      
-      const btn = event.target;
-      const originalHTML = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-check"></i> SAVED';
-      setTimeout(() => { 
-        btn.innerHTML = originalHTML;
-      }, 1500);
-      
-      console.log("Ticker message saved:", message);
-    })
-    .catch(err => {
-      console.error("Error saving ticker message:", err);
-      alert("Failed to save ticker message: " + err.message);
-    });
+// Update UI based on selected option
+function updateUIBasedOnOption() {
+  if (currentOption === 'instagram') {
+    optionIcon.className = 'fab fa-instagram';
+    optionTitle.textContent = 'INSTAGRAM 2FA ACCOUNTS';
+    copyUserLabel.textContent = 'USER';
+    copyCodeLabel.textContent = '2FA';
+    totalLabel.textContent = 'INSTA';
+    groupLabel.textContent = 'GROUPS';
+    deleteOptionName.textContent = 'INSTAGRAM';
+  } else if (currentOption === 'facebook2fa') {
+    optionIcon.className = 'fab fa-facebook';
+    optionTitle.textContent = 'FACEBOOK 2FA ACCOUNTS';
+    copyUserLabel.textContent = 'UID';
+    copyCodeLabel.textContent = '2FA';
+    totalLabel.textContent = 'FB2FA';
+    groupLabel.textContent = 'GROUPS';
+    deleteOptionName.textContent = 'FB 2FA';
+  } else {
+    optionIcon.className = 'fas fa-cookie-bite';
+    optionTitle.textContent = 'FACEBOOK COOKIE ACCOUNTS';
+    copyUserLabel.textContent = 'UID';
+    copyCodeLabel.textContent = 'COOKIE';
+    totalLabel.textContent = 'COOKIE';
+    groupLabel.textContent = 'GROUPS';
+    deleteOptionName.textContent = 'FB COOKIE';
   }
+}
 
-  function saveOffReasonMessage() {
-    const message = offReasonMessage.value.trim();
-    
-    db.ref("system_control/off_reason").set(message)
-    .then(() => {
-      offReasonText = message;
-      offReasonPreview.textContent = message || "কোন কারণ লেখা নেই";
-      
-      const btn = event.target;
-      const originalHTML = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-check"></i> SAVED';
-      setTimeout(() => { 
-        btn.innerHTML = originalHTML;
-      }, 1500);
-      
-      console.log("Off reason saved:", message);
-    })
-    .catch(err => {
-      console.error("Error saving off reason:", err);
-      alert("Failed to save off reason: " + err.message);
-    });
-  }
+// Show loading
+function showLoading() {
+  accountsContainer.innerHTML = `
+    <div style="padding: 30px; text-align: center;">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <p style="margin-top: 10px; color: var(--text-gray);">Loading from Firebase...</p>
+    </div>
+  `;
+}
 
-  function switchOption(option) {
-    if (option === currentOption) return;
-    
-    currentOption = option;
-    
-    optionTabs.forEach(tab => {
-      if (tab.dataset.option === option) {
-        tab.classList.add('active');
-      } else {
-        tab.classList.remove('active');
-      }
-    });
-    
-    updateUIBasedOnOption();
-    
-    isSearching = false;
-    currentSearchTerm = "";
-    searchInput.value = "";
+// Group accounts by password
+function groupAccountsByPassword(accounts) {
+  const groups = {};
+  
+  accounts.forEach(account => {
+    const password = account.password || "NO_PASSWORD";
+    if (!groups[password]) {
+      groups[password] = [];
+    }
+    groups[password].push(account);
+  });
+  
+  const groupedArray = Object.keys(groups).map(password => ({
+    password: password,
+    accounts: groups[password],
+    count: groups[password].length
+  }));
+  
+  groupedArray.sort((a, b) => b.count - a.count);
+  
+  return groupedArray;
+}
+
+// Update stats
+function updateStats() {
+  const total = allAccounts[currentOption].length;
+  const groups = groupedAccounts[currentOption].length;
+  const searchResults = filteredGroups.reduce((sum, group) => sum + group.accounts.length, 0);
+  
+  totalCount.textContent = total;
+  groupCount.textContent = groups;
+  
+  if (isSearching && currentSearchTerm) {
+    searchCount.textContent = searchResults;
+    searchLabel.textContent = `${searchResults} results for "${currentSearchTerm}"`;
+    searchResultCard.style.display = 'flex';
+  } else {
     searchResultCard.style.display = 'none';
-    
-    setupRealtimeListener(option);
   }
+  
+  countDisplay.textContent = `${isSearching ? searchResults : total} accounts in ${isSearching ? filteredGroups.length : groups} groups`;
+}
 
-  function updateUIBasedOnOption() {
-    if (currentOption === 'instagram') {
-      optionIcon.className = 'fab fa-instagram';
-      optionTitle.textContent = 'INSTAGRAM 2FA ACCOUNTS';
-      copyUserLabel.textContent = 'USER';
-      copyCodeLabel.textContent = '2FA';
-      totalLabel.textContent = 'INSTA';
-      groupLabel.textContent = 'GROUPS';
-      deleteOptionName.textContent = 'INSTAGRAM';
-    } else if (currentOption === 'facebook2fa') {
-      optionIcon.className = 'fab fa-facebook';
-      optionTitle.textContent = 'FACEBOOK 2FA ACCOUNTS';
-      copyUserLabel.textContent = 'UID';
-      copyCodeLabel.textContent = '2FA';
-      totalLabel.textContent = 'FB2FA';
-      groupLabel.textContent = 'GROUPS';
-      deleteOptionName.textContent = 'FB 2FA';
-    } else {
-      optionIcon.className = 'fas fa-cookie-bite';
-      optionTitle.textContent = 'FACEBOOK COOKIE ACCOUNTS';
-      copyUserLabel.textContent = 'UID';
-      copyCodeLabel.textContent = 'COOKIE';
-      totalLabel.textContent = 'COOKIE';
-      groupLabel.textContent = 'GROUPS';
-      deleteOptionName.textContent = 'FB COOKIE';
-    }
-  }
-
-  function showLoading() {
+// Render accounts table
+function renderAccountsTable(groups) {
+  if (!groups || groups.length === 0) {
     accountsContainer.innerHTML = `
-      <div class="loading-container">
-        <div class="loading-spinner">
-          <i class="fas fa-spinner fa-spin"></i>
-        </div>
-        <p>Loading from Firebase...</p>
+      <div style="padding: 40px 20px; text-align: center; color: var(--text-gray);">
+        <i class="fas fa-database" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+        <p>No accounts in database</p>
       </div>
     `;
+    return;
   }
-
-  function groupAccountsByPassword(accounts) {
-    const groups = {};
-    
-    accounts.forEach(account => {
-      const password = account.password || "NO_PASSWORD";
-      if (!groups[password]) {
-        groups[password] = [];
-      }
-      groups[password].push(account);
-    });
-    
-    const groupedArray = Object.keys(groups).map(password => ({
-      password: password,
-      accounts: groups[password],
-      count: groups[password].length
-    }));
-    
-    groupedArray.sort((a, b) => b.count - a.count);
-    
-    return groupedArray;
-  }
-
-  function updateStats() {
-    const total = allAccounts[currentOption].length;
-    const groups = groupedAccounts[currentOption].length;
-    const searchResults = filteredGroups.reduce((sum, group) => sum + group.accounts.length, 0);
-    
-    totalCount.textContent = total;
-    groupCount.textContent = groups;
-    
-    if (isSearching && currentSearchTerm) {
-      searchCount.textContent = searchResults;
-      searchLabel.textContent = `${searchResults} results for "${currentSearchTerm}"`;
-      searchResultCard.style.display = 'flex';
-    } else {
-      searchResultCard.style.display = 'none';
-    }
-    
-    countDisplay.textContent = `${isSearching ? searchResults : total} accounts in ${isSearching ? filteredGroups.length : groups} groups`;
-  }
-
-  function renderAccountsTable(groups) {
-    if (groups.length === 0 || groups.every(g => g.accounts.length === 0)) {
-      const noDataMessage = isSearching && currentSearchTerm 
-        ? `No accounts found for "${currentSearchTerm}"`
-        : "No accounts in database";
-      
-      accountsContainer.innerHTML = `
-        <div class="table-container">
-          <div class="no-data-cell">
-            <i class="fas fa-database" style="font-size: 2.5rem; margin-bottom: 10px; opacity: 0.5;"></i>
-            <p style="font-size: 0.9rem;">${noDataMessage}</p>
-          </div>
-        </div>
-      `;
-      return;
-    }
-    
-    let tableHTML = `
-      <div class="table-container">
-        <div class="table-header">
-          <div class="header-cell serial-cell">#</div>
-          <div class="header-cell username-cell">${currentOption === 'instagram' ? 'USERNAME' : 'UID'}</div>
-          <div class="header-cell password-cell">PASSWORD</div>
-          <div class="header-cell twofa-cell">${currentOption === 'facebookcookie' ? 'COOKIE' : '2FA CODE'}</div>
-        </div>
-    `;
-    
-    let globalIndex = 0;
-    
-    groups.forEach(group => {
+  
+  let tableHTML = `
+    <div class="table-container">
+      <div class="table-header">
+        <div class="header-cell serial-cell">#</div>
+        <div class="header-cell username-cell">${currentOption === 'instagram' ? 'USERNAME' : 'UID'}</div>
+        <div class="header-cell password-cell">PASSWORD</div>
+        <div class="header-cell twofa-cell">${currentOption === 'facebookcookie' ? 'COOKIE' : '2FA CODE'}</div>
+      </div>
+  `;
+  
+  let globalIndex = 0;
+  
+  groups.forEach(group => {
+    if (group.accounts.length > 0) {
       tableHTML += `
         <div class="password-group-header">
           <div class="row-cell serial-cell">
@@ -2309,7 +1941,7 @@ function initializeAdminPanel() {
           <div class="row-cell username-cell">
             <div class="cell-content">
               <i class="fas fa-key" style="margin-right: 5px; color: var(--secondary);"></i> 
-              <strong style="color: var(--secondary);">${group.password === "NO_PASSWORD" ? "⚠️ No Password" : group.password}</strong>
+              <strong style="color: var(--secondary);">${group.password}</strong>
               <span class="group-count">${group.count}</span>
             </div>
           </div>
@@ -2341,308 +1973,284 @@ function initializeAdminPanel() {
           </div>
         `;
       });
-    });
-    
-    tableHTML += '</div>';
-    accountsContainer.innerHTML = tableHTML;
-  }
-
-  function searchData(shouldLoad = true) {
-    const searchTerm = searchInput.value.trim().toLowerCase();
-    
-    if (!searchTerm) {
-      if (shouldLoad) {
-        isSearching = false;
-        currentSearchTerm = "";
-        filteredGroups = [...groupedAccounts[currentOption]];
-        renderAccountsTable(filteredGroups);
-        updateStats();
-      }
-      return;
     }
-    
-    filteredGroups = groupedAccounts[currentOption]
-      .map(group => {
-        const matchingAccounts = group.accounts.filter(account => 
-          (account.username && account.username.toLowerCase().includes(searchTerm)) ||
-          (account.password && account.password.toLowerCase().includes(searchTerm)) ||
-          (account.code && account.code.toLowerCase().includes(searchTerm))
-        );
-        
-        if (matchingAccounts.length > 0) {
-          return {
-            password: group.password,
-            accounts: matchingAccounts,
-            count: matchingAccounts.length
-          };
-        }
-        return null;
-      })
-      .filter(group => group !== null);
-    
-    filteredGroups.sort((a, b) => b.count - a.count);
-    
-    isSearching = true;
-    currentSearchTerm = searchTerm;
-    
+  });
+  
+  tableHTML += '</div>';
+  accountsContainer.innerHTML = tableHTML;
+}
+
+// Search data
+function searchData() {
+  const searchTerm = searchInput.value.trim().toLowerCase();
+  
+  if (!searchTerm) {
+    isSearching = false;
+    currentSearchTerm = "";
+    filteredGroups = [...groupedAccounts[currentOption]];
     renderAccountsTable(filteredGroups);
     updateStats();
+    return;
   }
-
-  function copyUsernames() {
-    const groupsToCopy = isSearching ? filteredGroups : groupedAccounts[currentOption];
-    
-    if (groupsToCopy.length === 0 || groupsToCopy.every(g => g.accounts.length === 0)) {
-      alert("No data to copy!");
-      return;
-    }
-    
-    const usernames = groupsToCopy.flatMap(group => 
-      group.accounts.map(account => account.username || "N/A")
-    ).join("\n");
-    
-    navigator.clipboard.writeText(usernames)
-      .then(() => {
-        const btn = document.querySelector('.username-btn-square');
-        const originalHTML = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i><span>DONE</span>';
-        setTimeout(() => { btn.innerHTML = originalHTML; }, 1500);
-      })
-      .catch(err => alert("Copy failed"));
-  }
-
-  function copyPasswords() {
-    const groupsToCopy = isSearching ? filteredGroups : groupedAccounts[currentOption];
-    
-    if (groupsToCopy.length === 0 || groupsToCopy.every(g => g.accounts.length === 0)) {
-      alert("No data to copy!");
-      return;
-    }
-    
-    const passwords = groupsToCopy.flatMap(group => 
-      group.accounts.map(account => account.password || "N/A")
-    ).join("\n");
-    
-    navigator.clipboard.writeText(passwords)
-      .then(() => {
-        const btn = document.querySelector('.password-btn-square');
-        const originalHTML = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i><span>DONE</span>';
-        setTimeout(() => { btn.innerHTML = originalHTML; }, 1500);
-      })
-      .catch(err => alert("Copy failed"));
-  }
-
-  function copyTwoFA() {
-    const groupsToCopy = isSearching ? filteredGroups : groupedAccounts[currentOption];
-    
-    if (groupsToCopy.length === 0 || groupsToCopy.every(g => g.accounts.length === 0)) {
-      alert("No data to copy!");
-      return;
-    }
-    
-    const codes = groupsToCopy.flatMap(group => 
-      group.accounts.map(account => account.code || "N/A")
-    ).join("\n");
-    
-    navigator.clipboard.writeText(codes)
-      .then(() => {
-        const btn = document.querySelector('.twofa-btn-square');
-        const originalHTML = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i><span>DONE</span>';
-        setTimeout(() => { btn.innerHTML = originalHTML; }, 1500);
-      })
-      .catch(err => alert("Copy failed"));
-  }
-
-  function openDeleteModal(target) {
-    deleteTarget = target;
-    
-    if (target === 'current') {
-      if (allAccounts[currentOption].length === 0) {
-        alert("No data to delete for this option!");
-        return;
-      }
-      deleteModalTitle.textContent = `DELETE ${currentOption.toUpperCase()} DATA?`;
-      deleteModalMessage.textContent = `Are you sure you want to permanently delete all ${currentOption} data?`;
-      deleteCount.textContent = allAccounts[currentOption].length;
-    } else {
-      const total = allAccounts.instagram.length + allAccounts.facebook2fa.length + allAccounts.facebookcookie.length;
-      if (total === 0) {
-        alert("No data to delete!");
-        return;
-      }
-      deleteModalTitle.textContent = `DELETE ALL DATA?`;
-      deleteModalMessage.textContent = `Are you sure you want to permanently delete ALL accounts from all options?`;
-      deleteCount.textContent = total;
-    }
-    
-    deleteModal.classList.add("active");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeDeleteModal() {
-    deleteModal.classList.remove("active");
-    document.body.style.overflow = "auto";
-  }
-
-  function confirmDelete() {
-    closeDeleteModal();
-    
-    if (deleteTarget === 'current') {
-      deleteCurrentOptionData();
-    } else {
-      deleteAllData();
-    }
-  }
-
-  function deleteCurrentOptionData() {
-    accountsContainer.innerHTML = `
-      <div class="loading-container">
-        <div class="loading-spinner">
-          <i class="fas fa-spinner fa-spin"></i>
-        </div>
-        <p>Deleting ${currentOption} data...</p>
-      </div>
-    `;
-    
-    let paths = [];
-    if (currentOption === 'instagram') {
-      paths = ["instagram_2fa_submissions", "submissions/instagram"];
-    } else if (currentOption === 'facebook2fa') {
-      paths = ["facebook_2fa_submissions", "submissions/facebook2fa"];
-    } else {
-      paths = ["facebook_cookie_submissions", "submissions/facebookcookie"];
-    }
-    
-    const usedIdsPath = "used_ids";
-    
-    db.ref(usedIdsPath).once('value').then(snapshot => {
-      const updates = {};
-      if (snapshot.exists()) {
-        snapshot.forEach(child => {
-          const data = child.val();
-          if (data.option === currentOption) {
-            updates[`${usedIdsPath}/${child.key}`] = null;
-          }
-        });
-      }
+  
+  filteredGroups = groupedAccounts[currentOption]
+    .map(group => {
+      const matchingAccounts = group.accounts.filter(account => 
+        (account.username && account.username.toLowerCase().includes(searchTerm)) ||
+        (account.password && account.password.toLowerCase().includes(searchTerm)) ||
+        (account.code && account.code.toLowerCase().includes(searchTerm))
+      );
       
-      paths.forEach(path => {
-        updates[path] = null;
-      });
-      
-      return db.ref().update(updates);
+      if (matchingAccounts.length > 0) {
+        return {
+          password: group.password,
+          accounts: matchingAccounts,
+          count: matchingAccounts.length
+        };
+      }
+      return null;
     })
+    .filter(group => group !== null);
+  
+  filteredGroups.sort((a, b) => b.count - a.count);
+  
+  isSearching = true;
+  currentSearchTerm = searchTerm;
+  
+  renderAccountsTable(filteredGroups);
+  updateStats();
+}
+
+// Copy functions
+function copyUsernames() {
+  const groupsToCopy = isSearching ? filteredGroups : groupedAccounts[currentOption];
+  
+  if (!groupsToCopy || groupsToCopy.length === 0) {
+    alert("No data to copy!");
+    return;
+  }
+  
+  const usernames = groupsToCopy.flatMap(group => 
+    group.accounts.map(account => account.username || "N/A")
+  ).join("\n");
+  
+  navigator.clipboard.writeText(usernames)
     .then(() => {
-      allAccounts[currentOption] = [];
-      groupedAccounts[currentOption] = [];
-      filteredGroups = [];
-      isSearching = false;
-      currentSearchTerm = "";
-      searchResultCard.style.display = 'none';
-      searchInput.value = "";
-      
-      renderAccountsTable([]);
-      updateStats();
+      alert('Copied to clipboard!');
     })
-    .catch(err => {
-      alert("Delete failed: " + err.message);
-      setupRealtimeListener(currentOption);
-    });
-  }
+    .catch(err => alert("Copy failed"));
+}
 
-  function deleteAllData() {
-    accountsContainer.innerHTML = `
-      <div class="loading-container">
-        <div class="loading-spinner">
-          <i class="fas fa-spinner fa-spin"></i>
-        </div>
-        <p>Deleting ALL data...</p>
+function copyPasswords() {
+  const groupsToCopy = isSearching ? filteredGroups : groupedAccounts[currentOption];
+  
+  if (!groupsToCopy || groupsToCopy.length === 0) {
+    alert("No data to copy!");
+    return;
+  }
+  
+  const passwords = groupsToCopy.flatMap(group => 
+    group.accounts.map(account => account.password || "N/A")
+  ).join("\n");
+  
+  navigator.clipboard.writeText(passwords)
+    .then(() => {
+      alert('Copied to clipboard!');
+    })
+    .catch(err => alert("Copy failed"));
+}
+
+function copyTwoFA() {
+  const groupsToCopy = isSearching ? filteredGroups : groupedAccounts[currentOption];
+  
+  if (!groupsToCopy || groupsToCopy.length === 0) {
+    alert("No data to copy!");
+    return;
+  }
+  
+  const codes = groupsToCopy.flatMap(group => 
+    group.accounts.map(account => account.code || "N/A")
+  ).join("\n");
+  
+  navigator.clipboard.writeText(codes)
+    .then(() => {
+      alert('Copied to clipboard!');
+    })
+    .catch(err => alert("Copy failed"));
+}
+
+// Delete modal functions
+function openDeleteModal(target) {
+  deleteTarget = target;
+  
+  if (target === 'current') {
+    if (allAccounts[currentOption].length === 0) {
+      alert("No data to delete for this option!");
+      return;
+    }
+    deleteModalTitle.textContent = `DELETE ${currentOption.toUpperCase()} DATA?`;
+    deleteModalMessage.textContent = `Are you sure you want to permanently delete all ${currentOption} data?`;
+    deleteCount.textContent = allAccounts[currentOption].length;
+  } else {
+    const total = allAccounts.instagram.length + allAccounts.facebook2fa.length + allAccounts.facebookcookie.length;
+    if (total === 0) {
+      alert("No data to delete!");
+      return;
+    }
+    deleteModalTitle.textContent = `DELETE ALL DATA?`;
+    deleteModalMessage.textContent = `Are you sure you want to permanently delete ALL accounts from all options?`;
+    deleteCount.textContent = total;
+  }
+  
+  deleteModal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeDeleteModal() {
+  deleteModal.classList.remove("active");
+  document.body.style.overflow = "auto";
+}
+
+function confirmDelete() {
+  closeDeleteModal();
+  
+  if (deleteTarget === 'current') {
+    deleteCurrentOptionData();
+  } else {
+    deleteAllData();
+  }
+}
+
+function deleteCurrentOptionData() {
+  accountsContainer.innerHTML = `
+    <div style="padding: 30px; text-align: center;">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
       </div>
-    `;
-    
-    const allPaths = [
-      "instagram_2fa_submissions",
-      "facebook_2fa_submissions", 
-      "facebook_cookie_submissions",
-      "submissions/instagram",
-      "submissions/facebook2fa",
-      "submissions/facebookcookie",
-      "used_ids"
-    ];
-    
+      <p style="margin-top: 10px;">Deleting ${currentOption} data...</p>
+    </div>
+  `;
+  
+  let paths = [];
+  if (currentOption === 'instagram') {
+    paths = ["instagram_2fa_submissions", "submissions/instagram"];
+  } else if (currentOption === 'facebook2fa') {
+    paths = ["facebook_2fa_submissions", "submissions/facebook2fa"];
+  } else {
+    paths = ["facebook_cookie_submissions", "submissions/facebookcookie"];
+  }
+  
+  const usedIdsPath = "used_ids";
+  
+  db.ref(usedIdsPath).once('value').then(snapshot => {
     const updates = {};
-    allPaths.forEach(path => {
+    if (snapshot.exists()) {
+      snapshot.forEach(child => {
+        const data = child.val();
+        if (data.option === currentOption) {
+          updates[`${usedIdsPath}/${child.key}`] = null;
+        }
+      });
+    }
+    
+    paths.forEach(path => {
       updates[path] = null;
     });
     
-    db.ref().update(updates)
-    .then(() => {
-      allAccounts = { instagram: [], facebook2fa: [], facebookcookie: [] };
-      groupedAccounts = { instagram: [], facebook2fa: [], facebookcookie: [] };
-      filteredGroups = [];
-      isSearching = false;
-      currentSearchTerm = "";
-      searchResultCard.style.display = 'none';
-      searchInput.value = "";
-      
-      renderAccountsTable([]);
-      updateStats();
-    })
-    .catch(err => {
-      alert("Delete failed: " + err.message);
-      setupRealtimeListener(currentOption);
-    });
-  }
-
-  // Event Listeners
-  deleteModal.addEventListener("click", function(e) {
-    if (e.target === deleteModal) {
-      closeDeleteModal();
-    }
+    return db.ref().update(updates);
+  })
+  .then(() => {
+    allAccounts[currentOption] = [];
+    groupedAccounts[currentOption] = [];
+    filteredGroups = [];
+    isSearching = false;
+    currentSearchTerm = "";
+    searchInput.value = "";
+    searchResultCard.style.display = 'none';
+    
+    renderAccountsTable([]);
+    updateStats();
+    alert('Data deleted successfully!');
+  })
+  .catch(err => {
+    alert("Delete failed: " + err.message);
+    setupRealtimeListener(currentOption);
   });
-
-  searchInput.addEventListener("keyup", function(e) {
-    if (e.key === "Enter") {
-      searchData();
-    }
-  });
-
-  searchInput.addEventListener("input", function() {
-    if (this.value.trim() === "" && isSearching) {
-      isSearching = false;
-      currentSearchTerm = "";
-      filteredGroups = [...groupedAccounts[currentOption]];
-      renderAccountsTable(filteredGroups);
-      updateStats();
-      searchResultCard.style.display = 'none';
-    }
-  });
-
-  // Initialize
-  updateUIBasedOnOption();
-  loadAllData();
-
-  // Make functions globally available
-  window.switchOption = switchOption;
-  window.refreshCurrentOption = refreshCurrentOption;
-  window.searchData = searchData;
-  window.copyUsernames = copyUsernames;
-  window.copyPasswords = copyPasswords;
-  window.copyTwoFA = copyTwoFA;
-  window.openDeleteModal = openDeleteModal;
-  window.closeDeleteModal = closeDeleteModal;
-  window.confirmDelete = confirmDelete;
-  window.toggleOptionStatus = toggleOptionStatus;
-  window.saveOptionMessage = saveOptionMessage;
-  window.saveTickerMessage = saveTickerMessage;
-  window.saveOffReasonMessage = saveOffReasonMessage;
 }
 
-// Make functions globally available
-window.handleLogin = handleLogin;
-window.handleLogout = handleLogout;
+function deleteAllData() {
+  accountsContainer.innerHTML = `
+    <div style="padding: 30px; text-align: center;">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <p style="margin-top: 10px;">Deleting ALL data...</p>
+    </div>
+  `;
+  
+  const allPaths = [
+    "instagram_2fa_submissions",
+    "facebook_2fa_submissions", 
+    "facebook_cookie_submissions",
+    "submissions/instagram",
+    "submissions/facebook2fa",
+    "submissions/facebookcookie",
+    "used_ids"
+  ];
+  
+  const updates = {};
+  allPaths.forEach(path => {
+    updates[path] = null;
+  });
+  
+  db.ref().update(updates)
+  .then(() => {
+    allAccounts = { instagram: [], facebook2fa: [], facebookcookie: [] };
+    groupedAccounts = { instagram: [], facebook2fa: [], facebookcookie: [] };
+    filteredGroups = [];
+    isSearching = false;
+    currentSearchTerm = "";
+    searchInput.value = "";
+    searchResultCard.style.display = 'none';
+    
+    renderAccountsTable([]);
+    updateStats();
+    alert('All data deleted successfully!');
+  })
+  .catch(err => {
+    alert("Delete failed: " + err.message);
+    setupRealtimeListener(currentOption);
+  });
+}
+
+// Event Listeners
+deleteModal.addEventListener("click", function(e) {
+  if (e.target === deleteModal) {
+    closeDeleteModal();
+  }
+});
+
+searchInput.addEventListener("keyup", function(e) {
+  if (e.key === "Enter") {
+    searchData();
+  }
+});
+
+searchInput.addEventListener("input", function() {
+  if (this.value.trim() === "" && isSearching) {
+    isSearching = false;
+    currentSearchTerm = "";
+    filteredGroups = [...groupedAccounts[currentOption]];
+    renderAccountsTable(filteredGroups);
+    updateStats();
+    searchResultCard.style.display = 'none';
+  }
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  updateUIBasedOnOption();
+});
 </script>
 
 </body>
