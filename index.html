@@ -117,119 +117,176 @@ body {
   background: var(--border-color);
 }
 
-/* WINNER CARD - ইউজারনেম + হিডেন পাসওয়ার্ড সহ */
-.winner-card {
-  background: linear-gradient(145deg, #1e293b, #0f172a);
-  border-radius: 16px;
-  padding: 18px 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 2px solid gold;
+/* WINNER TOGGLE BUTTON */
+.winner-toggle-container {
   width: 100%;
-  animation: winnerGlow 2s infinite;
+  margin-bottom: 15px;
+  position: relative;
 }
 
-@keyframes winnerGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
-  50% { box-shadow: 0 0 45px rgba(255, 215, 0, 0.8); }
-}
-
-.winner-info {
+.winner-toggle-btn {
+  width: 100%;
+  background: linear-gradient(135deg, gold, #fbbf24);
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #0f172a;
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+.winner-toggle-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px gold;
+}
+
+.winner-toggle-btn i {
+  font-size: 1.5rem;
+  color: #0f172a;
+}
+
+/* WINNER INFO CARD - NEW DESIGN */
+.winner-info-card {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 20px;
+  padding: 25px;
+  margin-top: 15px;
+  width: 100%;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 0 2px gold inset;
+  display: none;
+  border: none;
+  animation: winnerSlideDown 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.winner-info-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+  animation: winnerRotate 10s linear infinite;
+  z-index: 0;
+}
+
+@keyframes winnerRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes winnerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.winner-info-card.active {
+  display: block;
+}
+
+.winner-info-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 15px;
-  flex-wrap: wrap;
-}
-
-.winner-icon {
   color: gold;
-  font-size: 2.2rem;
-  filter: drop-shadow(0 0 10px gold);
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px gold;
+  position: relative;
+  z-index: 1;
 }
 
-.winner-details {
+.winner-info-header i {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 15px gold);
+}
+
+.winner-info-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
 }
 
-.winner-label {
-  font-size: 0.85rem;
-  color: gold;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.winner-username-box {
+.winner-info-row {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255,215,0,0.08);
-  padding: 6px 16px;
-  border-radius: 50px;
-  border: 1px solid rgba(255,215,0,0.3);
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  padding: 15px 20px;
+  border-left: 6px solid gold;
+  backdrop-filter: blur(5px);
 }
 
-.winner-username {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: white;
-  text-shadow: 0 0 15px gold;
-}
-
-.winner-password-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #0f172a;
-  padding: 6px 16px;
-  border-radius: 50px;
-  border: 1px solid var(--border-color);
-  max-width: 280px;
-}
-
-.password-hidden {
-  font-family: monospace;
-  font-size: 1.2rem;
-  letter-spacing: 2px;
-  color: var(--primary);
-  background: transparent;
-  border: none;
-  outline: none;
-  flex: 1;
-  min-width: 150px;
-}
-
-.toggle-password-btn {
-  background: transparent;
-  border: none;
+.winner-info-label {
   color: var(--text-gray);
-  cursor: pointer;
-  font-size: 1.2rem;
-  padding: 0 5px;
-  transition: color 0.2s;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
 }
 
-.toggle-password-btn:hover {
+.winner-info-value {
+  font-weight: 900;
+  color: white;
+  word-break: break-all;
+  line-height: 1.3;
+}
+
+.winner-info-value.username {
   color: gold;
+  font-size: 2.2rem;
+  text-shadow: 0 0 20px gold;
+  letter-spacing: 2px;
 }
 
-.winner-badge {
-  background: gold;
-  color: black;
-  padding: 8px 22px;
-  border-radius: 40px;
-  font-weight: bold;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-  box-shadow: 0 0 20px gold;
+.winner-info-value.password {
+  color: var(--primary);
+  font-family: 'Courier New', monospace;
+  font-size: 2rem;
+  text-shadow: 0 0 15px var(--primary);
+  letter-spacing: 2px;
+}
+
+.winner-info-value.time {
+  color: var(--secondary);
+  font-size: 1.4rem;
+  font-family: monospace;
+  text-shadow: 0 0 10px var(--secondary);
+}
+
+.winner-info-empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-gray);
+  font-style: italic;
+  font-size: 1.2rem;
+  background: rgba(0,0,0,0.3);
+  border-radius: 16px;
+  border: 1px dashed gold;
 }
 
 /* Search Section */
@@ -1186,23 +1243,17 @@ body {
     font-size: 0.8rem;
     padding: 10px 4px;
   }
-
-  .winner-card {
-    flex-direction: column;
-    gap: 15px;
-    align-items: flex-start;
+  
+  .winner-info-value.username {
+    font-size: 1.8rem;
   }
   
-  .winner-info {
-    width: 100%;
+  .winner-info-value.password {
+    font-size: 1.6rem;
   }
   
-  .winner-badge {
-    align-self: flex-end;
-  }
-  
-  .winner-password-area {
-    max-width: 100%;
+  .winner-info-value.time {
+    font-size: 1.2rem;
   }
 }
 
@@ -1280,13 +1331,16 @@ body {
     font-size: 0.8rem;
   }
   
-  .winner-username {
-    font-size: 1.2rem;
+  .winner-info-value.username {
+    font-size: 1.5rem;
   }
   
-  .password-hidden {
+  .winner-info-value.password {
+    font-size: 1.3rem;
+  }
+  
+  .winner-info-value.time {
     font-size: 1rem;
-    min-width: 120px;
   }
 }
 
@@ -1328,29 +1382,28 @@ body {
     <div class="subtitle">Message & Audio Controller + Account Manager</div>
   </div>
   
-  <!-- WINNER CARD - নতুন (ইউজারনেম + হিডেন পাসওয়ার্ড) -->
-  <div class="winner-card" id="winnerCard" style="display: none;">
-    <div class="winner-info">
-      <div class="winner-icon">
-        <i class="fas fa-trophy"></i>
+  <!-- WINNER TOGGLE BUTTON -->
+  <div class="winner-toggle-container">
+    <button class="winner-toggle-btn" onclick="toggleWinnerInfo()">
+      <i class="fas fa-trophy"></i>
+      <span>🏆 TODAY'S WINNER 🏆</span>
+      <i class="fas fa-trophy"></i>
+    </button>
+    
+    <!-- WINNER INFO CARD (Hidden by default) - NEW DESIGN -->
+    <div class="winner-info-card" id="winnerInfoCard">
+      <div class="winner-info-header">
+        <i class="fas fa-crown"></i>
+        <span>WINNER</span>
+        <i class="fas fa-crown"></i>
       </div>
-      <div class="winner-details">
-        <span class="winner-label">🏆 Today's First Winner 🏆</span>
-        <div class="winner-username-box">
-          <i class="fas fa-user" style="color: gold;"></i>
-          <span class="winner-username" id="winnerUsername">Loading...</span>
-        </div>
-        <div class="winner-password-area">
-          <i class="fas fa-lock" style="color: var(--primary);"></i>
-          <input type="password" id="winnerPasswordField" class="password-hidden" value="••••••••" readonly disabled>
-          <button class="toggle-password-btn" onclick="toggleWinnerPassword()" id="togglePasswordBtn">
-            <i class="fas fa-eye"></i>
-          </button>
+      
+      <div class="winner-info-content" id="winnerInfoContent">
+        <!-- Winner info will be loaded here -->
+        <div class="winner-info-empty">
+          <i class="fas fa-spinner fa-spin"></i> Loading winner data...
         </div>
       </div>
-    </div>
-    <div class="winner-badge">
-      <i class="fas fa-crown"></i> WINNER
     </div>
   </div>
   
@@ -1540,11 +1593,9 @@ const deleteModal = document.getElementById("deleteModal");
 const deleteCount = document.getElementById("deleteCount");
 const searchInput = document.getElementById("searchInput");
 
-// Winner Card Elements
-const winnerCard = document.getElementById("winnerCard");
-const winnerUsername = document.getElementById("winnerUsername");
-const winnerPasswordField = document.getElementById("winnerPasswordField");
-const togglePasswordBtn = document.getElementById("togglePasswordBtn");
+// Winner Elements
+const winnerInfoCard = document.getElementById("winnerInfoCard");
+const winnerInfoContent = document.getElementById("winnerInfoContent");
 
 // Message Control Elements
 const messageInput = document.getElementById("messageInput");
@@ -1564,108 +1615,60 @@ let filteredGroups = [];
 let isSearching = false;
 let currentSearchTerm = "";
 
-// Winner related variables
-let currentWinner = null;
-let isPasswordVisible = false;
-
 // ============================================
-// WINNER FUNCTIONS - নতুন সংযোজন
+// WINNER FUNCTIONS - UPDATED
 // ============================================
 
-// উইনারের ডাটা লোড করা
-function loadWinnerData() {
-  db.ref("settings/daily_winner").once("value").then(snapshot => {
-    if (snapshot.exists()) {
-      const winnerData = snapshot.val();
-      currentWinner = winnerData;
-      
-      // উইনার কার্ড দেখানো এবং ডাটা সেট করা
-      winnerCard.style.display = "flex";
-      winnerUsername.textContent = winnerData.username || "Unknown";
-      
-      // পাসওয়ার্ড ফিল্ড রিসেট করা (হিডেন অবস্থায়)
-      winnerPasswordField.type = "password";
-      winnerPasswordField.value = winnerData.password || "No password";
-      isPasswordVisible = false;
-      togglePasswordBtn.innerHTML = '<i class="fas fa-eye"></i>';
-    } else {
-      // কোনো উইনার নেই
-      winnerCard.style.display = "none";
-      currentWinner = null;
-    }
-  }).catch(err => {
-    console.error("Winner load error:", err);
-  });
-}
-
-// পাসওয়ার্ড টগল ফাংশন
-function toggleWinnerPassword() {
-  if (!currentWinner) return;
-  
-  if (winnerPasswordField.type === "password") {
-    winnerPasswordField.type = "text";
-    togglePasswordBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+// Toggle winner info card
+function toggleWinnerInfo() {
+  if (winnerInfoCard.classList.contains('active')) {
+    winnerInfoCard.classList.remove('active');
   } else {
-    winnerPasswordField.type = "password";
-    togglePasswordBtn.innerHTML = '<i class="fas fa-eye"></i>';
+    loadWinnerData();
+    winnerInfoCard.classList.add('active');
   }
 }
 
-// নতুন উইনার চেক করার ফাংশন (প্রথম এন্ট্রি)
-function checkForNewWinner() {
-  db.ref("accounts/parvez").once("value").then(snapshot => {
-    let firstAccount = null;
-    let firstKey = null;
-    
-    // সবচেয়ে পুরনো এন্ট্রি খুঁজে বের করা
-    snapshot.forEach(child => {
-      if (!firstKey) {
-        firstKey = child.key;
-        firstAccount = child.val();
-      }
-    });
-    
-    if (firstAccount) {
-      // এখন চেক করা এই এন্ট্রি আগে থেকেই উইনার কিনা
-      db.ref("settings/daily_winner").once("value").then(winnerSnap => {
-        if (!winnerSnap.exists()) {
-          // কোনো উইনার নেই, তাই এইটাকেই উইনার বানানো
-          const winnerData = {
-            username: firstAccount.username || "Unknown",
-            password: firstAccount.password || "No password",
-            accountKey: firstKey,
-            timestamp: new Date().toISOString()
-          };
-          
-          db.ref("settings/daily_winner").set(winnerData)
-            .then(() => {
-              console.log("✅ Winner saved:", winnerData.username);
-              loadWinnerData(); // রিলোড
-            })
-            .catch(err => console.error("Winner save error:", err));
-        } else {
-          // উইনার আগেই আছে, শুধু লোড করা
-          loadWinnerData();
-        }
-      });
-    } else {
-      // কোনো অ্যাকাউন্ট নেই, উইনার হাইড করা
-      winnerCard.style.display = "none";
-      currentWinner = null;
-    }
-  }).catch(err => {
-    console.error("Winner check error:", err);
-  });
+// Format time function
+function formatTime(timestamp) {
+  if (!timestamp) return 'N/A';
+  
+  const date = new Date(timestamp);
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  
+  return `${hours}:${minutes}:${seconds} | ${day}/${month}/${year}`;
 }
 
-// ডিলিট করার পর উইনার রিসেট করা
-function resetWinnerAfterDelete() {
-  db.ref("settings/daily_winner").remove()
-    .then(() => {
-      winnerCard.style.display = "none";
-      currentWinner = null;
-    })
-    .catch(err => console.error("Winner reset error:", err));
+// Load winner data from Firebase
+function loadWinnerData() {
+  winnerInfoContent.innerHTML = '<div class="winner-info-empty"><i class="fas fa-spinner fa-spin"></i> Loading winner data...</div>';
+  
+  db.ref("settings/daily_winner").once("value").then(snapshot => {
+    if (snapshot.exists()) {
+      const winnerData = snapshot.val();
+      
+      winnerInfoContent.innerHTML = `
+  <div class="winner-info-row">
+    <span class="winner-info-label">USERNAME</span>
+    <span class="winner-info-value username">${winnerData.username || 'N/A'}</span>
+  </div>
+  <div class="winner-info-row">
+    <span class="winner-info-label">PASSWORD</span>
+    <span class="winner-info-value password">${winnerData.password || 'N/A'}</span>
+  </div>
+`;
+    } else {
+      winnerInfoContent.innerHTML = '<div class="winner-info-empty"><i class="fas fa-info-circle"></i> No winner found. Be the first to submit an account!</div>';
+    }
+  }).catch(err => {
+    console.error("Winner load error:", err);
+    winnerInfoContent.innerHTML = '<div class="winner-info-empty"><i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i> Error loading winner data</div>';
+  });
 }
 
 // ============================================
@@ -1885,7 +1888,7 @@ function resetAudioUrl() {
 loadAudioSettings();
 
 // ============================================
-// EXISTING FUNCTIONS - MODIFIED (ACCOUNT MANAGEMENT with Winner)
+// EXISTING FUNCTIONS - UNCHANGED (ACCOUNT MANAGEMENT)
 // ============================================
 function showLoading() {
   accountsContainer.innerHTML = `
@@ -2046,9 +2049,6 @@ function loadData() {
     filteredGroups = [...groupedAccounts];
     renderAccountsTable(groupedAccounts);
     updateStats();
-    
-    // Winner চেক করা
-    checkForNewWinner();
   })
   .catch(err => {
     accountsContainer.innerHTML = `
@@ -2243,7 +2243,10 @@ function deleteAllData() {
     updateStats();
     
     // ডিলিট করার পর উইনার রিসেট
-    resetWinnerAfterDelete();
+    db.ref("settings/daily_winner").remove().catch(err => console.error(err));
+    
+    // উইনার কার্ড বন্ধ করা
+    winnerInfoCard.classList.remove('active');
     
     setTimeout(() => {
       alert("✅ All data has been permanently deleted.");
@@ -2285,6 +2288,13 @@ searchInput.addEventListener("input", function() {
 document.addEventListener('DOMContentLoaded', function() {
   loadData();
   setInterval(loadData, 120000);
+  
+  // প্রতি ৩০ সেকেন্ডে উইনার ডাটা আপডেট করা
+  setInterval(() => {
+    if (winnerInfoCard.classList.contains('active')) {
+      loadWinnerData();
+    }
+  }, 30000);
 });
 </script>
 
