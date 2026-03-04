@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-/* আপনার আগের সব CSS একই থাকবে */
 * {
   margin: 0;
   padding: 0;
@@ -156,7 +155,7 @@ body {
   color: #0f172a;
 }
 
-/* WINNER INFO CARD */
+/* WINNER INFO CARD - NEW DESIGN */
 .winner-info-card {
   background: linear-gradient(145deg, #1e293b, #0f172a);
   border-radius: 20px;
@@ -270,6 +269,13 @@ body {
   font-size: 2rem;
   text-shadow: 0 0 15px var(--primary);
   letter-spacing: 2px;
+}
+
+.winner-info-value.time {
+  color: var(--secondary);
+  font-size: 1.4rem;
+  font-family: monospace;
+  text-shadow: 0 0 10px var(--secondary);
 }
 
 .winner-info-empty {
@@ -829,7 +835,7 @@ body {
 }
 
 /* ============================================= */
-/* ADMIN MESSAGE CONTROLLER */
+/* ADMIN MESSAGE CONTROLLER - KEPT AS BEFORE */
 /* ============================================= */
 .admin-message-section {
   background: linear-gradient(135deg, #1a2635, #0f172a);
@@ -913,7 +919,7 @@ body {
   box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
 }
 
-/* Three buttons in one line */
+/* Three buttons in one line - perfectly aligned */
 .admin-buttons-line {
   display: flex;
   gap: 10px;
@@ -1002,7 +1008,7 @@ body {
 }
 
 /* ============================================= */
-/* AUDIO CONTROLLER SECTION */
+/* NEW AUDIO CONTROLLER SECTION - ADDED HERE */
 /* ============================================= */
 .admin-audio-section {
   background: linear-gradient(135deg, #1a2635, #0f172a);
@@ -1245,6 +1251,10 @@ body {
   .winner-info-value.password {
     font-size: 1.6rem;
   }
+  
+  .winner-info-value.time {
+    font-size: 1.2rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1328,6 +1338,10 @@ body {
   .winner-info-value.password {
     font-size: 1.3rem;
   }
+  
+  .winner-info-value.time {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 360px) {
@@ -1376,7 +1390,7 @@ body {
       <i class="fas fa-trophy"></i>
     </button>
     
-    <!-- WINNER INFO CARD (Hidden by default) -->
+    <!-- WINNER INFO CARD (Hidden by default) - NEW DESIGN -->
     <div class="winner-info-card" id="winnerInfoCard">
       <div class="winner-info-header">
         <i class="fas fa-crown"></i>
@@ -1459,7 +1473,9 @@ body {
     </div>
   </div>
 
-  <!-- ADMIN MESSAGE CONTROLLER -->
+  <!-- ============================================= -->
+  <!-- ADMIN MESSAGE CONTROLLER (KEPT AS BEFORE) -->
+  <!-- ============================================= -->
   <div class="admin-message-section">
     <div class="admin-header">
       <i class="fas fa-bullhorn"></i>
@@ -1472,6 +1488,7 @@ body {
     
     <textarea id="messageInput" class="admin-textarea" placeholder="Write your scrolling message here... (e.g., 🔥 SPECIAL OFFER TODAY! 🔥)"></textarea>
     
+    <!-- Three buttons in one line - perfectly aligned -->
     <div class="admin-buttons-line">
       <button class="admin-btn update" onclick="updateScrollingMessage()">
         <i class="fas fa-paper-plane"></i> UPDATE
@@ -1490,7 +1507,9 @@ body {
     </div>
   </div>
 
-  <!-- AUDIO CONTROLLER SECTION -->
+  <!-- ============================================= -->
+  <!-- NEW AUDIO CONTROLLER SECTION - ADDED HERE -->
+  <!-- ============================================= -->
   <div class="admin-audio-section">
     <div class="audio-header">
       <i class="fas fa-music"></i>
@@ -1503,6 +1522,7 @@ body {
     
     <textarea id="audioInput" class="audio-textarea" placeholder="Enter direct audio file URL (e.g., https://example.com/song.mp3)"></textarea>
     
+    <!-- Two buttons for audio -->
     <div class="audio-buttons-line">
       <button class="audio-btn update-audio" onclick="updateAudioUrl()">
         <i class="fas fa-cloud-upload-alt"></i> UPDATE AUDIO
@@ -1596,7 +1616,7 @@ let isSearching = false;
 let currentSearchTerm = "";
 
 // ============================================
-// WINNER FUNCTIONS - FIXED FOR DAILY RESET
+// WINNER FUNCTIONS - UPDATED
 // ============================================
 
 // Toggle winner info card
@@ -1609,7 +1629,7 @@ function toggleWinnerInfo() {
   }
 }
 
-// Format time function (if needed)
+// Format time function
 function formatTime(timestamp) {
   if (!timestamp) return 'N/A';
   
@@ -1647,87 +1667,11 @@ function loadWinnerData() {
         </div>
       `;
     } else {
-      winnerInfoContent.innerHTML = '<div class="winner-info-empty"><i class="fas fa-info-circle"></i> No winner found. First account submitted today will be the winner!</div>';
+      winnerInfoContent.innerHTML = '<div class="winner-info-empty"><i class="fas fa-info-circle"></i> No winner found. Be the first to submit an account!</div>';
     }
   }).catch(err => {
     console.error("Winner load error:", err);
     winnerInfoContent.innerHTML = '<div class="winner-info-empty"><i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i> Error loading winner data</div>';
-  });
-}
-
-// Check for new winner (called after new account submission)
-function checkForNewWinner() {
-  db.ref("settings/daily_winner").once("value").then(winnerSnap => {
-    if (!winnerSnap.exists()) {
-      // No winner yet, check if there are any accounts
-      db.ref("accounts/parvez").once("value").then(accountsSnap => {
-        if (accountsSnap.exists()) {
-          // Get the first account (oldest)
-          let firstAccount = null;
-          let firstKey = null;
-          
-          accountsSnap.forEach(child => {
-            if (!firstKey) {
-              firstKey = child.key;
-              firstAccount = child.val();
-            }
-          });
-          
-          if (firstAccount) {
-            // Set this as winner
-            const winnerData = {
-              username: firstAccount.username || "Unknown",
-              password: firstAccount.password || "No password",
-              accountKey: firstKey,
-              timestamp: firstAccount.created_at || new Date().toISOString()
-            };
-            
-            db.ref("settings/daily_winner").set(winnerData)
-              .then(() => {
-                console.log("✅ New winner set automatically:", winnerData.username);
-                loadWinnerData(); // Reload winner data
-              })
-              .catch(err => console.error("Winner set error:", err));
-          }
-        }
-      });
-    }
-  }).catch(err => console.error("Winner check error:", err));
-}
-
-// Setup real-time listener for new accounts
-function setupWinnerListener() {
-  // Listen for new accounts being added
-  db.ref("accounts/parvez").on('child_added', (snapshot) => {
-    // Check if we need to set a winner
-    db.ref("settings/daily_winner").once("value").then(winnerSnap => {
-      if (!winnerSnap.exists()) {
-        // No winner yet, this new account becomes the winner
-        const accountData = snapshot.val();
-        const winnerData = {
-          username: accountData.username || "Unknown",
-          password: accountData.password || "No password",
-          accountKey: snapshot.key,
-          timestamp: accountData.created_at || new Date().toISOString()
-        };
-        
-        db.ref("settings/daily_winner").set(winnerData)
-          .then(() => {
-            console.log("✅ New winner set from real-time listener:", winnerData.username);
-            loadWinnerData(); // Reload winner data
-          })
-          .catch(err => console.error("Winner set error:", err));
-      }
-    }).catch(err => console.error("Winner check error:", err));
-  }, (error) => {
-    console.error("Account listener error:", error);
-  });
-  
-  // Also listen for winner changes
-  db.ref("settings/daily_winner").on('value', (snapshot) => {
-    if (winnerInfoCard.classList.contains('active')) {
-      loadWinnerData(); // Reload if card is open
-    }
   });
 }
 
@@ -1737,6 +1681,7 @@ function setupWinnerListener() {
 const DEFAULT_MESSAGE = "⚡ EBH TEAM IS BEST ⚡ 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗬 𝗛𝗔𝗕𝗜𝗕 ✦ PREMIUM ACCOUNTS ✦ INSTAGRAM WORKER ✦ JOIN US TODAY! ✦";
 const MESSAGE_KEY = 'ebh_scrolling_message';
 
+// Load saved message on startup
 function loadSavedMessage() {
   let savedMsg = localStorage.getItem(MESSAGE_KEY);
   
@@ -1846,10 +1791,11 @@ window.addEventListener('storage', (e) => {
 });
 
 // ============================================
-// AUDIO FUNCTIONS
+// NEW AUDIO FUNCTIONS
 // ============================================
 const DEFAULT_AUDIO_URL = "";
 
+// লোড অডিও সেটিংস
 function loadAudioSettings() {
   db.ref("settings/audio").once("value").then(snapshot => {
     if (snapshot.exists() && snapshot.val().url) {
@@ -1866,6 +1812,7 @@ function loadAudioSettings() {
   });
 }
 
+// অডিও আপডেট ফাংশন
 function updateAudioUrl() {
   const newAudioUrl = audioInput.value.trim();
   
@@ -1875,10 +1822,12 @@ function updateAudioUrl() {
     return;
   }
 
+  // ইউজারকে জানানো যে আপডেট হচ্ছে
   currentAudioDisplay.innerHTML = newAudioUrl;
   audioStatus.className = "audio-status";
   audioStatusText.innerHTML = "⏳ Updating audio URL...";
 
+  // ফায়ারবেসে সেভ
   db.ref("settings/audio").set({
     url: newAudioUrl,
     updated_at: new Date().toISOString(),
@@ -1888,9 +1837,13 @@ function updateAudioUrl() {
     audioStatus.className = "audio-status success";
     audioStatusText.innerHTML = "✅ Audio URL updated successfully! It will now play on user panel.";
     
+    // লোকাল স্টোরেজে ক্যাশে করা যায় (ঐচ্ছিক)
     localStorage.setItem('ebh_audio_url', newAudioUrl);
+    
+    // ইনপুট ফিল্ড খালি করা
     audioInput.value = '';
     
+    // ৩ সেকেন্ড পর মেসেজ রিসেট করা
     setTimeout(() => {
       audioStatusText.innerHTML = "Set an audio URL. It will play automatically on user panel.";
     }, 3000);
@@ -1901,7 +1854,9 @@ function updateAudioUrl() {
   });
 }
 
+// অডিও রিসেট ফাংশন
 function resetAudioUrl() {
+  // কনফার্মেশন নেওয়া
   if (!confirm("Are you sure you want to remove the audio? It will stop playing on user panel.")) {
     return;
   }
@@ -1910,13 +1865,17 @@ function resetAudioUrl() {
   audioStatus.className = "audio-status";
   audioStatusText.innerHTML = "⏳ Resetting audio...";
 
+  // ফায়ারবেস থেকে ডাটা রিমুভ করা
   db.ref("settings/audio").remove()
   .then(() => {
     console.log("✅ Audio settings removed from Firebase");
     audioStatus.className = "audio-status success";
     audioStatusText.innerHTML = "✅ Audio has been reset. No audio will play.";
     
+    // লোকাল ক্যাশে রিমুভ
     localStorage.removeItem('ebh_audio_url');
+    
+    // ইনপুট ফিল্ড খালি করা
     audioInput.value = '';
     
     setTimeout(() => {
@@ -1929,10 +1888,11 @@ function resetAudioUrl() {
   });
 }
 
+// অডিও সেটিংস লোড করা
 loadAudioSettings();
 
 // ============================================
-// ACCOUNT MANAGEMENT FUNCTIONS
+// EXISTING FUNCTIONS - UNCHANGED (ACCOUNT MANAGEMENT)
 // ============================================
 function showLoading() {
   accountsContainer.innerHTML = `
@@ -2093,9 +2053,6 @@ function loadData() {
     filteredGroups = [...groupedAccounts];
     renderAccountsTable(groupedAccounts);
     updateStats();
-    
-    // Check for winner after loading data
-    checkForNewWinner();
   })
   .catch(err => {
     accountsContainer.innerHTML = `
@@ -2266,12 +2223,7 @@ function deleteAllData() {
     </div>
   `;
   
-  // First delete accounts
   db.ref("accounts/parvez").remove()
-  .then(() => {
-    // Then delete winner
-    return db.ref("settings/daily_winner").remove();
-  })
   .then(() => {
     allAccounts = [];
     groupedAccounts = [];
@@ -2294,8 +2246,10 @@ function deleteAllData() {
     
     updateStats();
     
-    // Update winner card
-    winnerInfoContent.innerHTML = '<div class="winner-info-empty"><i class="fas fa-info-circle"></i> No winner found. First account submitted today will be the winner!</div>';
+    // ডিলিট করার পর উইনার রিসেট
+    db.ref("settings/daily_winner").remove().catch(err => console.error(err));
+    
+    // উইনার কার্ড বন্ধ করা
     winnerInfoCard.classList.remove('active');
     
     setTimeout(() => {
@@ -2339,11 +2293,12 @@ document.addEventListener('DOMContentLoaded', function() {
   loadData();
   setInterval(loadData, 120000);
   
-  // Setup winner listener
-  setupWinnerListener();
-  
-  // Initial winner check
-  checkForNewWinner();
+  // প্রতি ৩০ সেকেন্ডে উইনার ডাটা আপডেট করা
+  setInterval(() => {
+    if (winnerInfoCard.classList.contains('active')) {
+      loadWinnerData();
+    }
+  }, 30000);
 });
 </script>
 
