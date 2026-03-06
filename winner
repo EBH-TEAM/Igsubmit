@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>EBH TEAM - Winner Checker</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #0a0a1f 0%, #1a1a3a 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated Grid Background */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255,215,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,215,0,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: perspective(500px) rotateX(60deg);
+      animation: gridMove 10s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes gridMove {
+      0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+      100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Glass Card */
+    .glass-card {
+      background: rgba(10, 10, 30, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 215, 0, 0.2);
+      border-radius: 48px;
+      padding: 32px 24px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+      animation: rotate 15s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .neon-text {
+      font-size: 36px;
+      font-weight: 900;
+      color: gold;
+      text-shadow: 
+        0 0 10px gold,
+        0 0 20px gold,
+        0 0 40px rgba(255,215,0,0.5);
+      letter-spacing: 4px;
+      animation: neonPulse 2s ease-in-out infinite;
+      margin-bottom: 8px;
+    }
+
+    @keyframes neonPulse {
+      0%, 100% { opacity: 1; text-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 40px rgba(255,215,0,0.5); }
+      50% { opacity: 0.9; text-shadow: 0 0 20px gold, 0 0 40px gold, 0 0 60px rgba(255,215,0,0.8); }
+    }
+
+    .glow-text {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Check Button */
+    .check-btn {
+      width: 100%;
+      padding: 24px;
+      border: none;
+      border-radius: 60px;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #0a0a1f;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .check-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .check-btn:hover::before {
+      left: 100%;
+    }
+
+    .check-btn:active {
+      transform: scale(0.96);
+      box-shadow: 0 5px 20px rgba(255,215,0,0.5);
+    }
+
+    /* Countdown Container */
+    .countdown-container {
+      text-align: center;
+      padding: 30px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 40px;
+      margin-bottom: 20px;
+      border: 2px solid rgba(255,215,0,0.2);
+    }
+
+    .countdown-number {
+      font-size: 100px;
+      font-weight: 900;
+      color: gold;
+      text-shadow: 0 0 30px gold;
+      line-height: 1;
+      margin-bottom: 20px;
+      animation: countdownPop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    }
+
+    @keyframes countdownPop {
+      0% {
+        transform: scale(0.3) translateY(100px);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .countdown-text {
+      color: rgba(255,255,255,0.8);
+      font-size: 18px;
+      letter-spacing: 3px;
+    }
+
+    /* Loading Animation */
+    .loading-wrapper {
+      padding: 40px 20px;
+    }
+
+    .scan-line {
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, gold, transparent);
+      animation: scan 1.5s linear infinite;
+      margin-bottom: 30px;
+    }
+
+    @keyframes scan {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .loader-text {
+      color: white;
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 4px;
+    }
+
+    .loader-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .loader-dot {
+      width: 12px;
+      height: 12px;
+      background: gold;
+      border-radius: 50%;
+      animation: dotWave 1s ease-in-out infinite;
+    }
+
+    .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotWave {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50% { transform: translateY(-20px); opacity: 1; }
+    }
+
+    /* Winner Container */
+    .winner-wrapper {
+      perspective: 1000px;
+    }
+
+    .trophy-animation {
+      text-align: center;
+      margin-bottom: 30px;
+      animation: trophyDrop 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    }
+
+    @keyframes trophyDrop {
+      0% {
+        transform: translateY(-200px) rotate(-180deg);
+        opacity: 0;
+      }
+      70% {
+        transform: translateY(10px) rotate(10deg);
+      }
+      100% {
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+      }
+    }
+
+    .trophy-icon {
+      font-size: 80px;
+      color: gold;
+      filter: drop-shadow(0 0 30px gold);
+      display: inline-block;
+    }
+
+    /* Username Animation Container */
+    .username-container {
+      background: rgba(0,0,0,0.4);
+      border-radius: 30px;
+      padding: 30px 20px;
+      margin-bottom: 20px;
+      border: 2px solid rgba(255,215,0,0.3);
+      min-height: 120px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .letter-box {
+      display: inline-block;
+      font-size: 42px;
+      font-weight: 900;
+      color: gold;
+      text-shadow: 0 0 20px gold;
+      animation: letterPop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+      opacity: 0;
+      transform: scale(0) translateY(50px);
+    }
+
+    @keyframes letterPop {
+      0% {
+        opacity: 0;
+        transform: scale(0) translateY(50px);
+      }
+      70% {
+        opacity: 1;
+        transform: scale(1.2) translateY(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .username-final {
+      font-size: 48px;
+      font-weight: 900;
+      color: gold;
+      text-shadow: 0 0 30px gold;
+      text-align: center;
+      animation: finalZoom 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+      margin: 20px 0;
+    }
+
+    @keyframes finalZoom {
+      0% {
+        transform: scale(0) rotate(-10deg);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1) rotate(2deg);
+      }
+      100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+      }
+    }
+
+    /* Password Container */
+    .password-container {
+      background: rgba(0,0,0,0.4);
+      border-radius: 30px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 2px solid #22c55e;
+      animation: passwordSlide 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+      transform-origin: top;
+    }
+
+    @keyframes passwordSlide {
+      0% {
+        transform: translateY(100px) scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .password-label {
+      color: #22c55e;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .password-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: #22c55e;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      text-shadow: 0 0 20px #22c55e;
+      word-break: break-all;
+      animation: glowPulse 2s infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { text-shadow: 0 0 20px #22c55e; }
+      50% { text-shadow: 0 0 40px #22c55e; }
+    }
+
+    /* Time Container */
+    .time-container {
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 16px;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 20px;
+      animation: fadeIn 1s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* No Winner Container */
+    .no-winner-wrapper {
+      text-align: center;
+      padding: 40px 20px;
+      animation: noWinnerReveal 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    }
+
+    @keyframes noWinnerReveal {
+      0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+      }
+      70% {
+        transform: scale(1.1) rotate(5deg);
+      }
+      100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+      }
+    }
+
+    .hourglass-big {
+      font-size: 100px;
+      color: gold;
+      filter: drop-shadow(0 0 30px gold);
+      animation: hourglassFloat 3s infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes hourglassFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .no-winner-title {
+      color: gold;
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px gold;
+    }
+
+    .no-winner-text {
+      color: white;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    .prize-glow {
+      color: gold;
+      font-size: 32px;
+      font-weight: 900;
+      margin: 20px 0;
+      text-shadow: 0 0 30px gold;
+      animation: prizePulse 1.5s infinite;
+    }
+
+    @keyframes prizePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Utility Classes */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: rgba(255,255,255,0.2);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div class="container">
+  <div class="glass-card">
+    <!-- Header -->
+    <div class="header">
+      <div class="neon-text">WINNER</div>
+      <div class="glow-text">কে হচ্ছেন আজকের বিজয়ী?</div>
+    </div>
+
+    <!-- Check Button -->
+    <button class="check-btn" id="checkWinnerBtn">
+      <i class="fas fa-search"></i>
+      <span>CHECK</span>
+      <i class="fas fa-trophy"></i>
+    </button>
+
+    <!-- Countdown Container (Hidden by default) -->
+    <div id="countdownContainer" class="countdown-container hidden">
+      <div class="countdown-number" id="countdownNumber">5</div>
+      <div class="countdown-text">চেক করা হচ্ছে...</div>
+    </div>
+
+    <!-- Loading Container (Hidden by default) -->
+    <div id="loadingContainer" class="loading-wrapper hidden">
+      <div class="scan-line"></div>
+      <div class="loader-text">প্রসেসিং</div>
+      <div class="loader-dots">
+        <div class="loader-dot"></div>
+        <div class="loader-dot"></div>
+        <div class="loader-dot"></div>
+      </div>
+    </div>
+
+    <!-- Dynamic Content Container -->
+    <div id="dynamicContent"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>EBH TEAM • সিনেমাটিক উইনার চেকার</p>
+  </div>
+</div>
+
+<script>
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDLh6Zg-K3ZZexLvLloRaR0F6Wr4ciHqAs",
+  authDomain: "teamwork-206ba.firebaseapp.com",
+  databaseURL: "https://teamwork-206ba-default-rtdb.firebaseio.com",
+  projectId: "teamwork-206ba",
+  storageBucket: "teamwork-206ba.appspot.com",
+  messagingSenderId: "906293702680",
+  appId: "1:906293702680:web:bf8c2257e1e87964ded36d"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// DOM Elements
+const checkBtn = document.getElementById('checkWinnerBtn');
+const countdownContainer = document.getElementById('countdownContainer');
+const loadingContainer = document.getElementById('loadingContainer');
+const dynamicContent = document.getElementById('dynamicContent');
+const countdownNumber = document.getElementById('countdownNumber');
+
+// State
+let isLoading = false;
+let currentAnimation = null;
+
+// Format time
+function formatTime(timestamp) {
+  if (!timestamp) return 'N/A';
+  const date = new Date(timestamp);
+  return `${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}:${date.getSeconds().toString().padStart(2,'0')} • ${date.getDate().toString().padStart(2,'0')}/${(date.getMonth()+1).toString().padStart(2,'0')}/${date.getFullYear()}`;
+}
+
+// Sleep function
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Animate countdown
+async function animateCountdown() {
+  countdownContainer.classList.remove('hidden');
+  loadingContainer.classList.add('hidden');
+  dynamicContent.innerHTML = '';
+  
+  for (let i = 5; i >= 1; i--) {
+    countdownNumber.textContent = i;
+    countdownNumber.style.animation = 'none';
+    countdownNumber.offsetHeight; // Trigger reflow
+    countdownNumber.style.animation = 'countdownPop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2)';
+    await sleep(1000);
+  }
+  
+  countdownContainer.classList.add('hidden');
+}
+
+// Animate username letter by letter
+async function animateUsername(username) {
+  const container = document.createElement('div');
+  container.className = 'username-container';
+  container.id = 'usernameContainer';
+  
+  // Show letters one by one
+  for (let i = 0; i < username.length; i++) {
+    const letter = document.createElement('span');
+    letter.className = 'letter-box';
+    letter.textContent = username[i];
+    letter.style.animationDelay = `${i * 0.1}s`;
+    container.appendChild(letter);
+  }
+  
+  dynamicContent.appendChild(container);
+  
+  // Wait for all letters to animate
+  await sleep(username.length * 100 + 400);
+  
+  // Remove individual letters
+  container.innerHTML = '';
+  
+  // Show final username with zoom effect
+  const finalUsername = document.createElement('div');
+  finalUsername.className = 'username-final';
+  finalUsername.textContent = username;
+  container.appendChild(finalUsername);
+  
+  await sleep(600);
+}
+
+// Show winner with cinematic animation
+async function showWinnerCinematic(winnerData) {
+  dynamicContent.innerHTML = '';
+  
+  // Trophy animation
+  const trophyDiv = document.createElement('div');
+  trophyDiv.className = 'trophy-animation';
+  trophyDiv.innerHTML = '<div class="trophy-icon"><i class="fas fa-trophy"></i></div>';
+  dynamicContent.appendChild(trophyDiv);
+  
+  await sleep(800);
+  
+  // Animate username
+  await animateUsername(winnerData.username || 'Unknown');
+  
+  // Show password with slide animation
+  await sleep(300);
+  
+  const passwordDiv = document.createElement('div');
+  passwordDiv.className = 'password-container';
+  passwordDiv.innerHTML = `
+    <div class="password-label">🔑 পাসওয়ার্ড</div>
+    <div class="password-value">${winnerData.password || 'No password'}</div>
+  `;
+  dynamicContent.appendChild(passwordDiv);
+  
+  // Show time
+  await sleep(400);
+  
+  const timeDiv = document.createElement('div');
+  timeDiv.className = 'time-container';
+  timeDiv.innerHTML = `
+    <i class="far fa-clock"></i> ${formatTime(winnerData.timestamp)}
+  `;
+  dynamicContent.appendChild(timeDiv);
+}
+
+// Show no winner with animation
+async function showNoWinnerCinematic() {
+  dynamicContent.innerHTML = `
+    <div class="no-winner-wrapper">
+      <div class="hourglass-big">
+        <i class="fas fa-hourglass-half"></i>
+      </div>
+      <div class="no-winner-title">কোনো উইনার নেই</div>
+      <div class="no-winner-text">
+        প্রথম অ্যাকাউন্ট জমা দিয়েই
+      </div>
+      <div class="prize-glow">২০ টাকা</div>
+      <div class="no-winner-text">
+        জিতে নিন!
+      </div>
+    </div>
+  `;
+}
+
+// Show error
+function showError() {
+  dynamicContent.innerHTML = `
+    <div class="no-winner-wrapper">
+      <div class="hourglass-big" style="color: #ef4444;">
+        <i class="fas fa-exclamation-circle"></i>
+      </div>
+      <div class="no-winner-title" style="color: #ef4444;">দুঃখিত!</div>
+      <div class="no-winner-text">
+        তথ্য লোড করতে সমস্যা হয়েছে<br>
+        আবার চেষ্টা করুন
+      </div>
+    </div>
+  `;
+}
+
+// Main check function
+async function checkWinner() {
+  if (isLoading) return;
+  isLoading = true;
+  
+  try {
+    // Step 1: Countdown
+    await animateCountdown();
+    
+    // Step 2: Show loading
+    loadingContainer.classList.remove('hidden');
+    
+    // Random loading time (2-3 seconds)
+    await sleep(Math.random() * 1000 + 2000);
+    
+    // Step 3: Get winner data
+    const snapshot = await db.ref("settings/daily_winner").once("value");
+    
+    loadingContainer.classList.add('hidden');
+    
+    if (snapshot.exists()) {
+      await showWinnerCinematic(snapshot.val());
+    } else {
+      await showNoWinnerCinematic();
+    }
+    
+  } catch (error) {
+    console.error(error);
+    loadingContainer.classList.add('hidden');
+    showError();
+  } finally {
+    isLoading = false;
+  }
+}
+
+// Button click handler
+checkBtn.addEventListener('click', checkWinner);
+
+// Ripple effect
+checkBtn.addEventListener('click', function(e) {
+  const ripple = document.createElement('span');
+  const rect = this.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const x = e.clientX - rect.left - size / 2;
+  const y = e.clientY - rect.top - size / 2;
+  
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = x + 'px';
+  ripple.style.top = y + 'px';
+  ripple.style.position = 'absolute';
+  ripple.style.background = 'rgba(255,255,255,0.4)';
+  ripple.style.borderRadius = '50%';
+  ripple.style.transform = 'scale(0)';
+  ripple.style.animation = 'ripple 0.6s ease-out';
+  ripple.style.pointerEvents = 'none';
+  
+  this.appendChild(ripple);
+  
+  setTimeout(() => ripple.remove(), 600);
+});
+
+// Add ripple animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>
