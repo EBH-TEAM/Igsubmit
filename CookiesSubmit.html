@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>EBH TEAM - User Panel</title>
   <style>
+    /* আপনার exact same CSS - কোনো পরিবর্তন নেই */
     * {
       margin: 0;
       padding: 0;
@@ -36,7 +37,6 @@
       overflow-x: hidden;
     }
 
-    /* header */
     .header {
       background: rgba(17, 24, 39, 0.96);
       backdrop-filter: blur(8px);
@@ -96,7 +96,6 @@
       white-space: nowrap;
     }
 
-    /* ULTRA SMOOTH SCROLLER */
     .scrolling-message-container {
       width: 100%;
       background: #0c1320;
@@ -157,7 +156,6 @@
       100% { transform: translate3d(-50%, 0, 0); }
     }
 
-    /* main layout */
     .layout {
       flex: 1;
       background: var(--panel);
@@ -305,7 +303,6 @@
       margin-top: 8px;
     }
 
-    /* Winner Container */
     .winner-container {
       background: #0d1624;
       border: 1px solid var(--border);
@@ -320,7 +317,6 @@
       overflow: hidden;
     }
 
-    /* WINNER CARD - যখন উইনার থাকে */
     .winner-card {
       background: linear-gradient(145deg, #1e293b, #0f172a);
       border-radius: 16px;
@@ -405,7 +401,6 @@
       text-shadow: 0 0 15px #22c55e;
     }
 
-    /* PLACEHOLDER CARD - যখন কোনো উইনার নেই */
     .winner-placeholder {
       background: linear-gradient(145deg, #1a2635, #0f172a);
       border-radius: 16px;
@@ -476,7 +471,6 @@
       text-shadow: 0 0 15px gold;
     }
 
-    /* hidden counters */
     #summary {
       display: none !important;
     }
@@ -536,7 +530,6 @@
       min-width: 55px;
     }
 
-    /* popup */
     .popup-notification {
       position: fixed;
       top: 50%;
@@ -596,12 +589,11 @@
     ::-webkit-scrollbar-track { background: #1a2635; }
     ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
   
-    /* অডিও এলিমেন্ট সম্পূর্ণ লুকানো থাকবে */
     audio {
       display: none;
     }
-    /* কোনো সতর্কতা বা বাটন দেখানো হবে না */
   </style>
+  
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -617,16 +609,13 @@
   </div>
 </div>
 
-<!-- SMOOTH MARQUEE -->
 <div class="scrolling-message-container" id="scrollingMessageContainer">
   <div class="scroller-track" id="scrollerTrack"></div>
 </div>
 
-<!-- অডিও এলিমেন্ট - এটি ইউজারকে দেখানো হবে না। Force Autoplay সক্রিয়। -->
 <audio id="backgroundAudio" preload="auto" style="display: none;"></audio>
 
 <main class="layout">
-  <!-- INPUT SECTION -->
   <div class="editor-container">
     <div class="panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg> Input (three columns)</div>
     <div class="editor">
@@ -653,34 +642,27 @@
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg>
       CONVERT & PUSH
     </button>
-    <div class="helper">One click convert & auto push. Save only if API push succeeds.</div>
+    <div class="helper">One click convert & auto push</div>
   </div>
 
-  <!-- Winner Section -->
   <div class="editor-container">
     <div class="panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Today's Winner</div>
     <div class="winner-container" id="winnerContainer">
-      <!-- Content will be dynamically loaded here -->
       <div id="winnerDynamicContent"></div>
     </div>
   </div>
 
-  <!-- hidden counter -->
   <div id="summary"><span id="okCount">0</span><span id="failCount">0</span></div>
 
-  <!-- push result line -->
   <div class="push-result">
     <div id="pushResult" class="tag">Ready to process</div>
   </div>
 
-  <!-- status list -->
   <div class="status-list" id="statusList"></div>
 </main>
 
-<!-- hidden output -->
 <textarea id="target" style="display: none;"></textarea>
 
-<!-- popup -->
 <div id="popupNotification" class="popup-notification">
   <div class="popup-icon" id="popupIcon">✅</div>
   <div class="popup-title" id="popupTitle">Success</div>
@@ -691,7 +673,79 @@
 <script>
 (function() {
   // ============================================
-  // GLOBAL MESSAGE SYNC SYSTEM
+  // FIREBASE CONFIG - আপনার existing ফায়ারবেস
+  // ============================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyDLh6Zg-K3ZZexLvLloRaR0F6Wr4ciHqAs",
+    authDomain: "teamwork-206ba.firebaseapp.com",
+    databaseURL: "https://teamwork-206ba-default-rtdb.firebaseio.com",
+    projectId: "teamwork-206ba",
+    storageBucket: "teamwork-206ba.appspot.com",
+    messagingSenderId: "906293702680",
+    appId: "1:906293702680:web:bf8c2257e1e87964ded36d"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  window.db = firebase.database();
+  
+  const PROFILE = { owner: "Parvez", project: "EBH TEAM", source: "web-html" };
+
+  // ============================================
+  // DOM Elements
+  // ============================================
+  const usernameBox = document.getElementById('usernameBox');
+  const passwordBox = document.getElementById('passwordBox');
+  const cookieBox = document.getElementById('cookieBox');
+  const processBtn = document.getElementById('processBtn');
+  const sourceLines = document.getElementById('sourceLines');
+  const pushResult = document.getElementById('pushResult');
+  const statusList = document.getElementById('statusList');
+  const target = document.getElementById('target');
+  const okSpan = document.getElementById('okCount');
+  const failSpan = document.getElementById('failCount');
+  const scrollerTrack = document.getElementById('scrollerTrack');
+  const winnerDynamicContent = document.getElementById('winnerDynamicContent');
+  
+  const popup = document.getElementById('popupNotification');
+  const popupIcon = document.getElementById('popupIcon');
+  const popupTitle = document.getElementById('popupTitle');
+  const popupMessage = document.getElementById('popupMessage');
+  const popupClose = document.getElementById('popupCloseBtn');
+
+  // ============================================
+  // API URL - Firebase থেকে লোড হবে
+  // ============================================
+  let API_URL = '';
+
+  // ============================================
+  // Firebase থেকে API URL লোড
+  // ============================================
+  function loadAPIUrl() {
+    return new Promise((resolve) => {
+      db.ref("settings/api_endpoint").once("value")
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            API_URL = snapshot.val();
+            console.log("✅ API URL loaded:", API_URL);
+            resolve(true);
+          } else {
+            console.error("❌ No API URL in Firebase");
+            // Fallback to hardcoded (শুধু ডেভেলপমেন্টের জন্য)
+            API_URL = 'http://43.135.182.151/api/api/v1/webhook/YDbd-GZyAokTsjuF4bpQ8fuiLBsE1z9dWOLWrjMNfdw/account-push';
+            resolve(true);
+          }
+        })
+        .catch(error => {
+          console.error("Error loading API URL:", error);
+          // Fallback to hardcoded
+          API_URL = 'http://43.135.182.151/api/api/v1/webhook/YDbd-GZyAokTsjuF4bpQ8fuiLBsE1z9dWOLWrjMNfdw/account-push';
+          resolve(true);
+        });
+    });
+  }
+
+  // ============================================
+  // MESSAGE SYNC (আগের মত)
   // ============================================
   const STORAGE_KEY = 'ebh_scrolling_message';
   const DEFAULT_MESSAGE = "⚡ EBH TEAM IS BEST ⚡ 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗬 𝗛𝗔𝗕𝗜𝗕 ✦ PREMIUM ACCOUNTS ✦ INSTAGRAM WORKER ✦ JOIN US TODAY! ✦";
@@ -701,49 +755,36 @@
       try {
         const localMsg = localStorage.getItem(STORAGE_KEY);
         if (localMsg && localMsg.trim() !== '') return localMsg;
-      } catch(e) { /* সাইলেন্ট */ }
+      } catch(e) {}
       
       try {
         const sessionMsg = sessionStorage.getItem(STORAGE_KEY);
         if (sessionMsg && sessionMsg.trim() !== '') return sessionMsg;
-      } catch(e) { /* সাইলেন্ট */ }
-      
-      try {
-        const cookie = document.cookie.split('; ').find(row => row.startsWith(STORAGE_KEY + '='));
-        if (cookie) {
-          const cookieMsg = decodeURIComponent(cookie.split('=')[1]);
-          if (cookieMsg.trim() !== '') return cookieMsg;
-        }
-      } catch(e) { /* সাইলেন্ট */ }
+      } catch(e) {}
       
       return DEFAULT_MESSAGE;
     },
     
     setMessage: function(newMessage) {
       if (!newMessage || newMessage.trim() === '') return false;
-      
       const cleanMsg = newMessage.trim();
       
       try {
         localStorage.setItem(STORAGE_KEY, cleanMsg);
         sessionStorage.setItem(STORAGE_KEY, cleanMsg);
-        document.cookie = `${STORAGE_KEY}=${encodeURIComponent(cleanMsg)}; path=/; max-age=31536000; SameSite=Lax`;
         
         try {
           if (window.db) {
             window.db.ref("settings/scrolling_message").set({
               message: cleanMsg,
-              updated_at: new Date().toISOString(),
-              updated_by: "admin"
+              updated_at: new Date().toISOString()
             });
           }
         } catch(e) {}
         
         this.notifyAllTabs(cleanMsg);
-        
         return true;
       } catch(e) {
-        console.warn('Storage error:', e);
         return false;
       }
     },
@@ -786,86 +827,76 @@
           });
         }
       } catch(e) {}
-      
-      let lastMsg = this.getCurrentMessage();
-      setInterval(() => {
-        const currentMsg = this.getCurrentMessage();
-        if (currentMsg !== lastMsg) {
-          lastMsg = currentMsg;
-          callback(currentMsg);
-        }
-      }, 3000);
     }
   };
 
   // ============================================
-  // ফায়ারবেস ইনিশিয়ালাইজ
+  // AUDIO (আগের মত)
   // ============================================
-  const firebaseConfig = {
-    apiKey: "AIzaSyDLh6Zg-K3ZZexLvLloRaR0F6Wr4ciHqAs",
-    authDomain: "teamwork-206ba.firebaseapp.com",
-    databaseURL: "https://teamwork-206ba-default-rtdb.firebaseio.com",
-    projectId: "teamwork-206ba",
-    storageBucket: "teamwork-206ba.appspot.com",
-    messagingSenderId: "906293702680",
-    appId: "1:906293702680:web:bf8c2257e1e87964ded36d"
-  };
-  
-  firebase.initializeApp(firebaseConfig);
-  window.db = firebase.database();
-  
-  const PROFILE = { owner: "Parvez", project: "EBH TEAM", source: "web-html" };
+  const audioElement = document.getElementById('backgroundAudio');
+  let isAudioPlaying = false;
+
+  function forcePlayAudio() {
+    if (!audioElement.src || isAudioPlaying) return;
+    const playPromise = audioElement.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        isAudioPlaying = true;
+      }).catch(error => {
+        isAudioPlaying = false;
+        setTimeout(() => { if (!isAudioPlaying && audioElement.src) audioElement.play().catch(e => {}); }, 100);
+        setTimeout(() => { if (!isAudioPlaying && audioElement.src) audioElement.play().catch(e => {}); }, 500);
+        setTimeout(() => { if (!isAudioPlaying && audioElement.src) audioElement.play().catch(e => {}); }, 1000);
+      });
+    }
+  }
+
+  function loadAudio(audioUrl) {
+    if (!audioUrl || audioUrl.trim() === '') {
+      audioElement.pause();
+      audioElement.src = '';
+      isAudioPlaying = false;
+      return;
+    }
+    if (audioElement.src !== audioUrl) {
+      audioElement.src = audioUrl;
+      audioElement.load();
+      setTimeout(forcePlayAudio, 200);
+      setTimeout(forcePlayAudio, 500);
+      setTimeout(forcePlayAudio, 1000);
+    } else {
+      forcePlayAudio();
+    }
+  }
+
+  if (window.db) {
+    window.db.ref("settings/audio").on('value', (snapshot) => {
+      if (snapshot.exists() && snapshot.val().url) {
+        loadAudio(snapshot.val().url);
+      } else {
+        loadAudio('');
+      }
+    }, (error) => {});
+  }
 
   // ============================================
-  // DOM এলিমেন্টস
+  // WINNER FUNCTIONS (আগের মত)
   // ============================================
-  const usernameBox = document.getElementById('usernameBox');
-  const passwordBox = document.getElementById('passwordBox');
-  const cookieBox = document.getElementById('cookieBox');
-  const processBtn = document.getElementById('processBtn');
-  const sourceLines = document.getElementById('sourceLines');
-  const pushResult = document.getElementById('pushResult');
-  const statusList = document.getElementById('statusList');
-  const target = document.getElementById('target');
-  const okSpan = document.getElementById('okCount');
-  const failSpan = document.getElementById('failCount');
-  const scrollerTrack = document.getElementById('scrollerTrack');
-  
-  // Winner Elements
-  const winnerDynamicContent = document.getElementById('winnerDynamicContent');
-  
-  // পপআপ
-  const popup = document.getElementById('popupNotification');
-  const popupIcon = document.getElementById('popupIcon');
-  const popupTitle = document.getElementById('popupTitle');
-  const popupMessage = document.getElementById('popupMessage');
-  const popupClose = document.getElementById('popupCloseBtn');
-
-  // ============================================
-  // WINNER FUNCTIONS - Daily Reset Compatible
-  // ============================================
-  
-  // উইনার ডাটা লোড করা
   function loadWinnerData() {
     if (!window.db) return;
-    
     window.db.ref("settings/daily_winner").once("value").then(snapshot => {
       if (snapshot.exists()) {
         const winnerData = snapshot.val();
-        
-        // Winner Card দেখানো
         winnerDynamicContent.innerHTML = `
           <div class="winner-card">
             <div class="winner-header">
               <i class="fas fa-trophy"></i>
               <span>🏆 Today Winner 🏆</span>
             </div>
-            
             <div class="winner-username-box">
               <i class="fas fa-user" style="color: gold;"></i>
               <span class="winner-username">${winnerData.username || 'Unknown'}</span>
             </div>
-            
             <div class="winner-message">
               <p>🎉 <span class="highlight">অভিনন্দন!</span> 🎉</p>
               <p>আপনি আজকের প্রথম অ্যাকাউন্ট জমা দাতা হিসেবে নির্বাচিত হয়েছেন!</p>
@@ -877,7 +908,6 @@
           </div>
         `;
       } else {
-        // কোন Winner নেই - Placeholder Card দেখানো
         winnerDynamicContent.innerHTML = `
           <div class="winner-placeholder">
             <div class="placeholder-icon">
@@ -893,7 +923,6 @@
         `;
       }
     }).catch(err => {
-      console.error("Winner load error:", err);
       winnerDynamicContent.innerHTML = `
         <div class="winner-placeholder">
           <div class="placeholder-icon">
@@ -908,41 +937,29 @@
     });
   }
   
-  // নতুন উইনার সেট করার ফাংশন (প্রথম অ্যাকাউন্ট)
   function setFirstAccountAsWinner() {
     if (!window.db) return;
-    
-    // চেক করে দেখি ইতিমধ্যে উইনার আছে কিনা
     window.db.ref("settings/daily_winner").once("value").then(winnerSnap => {
       if (!winnerSnap.exists()) {
-        // উইনার নেই, তাহলে প্রথম অ্যাকাউন্ট খুঁজি
         window.db.ref("accounts/parvez").once("value").then(accountsSnap => {
           if (accountsSnap.exists()) {
             let firstAccount = null;
             let firstKey = null;
-            
-            // প্রথম (সবচেয়ে পুরনো) অ্যাকাউন্ট খুঁজি
             accountsSnap.forEach(child => {
               if (!firstKey) {
                 firstKey = child.key;
                 firstAccount = child.val();
               }
             });
-            
             if (firstAccount) {
-              // উইনার সেট করি
               const winnerData = {
                 username: firstAccount.username || "Unknown",
                 password: firstAccount.password || "No password",
                 accountKey: firstKey,
                 timestamp: firstAccount.created_at || new Date().toISOString()
               };
-              
               window.db.ref("settings/daily_winner").set(winnerData)
-                .then(() => {
-                  console.log("✅ New winner set automatically:", winnerData.username);
-                  loadWinnerData(); // UI আপডেট
-                })
+                .then(() => loadWinnerData())
                 .catch(err => console.error("Winner set error:", err));
             }
           }
@@ -951,136 +968,29 @@
     }).catch(err => console.error("Winner check error:", err));
   }
   
-  // রিয়েল-টাইম লিসেনার সেটআপ
   function setupWinnerListener() {
     if (!window.db) return;
-    
-    // প্রতি ১০ সেকেন্ডে উইনার চেক করা (পেজ রিফ্রেশ ছাড়া আপডেট)
     setInterval(loadWinnerData, 10000);
-    
-    // ফায়ারবেসে রিয়েল-টাইম লিসেনার
     window.db.ref("settings/daily_winner").on('value', (snapshot) => {
-      loadWinnerData(); // আপডেট হলে রিলোড
-    }, (error) => {
-      console.error("Winner listener error:", error);
-    });
-    
-    // নতুন অ্যাকাউন্ট অ্যাড হওয়া মনিটর করি
-    window.db.ref("accounts/parvez").on('child_added', (snapshot) => {
-      // নতুন অ্যাকাউন্ট আসলেই চেক করি
-      setFirstAccountAsWinner();
-    });
-  }
-
-  // ============================================
-  // অডিও এলিমেন্ট এবং ফাংশন
-  // ============================================
-  const audioElement = document.getElementById('backgroundAudio');
-  let isAudioPlaying = false;
-
-  function forcePlayAudio() {
-      if (!audioElement.src || isAudioPlaying) return;
-
-      const playPromise = audioElement.play();
-      
-      if (playPromise !== undefined) {
-          playPromise.then(() => {
-              console.log("✅ Audio is playing automatically (forced).");
-              isAudioPlaying = true;
-          }).catch(error => {
-              console.log("⚠️ Auto-play blocked, but we will retry aggressively.");
-              isAudioPlaying = false;
-              
-              setTimeout(() => {
-                  if (!isAudioPlaying && audioElement.src) {
-                      audioElement.play().catch(e => {});
-                  }
-              }, 100);
-              
-              setTimeout(() => {
-                  if (!isAudioPlaying && audioElement.src) {
-                      audioElement.play().catch(e => {});
-                  }
-              }, 500);
-              
-              setTimeout(() => {
-                  if (!isAudioPlaying && audioElement.src) {
-                      audioElement.play().catch(e => {});
-                  }
-              }, 1000);
-          });
-      }
-  }
-
-  function loadAudio(audioUrl) {
-    if (!audioUrl || audioUrl.trim() === '') {
-      audioElement.pause();
-      audioElement.src = '';
-      isAudioPlaying = false;
-      return;
-    }
-
-    if (audioElement.src !== audioUrl) {
-        audioElement.src = audioUrl;
-        audioElement.load();
-        
-        setTimeout(forcePlayAudio, 200);
-        setTimeout(forcePlayAudio, 500);
-        setTimeout(forcePlayAudio, 1000);
-    } else {
-        forcePlayAudio();
-    }
-  }
-
-  if (window.db) {
-    window.db.ref("settings/audio").on('value', (snapshot) => {
-      if (snapshot.exists() && snapshot.val().url) {
-        const audioUrl = snapshot.val().url;
-        loadAudio(audioUrl);
-      } else {
-        loadAudio('');
-      }
-    }, (error) => {
-        console.error("Firebase audio listener error:", error);
-    });
-  }
-
-  window.addEventListener('load', function() {
-      setTimeout(forcePlayAudio, 500);
-      setTimeout(forcePlayAudio, 1000);
-      setTimeout(forcePlayAudio, 2000);
-      
-      // উইনার ডাটা লোড
       loadWinnerData();
-      
-      // প্রথম অ্যাকাউন্ট চেক করে উইনার সেট (যদি থাকে)
+    }, (error) => {});
+    window.db.ref("accounts/parvez").on('child_added', (snapshot) => {
       setFirstAccountAsWinner();
-      
-      // লিসেনার সেটআপ
-      setupWinnerListener();
-  });
-
-  document.body.addEventListener('click', function() {
-      if (audioElement.src && !isAudioPlaying) {
-          audioElement.play().catch(e => {});
-      }
-  });
+    });
+  }
 
   // ============================================
-  // স্ক্রলার মেসেজ আপডেট ফাংশন
+  // SCROLLER MESSAGE (আগের মত)
   // ============================================
   function updateScrollerMessage(message) {
     if (!scrollerTrack) return;
-    
     scrollerTrack.innerHTML = '';
-    
     for (let i = 0; i < 16; i++) {
       const span = document.createElement('span');
       span.className = 'scroller-item';
       span.textContent = message;
       scrollerTrack.appendChild(span);
     }
-    
     scrollerTrack.style.transform = 'translate3d(0,0,0)';
   }
 
@@ -1092,7 +1002,7 @@
   });
 
   // ============================================
-  // লাইন নাম্বার সিঙ্ক
+  // LINE NUMBERS (আগের মত)
   // ============================================
   function updateLineNumbers() {
     const lines = Math.max(
@@ -1120,7 +1030,7 @@
   updateLineNumbers();
 
   // ============================================
-  // ডাটা কনভার্সন
+  // DATA CONVERSION (আগের মত)
   // ============================================
   let rawAccounts = [];
 
@@ -1170,7 +1080,6 @@
     return text.split(/\r?\n/).filter(Boolean).map(l => `accounts=${btoa(l)}`).join('\n');
   }
 
-  // ফায়ারবেস সেভ
   async function saveToFirebase(acc) {
     try {
       const ref = window.db.ref("accounts/parvez").push();
@@ -1186,7 +1095,6 @@
     }
   }
 
-  // পপআপ
   function showPopup(type, title, msg) {
     popup.className = `popup-notification ${type}`;
     popupIcon.textContent = type==='success'?'✅':type==='error'?'❌':'⚠️';
@@ -1199,44 +1107,55 @@
   popupClose.addEventListener('click', () => popup.classList.remove('show'));
   popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.remove('show'); });
 
-  // API পুশ
+  // ============================================
+  // PUSH TO API (আপডেটেড - Firebase থেকে API URL ব্যবহার)
+  // ============================================
   async function pushToAPI(converted) {
-    const url = 'http://43.135.182.151/api/api/v1/webhook/YDbd-GZyAokTsjuF4bpQ8fuiLBsE1z9dWOLWrjMNfdw/account-push';
+    if (!API_URL) {
+      showPopup('error', '❌ Configuration Error', 'API URL not loaded');
+      return { success: false, message: 'API URL not configured' };
+    }
+
     const payload = buildPayload(converted);
     if (!payload) return { success: false, message: 'No data' };
 
     try {
-      const res = await fetch(url, { method:'POST', headers:{'Content-Type':'text/plain'}, body:payload });
+      const res = await fetch(API_URL, { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'text/plain' }, 
+        body: payload 
+      });
+      
       if (!res.ok) {
         const err = await res.text();
         showPopup('warning', '⚠️ Server Unavailable', 'Server down, try later.');
-        return { success: false, message: `API error ${res.status}: ${err.substring(0,60)}` };
+        return { success: false, message: `API error ${res.status}` };
       }
+      
       const data = await res.json();
-      if (!data || !data.data) throw new Error('invalid response');
-
-      if (data.data.success_count > 0) {
+      
+      if (data && data.data && data.data.success_count > 0) {
         let fbOk = 0, fbBad = 0;
         for (let a of rawAccounts) {
           (await saveToFirebase(a)) ? fbOk++ : fbBad++;
         }
         showPopup('success', '✅ Submission Successful', `${data.data.success_count} accounts pushed`);
-        
-        // ফায়ারবেসে সেভ করার পর উইনার চেক করি
         setFirstAccountAsWinner();
-        
-        return { success: true, message: `API S:${data.data.success_count} F:${data.data.failed_count} | Firebase:${fbOk} saved` };
+        return { success: true, message: `✅ ${data.data.success_count} accounts pushed` };
       } else {
-        showPopup('error', '❌ Submission Failed', 'API succeeded but 0 accounts pushed');
-        return { success: true, message: `API: 0 success, ${data.data.failed_count} failed` };
+        showPopup('error', '❌ Submission Failed', 'API returned 0 success');
+        return { success: false, message: 'API: 0 success' };
       }
     } catch (err) {
-      showPopup('warning', '⚠️ Server Unavailable', 'Network error / server down');
+      console.error("Push error:", err);
+      showPopup('warning', '⚠️ Connection Error', 'Network error / server down');
       return { success: false, message: `Push error: ${err.message}` };
     }
   }
 
-  // বাটন ক্লিক
+  // ============================================
+  // PROCESS BUTTON CLICK (আপডেটেড - আগে API URL লোড)
+  // ============================================
   processBtn.addEventListener('click', async () => {
     processBtn.disabled = true;
     processBtn.innerHTML = `<span>PROCESSING...</span>`;
@@ -1257,6 +1176,7 @@
       processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg> CONVERT & PUSH`;
       return;
     }
+    
     if (ok === 0) {
       pushResult.textContent = 'No valid data';
       pushResult.className = 'tag error';
@@ -1264,6 +1184,12 @@
       processBtn.disabled = false;
       processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg> CONVERT & PUSH`;
       return;
+    }
+
+    // API URL লোড করুন (যদি না লোড থাকে)
+    if (!API_URL) {
+      pushResult.textContent = 'Loading API config...';
+      await loadAPIUrl();
     }
 
     pushResult.textContent = 'Pushing to API...';
@@ -1281,16 +1207,39 @@
     if (e.ctrlKey && e.key === 'Enter') processBtn.click();
   });
 
+  // ============================================
+  // PAGE LOAD
+  // ============================================
+  window.addEventListener('load', function() {
+    // API URL লোড
+    loadAPIUrl();
+    
+    // Audio
+    setTimeout(forcePlayAudio, 500);
+    setTimeout(forcePlayAudio, 1000);
+    setTimeout(forcePlayAudio, 2000);
+    
+    // Winner
+    loadWinnerData();
+    setFirstAccountAsWinner();
+    setupWinnerListener();
+  });
+
+  document.body.addEventListener('click', function() {
+    if (audioElement.src && !isAudioPlaying) {
+      audioElement.play().catch(e => {});
+    }
+  });
+
   window.updateScrollingMessage = function(newMsg) {
     return window.EBH_MessageSync.setMessage(newMsg);
   };
 })();
 </script>
 
-<!-- কনসোল হেল্পার -->
 <script>
-  console.log('✅ EBH Message Sync & Audio Player Ready');
-  console.log('📢 To set message: updateScrollingMessage("Your new message here")');
+  console.log('✅ EBH TEAM Panel Ready - API URL loaded from Firebase');
+  console.log('📢 Admin can update API URL in Firebase: settings/api_endpoint');
 </script>
 
 </body>
