@@ -12,7 +12,7 @@
         }
         body {
             background: #000;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: system-ui, sans-serif;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -22,11 +22,11 @@
         
         /* বড় লেখা দেখানোর জায়গা */
         .big-text-container {
-            flex: 2;
+            flex: 4;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         
         #bigTextBox {
@@ -36,157 +36,143 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 30px;
+            border-radius: 25px;
+            border: 2px solid #333;
+            padding: 20px;
             cursor: pointer;
-            border: 3px solid #333;
-            transition: all 0.2s;
-            padding: 30px;
-        }
-        #bigTextBox:active {
-            background: #2a2a2a;
-            transform: scale(0.99);
         }
         
         #bigText {
-            font-size: 72px;  /* খুব বড় */
+            font-size: 60px;
             font-weight: bold;
             text-align: center;
-            word-break: break-word;
             color: #fff;
-            line-height: 1.3;
-            max-width: 100%;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
-        /* লেখার তালিকা */
-        .items-list {
+        /* একটা মাত্র লেখার বক্স - এখন অর্ধেক সাইজ */
+        .single-item-box {
             background: #111;
-            padding: 20px;
-            border-radius: 30px 30px 0 0;
-            max-height: 300px;
-            overflow-y: auto;
+            border-radius: 20px;
+            padding: 10px;
             border: 1px solid #333;
-            flex: 1;
-        }
-        
-        .list-title {
-            color: #888;
-            margin-bottom: 15px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* প্রতিটি আইটেম */
-        .item {
-            background: #1a1a1a;
-            padding: 15px;
             margin-bottom: 10px;
-            border-radius: 15px;
+            flex: 1;
+            max-height: 80px;  /* ছোট করে দিলাম */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        /* একটা মাত্র লেখা আর ডিলিট বাটন এক লাইনে */
+        .single-item {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 8px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #333;
+            width: 100%;
         }
         
         .item-text {
-            font-size: 18px;
             color: #ddd;
+            font-size: 16px;
+            cursor: pointer;
             flex: 1;
-            padding-right: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 8px;
         }
         
+        /* ডিলিট বাটন - ছোট */
         .delete-btn {
             background: #ff4444;
             color: white;
             border: none;
-            font-size: 20px;
-            padding: 10px 20px;
-            border-radius: 10px;
+            font-size: 13px;
+            padding: 5px 10px;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: bold;
-            min-width: 60px;
-        }
-        .delete-btn:active {
-            background: #cc0000;
         }
         
-        /* নতুন লেখা যোগ করার অংশ */
+        /* নতুন লেখা যোগ - ছোট */
         .add-section {
             background: #111;
-            padding: 20px;
-            border-top: 2px solid #333;
+            border-radius: 20px;
+            padding: 12px;
+            border: 1px solid #333;
+            flex: 0.8;
         }
         
         .add-box {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
         
         #newText {
             flex: 1;
-            padding: 18px;
-            font-size: 18px;
+            padding: 10px 12px;
             border: none;
-            border-radius: 15px;
+            border-radius: 10px;
             background: #1a1a1a;
             color: white;
             border: 1px solid #333;
-        }
-        #newText::placeholder {
-            color: #666;
+            font-size: 15px;
         }
         
         #addBtn {
             background: #4CAF50;
             color: white;
             border: none;
-            padding: 0 30px;
-            border-radius: 15px;
-            font-size: 24px;
-            font-weight: bold;
+            padding: 0 18px;
+            border-radius: 10px;
+            font-size: 18px;
             cursor: pointer;
-        }
-        #addBtn:active {
-            background: #45a049;
         }
         
         /* কপি মেসেজ */
         #copyMessage {
             position: fixed;
-            top: 30px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             background: #4CAF50;
             color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 20px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
             display: none;
             z-index: 999;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
 
-    <!-- কপি মেসেজ -->
     <div id="copyMessage">✅ কপি হয়েছে!</div>
 
-    <!-- বড় লেখা দেখানোর বক্স (এটাতে ক্লিক করলেই কপি) -->
+    <!-- বড় লেখা দেখানোর বক্স -->
     <div class="big-text-container">
         <div id="bigTextBox" onclick="copyBigText()">
             <div id="bigText">👆 লেখা সিলেক্ট করুন</div>
         </div>
     </div>
 
-    <!-- লেখার তালিকা (শুধু ডিলিট বাটন) -->
-    <div class="items-list" id="itemsList">
-        <div class="list-title">📋 আপনার লেখাগুলো</div>
-        <!-- আইটেমগুলো এখানে আসবে -->
+    <!-- একটা মাত্র লেখার বক্স (অর্ধেক সাইজ) -->
+    <div class="single-item-box">
+        <div class="section-title">📋 আপনার লেখা</div>
+        <div id="singleItemContainer" class="single-item">
+            <!-- এখানে শুধু একটা আইটেম থাকবে -->
+        </div>
     </div>
 
-    <!-- নতুন লেখা যোগ করার অংশ -->
+    <!-- নতুন লেখা যোগ -->
     <div class="add-section">
         <div class="add-box">
             <input type="text" id="newText" placeholder="নতুন লেখা লিখুন...">
@@ -195,126 +181,85 @@
     </div>
 
     <script>
-        // ডাটা লোড
-        let items = JSON.parse(localStorage.getItem('bigNotes2')) || [];
+        // ডাটা লোড - শুধু একটা আইটেম রাখবো
+        let currentItem = JSON.parse(localStorage.getItem('singleNote2')) || null;
 
-        // ফাংশন: সব সেভ
-        function saveAll() {
-            localStorage.setItem('bigNotes2', JSON.stringify(items));
-            displayItems();
+        function saveItem() {
+            if (currentItem) {
+                localStorage.setItem('singleNote2', JSON.stringify(currentItem));
+            } else {
+                localStorage.removeItem('singleNote2');
+            }
+            displaySingleItem();
         }
 
-        // ফাংশন: নতুন আইটেম যোগ
         function addItem() {
             let input = document.getElementById('newText');
             let text = input.value.trim();
             
             if (text) {
-                items.push({
+                currentItem = {
                     id: Date.now(),
                     text: text
-                });
-                saveAll();
+                };
+                saveItem();
                 input.value = '';
                 
-                // নতুন যোগ করা লেখাটা বড় বক্সে দেখান
+                // নতুন লেখা বড় বক্সে দেখান
                 document.getElementById('bigText').innerText = text;
-            } else {
-                alert('কিছু লিখুন');
             }
         }
 
-        // ফাংশন: বড় বক্সের লেখা কপি করা
         async function copyBigText() {
             let bigText = document.getElementById('bigText').innerText;
-            
-            // চেক করা যে ডিফল্ট টেক্সট না
             if (bigText !== '👆 লেখা সিলেক্ট করুন') {
-                try {
-                    await navigator.clipboard.writeText(bigText);
-                    
-                    // মেসেজ দেখান
-                    let msg = document.getElementById('copyMessage');
-                    msg.style.display = 'block';
-                    setTimeout(() => {
-                        msg.style.display = 'none';
-                    }, 800);
-                    
-                } catch (err) {
-                    alert('কপি করতে সমস্যা');
-                }
+                await navigator.clipboard.writeText(bigText);
+                let msg = document.getElementById('copyMessage');
+                msg.style.display = 'block';
+                setTimeout(() => msg.style.display = 'none', 800);
             }
         }
 
-        // ফাংশন: ডিলিট (শুধু ডিলিট, কপি না)
-        function deleteItem(id, event) {
-            event.stopPropagation(); // কোনো ইভেন্ট বন্ধ না
-            
-            if (confirm('🗑️ ডিলিট করবেন?')) {
-                items = items.filter(item => item.id !== id);
-                saveAll();
-                
-                // যদি বড় লেখাটা ডিলিট হয়, তাহলে নতুন কিছু দেখান
-                let bigText = document.getElementById('bigText').innerText;
-                let deletedItem = items.find(item => item.text === bigText);
-                
-                if (!deletedItem && items.length > 0) {
-                    // শেষের আইটেমটা দেখান
-                    document.getElementById('bigText').innerText = items[items.length-1].text;
-                } else if (items.length === 0) {
-                    document.getElementById('bigText').innerText = '👆 লেখা সিলেক্ট করুন';
-                }
+        function deleteItem(event) {
+            event.stopPropagation();
+            if (currentItem && confirm('🗑️ ডিলিট করবেন?')) {
+                currentItem = null;
+                saveItem();
+                document.getElementById('bigText').innerText = '👆 লেখা সিলেক্ট করুন';
             }
         }
 
-        // ফাংশন: বড় বক্সে লেখা দেখান (শুধু দেখান, কপি না)
-        function showInBig(text) {
-            document.getElementById('bigText').innerText = text;
+        function showInBig() {
+            if (currentItem) {
+                document.getElementById('bigText').innerText = currentItem.text;
+            }
         }
 
-        // ফাংশন: সব আইটেম দেখান
-        function displayItems() {
-            let container = document.getElementById('itemsList');
+        function displaySingleItem() {
+            let container = document.getElementById('singleItemContainer');
             
-            if (items.length === 0) {
+            if (currentItem) {
                 container.innerHTML = `
-                    <div class="list-title">📋 আপনার লেখাগুলো</div>
-                    <div style="text-align: center; padding: 30px; color: #666;">
-                        কোন লেখা নেই
-                    </div>
+                    <span class="item-text" onclick="showInBig()">${currentItem.text}</span>
+                    <button class="delete-btn" onclick="deleteItem(event)">🗑️</button>
                 `;
-                return;
-            }
-            
-            let html = `<div class="list-title">📋 আপনার লেখাগুলো</div>`;
-            
-            // নতুন থেকে পুরাতন দেখান (reverse)
-            for (let i = items.length - 1; i >= 0; i--) {
-                let item = items[i];
-                html += `
-                    <div class="item">
-                        <span class="item-text" onclick="showInBig('${item.text.replace(/'/g, "\\'")}')">${item.text}</span>
-                        <button class="delete-btn" onclick="deleteItem(${item.id}, event)">🗑️</button>
-                    </div>
+            } else {
+                container.innerHTML = `
+                    <span style="color: #666; flex:1; font-size: 14px;">কোন লেখা নেই</span>
                 `;
             }
-            
-            container.innerHTML = html;
         }
 
         // শুরুতে দেখান
-        displayItems();
+        displaySingleItem();
         
-        // প্রথম আইটেম বড় করে দেখান (যদি থাকে)
-        if (items.length > 0) {
-            document.getElementById('bigText').innerText = items[items.length-1].text;
+        if (currentItem) {
+            document.getElementById('bigText').innerText = currentItem.text;
         }
 
         // এন্টার চাপলে যোগ হবে
         document.getElementById('newText').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addItem();
-            }
+            if (e.key === 'Enter') addItem();
         });
     </script>
 
