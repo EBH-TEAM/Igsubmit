@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>EBH TEAM - User Panel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --border: #1f2937;
+      --accent: #22c55e;
+      --accent-2: #f97316;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --error: #ef4444;
+      --winner-gold: #ffd700;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.12), transparent 40%),
+                  radial-gradient(circle at 90% 10%, rgba(34, 197, 94, 0.1), transparent 35%),
+                  var(--bg);
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      line-height: 1.4;
+      overflow-x: hidden;
+    }
+
+    /* header */
+    .header {
+      background: rgba(17, 24, 39, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(34, 197, 94, 0.25);
+      padding: 14px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .logo-icon {
+      font-size: 28px;
+      background: linear-gradient(135deg, #22c55e, #3b82f6, #f97316);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 12px #22c55e);
+      animation: rotateSlow 8s infinite linear;
+      will-change: transform;
+    }
+
+    .logo-text {
+      font-size: 30px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #22c55e, #3b82f6, #22c55e);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+      animation: shine 4s infinite alternate;
+      position: relative;
+    }
+
+    .logo-badge {
+      position: absolute;
+      top: -12px;
+      right: -38px;
+      background: linear-gradient(90deg, #f97316, #eab308);
+      color: #0b1220;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 20px;
+      transform: rotate(12deg);
+      box-shadow: 0 0 20px #f97316;
+      animation: badgePop 2s infinite ease-in-out;
+      white-space: nowrap;
+    }
+
+    /* ULTRA SMOOTH SCROLLER */
+    .scrolling-message-container {
+      width: 100%;
+      background: #0c1320;
+      border-top: 1px solid rgba(34,197,94,0.2);
+      border-bottom: 1px solid rgba(34,197,94,0.2);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      box-shadow: inset 0 0 30px rgba(0,255,100,0.1);
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+
+    .scroller-track {
+      display: flex;
+      width: max-content;
+      will-change: transform;
+      animation: scrollMarquee 32s linear infinite;
+      transform: translate3d(0,0,0);
+    }
+
+    .scroller-item {
+      display: flex;
+      align-items: center;
+      padding: 0 25px;
+      font-size: 1.7rem;
+      font-weight: 800;
+      white-space: nowrap;
+      background: linear-gradient(135deg, #ff8a5c, #ff4d6d, #b5179e, #4361ee);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .scroller-item::before {
+      content: "⚡";
+      margin-right: 25px;
+      font-size: 2rem;
+      color: #f97316;
+      filter: drop-shadow(0 0 8px #f97316);
+    }
+
+    .scroller-item::after {
+      content: "⚡";
+      margin-left: 25px;
+      font-size: 2rem;
+      color: #22c55e;
+      filter: drop-shadow(0 0 8px #22c55e);
+    }
+
+    @keyframes scrollMarquee {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    /* main layout */
+    .layout {
+      flex: 1;
+      background: var(--panel);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border: none;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .editor-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .editor {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      background: #0b1220;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 170px;
+      max-height: 210px;
+    }
+
+    .line-numbers {
+      background: #0c1322;
+      color: var(--muted);
+      padding: 12px 6px;
+      min-width: 42px;
+      text-align: right;
+      font-family: 'SF Mono', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      border-right: 1px solid var(--border);
+      white-space: pre;
+      user-select: none;
+      overflow: hidden;
+    }
+
+    .three-box-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.5fr;
+      gap: 1px;
+      background: var(--border);
+      width: 100%;
+    }
+
+    .input-column {
+      background: #0b1220;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .column-header {
+      background: #1a2635;
+      padding: 8px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .column-textarea {
+      flex: 1;
+      background: transparent;
+      color: var(--text);
+      border: none;
+      padding: 10px;
+      font-family: 'SF Mono', monospace;
+      font-size: 12px;
+      line-height: 1.45;
+      resize: none;
+      outline: none;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    .column-textarea::placeholder {
+      color: #3a465a;
+    }
+
+    .actions {
+      margin: 6px 0 2px;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(135deg, #22c55e, #16a34a, #3b82f6, #f97316);
+      background-size: 300% 300%;
+      border: none;
+      padding: 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 1.5px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(34,197,94,0.5);
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.1);
+      will-change: transform, box-shadow;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      background-position: 100% 50%;
+      box-shadow: 0 12px 35px #22c55e;
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      filter: grayscale(0.4);
+      transform: none;
+      animation: none;
+    }
+
+    .helper {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* Winner Container */
+    .winner-container {
+      background: #0d1624;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* WINNER CARD - যখন উইনার থাকে */
+    .winner-card {
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border-radius: 16px;
+      padding: 20px 20px;
+      width: 100%;
+      max-width: 550px;
+      margin: 0 auto;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      border: 2px solid gold;
+      animation: winnerGlow 2s infinite;
+    }
+
+    @keyframes winnerGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+      50% { box-shadow: 0 0 45px rgba(255, 215, 0, 0.8); }
+    }
+
+    .winner-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: gold;
+      font-size: 1.4rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .winner-header i {
+      font-size: 2rem;
+      filter: drop-shadow(0 0 10px gold);
+    }
+
+    .winner-username-box {
+      background: rgba(255, 215, 0, 0.1);
+      padding: 15px 30px;
+      border-radius: 60px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .winner-username {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: white;
+      text-shadow: 0 0 20px gold;
+      letter-spacing: 2px;
+    }
+
+    .winner-message {
+      text-align: center;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.7;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px 20px;
+      border-radius: 12px;
+      border-left: 3px solid gold;
+      width: 100%;
+    }
+
+    .winner-message p {
+      margin: 8px 0;
+    }
+
+    .winner-message .highlight {
+      color: gold;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    .winner-message .prize {
+      color: #22c55e;
+      font-weight: 800;
+      font-size: 1.6rem;
+      text-shadow: 0 0 15px #22c55e;
+    }
+
+    /* PLACEHOLDER CARD - যখন কোনো উইনার নেই */
+    .winner-placeholder {
+      background: linear-gradient(145deg, #1a2635, #0f172a);
+      border-radius: 16px;
+      padding: 30px 20px;
+      width: 100%;
+      max-width: 550px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      border: 2px dashed var(--accent);
+      animation: placeholderPulse 3s infinite;
+    }
+
+    @keyframes placeholderPulse {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+
+    .placeholder-icon {
+      font-size: 3.5rem;
+      color: var(--accent);
+      filter: drop-shadow(0 0 15px var(--accent));
+      animation: placeholderBounce 2s infinite;
+    }
+
+    @keyframes placeholderBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .placeholder-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      text-shadow: 0 0 15px var(--accent);
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .placeholder-text {
+      text-align: center;
+      color: var(--text);
+      font-size: 1.2rem;
+      line-height: 1.8;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px 25px;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+      width: 100%;
+    }
+
+    .placeholder-text p {
+      margin: 10px 0;
+    }
+
+    .placeholder-text .highlight {
+      color: var(--accent);
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .placeholder-text .prize {
+      color: gold;
+      font-weight: 800;
+      font-size: 1.8rem;
+      text-shadow: 0 0 15px gold;
+    }
+
+    /* hidden counters */
+    #summary {
+      display: none !important;
+    }
+
+    .push-result {
+      margin-top: 6px;
+    }
+
+    .push-result .tag {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #1f2a3c;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .push-result .tag.success { background: #0f2a1f; color: #22c55e; box-shadow: 0 0 15px #22c55e40; }
+    .push-result .tag.error { background: #2a1a1a; color: #ef4444; box-shadow: 0 0 15px #ef444440; }
+    .push-result .tag.processing { background: #1f2c1f; color: #fbbf24; animation: pulseBg 1.5s infinite; }
+
+    .status-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 130px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .status-item {
+      background: #111b2c;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      gap: 15px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .status-item.error {
+      border-color: #ef444480;
+      background: #1f1420;
+      color: #ef8888;
+    }
+
+    .status-item .line {
+      font-weight: 700;
+      color: var(--text);
+      min-width: 55px;
+    }
+
+    /* popup */
+    .popup-notification {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -70%) scale(0.9);
+      background: #111e30;
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      padding: 26px 34px;
+      box-shadow: 0 30px 70px black;
+      z-index: 10000;
+      text-align: center;
+      min-width: 300px;
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      pointer-events: none;
+    }
+
+    .popup-notification.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+    }
+
+    .popup-icon { font-size: 60px; margin-bottom: 10px; }
+    .popup-title { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+    .popup-message { color: var(--muted); margin-bottom: 24px; }
+    .popup-button {
+      background: #22c55e;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-weight: 800;
+      color: #0f172a;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+      border: 1px solid #ffffff30;
+    }
+    .popup-button:hover { background: #2ed573; transform: scale(1.04); }
+
+    .popup-notification.success .popup-title { background: linear-gradient(90deg,#22c55e,#4ade80); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .popup-notification.error .popup-title { background: linear-gradient(90deg,#ef4444,#f87171); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .popup-notification.warning .popup-title { background: linear-gradient(90deg,#f97316,#fbbf24); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    @keyframes rotateSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes shine { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+    @keyframes badgePop { 0%,100% { transform: rotate(12deg) scale(1); } 50% { transform: rotate(12deg) scale(1.15); } }
+    @keyframes softBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes gradientShift { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(10deg); } }
+    @keyframes pulseBg { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #1a2635; }
+    ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+  
+    /* অডিও এলিমেন্ট সম্পূর্ণ লুকানো থাকবে */
+    audio {
+      display: none;
+    }
+    /* কোনো সতর্কতা বা বাটন দেখানো হবে না */
+  </style>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-container">
+    <span class="logo-icon">⚡</span>
+    <span class="logo-text">EBH TEAM <span class="logo-badge">is BEST</span></span>
+  </div>
+</div>
+
+<!-- SMOOTH MARQUEE -->
+<div class="scrolling-message-container" id="scrollingMessageContainer">
+  <div class="scroller-track" id="scrollerTrack"></div>
+</div>
+
+<!-- অডিও এলিমেন্ট - এটি ইউজারকে দেখানো হবে না। Force Autoplay সক্রিয়। -->
+<audio id="backgroundAudio" preload="auto" style="display: none;"></audio>
+
+<main class="layout">
+  <!-- INPUT SECTION -->
+  <div class="editor-container">
+    <div class="panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg> Input (three columns)</div>
+    <div class="editor">
+      <div class="line-numbers" id="sourceLines">1</div>
+      <div class="three-box-wrapper">
+        <div class="input-column">
+          <div class="column-header"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Username</div>
+          <textarea class="column-textarea" id="usernameBox" placeholder="Enter usernames&#10;one per line"></textarea>
+        </div>
+        <div class="input-column">
+          <div class="column-header"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Password</div>
+          <textarea class="column-textarea" id="passwordBox" placeholder="Enter passwords&#10;one per line"></textarea>
+        </div>
+        <div class="input-column">
+          <div class="column-header"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> Cookie</div>
+          <textarea class="column-textarea" id="cookieBox" placeholder="Enter cookies&#10;one per line"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="processBtn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg>
+      CONVERT & PUSH
+    </button>
+    <div class="helper">One click convert & auto push. Save only if API push succeeds.</div>
+  </div>
+
+  <!-- Winner Section -->
+  <div class="editor-container">
+    <div class="panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Today's Winner</div>
+    <div class="winner-container" id="winnerContainer">
+      <!-- Content will be dynamically loaded here -->
+      <div id="winnerDynamicContent"></div>
+    </div>
+  </div>
+
+  <!-- hidden counter -->
+  <div id="summary"><span id="okCount">0</span><span id="failCount">0</span></div>
+
+  <!-- push result line -->
+  <div class="push-result">
+    <div id="pushResult" class="tag">Ready to process</div>
+  </div>
+
+  <!-- status list -->
+  <div class="status-list" id="statusList"></div>
+</main>
+
+<!-- hidden output -->
+<textarea id="target" style="display: none;"></textarea>
+
+<!-- popup -->
+<div id="popupNotification" class="popup-notification">
+  <div class="popup-icon" id="popupIcon">✅</div>
+  <div class="popup-title" id="popupTitle">Success</div>
+  <div class="popup-message" id="popupMessage"></div>
+  <button class="popup-button" id="popupCloseBtn">CLOSE</button>
+</div>
+
+<script>
+(function() {
+  // ============================================
+  // GLOBAL MESSAGE SYNC SYSTEM
+  // ============================================
+  const STORAGE_KEY = 'ebh_scrolling_message';
+  const DEFAULT_MESSAGE = "⚡ EBH TEAM IS BEST ⚡ 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗬 𝗛𝗔𝗕𝗜𝗕 ✦ PREMIUM ACCOUNTS ✦ INSTAGRAM WORKER ✦ JOIN US TODAY! ✦";
+  
+  window.EBH_MessageSync = {
+    getCurrentMessage: function() {
+      try {
+        const localMsg = localStorage.getItem(STORAGE_KEY);
+        if (localMsg && localMsg.trim() !== '') return localMsg;
+      } catch(e) { /* সাইলেন্ট */ }
+      
+      try {
+        const sessionMsg = sessionStorage.getItem(STORAGE_KEY);
+        if (sessionMsg && sessionMsg.trim() !== '') return sessionMsg;
+      } catch(e) { /* সাইলেন্ট */ }
+      
+      try {
+        const cookie = document.cookie.split('; ').find(row => row.startsWith(STORAGE_KEY + '='));
+        if (cookie) {
+          const cookieMsg = decodeURIComponent(cookie.split('=')[1]);
+          if (cookieMsg.trim() !== '') return cookieMsg;
+        }
+      } catch(e) { /* সাইলেন্ট */ }
+      
+      return DEFAULT_MESSAGE;
+    },
+    
+    setMessage: function(newMessage) {
+      if (!newMessage || newMessage.trim() === '') return false;
+      
+      const cleanMsg = newMessage.trim();
+      
+      try {
+        localStorage.setItem(STORAGE_KEY, cleanMsg);
+        sessionStorage.setItem(STORAGE_KEY, cleanMsg);
+        document.cookie = `${STORAGE_KEY}=${encodeURIComponent(cleanMsg)}; path=/; max-age=31536000; SameSite=Lax`;
+        
+        try {
+          if (window.db) {
+            window.db.ref("settings/scrolling_message").set({
+              message: cleanMsg,
+              updated_at: new Date().toISOString(),
+              updated_by: "admin"
+            });
+          }
+        } catch(e) {}
+        
+        this.notifyAllTabs(cleanMsg);
+        
+        return true;
+      } catch(e) {
+        console.warn('Storage error:', e);
+        return false;
+      }
+    },
+    
+    notifyAllTabs: function(message) {
+      try {
+        localStorage.setItem('_ebh_trigger_' + Date.now(), message);
+        setTimeout(() => {
+          try { localStorage.removeItem('_ebh_trigger_' + Date.now()); } catch(e) {}
+        }, 100);
+      } catch(e) {}
+      
+      window.dispatchEvent(new CustomEvent('ebh_message_updated', { detail: { message: message } }));
+    },
+    
+    onMessageUpdate: function(callback) {
+      if (!callback) return;
+      
+      window.addEventListener('storage', function(e) {
+        if (e.key && e.key.startsWith('_ebh_trigger_')) {
+          const msg = EBH_MessageSync.getCurrentMessage();
+          callback(msg);
+        }
+      });
+      
+      window.addEventListener('ebh_message_updated', function(e) {
+        callback(e.detail.message);
+      });
+      
+      try {
+        if (window.db) {
+          window.db.ref("settings/scrolling_message").on('value', (snapshot) => {
+            if (snapshot.exists()) {
+              const fbMsg = snapshot.val().message;
+              if (fbMsg && fbMsg !== EBH_MessageSync.getCurrentMessage()) {
+                EBH_MessageSync.setMessage(fbMsg);
+                callback(fbMsg);
+              }
+            }
+          });
+        }
+      } catch(e) {}
+      
+      let lastMsg = this.getCurrentMessage();
+      setInterval(() => {
+        const currentMsg = this.getCurrentMessage();
+        if (currentMsg !== lastMsg) {
+          lastMsg = currentMsg;
+          callback(currentMsg);
+        }
+      }, 3000);
+    }
+  };
+
+  // ============================================
+  // ফায়ারবেস ইনিশিয়ালাইজ
+  // ============================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyDLh6Zg-K3ZZexLvLloRaR0F6Wr4ciHqAs",
+    authDomain: "teamwork-206ba.firebaseapp.com",
+    databaseURL: "https://teamwork-206ba-default-rtdb.firebaseio.com",
+    projectId: "teamwork-206ba",
+    storageBucket: "teamwork-206ba.appspot.com",
+    messagingSenderId: "906293702680",
+    appId: "1:906293702680:web:bf8c2257e1e87964ded36d"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  window.db = firebase.database();
+  
+  const PROFILE = { owner: "Parvez", project: "EBH TEAM", source: "web-html" };
+
+  // ============================================
+  // DOM এলিমেন্টস
+  // ============================================
+  const usernameBox = document.getElementById('usernameBox');
+  const passwordBox = document.getElementById('passwordBox');
+  const cookieBox = document.getElementById('cookieBox');
+  const processBtn = document.getElementById('processBtn');
+  const sourceLines = document.getElementById('sourceLines');
+  const pushResult = document.getElementById('pushResult');
+  const statusList = document.getElementById('statusList');
+  const target = document.getElementById('target');
+  const okSpan = document.getElementById('okCount');
+  const failSpan = document.getElementById('failCount');
+  const scrollerTrack = document.getElementById('scrollerTrack');
+  
+  // Winner Elements
+  const winnerDynamicContent = document.getElementById('winnerDynamicContent');
+  
+  // পপআপ
+  const popup = document.getElementById('popupNotification');
+  const popupIcon = document.getElementById('popupIcon');
+  const popupTitle = document.getElementById('popupTitle');
+  const popupMessage = document.getElementById('popupMessage');
+  const popupClose = document.getElementById('popupCloseBtn');
+
+  // ============================================
+  // WINNER FUNCTIONS - Daily Reset Compatible
+  // ============================================
+  
+  // উইনার ডাটা লোড করা
+  function loadWinnerData() {
+    if (!window.db) return;
+    
+    window.db.ref("settings/daily_winner").once("value").then(snapshot => {
+      if (snapshot.exists()) {
+        const winnerData = snapshot.val();
+        
+        // Winner Card দেখানো
+        winnerDynamicContent.innerHTML = `
+          <div class="winner-card">
+            <div class="winner-header">
+              <i class="fas fa-trophy"></i>
+              <span>🏆 Today Winner 🏆</span>
+            </div>
+            
+            <div class="winner-username-box">
+              <i class="fas fa-user" style="color: gold;"></i>
+              <span class="winner-username">${winnerData.username || 'Unknown'}</span>
+            </div>
+            
+            <div class="winner-message">
+              <p>🎉 <span class="highlight">অভিনন্দন!</span> 🎉</p>
+              <p>আপনি আজকের প্রথম অ্যাকাউন্ট জমা দাতা হিসেবে নির্বাচিত হয়েছেন!</p>
+              <p>📩 <strong>ইনবক্সে সঠিক পাসওয়ার্ড দিন</strong> 📩</p>
+              <p>এবং আপনার পুরস্কারটি নিয়ে নিন:</p>
+              <p class="prize">💰 ২০ টাকা বোনাস 💰</p>
+              <p style="font-size: 0.9rem; color: gold;">(পাসওয়ার্ড সঠিক হলে পুরস্কার প্রদান করা হবে)</p>
+            </div>
+          </div>
+        `;
+      } else {
+        // কোন Winner নেই - Placeholder Card দেখানো
+        winnerDynamicContent.innerHTML = `
+          <div class="winner-placeholder">
+            <div class="placeholder-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <div class="placeholder-title">🏆 আজকের উইনার নির্ধারিত হয়নি 🏆</div>
+            <div class="placeholder-text">
+              <p>প্রথম অ্যাকাউন্ট জমা দিয়েই <span class="highlight">২০ টাকা বোনাস</span> জিতুন!</p>
+              <p>লিংক ওপেন থাকলে এখনই সাবমিট করুন।</p>
+              <p class="prize">উইনার হবার সুযোগ আপনারই!</p>
+            </div>
+          </div>
+        `;
+      }
+    }).catch(err => {
+      console.error("Winner load error:", err);
+      winnerDynamicContent.innerHTML = `
+        <div class="winner-placeholder">
+          <div class="placeholder-icon">
+            <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
+          </div>
+          <div class="placeholder-title">লোড করতে সমস্যা হয়েছে</div>
+          <div class="placeholder-text">
+            <p>দয়া করে পৃষ্ঠাটি রিফ্রেশ করুন।</p>
+          </div>
+        </div>
+      `;
+    });
+  }
+  
+  // নতুন উইনার সেট করার ফাংশন (প্রথম অ্যাকাউন্ট)
+  function setFirstAccountAsWinner() {
+    if (!window.db) return;
+    
+    // চেক করে দেখি ইতিমধ্যে উইনার আছে কিনা
+    window.db.ref("settings/daily_winner").once("value").then(winnerSnap => {
+      if (!winnerSnap.exists()) {
+        // উইনার নেই, তাহলে প্রথম অ্যাকাউন্ট খুঁজি
+        window.db.ref("accounts/parvez").once("value").then(accountsSnap => {
+          if (accountsSnap.exists()) {
+            let firstAccount = null;
+            let firstKey = null;
+            
+            // প্রথম (সবচেয়ে পুরনো) অ্যাকাউন্ট খুঁজি
+            accountsSnap.forEach(child => {
+              if (!firstKey) {
+                firstKey = child.key;
+                firstAccount = child.val();
+              }
+            });
+            
+            if (firstAccount) {
+              // উইনার সেট করি
+              const winnerData = {
+                username: firstAccount.username || "Unknown",
+                password: firstAccount.password || "No password",
+                accountKey: firstKey,
+                timestamp: firstAccount.created_at || new Date().toISOString()
+              };
+              
+              window.db.ref("settings/daily_winner").set(winnerData)
+                .then(() => {
+                  console.log("✅ New winner set automatically:", winnerData.username);
+                  loadWinnerData(); // UI আপডেট
+                })
+                .catch(err => console.error("Winner set error:", err));
+            }
+          }
+        });
+      }
+    }).catch(err => console.error("Winner check error:", err));
+  }
+  
+  // রিয়েল-টাইম লিসেনার সেটআপ
+  function setupWinnerListener() {
+    if (!window.db) return;
+    
+    // প্রতি ১০ সেকেন্ডে উইনার চেক করা (পেজ রিফ্রেশ ছাড়া আপডেট)
+    setInterval(loadWinnerData, 10000);
+    
+    // ফায়ারবেসে রিয়েল-টাইম লিসেনার
+    window.db.ref("settings/daily_winner").on('value', (snapshot) => {
+      loadWinnerData(); // আপডেট হলে রিলোড
+    }, (error) => {
+      console.error("Winner listener error:", error);
+    });
+    
+    // নতুন অ্যাকাউন্ট অ্যাড হওয়া মনিটর করি
+    window.db.ref("accounts/parvez").on('child_added', (snapshot) => {
+      // নতুন অ্যাকাউন্ট আসলেই চেক করি
+      setFirstAccountAsWinner();
+    });
+  }
+
+  // ============================================
+  // অডিও এলিমেন্ট এবং ফাংশন
+  // ============================================
+  const audioElement = document.getElementById('backgroundAudio');
+  let isAudioPlaying = false;
+
+  function forcePlayAudio() {
+      if (!audioElement.src || isAudioPlaying) return;
+
+      const playPromise = audioElement.play();
+      
+      if (playPromise !== undefined) {
+          playPromise.then(() => {
+              console.log("✅ Audio is playing automatically (forced).");
+              isAudioPlaying = true;
+          }).catch(error => {
+              console.log("⚠️ Auto-play blocked, but we will retry aggressively.");
+              isAudioPlaying = false;
+              
+              setTimeout(() => {
+                  if (!isAudioPlaying && audioElement.src) {
+                      audioElement.play().catch(e => {});
+                  }
+              }, 100);
+              
+              setTimeout(() => {
+                  if (!isAudioPlaying && audioElement.src) {
+                      audioElement.play().catch(e => {});
+                  }
+              }, 500);
+              
+              setTimeout(() => {
+                  if (!isAudioPlaying && audioElement.src) {
+                      audioElement.play().catch(e => {});
+                  }
+              }, 1000);
+          });
+      }
+  }
+
+  function loadAudio(audioUrl) {
+    if (!audioUrl || audioUrl.trim() === '') {
+      audioElement.pause();
+      audioElement.src = '';
+      isAudioPlaying = false;
+      return;
+    }
+
+    if (audioElement.src !== audioUrl) {
+        audioElement.src = audioUrl;
+        audioElement.load();
+        
+        setTimeout(forcePlayAudio, 200);
+        setTimeout(forcePlayAudio, 500);
+        setTimeout(forcePlayAudio, 1000);
+    } else {
+        forcePlayAudio();
+    }
+  }
+
+  if (window.db) {
+    window.db.ref("settings/audio").on('value', (snapshot) => {
+      if (snapshot.exists() && snapshot.val().url) {
+        const audioUrl = snapshot.val().url;
+        loadAudio(audioUrl);
+      } else {
+        loadAudio('');
+      }
+    }, (error) => {
+        console.error("Firebase audio listener error:", error);
+    });
+  }
+
+  window.addEventListener('load', function() {
+      setTimeout(forcePlayAudio, 500);
+      setTimeout(forcePlayAudio, 1000);
+      setTimeout(forcePlayAudio, 2000);
+      
+      // উইনার ডাটা লোড
+      loadWinnerData();
+      
+      // প্রথম অ্যাকাউন্ট চেক করে উইনার সেট (যদি থাকে)
+      setFirstAccountAsWinner();
+      
+      // লিসেনার সেটআপ
+      setupWinnerListener();
+  });
+
+  document.body.addEventListener('click', function() {
+      if (audioElement.src && !isAudioPlaying) {
+          audioElement.play().catch(e => {});
+      }
+  });
+
+  // ============================================
+  // স্ক্রলার মেসেজ আপডেট ফাংশন
+  // ============================================
+  function updateScrollerMessage(message) {
+    if (!scrollerTrack) return;
+    
+    scrollerTrack.innerHTML = '';
+    
+    for (let i = 0; i < 16; i++) {
+      const span = document.createElement('span');
+      span.className = 'scroller-item';
+      span.textContent = message;
+      scrollerTrack.appendChild(span);
+    }
+    
+    scrollerTrack.style.transform = 'translate3d(0,0,0)';
+  }
+
+  const initialMsg = window.EBH_MessageSync.getCurrentMessage();
+  updateScrollerMessage(initialMsg);
+  
+  window.EBH_MessageSync.onMessageUpdate(function(newMessage) {
+    updateScrollerMessage(newMessage);
+  });
+
+  // ============================================
+  // লাইন নাম্বার সিঙ্ক
+  // ============================================
+  function updateLineNumbers() {
+    const lines = Math.max(
+      (usernameBox.value.match(/\n/g) || '').length + 1,
+      (passwordBox.value.match(/\n/g) || '').length + 1,
+      (cookieBox.value.match(/\n/g) || '').length + 1
+    );
+    sourceLines.innerText = Array.from({ length: lines }, (_, i) => i + 1).join('\n');
+  }
+  
+  function syncScroll(e) {
+    const top = e.target.scrollTop;
+    usernameBox.scrollTop = top;
+    passwordBox.scrollTop = top;
+    cookieBox.scrollTop = top;
+    sourceLines.scrollTop = top;
+  }
+  
+  usernameBox.addEventListener('input', updateLineNumbers);
+  passwordBox.addEventListener('input', updateLineNumbers);
+  cookieBox.addEventListener('input', updateLineNumbers);
+  usernameBox.addEventListener('scroll', syncScroll);
+  passwordBox.addEventListener('scroll', syncScroll);
+  cookieBox.addEventListener('scroll', syncScroll);
+  updateLineNumbers();
+
+  // ============================================
+  // ডাটা কনভার্সন
+  // ============================================
+  let rawAccounts = [];
+
+  function convertData() {
+    const u = usernameBox.value.split(/\r?\n/).map(s => s.trim());
+    const p = passwordBox.value.split(/\r?\n/).map(s => s.trim());
+    const c = cookieBox.value.split(/\r?\n/).map(s => s.trim());
+    const max = Math.max(u.length, p.length, c.length);
+    let results = [], status = [], ok = 0, fail = 0;
+    rawAccounts = [];
+
+    for (let i = 0; i < max; i++) {
+      const user = u[i] || '', pass = p[i] || '', cook = c[i] || '';
+      if (!user && !pass && !cook) continue;
+      if (!user) { status.push({line:i+1,msg:'Missing username'}); fail++; continue; }
+      if (!pass) { status.push({line:i+1,msg:'Missing password'}); fail++; continue; }
+      if (!cook) { status.push({line:i+1,msg:'Missing cookie'}); fail++; continue; }
+      if (!cook.includes('=')) { status.push({line:i+1,msg:'Invalid cookie'}); fail++; continue; }
+      results.push(`${user}:${pass}|||${cook}||`);
+      rawAccounts.push({username:user, password:pass, cookie:cook});
+      ok++;
+    }
+    return { text: results.join('\n'), status, ok, fail };
+  }
+
+  function renderStatus(statusArr) {
+    statusList.innerHTML = '';
+    if (!statusArr.length) {
+      statusList.innerHTML = '<div class="status-item"><span class="line">All</span><span>All valid</span></div>';
+      return;
+    }
+    statusArr.slice(0,15).forEach(s => {
+      const d = document.createElement('div');
+      d.className = 'status-item error';
+      d.innerHTML = `<span class="line">Line ${s.line}</span><span>${s.msg}</span>`;
+      statusList.appendChild(d);
+    });
+    if (statusArr.length > 15) {
+      const more = document.createElement('div');
+      more.className = 'status-item';
+      more.innerHTML = `<span class="line">+${statusArr.length-15} more</span>`;
+      statusList.appendChild(more);
+    }
+  }
+
+  function buildPayload(text) {
+    return text.split(/\r?\n/).filter(Boolean).map(l => `accounts=${btoa(l)}`).join('\n');
+  }
+
+  // ফায়ারবেস সেভ
+  async function saveToFirebase(acc) {
+    try {
+      const ref = window.db.ref("accounts/parvez").push();
+      await ref.set({ 
+        ...acc, 
+        profile: PROFILE, 
+        created_at: new Date().toISOString(), 
+        status: 'pushed' 
+      });
+      return true;
+    } catch { 
+      return false; 
+    }
+  }
+
+  // পপআপ
+  function showPopup(type, title, msg) {
+    popup.className = `popup-notification ${type}`;
+    popupIcon.textContent = type==='success'?'✅':type==='error'?'❌':'⚠️';
+    popupTitle.textContent = title;
+    popupMessage.textContent = msg;
+    popup.classList.add('show');
+    setTimeout(() => popup.classList.remove('show'), 4500);
+  }
+  
+  popupClose.addEventListener('click', () => popup.classList.remove('show'));
+  popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.remove('show'); });
+
+  // API পুশ
+  async function pushToAPI(converted) {
+    const url = 'http://43.135.182.151/api/api/v1/webhook/YDbd-GZyAokTsjuF4bpQ8fuiLBsE1z9dWOLWrjMNfdw/account-push';
+    const payload = buildPayload(converted);
+    if (!payload) return { success: false, message: 'No data' };
+
+    try {
+      const res = await fetch(url, { method:'POST', headers:{'Content-Type':'text/plain'}, body:payload });
+      if (!res.ok) {
+        const err = await res.text();
+        showPopup('warning', '⚠️ Server Unavailable', 'Server down, try later.');
+        return { success: false, message: `API error ${res.status}: ${err.substring(0,60)}` };
+      }
+      const data = await res.json();
+      if (!data || !data.data) throw new Error('invalid response');
+
+      if (data.data.success_count > 0) {
+        let fbOk = 0, fbBad = 0;
+        for (let a of rawAccounts) {
+          (await saveToFirebase(a)) ? fbOk++ : fbBad++;
+        }
+        showPopup('success', '✅ Submission Successful', `${data.data.success_count} accounts pushed`);
+        
+        // ফায়ারবেসে সেভ করার পর উইনার চেক করি
+        setFirstAccountAsWinner();
+        
+        return { success: true, message: `API S:${data.data.success_count} F:${data.data.failed_count} | Firebase:${fbOk} saved` };
+      } else {
+        showPopup('error', '❌ Submission Failed', 'API succeeded but 0 accounts pushed');
+        return { success: true, message: `API: 0 success, ${data.data.failed_count} failed` };
+      }
+    } catch (err) {
+      showPopup('warning', '⚠️ Server Unavailable', 'Network error / server down');
+      return { success: false, message: `Push error: ${err.message}` };
+    }
+  }
+
+  // বাটন ক্লিক
+  processBtn.addEventListener('click', async () => {
+    processBtn.disabled = true;
+    processBtn.innerHTML = `<span>PROCESSING...</span>`;
+    pushResult.textContent = 'Converting...';
+    pushResult.className = 'tag processing';
+
+    const { text, status, ok, fail } = convertData();
+    target.value = text;
+    okSpan.textContent = ok;
+    failSpan.textContent = fail;
+    renderStatus(status);
+
+    if (fail > 0) {
+      pushResult.textContent = 'Fix errors before push';
+      pushResult.className = 'tag error';
+      showPopup('error','❌ Conversion Failed','Please fix errors');
+      processBtn.disabled = false;
+      processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg> CONVERT & PUSH`;
+      return;
+    }
+    if (ok === 0) {
+      pushResult.textContent = 'No valid data';
+      pushResult.className = 'tag error';
+      showPopup('warning','⚠️ No Data','No valid accounts');
+      processBtn.disabled = false;
+      processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg> CONVERT & PUSH`;
+      return;
+    }
+
+    pushResult.textContent = 'Pushing to API...';
+    pushResult.className = 'tag processing';
+    const result = await pushToAPI(text);
+    pushResult.textContent = result.message;
+    pushResult.className = result.success ? 'tag success' : 'tag error';
+
+    processBtn.disabled = false;
+    processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg> CONVERT & PUSH`;
+  });
+
+  // Ctrl+Enter
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === 'Enter') processBtn.click();
+  });
+
+  window.updateScrollingMessage = function(newMsg) {
+    return window.EBH_MessageSync.setMessage(newMsg);
+  };
+})();
+</script>
+
+<!-- কনসোল হেল্পার -->
+<script>
+  console.log('✅ EBH Message Sync & Audio Player Ready');
+  console.log('📢 To set message: updateScrollingMessage("Your new message here")');
+</script>
+
+</body>
+</html>
