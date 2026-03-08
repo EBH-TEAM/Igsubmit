@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>EBH TEAM - User Panel</title>
   <style>
-    /* আপনার exact same CSS - কোনো পরিবর্তন নেই */
     * {
       margin: 0;
       padding: 0;
@@ -597,7 +596,7 @@
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <!-- Font Awesome for icons -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -713,39 +712,7 @@
   const popupClose = document.getElementById('popupCloseBtn');
 
   // ============================================
-  // API URL - Firebase থেকে লোড হবে
-  // ============================================
-  let API_URL = '';
-
-  // ============================================
-  // Firebase থেকে API URL লোড
-  // ============================================
-  function loadAPIUrl() {
-    return new Promise((resolve) => {
-      db.ref("settings/api_endpoint").once("value")
-        .then(snapshot => {
-          if (snapshot.exists()) {
-            API_URL = snapshot.val();
-            console.log("✅ API URL loaded:", API_URL);
-            resolve(true);
-          } else {
-            console.error("❌ No API URL in Firebase");
-            // Fallback to hardcoded (শুধু ডেভেলপমেন্টের জন্য)
-            API_URL = 'http://43.135.182.151/api/api/v1/webhook/YDbd-GZyAokTsjuF4bpQ8fuiLBsE1z9dWOLWrjMNfdw/account-push';
-            resolve(true);
-          }
-        })
-        .catch(error => {
-          console.error("Error loading API URL:", error);
-          // Fallback to hardcoded
-          API_URL = 'http://43.135.182.151/api/api/v1/webhook/YDbd-GZyAokTsjuF4bpQ8fuiLBsE1z9dWOLWrjMNfdw/account-push';
-          resolve(true);
-        });
-    });
-  }
-
-  // ============================================
-  // MESSAGE SYNC (আগের মত)
+  // MESSAGE SYNC - আগের মতই (Admin panel থেকে)
   // ============================================
   const STORAGE_KEY = 'ebh_scrolling_message';
   const DEFAULT_MESSAGE = "⚡ EBH TEAM IS BEST ⚡ 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗬 𝗛𝗔𝗕𝗜𝗕 ✦ PREMIUM ACCOUNTS ✦ INSTAGRAM WORKER ✦ JOIN US TODAY! ✦";
@@ -827,11 +794,20 @@
           });
         }
       } catch(e) {}
+      
+      let lastMsg = this.getCurrentMessage();
+      setInterval(() => {
+        const currentMsg = this.getCurrentMessage();
+        if (currentMsg !== lastMsg) {
+          lastMsg = currentMsg;
+          callback(currentMsg);
+        }
+      }, 3000);
     }
   };
 
   // ============================================
-  // AUDIO (আগের মত)
+  // AUDIO - আগের মতই (Admin panel থেকে)
   // ============================================
   const audioElement = document.getElementById('backgroundAudio');
   let isAudioPlaying = false;
@@ -880,7 +856,7 @@
   }
 
   // ============================================
-  // WINNER FUNCTIONS (আগের মত)
+  // WINNER FUNCTIONS - আগের মতই
   // ============================================
   function loadWinnerData() {
     if (!window.db) return;
@@ -980,7 +956,7 @@
   }
 
   // ============================================
-  // SCROLLER MESSAGE (আগের মত)
+  // SCROLLER MESSAGE - আগের মতই
   // ============================================
   function updateScrollerMessage(message) {
     if (!scrollerTrack) return;
@@ -1002,7 +978,7 @@
   });
 
   // ============================================
-  // LINE NUMBERS (আগের মত)
+  // LINE NUMBERS - আগের মতই
   // ============================================
   function updateLineNumbers() {
     const lines = Math.max(
@@ -1030,7 +1006,7 @@
   updateLineNumbers();
 
   // ============================================
-  // DATA CONVERSION (আগের মত)
+  // DATA CONVERSION - আগের মতই
   // ============================================
   let rawAccounts = [];
 
@@ -1108,53 +1084,83 @@
   popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.remove('show'); });
 
   // ============================================
-  // PUSH TO API (আপডেটেড - Firebase থেকে API URL ব্যবহার)
+  // PUSH TO API - CORS PROXY সহ আপডেটেড
   // ============================================
   async function pushToAPI(converted) {
-    if (!API_URL) {
-      showPopup('error', '❌ Configuration Error', 'API URL not loaded');
-      return { success: false, message: 'API URL not configured' };
-    }
-
     const payload = buildPayload(converted);
     if (!payload) return { success: false, message: 'No data' };
 
+    // CORS Proxy ব্যবহার করে API কল
+    const proxyUrl = 'https://corsproxy.io/?';
+    const targetUrl = encodeURIComponent('http://43.135.182.151/api/api/v1/webhook/YDbd-GZyAokTsjuF4bpQ8fuiLBsE1z9dWOLWrjMNfdw/account-push');
+    
     try {
-      const res = await fetch(API_URL, { 
+      pushResult.textContent = 'Sending via proxy...';
+      
+      const res = await fetch(proxyUrl + targetUrl, { 
         method: 'POST', 
-        headers: { 'Content-Type': 'text/plain' }, 
+        headers: { 
+          'Content-Type': 'text/plain',
+          'X-Requested-With': 'XMLHttpRequest'
+        }, 
         body: payload 
       });
       
       if (!res.ok) {
-        const err = await res.text();
-        showPopup('warning', '⚠️ Server Unavailable', 'Server down, try later.');
-        return { success: false, message: `API error ${res.status}` };
+        throw new Error(`HTTP error ${res.status}`);
       }
       
       const data = await res.json();
       
       if (data && data.data && data.data.success_count > 0) {
-        let fbOk = 0, fbBad = 0;
+        // Firebase এ সেভ করুন
+        let fbOk = 0;
         for (let a of rawAccounts) {
-          (await saveToFirebase(a)) ? fbOk++ : fbBad++;
+          if (await saveToFirebase(a)) fbOk++;
         }
-        showPopup('success', '✅ Submission Successful', `${data.data.success_count} accounts pushed`);
+        
+        showPopup('success', '✅ Success', `${data.data.success_count} accounts pushed`);
         setFirstAccountAsWinner();
         return { success: true, message: `✅ ${data.data.success_count} accounts pushed` };
       } else {
-        showPopup('error', '❌ Submission Failed', 'API returned 0 success');
+        showPopup('error', '❌ Failed', 'API returned 0 success');
         return { success: false, message: 'API: 0 success' };
       }
     } catch (err) {
       console.error("Push error:", err);
-      showPopup('warning', '⚠️ Connection Error', 'Network error / server down');
-      return { success: false, message: `Push error: ${err.message}` };
+      
+      // Fallback: আরেকটি proxy try করুন
+      try {
+        pushResult.textContent = 'Trying alternative proxy...';
+        
+        const altProxy = 'https://api.allorigins.win/raw?url=';
+        const altTarget = encodeURIComponent('http://43.135.182.151/api/api/v1/webhook/YDbd-GZyAokTsjuF4bpQ8fuiLBsE1z9dWOLWrjMNfdw/account-push');
+        
+        const res2 = await fetch(altProxy + altTarget, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: payload
+        });
+        
+        if (!res2.ok) throw new Error('Alt proxy failed');
+        
+        const data2 = await res2.json();
+        
+        if (data2 && data2.data && data2.data.success_count > 0) {
+          for (let a of rawAccounts) await saveToFirebase(a);
+          showPopup('success', '✅ Success', `${data2.data.success_count} accounts pushed`);
+          setFirstAccountAsWinner();
+          return { success: true, message: `✅ ${data2.data.success_count} accounts pushed` };
+        }
+      } catch (err2) {
+        showPopup('error', '❌ Failed', 'All proxies failed');
+        return { success: false, message: 'Push failed: ' + err.message };
+      }
     }
   }
 
   // ============================================
-  // PROCESS BUTTON CLICK (আপডেটেড - আগে API URL লোড)
+  // PROCESS BUTTON CLICK
   // ============================================
   processBtn.addEventListener('click', async () => {
     processBtn.disabled = true;
@@ -1186,12 +1192,6 @@
       return;
     }
 
-    // API URL লোড করুন (যদি না লোড থাকে)
-    if (!API_URL) {
-      pushResult.textContent = 'Loading API config...';
-      await loadAPIUrl();
-    }
-
     pushResult.textContent = 'Pushing to API...';
     pushResult.className = 'tag processing';
     const result = await pushToAPI(text);
@@ -1211,15 +1211,10 @@
   // PAGE LOAD
   // ============================================
   window.addEventListener('load', function() {
-    // API URL লোড
-    loadAPIUrl();
-    
-    // Audio
     setTimeout(forcePlayAudio, 500);
     setTimeout(forcePlayAudio, 1000);
     setTimeout(forcePlayAudio, 2000);
     
-    // Winner
     loadWinnerData();
     setFirstAccountAsWinner();
     setupWinnerListener();
@@ -1238,8 +1233,8 @@
 </script>
 
 <script>
-  console.log('✅ EBH TEAM Panel Ready - API URL loaded from Firebase');
-  console.log('📢 Admin can update API URL in Firebase: settings/api_endpoint');
+  console.log('✅ EBH TEAM Panel Ready with CORS Proxy');
+  console.log('📢 Scrolling message & audio controlled from Admin Panel');
 </script>
 
 </body>
