@@ -681,6 +681,79 @@ body {
   background: var(--warning-dark);
 }
 
+/* ============================================= */
+/* NEW EXCEL DOWNLOAD BUTTON - ADDED HERE */
+/* ============================================= */
+.excel-export-container {
+  width: 100%;
+  margin: 15px 0;
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.excel-export-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #059669, #10b981);
+  border: none;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(5, 150, 105, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+.excel-export-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(5, 150, 105, 0.6);
+  background: linear-gradient(135deg, #047857, #059669);
+}
+
+.excel-export-btn:active {
+  transform: translateY(0);
+}
+
+.excel-export-btn i {
+  font-size: 1.4rem;
+}
+
+.excel-hint {
+  text-align: center;
+  margin-top: 8px;
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+.excel-hint i {
+  margin-right: 4px;
+}
+
+@media (max-width: 480px) {
+  .excel-export-btn {
+    font-size: 0.9rem;
+    padding: 12px 15px;
+  }
+}
+
 /* Delete Button */
 .danger-section {
   text-align: center;
@@ -1255,6 +1328,11 @@ body {
   .winner-info-value.time {
     font-size: 1.2rem;
   }
+  
+  .excel-export-btn {
+    font-size: 0.9rem;
+    padding: 12px 15px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1342,6 +1420,11 @@ body {
   .winner-info-value.time {
     font-size: 1rem;
   }
+  
+  .excel-export-btn {
+    font-size: 0.8rem;
+    padding: 10px 12px;
+  }
 }
 
 @media (max-width: 360px) {
@@ -1366,6 +1449,11 @@ body {
   .audio-btn {
     flex: 1 1 auto;
     min-width: 80px;
+  }
+  
+  .excel-export-btn {
+    font-size: 0.75rem;
+    padding: 8px 10px;
   }
 }
 </style>
@@ -1465,6 +1553,19 @@ body {
         <i class="fas fa-cookie"></i> COOKIES
       </button>
     </div>
+
+    <!-- ⭐ NEW EXCEL DOWNLOAD BUTTON - ADDED HERE ⭐ -->
+    <div class="excel-export-container">
+      <button class="excel-export-btn" onclick="exportToExcel()">
+        <i class="fas fa-file-excel"></i>
+        <span>📥 DOWNLOAD EXCEL FILE</span>
+        <i class="fas fa-download"></i>
+      </button>
+      <div class="excel-hint">
+        <i class="fas fa-info-circle"></i> Only accounts will be exported (No headers, no serial numbers)
+      </div>
+    </div>
+    <!-- ⭐ EXCEL BUTTON END ⭐ -->
     
     <div class="danger-section">
       <button class="danger-btn" onclick="openDeleteModal()">
@@ -2193,6 +2294,76 @@ function copyCookies() {
       console.error('Copy failed:', err);
       alert("Failed to copy cookies.");
     });
+}
+
+// ============================================
+// NEW EXCEL EXPORT FUNCTION - UPDATED
+// ============================================
+function exportToExcel() {
+  const groupsToExport = isSearching ? filteredGroups : groupedAccounts;
+  
+  if (groupsToExport.length === 0 || groupsToExport.every(g => g.accounts.length === 0)) {
+    alert("⚠️ No data to export!");
+    return;
+  }
+
+  // শুধু অ্যাকাউন্টগুলো নেওয়া হবে - কোনো হেডার বা সিরিয়াল নম্বর নেই
+  let excelData = [];
+  
+  groupsToExport.forEach(group => {
+    // শুধু অ্যাকাউন্টগুলো যোগ করা (গ্রুপ হেডার বাদ)
+    group.accounts.forEach(account => {
+      excelData.push([
+        account.username || 'N/A',
+        account.password || 'N/A',
+        account.cookies || 'No cookies'
+      ]);
+    });
+  });
+  
+  // CSV ফরম্যাটে কনভার্ট করা - হেডার ছাড়া
+  const csvContent = excelData.map(row => 
+    row.map(cell => {
+      // কমা থাকলে ডাবল কোটেশনের ভিতরে রাখা
+      if (typeof cell === 'string' && (cell.includes(',') || cell.includes('"'))) {
+        return `"${cell.replace(/"/g, '""')}"`;
+      }
+      return cell;
+    }).join(',')
+  ).join('\n');
+  
+  // ব্লব তৈরি করা
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' }); // \uFEFF for BOM
+  
+  // ডাউনলোড লিংক তৈরি
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  
+  // ফাইলের নাম তৈরি (বর্তমান তারিখ ও সময় সহ)
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('bn').replace(/\//g, '-');
+  const timeStr = now.toLocaleTimeString('bn').replace(/:/g, '-');
+  const fileName = `EBH_ACCOUNTS_${dateStr}_${timeStr}.csv`;
+  
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  
+  // বাটনে এনিমেশন
+  const exportBtn = document.querySelector('.excel-export-btn');
+  const originalHTML = exportBtn.innerHTML;
+  exportBtn.innerHTML = '<i class="fas fa-check-circle"></i> DOWNLOADED! <i class="fas fa-file-excel"></i>';
+  exportBtn.style.background = 'linear-gradient(135deg, #047857, #059669)';
+  
+  setTimeout(() => {
+    exportBtn.innerHTML = originalHTML;
+    exportBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+  }, 2000);
+  
+  console.log(`✅ Excel file downloaded: ${fileName}`);
 }
 
 function openDeleteModal() {
