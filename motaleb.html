@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EBH Team - Username & Password Viewer (Password Grouped)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>EBH Team - Username & Password Viewer (Password Grouped)</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 * {
   margin: 0;
@@ -30,6 +30,8 @@
   --border-color: #334155;
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   --table-border: #475569;
+  --excel-green: #10b981;
+  --excel-dark: #059669;
 }
 
 body {
@@ -313,7 +315,7 @@ body {
   border-bottom: none;
 }
 
-/* Table Cells - Fixed Height, Single Line */
+/* Table Cells - Fixed Width, Single Line */
 .row-cell {
   display: table-cell;
   padding: 10px 8px;
@@ -371,7 +373,7 @@ body {
   font-size: 0.85rem;
 }
 
-/* Scrollable cell content - FIXED WIDTH CONTAINERS */
+/* Scrollable cell content */
 .cell-content {
   position: absolute;
   top: 0;
@@ -455,12 +457,13 @@ body {
   border-radius: 0 0 8px 8px;
 }
 
-/* Copy Buttons - Three Equal Buttons */
+/* Buttons Row - Three Copy Buttons */
 .copy-buttons-row {
   display: flex;
   gap: 6px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .copy-btn-third {
@@ -505,6 +508,40 @@ body {
 
 .copy-cookies-btn:hover {
   background: var(--warning-dark);
+}
+
+/* Excel Download Button - Between Copy Buttons and Delete Button */
+.excel-download-wrapper {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.excel-btn {
+  width: 100%;
+  background: var(--excel-green);
+  color: white;
+  border: none;
+  padding: 10px 5px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.excel-btn:hover {
+  background: var(--excel-dark);
+  transform: translateY(-1px);
+}
+
+.excel-btn i {
+  font-size: 1rem;
 }
 
 /* Delete Button */
@@ -619,11 +656,6 @@ body {
   margin-top: 15px;
 }
 
-.warning-text i {
-  color: var(--danger);
-  margin-right: 5px;
-}
-
 .modal-actions {
   display: flex;
   gap: 10px;
@@ -662,113 +694,33 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .header h1 {
-    font-size: 1.3rem;
-  }
-  
-  .header-cell {
-    font-size: 0.75rem;
-    padding: 8px 6px;
-  }
-  
-  .row-cell {
-    padding: 8px 6px;
-    font-size: 0.85rem;
-    height: 40px;
-  }
-  
-  .copy-btn-third {
-    font-size: 11px;
-    padding: 8px 4px;
-    min-height: 36px;
-  }
-  
-  .serial-cell {
-    width: 40px;
-    min-width: 40px;
-    max-width: 40px;
-  }
-  
-  .username-cell {
-    width: 150px;
-    min-width: 150px;
-    max-width: 150px;
-  }
-  
-  .password-cell {
-    width: 120px;
-    min-width: 120px;
-    max-width: 120px;
-  }
-  
-  .cookies-cell {
-    width: 200px;
-    min-width: 200px;
-    max-width: 200px;
-  }
+  .header h1 { font-size: 1.3rem; }
+  .header-cell { font-size: 0.75rem; padding: 8px 6px; }
+  .row-cell { padding: 8px 6px; font-size: 0.85rem; height: 40px; }
+  .copy-btn-third { font-size: 11px; padding: 8px 4px; min-height: 36px; }
+  .excel-btn { font-size: 12px; padding: 9px 5px; min-height: 40px; }
+  .serial-cell { width: 40px; min-width: 40px; max-width: 40px; }
+  .username-cell { width: 150px; min-width: 150px; max-width: 150px; }
+  .password-cell { width: 120px; min-width: 120px; max-width: 120px; }
+  .cookies-cell { width: 200px; min-width: 200px; max-width: 200px; }
 }
 
 @media (max-width: 480px) {
-  .header h1 {
-    font-size: 1.2rem;
-  }
-  
-  .header-cell {
-    font-size: 0.7rem;
-    padding: 6px 4px;
-  }
-  
-  .row-cell {
-    padding: 6px 4px;
-    font-size: 0.8rem;
-    height: 38px;
-  }
-  
-  .copy-btn-third {
-    font-size: 10px;
-    padding: 6px 3px;
-    min-height: 34px;
-  }
-  
-  .serial-cell {
-    width: 35px;
-    min-width: 35px;
-    max-width: 35px;
-  }
-  
-  .username-cell {
-    width: 130px;
-    min-width: 130px;
-    max-width: 130px;
-  }
-  
-  .password-cell {
-    width: 100px;
-    min-width: 100px;
-    max-width: 100px;
-  }
-  
-  .cookies-cell {
-    width: 180px;
-    min-width: 180px;
-    max-width: 180px;
-  }
-}
-
-@media (max-width: 360px) {
-  .copy-btn-third {
-    font-size: 9px;
-    padding: 5px 2px;
-  }
+  .header h1 { font-size: 1.2rem; }
+  .header-cell { font-size: 0.7rem; padding: 6px 4px; }
+  .row-cell { padding: 6px 4px; font-size: 0.8rem; height: 38px; }
+  .copy-btn-third { font-size: 10px; padding: 6px 3px; min-height: 34px; }
+  .excel-btn { font-size: 11px; padding: 8px 5px; min-height: 38px; }
+  .serial-cell { width: 35px; min-width: 35px; max-width: 35px; }
+  .username-cell { width: 130px; min-width: 130px; max-width: 130px; }
+  .password-cell { width: 100px; min-width: 100px; max-width: 100px; }
+  .cookies-cell { width: 180px; min-width: 180px; max-width: 180px; }
 }
 </style>
-
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
-
 <body>
-
 <div class="container">
   <div class="header">
     <h1><i class="fas fa-fire"></i> Motaleb Vai Pro   <i class="fas fa-users"></i></h1>
@@ -776,114 +728,67 @@ body {
   </div>
   
   <div class="stats-card">
-    <div class="stat">
-      <span class="number" id="totalCount">0</span>
-      <span class="label">Total Accounts</span>
-    </div>
+    <div class="stat"><span class="number" id="totalCount">0</span><span class="label">Total Accounts</span></div>
     <div class="divider"></div>
-    <div class="stat">
-      <span class="number" id="groupCount">0</span>
-      <span class="label">Password Groups</span>
-    </div>
+    <div class="stat"><span class="number" id="groupCount">0</span><span class="label">Password Groups</span></div>
     <div class="divider"></div>
-    <div class="stat">
-      <span class="number" id="lastUpdate">-</span>
-      <span class="label">Last Updated</span>
-    </div>
+    <div class="stat"><span class="number" id="lastUpdate">-</span><span class="label">Last Updated</span></div>
   </div>
   
   <div id="searchResultCard" class="search-stat" style="display: none;">
-    <div class="stat">
-      <span class="number" id="searchCount">0</span>
-      <span class="label" id="searchLabel">Search Results</span>
-    </div>
+    <div class="stat"><span class="number" id="searchCount">0</span><span class="label" id="searchLabel">Search Results</span></div>
   </div>
   
   <div class="search-section">
     <div class="search-container">
       <input type="text" id="searchInput" placeholder="Search by username, password or cookies...">
-      <button class="search-btn" onclick="searchByPassword()">
-        <i class="fas fa-search"></i> SEARCH
-      </button>
+      <button class="search-btn" onclick="searchByPassword()"><i class="fas fa-search"></i> SEARCH</button>
     </div>
   </div>
   
   <div class="main-card">
     <div class="card-header">
       <h2 class="card-title"><i class="fas fa-user-circle"></i> Grouped Account List</h2>
-      <button class="refresh-btn" onclick="loadData()">
-        <i class="fas fa-sync-alt"></i> Refresh
-      </button>
+      <button class="refresh-btn" onclick="loadData()"><i class="fas fa-sync-alt"></i> Refresh</button>
     </div>
     
-    <div class="accounts-container" id="accountsContainer">
-      <!-- Table will be generated by JavaScript -->
-    </div>
+    <div class="accounts-container" id="accountsContainer"></div>
     
     <div class="count-display" id="countDisplay">0 accounts in 0 groups</div>
     
+    <!-- Three Copy Buttons Row -->
     <div class="copy-buttons-row">
-      <button class="copy-btn-third copy-usernames-btn" onclick="copyUsernames()">
-        <i class="fas fa-user"></i> USERNAMES
-      </button>
-      <button class="copy-btn-third copy-passwords-btn" onclick="copyPasswords()">
-        <i class="fas fa-key"></i> PASSWORDS
-      </button>
-      <button class="copy-btn-third copy-cookies-btn" onclick="copyCookies()">
-        <i class="fas fa-cookie"></i> COOKIES
+      <button class="copy-btn-third copy-usernames-btn" onclick="copyUsernames()"><i class="fas fa-user"></i> USERNAMES</button>
+      <button class="copy-btn-third copy-passwords-btn" onclick="copyPasswords()"><i class="fas fa-key"></i> PASSWORDS</button>
+      <button class="copy-btn-third copy-cookies-btn" onclick="copyCookies()"><i class="fas fa-cookie-bite"></i> COOKIES</button>
+    </div>
+    
+    <!-- Excel Download Button - Between Copy Buttons and Delete Button -->
+    <div class="excel-download-wrapper">
+      <button class="excel-btn" onclick="downloadExcel()">
+        <i class="fas fa-file-excel"></i> DOWNLOAD EXCEL
       </button>
     </div>
     
+    <!-- Delete Button Section -->
     <div class="danger-section">
-      <button class="danger-btn" onclick="openDeleteModal()">
-        <i class="fas fa-trash-alt"></i> DELETE ALL DATA
-      </button>
+      <button class="danger-btn" onclick="openDeleteModal()"><i class="fas fa-trash-alt"></i> DELETE ALL DATA</button>
     </div>
   </div>
   
-  <div class="footer">
-    <p> EBH  Account Viewer • Password Grouped Version</p>
-  </div>
+  <div class="footer"><p> EBH Account Viewer • Password Grouped Version</p></div>
 </div>
 
-<!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
-    <div class="modal-header">
-      <i class="fas fa-exclamation-triangle"></i>
-      <h2>Delete All Data</h2>
-    </div>
-    
-    <div class="modal-body">
-      <p>Are you sure you want to permanently delete all data from Firebase?</p>
-      <p>This action will delete <strong id="deleteCount">0</strong> accounts.</p>
-      
-      <div class="warning-text">
-        <p><i class="fas fa-exclamation-circle"></i> <strong>Warning:</strong> This action cannot be undone.</p>
-      </div>
-    </div>
-    
-    <div class="modal-actions">
-      <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">NO, CANCEL</button>
-      <button class="modal-btn modal-btn-danger" onclick="deleteAllData()">YES, DELETE</button>
-    </div>
+    <div class="modal-header"><i class="fas fa-exclamation-triangle"></i><h2>Delete All Data</h2></div>
+    <div class="modal-body"><p>Are you sure you want to permanently delete all data from Firebase?</p><p>This action will delete <strong id="deleteCount">0</strong> accounts.</p><div class="warning-text"><p><i class="fas fa-exclamation-circle"></i> <strong>Warning:</strong> This action cannot be undone.</p></div></div>
+    <div class="modal-actions"><button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">NO, CANCEL</button><button class="modal-btn modal-btn-danger" onclick="deleteAllData()">YES, DELETE</button></div>
   </div>
 </div>
 
 <script>
-// Firebase Configuration - নতুন RPH অ্যাকাউন্ট
-const firebaseConfig = {
-  apiKey: "AIzaSyB2ul7SMulLalH3Bi3j0jp1km0oLSM939Q",
-  authDomain: "rhp-cb421.firebaseapp.com",
-  databaseURL: "https://rhp-cb421-default-rtdb.firebaseio.com",
-  projectId: "rhp-cb421",
-  storageBucket: "rhp-cb421.firebasestorage.app",
-  messagingSenderId: "878808791188",
-  appId: "1:878808791188:web:2a3992f50edff41a4d1c81",
-  measurementId: "G-7VRRCMD4BJ"
-};
-
-// Initialize Firebase
+const firebaseConfig = { apiKey: "AIzaSyB2ul7SMulLalH3Bi3j0jp1km0oLSM939Q", authDomain: "rhp-cb421.firebaseapp.com", databaseURL: "https://rhp-cb421-default-rtdb.firebaseio.com", projectId: "rhp-cb421", storageBucket: "rhp-cb421.firebasestorage.app", messagingSenderId: "878808791188", appId: "1:878808791188:web:2a3992f50edff41a4d1c81", measurementId: "G-7VRRCMD4BJ" };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
@@ -896,420 +801,145 @@ const searchResultCard = document.getElementById("searchResultCard");
 const countDisplay = document.getElementById("countDisplay");
 const lastUpdate = document.getElementById("lastUpdate");
 const deleteModal = document.getElementById("deleteModal");
-const deleteCount = document.getElementById("deleteCount");
+const deleteCountSpan = document.getElementById("deleteCount");
 const searchInput = document.getElementById("searchInput");
 
 let allAccounts = [];
-let groupedAccounts = []; // Array of { password, accounts[] }
+let groupedAccounts = [];
 let filteredGroups = [];
 let isSearching = false;
 let currentSearchTerm = "";
 
-function showLoading() {
-  accountsContainer.innerHTML = `
-    <div class="loading-container">
-      <div class="loading-spinner">
-        <i class="fas fa-spinner fa-spin"></i>
-      </div>
-      <p>Loading accounts from Firebase...</p>
-    </div>
-  `;
-}
+function showLoading() { accountsContainer.innerHTML = `<div class="loading-container"><div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div><p>Loading accounts from Firebase...</p></div>`; }
 
 function groupAccountsByPassword(accounts) {
   const groups = {};
-  
-  accounts.forEach(account => {
-    const password = account.password || "NO_PASSWORD";
-    if (!groups[password]) {
-      groups[password] = [];
-    }
-    groups[password].push(account);
-  });
-  
-  // Convert to array and sort by group size (largest first)
-  const groupedArray = Object.keys(groups).map(password => ({
-    password: password,
-    accounts: groups[password],
-    count: groups[password].length
-  }));
-  
-  // Sort by count descending (largest group first)
-  groupedArray.sort((a, b) => b.count - a.count);
-  
+  accounts.forEach(account => { const pwd = account.password || "NO_PASSWORD"; if(!groups[pwd]) groups[pwd] = []; groups[pwd].push(account); });
+  const groupedArray = Object.keys(groups).map(pwd => ({ password: pwd, accounts: groups[pwd], count: groups[pwd].length }));
+  groupedArray.sort((a,b) => b.count - a.count);
   return groupedArray;
 }
 
 function updateStats() {
   const total = allAccounts.length;
   const groups = groupedAccounts.length;
-  const searchResults = filteredGroups.reduce((sum, group) => sum + group.accounts.length, 0);
-  
+  const searchResults = filteredGroups.reduce((sum, g) => sum + g.accounts.length, 0);
   totalCount.textContent = total;
   groupCount.textContent = groups;
-  
-  if (isSearching && currentSearchTerm) {
-    searchCount.textContent = searchResults;
-    searchLabel.textContent = `Results for: "${currentSearchTerm}"`;
-    searchResultCard.style.display = 'flex';
-  } else {
-    searchResultCard.style.display = 'none';
-  }
-  
+  if(isSearching && currentSearchTerm) { searchCount.textContent = searchResults; searchLabel.textContent = `Results for: "${currentSearchTerm}"`; searchResultCard.style.display = 'flex'; } 
+  else { searchResultCard.style.display = 'none'; }
   countDisplay.textContent = `${isSearching ? searchResults : total} accounts in ${isSearching ? filteredGroups.length : groups} groups`;
-  deleteCount.textContent = total;
-  
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-  lastUpdate.textContent = `${timeStr}`;
+  deleteCountSpan.textContent = total;
+  const now = new Date(); lastUpdate.textContent = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
 }
 
 function renderAccountsTable(groups) {
-  if (groups.length === 0 || groups.every(g => g.accounts.length === 0)) {
-    const noDataMessage = isSearching && currentSearchTerm 
-      ? `No accounts found containing: "${currentSearchTerm}"`
-      : "No accounts found in the database.";
-    
-    accountsContainer.innerHTML = `
-      <div class="table-container">
-        <div class="no-data">
-          <td colspan="4">
-            <i class="fas fa-database" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
-            <p>${noDataMessage}</p>
-          </td>
-        </div>
-      </div>
-    `;
+  if(groups.length === 0 || groups.every(g=>g.accounts.length===0)) {
+    accountsContainer.innerHTML = `<div class="table-container"><div class="no-data"><td colspan="4"><i class="fas fa-database" style="font-size:2rem;margin-bottom:10px;opacity:0.5;"></i><p>${isSearching && currentSearchTerm ? `No accounts found containing: "${currentSearchTerm}"` : "No accounts found in the database."}</p>\\u003C/td></div></div>`;
     return;
   }
-  
-  let tableHTML = `
-    <div class="table-container">
-      <div class="table-header">
-        <div class="header-cell serial-cell">#</div>
-        <div class="header-cell username-cell">Username</div>
-        <div class="header-cell password-cell">Password</div>
-        <div class="header-cell cookies-cell">Cookies</div>
-      </div>
-  `;
-  
+  let tableHTML = `<div class="table-container"><div class="table-header"><div class="header-cell serial-cell">#</div><div class="header-cell username-cell">Username</div><div class="header-cell password-cell">Password</div><div class="header-cell cookies-cell">Cookies</div></div>`;
   let globalIndex = 0;
-  
   groups.forEach(group => {
-    // Add group header row
-    tableHTML += `
-      <div class="password-group-header">
-        <div class="row-cell serial-cell">
-          <div class="cell-content">📁</div>
-        </div>
-        <div class="row-cell username-cell">
-          <div class="cell-content">
-            <i class="fas fa-key" style="margin-right: 5px;"></i> 
-            <strong>${group.password === "NO_PASSWORD" ? "⚠️ No Password" : group.password}</strong>
-            <span class="group-count">${group.count}</span>
-          </div>
-        </div>
-        <div class="row-cell password-cell">
-          <div class="cell-content"></div>
-        </div>
-        <div class="row-cell cookies-cell">
-          <div class="cell-content"></div>
-        </div>
-      </div>
-    `;
-    
-    // Add accounts for this group
-    group.accounts.forEach(account => {
-      globalIndex++;
-      tableHTML += `
-        <div class="account-row">
-          <div class="row-cell serial-cell">
-            <div class="cell-content">${globalIndex}.</div>
-          </div>
-          <div class="row-cell username-cell">
-            <div class="cell-content" title="${account.username || 'N/A'}">${account.username || 'N/A'}</div>
-          </div>
-          <div class="row-cell password-cell">
-            <div class="cell-content" title="${account.password || 'N/A'}">${account.password || 'N/A'}</div>
-          </div>
-          <div class="row-cell cookies-cell">
-            <div class="cell-content" title="${account.cookie || 'No cookies'}">${account.cookie || 'No cookies'}</div>
-          </div>
-        </div>
-      `;
+    tableHTML += `<div class="password-group-header"><div class="row-cell serial-cell"><div class="cell-content">📁</div></div><div class="row-cell username-cell"><div class="cell-content"><i class="fas fa-key" style="margin-right:5px;"></i> <strong>${group.password === "NO_PASSWORD" ? "⚠️ No Password" : group.password}</strong><span class="group-count">${group.count}</span></div></div><div class="row-cell password-cell"><div class="cell-content"></div></div><div class="row-cell cookies-cell"><div class="cell-content"></div></div></div>`;
+    group.accounts.forEach(account => { globalIndex++;
+      tableHTML += `<div class="account-row"><div class="row-cell serial-cell"><div class="cell-content">${globalIndex}.</div></div><div class="row-cell username-cell"><div class="cell-content" title="${escapeHtml(account.username || 'N/A')}">${escapeHtml(account.username || 'N/A')}</div></div><div class="row-cell password-cell"><div class="cell-content" title="${escapeHtml(account.password || 'N/A')}">${escapeHtml(account.password || 'N/A')}</div></div><div class="row-cell cookies-cell"><div class="cell-content" title="${escapeHtml(account.cookie || 'No cookies')}">${escapeHtml(account.cookie || 'No cookies')}</div></div></div>`;
     });
   });
-  
   tableHTML += '</div>';
   accountsContainer.innerHTML = tableHTML;
 }
 
+function escapeHtml(str) {
+  if(!str) return '';
+  return str.replace(/[&<>]/g, function(m) {
+    if(m === '&') return '&amp;';
+    if(m === '<') return '&lt;';
+    if(m === '>') return '&gt;';
+    return m;
+  }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+    return c;
+  });
+}
+
 function loadData() {
   showLoading();
-  
   searchInput.value = '';
-  isSearching = false;
-  currentSearchTerm = "";
-  searchResultCard.style.display = 'none';
-  
-  // RPH অ্যাকাউন্ট থেকে ডাটা লোড করবে
-  db.ref("accounts/rph").once("value")
-  .then(snapshot => {
+  isSearching = false; currentSearchTerm = ""; searchResultCard.style.display = 'none';
+  db.ref("accounts/rph").once("value").then(snapshot => {
     allAccounts = [];
-    snapshot.forEach(child => {
-      const data = child.val();
-      allAccounts.push({
-        username: data.username || "",
-        password: data.password || "",
-        cookie: data.cookie || data.cookies || "",
-        created_at: data.created_at || ""
-      });
-    });
-    
+    snapshot.forEach(child => { const data = child.val(); allAccounts.push({ username: data.username || "", password: data.password || "", cookie: data.cookie || data.cookies || "", created_at: data.created_at || "" }); });
     groupedAccounts = groupAccountsByPassword(allAccounts);
     filteredGroups = [...groupedAccounts];
     renderAccountsTable(groupedAccounts);
     updateStats();
-  })
-  .catch(err => {
-    accountsContainer.innerHTML = `
-      <div class="table-container">
-        <div class="no-data">
-          <td colspan="4" style="color: #ef4444;">
-            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
-            <p>Error loading data: ${err.message}</p>
-          </td>
-        </div>
-      </div>
-    `;
-    console.error("Firebase error:", err);
-  });
+  }).catch(err => { accountsContainer.innerHTML = `<div class="table-container"><div class="no-data"><td colspan="4" style="color:#ef4444;"><i class="fas fa-exclamation-triangle" style="font-size:2rem;margin-bottom:10px;"></i><p>Error loading data: ${err.message}</p>\\u003C/td></div></div>`; console.error(err); });
 }
 
 function searchByPassword() {
-  const searchTerm = searchInput.value.trim().toLowerCase();
-  
-  if (!searchTerm) {
-    loadData();
-    return;
-  }
-  
-  // Filter groups based on search term
-  filteredGroups = groupedAccounts
-    .map(group => {
-      // Filter accounts within group that match search
-      const matchingAccounts = group.accounts.filter(account => 
-        (account.password && account.password.toLowerCase().includes(searchTerm)) ||
-        (account.username && account.username.toLowerCase().includes(searchTerm)) ||
-        (account.cookie && account.cookie.toLowerCase().includes(searchTerm))
-      );
-      
-      if (matchingAccounts.length > 0) {
-        return {
-          password: group.password,
-          accounts: matchingAccounts,
-          count: matchingAccounts.length
-        };
-      }
-      return null;
-    })
-    .filter(group => group !== null);
-  
-  // Sort filtered groups by size (largest first)
-  filteredGroups.sort((a, b) => b.count - a.count);
-  
-  isSearching = true;
-  currentSearchTerm = searchTerm;
-  
+  const term = searchInput.value.trim().toLowerCase();
+  if(!term) { loadData(); return; }
+  filteredGroups = groupedAccounts.map(group => {
+    const matched = group.accounts.filter(acc => (acc.password && acc.password.toLowerCase().includes(term)) || (acc.username && acc.username.toLowerCase().includes(term)) || (acc.cookie && acc.cookie.toLowerCase().includes(term)));
+    if(matched.length) return { password: group.password, accounts: matched, count: matched.length };
+    return null;
+  }).filter(g => g !== null);
+  filteredGroups.sort((a,b) => b.count - a.count);
+  isSearching = true; currentSearchTerm = term;
   renderAccountsTable(filteredGroups);
   updateStats();
 }
 
-function copyUsernames() {
-  const groupsToCopy = isSearching ? filteredGroups : groupedAccounts;
+function copyUsernames() { copyHelper(isSearching ? filteredGroups : groupedAccounts, 'username', '.copy-usernames-btn', '#16a34a'); }
+function copyPasswords() { copyHelper(isSearching ? filteredGroups : groupedAccounts, 'password', '.copy-passwords-btn', '#2563eb'); }
+function copyCookies() { copyHelper(isSearching ? filteredGroups : groupedAccounts, 'cookie', '.copy-cookies-btn', '#d97706'); }
+function copyHelper(groups, field, btnClass, successColor) {
+  const flat = groups.flatMap(g => g.accounts.map(acc => acc[field] || (field === 'cookie' ? 'No cookies' : 'N/A'))).join("\n");
+  if(!flat.trim()) { alert("⚠️ No data to copy!"); return; }
+  navigator.clipboard.writeText(flat).then(() => { const btn = document.querySelector(btnClass); const original = btn.innerHTML; btn.innerHTML = '<i class="fas fa-check"></i> COPIED!'; btn.style.background = successColor; setTimeout(() => { btn.innerHTML = original; btn.style.background = ""; }, 1500); }).catch(() => alert("Copy failed"));
+}
+
+function downloadExcel() {
+  const sourceGroups = isSearching ? filteredGroups : groupedAccounts;
+  if(!sourceGroups.length || sourceGroups.every(g=>g.accounts.length===0)) { alert("⚠️ No data to export!"); return; }
   
-  if (groupsToCopy.length === 0 || groupsToCopy.every(g => g.accounts.length === 0)) {
-    alert("⚠️ No data to copy!");
-    return;
-  }
-  
-  const usernames = groupsToCopy.flatMap(group => 
-    group.accounts.map(account => account.username)
-  ).join("\n");
-  
-  navigator.clipboard.writeText(usernames)
-    .then(() => {
-      const copyBtn = document.querySelector('.copy-usernames-btn');
-      const originalText = copyBtn.innerHTML;
-      copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
-      copyBtn.style.background = "#16a34a";
-      
-      setTimeout(() => {
-        copyBtn.innerHTML = originalText;
-        copyBtn.style.background = "";
-      }, 1500);
-    })
-    .catch(err => {
-      console.error('Copy failed:', err);
-      alert("Failed to copy usernames.");
+  // Excel file: ONLY Username, Password, Cookies columns - no numbering, no extra text
+  const rows = [];
+  sourceGroups.forEach(group => {
+    group.accounts.forEach(acc => {
+      rows.push({
+        "Username": acc.username || "",
+        "Password": acc.password || "",
+        "Cookies": acc.cookie || ""
+      });
     });
+  });
+  
+  const ws = XLSX.utils.json_to_sheet(rows);
+  // Adjust column widths for better readability
+  ws['!cols'] = [{wch:25}, {wch:20}, {wch:40}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Accounts");
+  XLSX.writeFile(wb, `ebh_accounts_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.xlsx`);
 }
 
-function copyPasswords() {
-  const groupsToCopy = isSearching ? filteredGroups : groupedAccounts;
-  
-  if (groupsToCopy.length === 0 || groupsToCopy.every(g => g.accounts.length === 0)) {
-    alert("⚠️ No data to copy!");
-    return;
-  }
-  
-  const passwords = groupsToCopy.flatMap(group => 
-    group.accounts.map(account => account.password)
-  ).join("\n");
-  
-  navigator.clipboard.writeText(passwords)
-    .then(() => {
-      const copyBtn = document.querySelector('.copy-passwords-btn');
-      const originalText = copyBtn.innerHTML;
-      copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
-      copyBtn.style.background = "#2563eb";
-      
-      setTimeout(() => {
-        copyBtn.innerHTML = originalText;
-        copyBtn.style.background = "";
-      }, 1500);
-    })
-    .catch(err => {
-      console.error('Copy failed:', err);
-      alert("Failed to copy passwords.");
-    });
-}
-
-function copyCookies() {
-  const groupsToCopy = isSearching ? filteredGroups : groupedAccounts;
-  
-  if (groupsToCopy.length === 0 || groupsToCopy.every(g => g.accounts.length === 0)) {
-    alert("⚠️ No data to copy!");
-    return;
-  }
-  
-  const cookies = groupsToCopy.flatMap(group => 
-    group.accounts.map(account => account.cookie || "No cookies")
-  ).join("\n");
-  
-  navigator.clipboard.writeText(cookies)
-    .then(() => {
-      const copyBtn = document.querySelector('.copy-cookies-btn');
-      const originalText = copyBtn.innerHTML;
-      copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
-      copyBtn.style.background = "#d97706";
-      
-      setTimeout(() => {
-        copyBtn.innerHTML = originalText;
-        copyBtn.style.background = "";
-      }, 1500);
-    })
-    .catch(err => {
-      console.error('Copy failed:', err);
-      alert("Failed to copy cookies.");
-    });
-}
-
-function openDeleteModal() {
-  if (allAccounts.length === 0) {
-    alert("⚠️ No data to delete! The database is already empty.");
-    return;
-  }
-  
-  deleteCount.textContent = allAccounts.length;
-  deleteModal.classList.add("active");
-  document.body.style.overflow = "hidden";
-}
-
-function closeDeleteModal() {
-  deleteModal.classList.remove("active");
-  document.body.style.overflow = "auto";
-}
-
+function openDeleteModal() { if(allAccounts.length===0){ alert("⚠️ No data to delete!"); return; } deleteCountSpan.textContent = allAccounts.length; deleteModal.classList.add("active"); document.body.style.overflow = "hidden"; }
+function closeDeleteModal() { deleteModal.classList.remove("active"); document.body.style.overflow = "auto"; }
 function deleteAllData() {
   closeDeleteModal();
-  
-  accountsContainer.innerHTML = `
-    <div class="loading-container">
-      <div class="loading-spinner">
-        <i class="fas fa-spinner fa-spin"></i>
-      </div>
-      <p>Deleting all data from Firebase...</p>
-    </div>
-  `;
-  
-  // RPH অ্যাকাউন্ট থেকে ডাটা ডিলিট করবে
-  db.ref("accounts/rph").remove()
-  .then(() => {
-    allAccounts = [];
-    groupedAccounts = [];
-    filteredGroups = [];
-    isSearching = false;
-    currentSearchTerm = "";
-    searchResultCard.style.display = 'none';
-    
-    accountsContainer.innerHTML = `
-      <div class="table-container">
-        <div class="no-data" style="color: #22c55e;">
-          <td colspan="4">
-            <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 10px;"></i>
-            <p>✅ All data deleted successfully!</p>
-            <p>Database is now empty.</p>
-          </td>
-        </div>
-      </div>
-    `;
-    
+  accountsContainer.innerHTML = `<div class="loading-container"><div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div><p>Deleting all data from Firebase...</p></div>`;
+  db.ref("accounts/rph").remove().then(() => {
+    allAccounts = []; groupedAccounts = []; filteredGroups = []; isSearching = false; currentSearchTerm = ""; searchResultCard.style.display = 'none';
+    accountsContainer.innerHTML = `<div class="table-container"><div class="no-data" style="color:#22c55e;"><td colspan="4"><i class="fas fa-check-circle" style="font-size:2rem;margin-bottom:10px;"></i><p>✅ All data deleted successfully!</p><p>Database is now empty.</p>\\u003C/td></div></div>`;
     updateStats();
-    
-    setTimeout(() => {
-      alert("✅ All data has been permanently deleted.");
-    }, 500);
-  })
-  .catch(err => {
-    accountsContainer.innerHTML = `
-      <div class="table-container">
-        <div class="no-data" style="color: #ef4444;">
-          <td colspan="4">
-            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
-            <p>❌ Error deleting data</p>
-          </td>
-        </div>
-      </div>
-    `;
-    console.error("Delete error:", err);
-  });
+    setTimeout(() => alert("✅ All data has been permanently deleted."), 500);
+  }).catch(err => { accountsContainer.innerHTML = `<div class="table-container"><div class="no-data" style="color:#ef4444;"><td colspan="4"><i class="fas fa-exclamation-triangle" style="font-size:2rem;margin-bottom:10px;"></i><p>❌ Error deleting data</p>\\u003C/td></div></div>`; console.error(err); });
 }
 
-deleteModal.addEventListener("click", function(e) {
-  if (e.target === deleteModal) {
-    closeDeleteModal();
-  }
-});
-
-searchInput.addEventListener("keyup", function(e) {
-  if (e.key === "Enter") {
-    searchByPassword();
-  }
-});
-
-searchInput.addEventListener("input", function() {
-  if (this.value.trim() === "" && isSearching) {
-    loadData();
-  }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  loadData();
-  // Auto refresh every 2 minutes
-  setInterval(loadData, 120000);
-});
+deleteModal.addEventListener("click", function(e) { if(e.target === deleteModal) closeDeleteModal(); });
+searchInput.addEventListener("keyup", function(e) { if(e.key === "Enter") searchByPassword(); });
+searchInput.addEventListener("input", function() { if(this.value.trim() === "" && isSearching) loadData(); });
+document.addEventListener('DOMContentLoaded', () => { loadData(); setInterval(loadData, 120000); });
 </script>
-
 </body>
 </html>
