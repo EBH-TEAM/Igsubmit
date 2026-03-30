@@ -5,27 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>EBH TEAM - 2FA SUBMISSION SYSTEM</title>
   <style>
-    /* আপডেটেড 3D স্টাইল - লাইটার কালার */
+    /* আপডেটেড 3D স্টাইল - গ্রিন-রেড-ইয়েলো থিম */
     :root {
-      --primary: #ff66a3;
-      --primary-dark: #ff3385;
-      --secondary: #ffb366;
-      --secondary-dark: #ff9933;
-      --accent: #8a7aff;
-      --accent-dark: #6b5fff;
-      --danger: #ff6b8b;
-      --danger-dark: #ff4d6d;
-      --dark-bg: #0f1422;
-      --panel: #1e2a3a;
-      --border: #3a4a66;
+      --primary: #00c853;
+      --primary-dark: #009624;
+      --secondary: #ffd600;
+      --secondary-dark: #ffab00;
+      --accent: #ff6d00;
+      --accent-dark: #ff5200;
+      --danger: #ff3d00;
+      --danger-dark: #dd2c00;
+      --dark-bg: #0a1a0f;
+      --panel: #1a3a1a;
+      --border: #2e7d32;
       --text: #ffffff;
-      --muted: #c0d0e5;
-      --error: #ff6b8b;
-      --success: #4cd964;
-      --warning: #ffcc66;
-      --instagram-gradient: linear-gradient(45deg, #ffb347 0%, #ff9966 25%, #ff7b8c 50%, #e65c99 75%, #cc4dcc 100%);
-      --shadow-3d: 0 10px 0 rgba(0, 0, 0, 0.4), 0 8px 20px rgba(255, 102, 163, 0.3);
-      --shadow-3d-hover: 0 15px 0 rgba(0, 0, 0, 0.4), 0 12px 30px rgba(255, 102, 163, 0.5);
+      --muted: #c8e6c9;
+      --error: #ff5722;
+      --success: #00e676;
+      --warning: #ffea00;
+      --instagram-gradient: linear-gradient(45deg, #00c853 0%, #ffd600 50%, #ff3d00 100%);
+      --shadow-3d: 0 10px 0 rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 200, 83, 0.3);
+      --shadow-3d-hover: 0 15px 0 rgba(0, 0, 0, 0.4), 0 12px 30px rgba(0, 200, 83, 0.5);
     }
 
     * {
@@ -45,8 +45,8 @@
       align-items: center;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 20% 20%, rgba(255, 102, 163, 0.15), transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(138, 122, 255, 0.1), transparent 40%);
+        radial-gradient(circle at 20% 20%, rgba(0, 200, 83, 0.15), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 61, 0, 0.1), transparent 40%);
     }
 
     .container {
@@ -57,7 +57,7 @@
 
     /* 3D হেডার */
     .header {
-      background: rgba(30, 42, 58, 0.97);
+      background: rgba(26, 58, 26, 0.97);
       backdrop-filter: blur(20px);
       padding: 16px 12px;
       position: sticky;
@@ -87,7 +87,7 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      filter: drop-shadow(0 0 10px rgba(255, 102, 163, 0.5));
+      filter: drop-shadow(0 0 10px rgba(0, 200, 83, 0.5));
       animation: float 3s ease-in-out infinite;
     }
 
@@ -119,10 +119,10 @@
       border-radius: 20px;
       font-weight: 700;
       transform: rotate(10deg);
-      box-shadow: 0 4px 0 #b3476b, 0 8px 15px rgba(255, 102, 163, 0.3);
+      box-shadow: 0 4px 0 #009624, 0 8px 15px rgba(0, 200, 83, 0.3);
       animation: badgeGlow 2s ease-in-out infinite;
       border: 2px solid rgba(255,255,255,0.2);
-      border-bottom: 4px solid #b3476b;
+      border-bottom: 4px solid #009624;
     }
 
     /* সিস্টেম স্ট্যাটাস বার */
@@ -140,7 +140,7 @@
       flex-wrap: wrap;
       gap: 10px;
       transform: translateY(-2px);
-      border-bottom: 4px solid #15202b;
+      border-bottom: 4px solid #0a3a0a;
     }
 
     .system-status-info {
@@ -156,18 +156,18 @@
       height: 12px;
       border-radius: 50%;
       background: var(--success);
-      box-shadow: 0 0 12px var(--success), 0 2px 0 #1a7a3a;
+      box-shadow: 0 0 12px var(--success), 0 2px 0 #00a152;
       animation: pulse 2s infinite;
-      border-bottom: 2px solid #1a7a3a;
+      border-bottom: 2px solid #00a152;
     }
 
     .system-status-dot.off {
       background: var(--danger);
-      box-shadow: 0 0 12px var(--danger), 0 2px 0 #b33f5a;
-      border-bottom: 2px solid #b33f5a;
+      box-shadow: 0 0 12px var(--danger), 0 2px 0 #c62828;
+      border-bottom: 2px solid #c62828;
     }
 
-    /* টিকার কন্টেইনার - ফিক্সড */
+    /* টিকার কন্টেইনার */
     .message-ticker-container {
       flex: 2;
       min-width: 200px;
@@ -177,9 +177,9 @@
       border: 1px solid var(--border);
       overflow: hidden;
       position: relative;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 4px 0 #0f1422;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 4px 0 #0a3a0a;
       transform: translateY(-2px);
-      border-bottom: 3px solid #0f1422;
+      border-bottom: 3px solid #0a3a0a;
       height: 38px;
       display: flex;
       align-items: center;
@@ -201,25 +201,14 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 8px rgba(255, 102, 163, 0.4);
+      text-shadow: 0 0 8px rgba(0, 200, 83, 0.4);
       letter-spacing: 0.5px;
       white-space: nowrap;
-    }
-
-    .ticker-content.warning {
-      background: linear-gradient(45deg, #ff6b8b, #ffb366);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
     }
 
     @keyframes ticker-scroll {
       0% { transform: translateX(0%); }
       100% { transform: translateX(-50%); }
-    }
-
-    .message-ticker:hover .ticker-content {
-      animation-play-state: paused;
     }
 
     /* সিস্টেম অফ নোটিস */
@@ -230,28 +219,27 @@
       padding: 16px 20px;
       border-radius: 40px;
       border: 3px solid var(--danger);
-      background: rgba(255, 107, 139, 0.15);
+      background: rgba(255, 61, 0, 0.15);
       color: var(--danger);
       max-width: 100%;
       width: 100%;
       margin: 12px auto;
       backdrop-filter: blur(8px);
-      box-shadow: var(--shadow-3d), 0 0 30px rgba(255, 107, 139, 0.3);
+      box-shadow: var(--shadow-3d), 0 0 30px rgba(255, 61, 0, 0.3);
       line-height: 1.5;
       transform: translateY(-2px);
-      border-bottom: 6px solid #b33f5a;
+      border-bottom: 6px solid #c62828;
     }
 
-    /* তিনটি অপশন কার্ড - আপডেট: এখন কোনটাই সিলেক্টেড থাকবে না */
+    /* চারটি অপশন কার্ড */
     .options-container {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
       margin: 12px 0 16px;
     }
 
     .option-card {
-      flex: 1;
       background: var(--panel);
       border: 2px solid var(--border);
       border-radius: 16px;
@@ -261,13 +249,13 @@
       transition: all 0.1s ease;
       box-shadow: var(--shadow-3d);
       transform: translateY(-2px);
-      border-bottom: 4px solid #15202b;
+      border-bottom: 4px solid #0a3a0a;
       opacity: 0.8;
     }
 
     .option-card.selected {
       border-color: var(--primary);
-      box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
+      box-shadow: 0 0 15px rgba(0, 200, 83, 0.4);
       transform: translateY(-3px);
       border-bottom-color: var(--primary);
       opacity: 1;
@@ -289,12 +277,27 @@
       font-weight: 700;
     }
 
-    /* তিনটি ইনপুট বক্স */
+    /* তিনটি ইনপুট বক্স - ডাইনামিক সাইজ */
     .input-container {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
       margin-top: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .input-container.small-boxes .input-box {
+      min-height: 100px;
+    }
+
+    .input-container.small-boxes .box-header {
+      font-size: 11px;
+      padding: 6px 4px;
+    }
+
+    .input-container.small-boxes .box-textarea {
+      font-size: 10px;
+      padding: 6px;
     }
 
     .input-box {
@@ -308,16 +311,12 @@
       border: 1px solid var(--border);
       backdrop-filter: blur(8px);
       transform: translateY(-2px);
-      border-bottom: 5px solid #15202b;
-    }
-
-    .input-box:active {
-      transform: translateY(2px);
-      border-bottom-width: 2px;
+      border-bottom: 5px solid #0a3a0a;
+      transition: all 0.3s ease;
     }
 
     .box-header {
-      background: rgba(15, 20, 34, 0.8);
+      background: rgba(10, 26, 15, 0.8);
       padding: 10px 6px;
       font-size: 14px;
       font-weight: 800;
@@ -326,25 +325,10 @@
       text-transform: uppercase;
     }
 
-    .input-box:nth-child(1) .box-header {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-    
-    .input-box:nth-child(2) .box-header {
-      color: var(--secondary);
-      border-bottom-color: var(--secondary);
-    }
-    
-    .input-box:nth-child(3) .box-header {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-    }
-
     .box-textarea {
       flex: 1;
       width: 100%;
-      background: rgba(15, 20, 34, 0.5);
+      background: rgba(10, 26, 15, 0.5);
       color: var(--text);
       border: none;
       padding: 10px;
@@ -357,9 +341,66 @@
       overflow-y: auto;
     }
 
-    .error-border {
-      border: 2px solid var(--error) !important;
-      box-shadow: 0 0 12px rgba(255, 107, 139, 0.5);
+    /* অতিরিক্ত লম্বা ইনপুট বক্স - এক লাইন সাবমিটের জন্য */
+    .extra-input-container {
+      margin-top: 12px;
+      display: none;
+    }
+
+    .extra-input-container.show {
+      display: block;
+    }
+
+    .extra-input-box {
+      background: var(--panel);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 120px;
+      box-shadow: var(--shadow-3d);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      transform: translateY(-2px);
+      border-bottom: 5px solid #0a3a0a;
+    }
+
+    .extra-box-header {
+      background: rgba(0, 200, 83, 0.3);
+      padding: 12px 6px;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      border-bottom: 2px solid var(--primary);
+      text-transform: uppercase;
+      color: var(--secondary);
+    }
+
+    .extra-box-textarea {
+      width: 100%;
+      background: rgba(10, 26, 15, 0.5);
+      color: var(--text);
+      border: none;
+      padding: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+      min-height: 100px;
+    }
+
+    .format-hint {
+      padding: 8px 12px;
+      font-size: 11px;
+      color: var(--secondary);
+      background: rgba(255, 214, 0, 0.1);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .format-hint i {
+      margin-right: 5px;
     }
 
     /* তারিখ ইনফো */
@@ -375,14 +416,14 @@
       box-shadow: var(--shadow-3d);
       font-weight: 500;
       transform: translateY(-2px);
-      border-bottom: 4px solid #15202b;
+      border-bottom: 4px solid #0a3a0a;
     }
 
     .current-date {
       color: var(--secondary);
       font-weight: 900;
       font-size: 20px;
-      background: rgba(255, 179, 102, 0.1);
+      background: rgba(255, 214, 0, 0.1);
       padding: 2px 8px;
       border-radius: 30px;
       display: inline-block;
@@ -408,17 +449,10 @@
       backdrop-filter: blur(8px);
       max-width: 100%;
       width: 100%;
-      background: rgba(255, 102, 163, 0.1);
+      background: rgba(0, 200, 83, 0.1);
       box-shadow: var(--shadow-3d);
       transform: translateY(-2px);
-      border-bottom: 5px solid #b3476b;
-    }
-
-    .submit-notice.restricted {
-      color: var(--danger);
-      border-color: var(--danger);
-      background: rgba(255, 107, 139, 0.1);
-      border-bottom-color: #b33f5a;
+      border-bottom: 5px solid #009624;
     }
 
     .submit-btn {
@@ -438,16 +472,13 @@
       justify-content: center;
       gap: 10px;
       text-transform: uppercase;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 0 #b3476b, 0 12px 20px rgba(255, 102, 163, 0.4);
+      box-shadow: 0 8px 0 #009624, 0 12px 20px rgba(0, 200, 83, 0.4);
       transform: translateY(-4px);
-      border: 2px solid rgba(255,255,255,0.2);
     }
 
     .submit-btn:active {
       transform: translateY(2px);
-      box-shadow: 0 4px 0 #b3476b, 0 8px 15px rgba(255, 102, 163, 0.4);
+      box-shadow: 0 4px 0 #009624, 0 8px 15px rgba(0, 200, 83, 0.4);
     }
 
     .submit-btn.system-off-btn {
@@ -455,17 +486,10 @@
       cursor: not-allowed;
       filter: grayscale(60%);
       background: linear-gradient(45deg, #888, #aaa);
-      box-shadow: 0 5px 0 #555, 0 8px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 0 #555;
       pointer-events: none;
-      transform: translateY(-2px);
     }
 
-    .submit-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    /* টাইম রিমেইনিং */
     .time-remaining {
       font-size: 14px;
       font-weight: 600;
@@ -473,10 +497,6 @@
       padding: 6px 18px;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 40px;
-      border: 1px solid var(--border);
-      margin-top: 4px;
-      box-shadow: 0 4px 0 #0f1422;
-      transform: translateY(-2px);
     }
 
     .time-highlight {
@@ -484,24 +504,13 @@
       font-weight: 700;
     }
 
-    /* আউটপুট সেকশন */
     .output-section {
       background: var(--panel);
-      border: 1px solid var(--border);
       border-radius: 20px;
       padding: 24px 16px;
-      min-height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       text-align: center;
-      position: relative;
-      overflow: hidden;
       margin: 12px 0;
       box-shadow: var(--shadow-3d);
-      backdrop-filter: blur(8px);
-      transform: translateY(-2px);
-      border-bottom: 5px solid #15202b;
     }
 
     .output-text {
@@ -511,15 +520,9 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      animation: textFloat 4s ease-in-out infinite;
-      padding: 12px 20px;
-      border-radius: 14px;
-      position: relative;
-      z-index: 2;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
 
-    /* পপআপ স্টাইল */
+    /* পপআপ */
     .popup-overlay {
       position: fixed;
       top: 0;
@@ -537,860 +540,357 @@
       visibility: hidden;
       transition: all 0.3s ease;
     }
-
-    .popup-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
+    .popup-overlay.active { opacity: 1; visibility: visible; }
     .popup-content {
       background: var(--panel);
-      border: 1px solid var(--border);
       border-radius: 24px;
       padding: 24px;
       width: 100%;
       max-width: 340px;
-      max-height: 80vh;
-      overflow-y: auto;
-      transform: scale(0.9) translateY(0);
-      transition: transform 0.3s ease;
       box-shadow: var(--shadow-3d);
-      border-bottom: 6px solid #15202b;
     }
-
-    .popup-overlay.active .popup-content {
-      transform: scale(1) translateY(-3px);
-    }
-
     .popup-header {
       font-size: 22px;
       font-weight: 800;
       text-align: center;
       margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--border);
     }
-
-    .popup-header.warning { color: var(--warning); border-bottom-color: var(--warning); }
-    .popup-header.error { color: var(--error); border-bottom-color: var(--error); }
-    .popup-header.success { color: var(--success); border-bottom-color: var(--success); }
-
-    .popup-message {
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--text);
-      margin-bottom: 20px;
-      text-align: center;
-      white-space: pre-line;
-    }
-
-    .popup-buttons {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
+    .popup-message { font-size: 16px; line-height: 1.6; text-align: center; margin-bottom: 20px; white-space: pre-line; }
+    .popup-buttons { display: flex; gap: 12px; }
     .popup-btn {
       flex: 1;
       padding: 14px;
-      border: none;
       border-radius: 40px;
       font-weight: 700;
-      font-size: 16px;
       cursor: pointer;
-      transition: all 0.1s ease;
-      transform: translateY(-2px);
-      border-bottom: 4px solid #b3476b;
-      box-shadow: 0 5px 0 #b3476b;
-    }
-
-    .popup-btn.confirm {
       background: var(--instagram-gradient);
       color: white;
-      box-shadow: 0 6px 0 #b3476b, 0 6px 15px rgba(255, 102, 163, 0.4);
+      border: none;
+      box-shadow: 0 5px 0 #009624;
     }
-
-    /* মোবাইল রেস্পন্সিভ */
-    @media (max-width: 480px) {
-      .header { padding: 12px; min-height: 70px; }
-      .logo-icon { font-size: 32px; }
-      .logo-text { font-size: 24px; }
-      .logo-badge { right: -30px; font-size: 10px; padding: 3px 8px; top: -10px; }
-      
-      .options-container { gap: 4px; }
-      .option-card { padding: 8px 2px; }
-      .option-icon { font-size: 20px; }
-      .option-title { font-size: 11px; }
-      
-      .input-container { gap: 6px; }
-      .input-box { min-height: 160px; }
-      .box-header { font-size: 12px; padding: 8px 4px; }
-      .box-textarea { font-size: 11px; padding: 8px; }
-      
-      .submit-btn { padding: 14px 20px; font-size: 16px; }
-      .output-text { font-size: 24px; padding: 10px 16px; }
-      
-      .popup-content { padding: 20px; }
-      .popup-header { font-size: 20px; }
-      .popup-message { font-size: 14px; }
-    }
-
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
   </style>
-  
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
-
 <body>
-  <div class="container">
-    <!-- হেডার -->
-    <div class="header">
-      <div class="logo-container">
-        <div class="logo-icon">♂️</div>
-        <div class="logo-text">
-          EARNING BY HABIB 
-          <div class="logo-badge">EBH</div>
-        </div>
-      </div>
-    </div>
+<div class="container">
+  <div class="header"><div class="logo-container"><div class="logo-icon">♂️</div><div class="logo-text">EARNING BY HABIB <div class="logo-badge">EBH</div></div></div></div>
+  <div class="system-status-bar"><div class="system-status-info"><div class="system-status-dot" id="systemStatusDot"></div><div class="system-status-text" id="systemStatusText">Loading...</div></div><div class="message-ticker-container"><div class="message-ticker"><div class="ticker-content" id="tickerContent">📢 Loading...</div></div></div></div>
+  <div class="system-off-notice" id="systemOffNotice" style="display: none;"><span id="systemOffMessage"></span></div>
 
-    <!-- সিস্টেম স্ট্যাটাস বার (টিকার সাথে) -->
-    <div class="system-status-bar">
-      <div class="system-status-info">
-        <div class="system-status-dot" id="systemStatusDot"></div>
-        <div class="system-status-text" id="systemStatusText">Loading...</div>
-      </div>
-      <div class="message-ticker-container">
-        <div class="message-ticker">
-          <div class="ticker-content" id="tickerContent">📢 Loading ticker message...</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- সিস্টেম অফ নোটিস (যখন পুরো সিস্টেম অফ) -->
-    <div class="system-off-notice" id="systemOffNotice" style="display: none;">
-      <span id="systemOffMessage"></span>
-    </div>
-
-    <!-- তিনটি অপশন কার্ড - আপডেট: কোনটাই প্রি-সিলেক্টেড না -->
-    <div class="options-container">
-      <div class="option-card" id="optionInstagram">
-        <div class="option-icon">📷</div>
-        <div class="option-title">INSTAGRAM 2FA</div>
-      </div>
-      <div class="option-card" id="optionFacebook2FA">
-        <div class="option-icon">📘</div>
-        <div class="option-title">FACEBOOK 2FA</div>
-      </div>
-      <div class="option-card" id="optionFacebookCookie">
-        <div class="option-icon">🍪</div>
-        <div class="option-title">FACEBOOK COOKIE</div>
-      </div>
-    </div>
-
-    <!-- তিনটি ইনপুট বক্স -->
-    <div class="input-container">
-      <div class="input-box">
-        <div class="box-header" id="header1">USERNAME</div>
-        <textarea class="box-textarea" id="input1" placeholder="One per line"></textarea>
-      </div>
-      <div class="input-box">
-        <div class="box-header" id="header2">PASSWORD</div>
-        <textarea class="box-textarea" id="input2" placeholder="One per line"></textarea>
-      </div>
-      <div class="input-box">
-        <div class="box-header" id="header3">2FA CODE</div>
-        <textarea class="box-textarea" id="input3" placeholder="One per line"></textarea>
-      </div>
-    </div>
-
-    <!-- তারিখ ইনফো -->
-    <div class="date-info">
-      Today: <span class="current-date" id="currentDate"></span> 
-      - Must include in password
-    </div>
-
-    <!-- সাবমিট সেকশন -->
-    <div class="submit-section">
-      <div class="submit-notice" id="timeNotice">Working Hours: 24/7</div>
-      <div id="timeRemaining" class="time-remaining"></div>
-      <button class="submit-btn" id="submitBtn">SUBMIT</button>
-    </div>
-
-    <!-- আউটপুট সেকশন -->
-    <div class="output-section">
-      <div class="output-text">EARNING BY HABIB</div>
-    </div>
+  <!-- 4 Options -->
+  <div class="options-container">
+    <div class="option-card" id="optionInstagram"><div class="option-icon">📷</div><div class="option-title">INSTAGRAM 2FA</div></div>
+    <div class="option-card" id="optionFacebook2FA"><div class="option-icon">📘</div><div class="option-title">FACEBOOK 2FA</div></div>
+    <div class="option-card" id="optionFacebookCookie"><div class="option-icon">🍪</div><div class="option-title">FACEBOOK COOKIE</div></div>
+    <div class="option-card" id="optionIgCookies"><div class="option-icon">🍪</div><div class="option-title">IG COOKIES (NO LINK)</div></div>
   </div>
 
-  <!-- পপআপগুলো -->
-  <div class="popup-overlay" id="restrictedPopup">
-    <div class="popup-content">
-      <div class="popup-header warning">⏰ CLOSED</div>
-      <div class="popup-message">🔴 9PM - 12AM</div>
-      <div class="popup-buttons">
-        <button class="popup-btn confirm" id="closeRestrictedPopup">OK</button>
+  <!-- তিনটি ইনপুট বক্স -->
+  <div class="input-container" id="mainInputContainer">
+    <div class="input-box"><div class="box-header" id="header1">USERNAME</div><textarea class="box-textarea" id="input1" placeholder="One per line"></textarea></div>
+    <div class="input-box"><div class="box-header" id="header2">PASSWORD</div><textarea class="box-textarea" id="input2" placeholder="One per line - Must include date"></textarea></div>
+    <div class="input-box"><div class="box-header" id="header3">2FA CODE</div><textarea class="box-textarea" id="input3" placeholder="One per line"></textarea></div>
+  </div>
+
+  <!-- অতিরিক্ত লম্বা ইনপুট বক্স - এক লাইন সাবমিটের জন্য (শুধু IG COOKIES অপশনে দেখাবে) -->
+  <div class="extra-input-container" id="extraInputContainer">
+    <div class="extra-input-box">
+      <div class="extra-box-header">
+        <i class="fas fa-layer-group"></i> BULK SUBMIT (One Line Format)
+      </div>
+      <textarea class="extra-box-textarea" id="extraInput" placeholder="username|password|cookie&#10;user2|pass2|cookie2&#10;user3|pass3|cookie3"></textarea>
+      <div class="format-hint">
+        <i>ℹ️</i> Format: username | password | cookie (use pipe | to separate)
       </div>
     </div>
   </div>
 
-  <div class="popup-overlay" id="systemOffPopup">
-    <div class="popup-content">
-      <div class="popup-header warning">⚠️ SYSTEM OFFLINE</div>
-      <div class="popup-message" id="systemOffPopupMessage"></div>
-      <div class="popup-buttons">
-        <button class="popup-btn confirm" id="closeSystemOffPopup">OK</button>
-      </div>
-    </div>
-  </div>
+  <div class="date-info">Today: <span class="current-date" id="currentDate"></span> - Must include in password</div>
+  <div class="submit-section"><div class="submit-notice" id="timeNotice">Working Hours: 24/7</div><div id="timeRemaining" class="time-remaining"></div><button class="submit-btn" id="submitBtn">SUBMIT</button></div>
+  <div class="output-section"><div class="output-text">EARNING BY HABIB</div></div>
+</div>
 
-  <div class="popup-overlay" id="optionOffPopup">
-    <div class="popup-content">
-      <div class="popup-header warning" id="optionOffTitle">⚠️ UNAVAILABLE</div>
-      <div class="popup-message" id="optionOffMessage"></div>
-      <div class="popup-buttons">
-        <button class="popup-btn confirm" id="closeOptionOffPopup">OK</button>
-      </div>
-    </div>
-  </div>
+<!-- Popups -->
+<div class="popup-overlay" id="restrictedPopup"><div class="popup-content"><div class="popup-header warning">⏰ CLOSED</div><div class="popup-message">🔴 9PM - 12AM</div><div class="popup-buttons"><button class="popup-btn confirm" id="closeRestrictedPopup">OK</button></div></div></div>
+<div class="popup-overlay" id="systemOffPopup"><div class="popup-content"><div class="popup-header warning">⚠️ SYSTEM OFFLINE</div><div class="popup-message" id="systemOffPopupMessage"></div><div class="popup-buttons"><button class="popup-btn confirm" id="closeSystemOffPopup">OK</button></div></div></div>
+<div class="popup-overlay" id="optionOffPopup"><div class="popup-content"><div class="popup-header warning" id="optionOffTitle">⚠️ UNAVAILABLE</div><div class="popup-message" id="optionOffMessage"></div><div class="popup-buttons"><button class="popup-btn confirm" id="closeOptionOffPopup">OK</button></div></div></div>
+<div class="popup-overlay" id="noOptionSelectedPopup"><div class="popup-content"><div class="popup-header warning">⚠️ NO OPTION SELECTED</div><div class="popup-message">Please select an option before submitting.</div><div class="popup-buttons"><button class="popup-btn confirm" id="closeNoOptionPopup">OK</button></div></div></div>
+<div class="popup-overlay" id="popupOverlay"><div class="popup-content"><div class="popup-header" id="popupTitle">MESSAGE</div><div class="popup-message" id="popupMessage"></div><div class="popup-buttons"><button class="popup-btn confirm" id="popupConfirm">OK</button></div></div></div>
+<div class="popup-overlay" id="duplicatePopup"><div class="popup-content"><div class="popup-header warning">⚠️ DUPLICATE</div><div class="popup-message" id="duplicatePopupMessage"></div><div class="popup-buttons"><button class="popup-btn confirm" id="duplicateConfirm">NEW ONLY</button><button class="popup-btn confirm" id="duplicateCancel">CANCEL</button></div></div></div>
 
-  <div class="popup-overlay" id="noOptionSelectedPopup">
-    <div class="popup-content">
-      <div class="popup-header warning">⚠️ NO OPTION SELECTED</div>
-      <div class="popup-message">Please select an option (Instagram, Facebook 2FA, or Facebook Cookie) before submitting.</div>
-      <div class="popup-buttons">
-        <button class="popup-btn confirm" id="closeNoOptionPopup">OK</button>
-      </div>
-    </div>
-  </div>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCI4HPJ_mqhqmDjKHQr3Cd302rO2Tud1Go",
+    authDomain: "mtwork-fc469.firebaseapp.com",
+    databaseURL: "https://mtwork-fc469-default-rtdb.firebaseio.com",
+    projectId: "mtwork-fc469",
+    storageBucket: "mtwork-fc469.firebasestorage.app",
+    messagingSenderId: "351935919939",
+    appId: "1:351935919939:web:7ad33f6c3e6e4de26f21f6"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup-content">
-      <div class="popup-header" id="popupTitle">MESSAGE</div>
-      <div class="popup-message" id="popupMessage"></div>
-      <div class="popup-buttons">
-        <button class="popup-btn confirm" id="popupConfirm">OK</button>
-      </div>
-    </div>
-  </div>
+  // DOM
+  const header1 = document.getElementById('header1'), header2 = document.getElementById('header2'), header3 = document.getElementById('header3');
+  const input1 = document.getElementById('input1'), input2 = document.getElementById('input2'), input3 = document.getElementById('input3');
+  const extraInput = document.getElementById('extraInput');
+  const extraInputContainer = document.getElementById('extraInputContainer');
+  const mainInputContainer = document.getElementById('mainInputContainer');
+  const submitBtn = document.getElementById('submitBtn'), currentDateElement = document.getElementById('currentDate');
+  const optionInstagram = document.getElementById('optionInstagram'), optionFacebook2FA = document.getElementById('optionFacebook2FA'), optionFacebookCookie = document.getElementById('optionFacebookCookie'), optionIgCookies = document.getElementById('optionIgCookies');
+  const systemStatusDot = document.getElementById('systemStatusDot'), systemStatusText = document.getElementById('systemStatusText'), tickerContent = document.getElementById('tickerContent'), systemOffNotice = document.getElementById('systemOffNotice'), systemOffMessage = document.getElementById('systemOffMessage');
+  const restrictedPopup = document.getElementById('restrictedPopup'), systemOffPopup = document.getElementById('systemOffPopup'), systemOffPopupMessage = document.getElementById('systemOffPopupMessage'), optionOffPopup = document.getElementById('optionOffPopup'), optionOffMessage = document.getElementById('optionOffMessage'), optionOffTitle = document.getElementById('optionOffTitle'), noOptionSelectedPopup = document.getElementById('noOptionSelectedPopup'), popupOverlay = document.getElementById('popupOverlay'), popupTitle = document.getElementById('popupTitle'), popupMessage = document.getElementById('popupMessage'), duplicatePopup = document.getElementById('duplicatePopup'), duplicatePopupMessage = document.getElementById('duplicatePopupMessage');
+  const closeRestricted = document.getElementById('closeRestrictedPopup'), closeSystemOff = document.getElementById('closeSystemOffPopup'), closeOptionOff = document.getElementById('closeOptionOffPopup'), closeNoOption = document.getElementById('closeNoOptionPopup'), popupConfirm = document.getElementById('popupConfirm'), duplicateConfirm = document.getElementById('duplicateConfirm'), duplicateCancel = document.getElementById('duplicateCancel');
 
-  <div class="popup-overlay" id="duplicatePopup">
-    <div class="popup-content">
-      <div class="popup-header warning">⚠️ DUPLICATE</div>
-      <div class="popup-message" id="duplicatePopupMessage"></div>
-      <div class="popup-buttons">
-        <button class="popup-btn confirm" id="duplicateConfirm">NEW ONLY</button>
-        <button class="popup-btn confirm" id="duplicateCancel">CANCEL</button>
-      </div>
-    </div>
-  </div>
+  let selectedOption = null;
+  let systemStatus = true;
+  let optionStatus = { instagram: true, facebook2fa: true, facebookcookie: true, igcookies: true };
+  let optionMessages = { instagram: "", facebook2fa: "", facebookcookie: "", igcookies: "" };
+  let tickerMessage = "", offReason = "";
+  let pendingSubmission = { ids: [], passwords: [], codes: [], uniqueIndices: [] };
+  const TODAY_DATE = new Date().getDate().toString();
+  if (currentDateElement) currentDateElement.textContent = TODAY_DATE;
 
-  <script>
-    (function() {
-      // Firebase Config
-      const firebaseConfig = {
-        apiKey: "AIzaSyCI4HPJ_mqhqmDjKHQr3Cd302rO2Tud1Go",
-        authDomain: "mtwork-fc469.firebaseapp.com",
-        databaseURL: "https://mtwork-fc469-default-rtdb.firebaseio.com",
-        projectId: "mtwork-fc469",
-        storageBucket: "mtwork-fc469.firebasestorage.app",
-        messagingSenderId: "351935919939",
-        appId: "1:351935919939:web:7ad33f6c3e6e4de26f21f6"
-      };
-
-      // Initialize Firebase
-      let db;
-      try {
-        firebase.initializeApp(firebaseConfig);
-        db = firebase.database();
-        console.log("✅ Firebase Connected");
-      } catch (e) {
-        console.error("❌ Firebase Error:", e);
+  function loadAllData() { loadSystemStatus(); loadOptionStatus(); }
+  function loadSystemStatus() {
+    db.ref("system_control").on("value", (snap) => {
+      if(snap.exists()){ let d=snap.val(); systemStatus=d.status!==undefined?d.status:true; tickerMessage=d.ticker_message||""; offReason=d.off_reason||""; }
+      else { systemStatus=true; tickerMessage=""; offReason=""; }
+      updateSystemUI();
+    });
+  }
+  function loadOptionStatus() {
+    db.ref("option_control").on("value", (snap) => {
+      if(snap.exists()){ let d=snap.val();
+        optionStatus.instagram = d.instagram?.status!==false; optionStatus.facebook2fa = d.facebook2fa?.status!==false; optionStatus.facebookcookie = d.facebookcookie?.status!==false; optionStatus.igcookies = d.igcookies?.status!==false;
+        optionMessages.instagram = d.instagram?.message||""; optionMessages.facebook2fa = d.facebook2fa?.message||""; optionMessages.facebookcookie = d.facebookcookie?.message||""; optionMessages.igcookies = d.igcookies?.message||"";
       }
-
-      // DOM Elements
-      const header1 = document.getElementById('header1');
-      const header2 = document.getElementById('header2');
-      const header3 = document.getElementById('header3');
-      const input1 = document.getElementById('input1');
-      const input2 = document.getElementById('input2');
-      const input3 = document.getElementById('input3');
-      const submitBtn = document.getElementById('submitBtn');
-      const currentDateElement = document.getElementById('currentDate');
+      updateOptionUI();
+    });
+  }
+  function updateSystemUI() {
+    if(systemStatus){ systemStatusDot.className='system-status-dot'; systemStatusText.textContent='✅ ONLINE'; systemOffNotice.style.display='none'; }
+    else { systemStatusDot.className='system-status-dot off'; systemStatusText.textContent='🔴 OFFLINE'; systemOffMessage.textContent=offReason||'System offline'; systemOffNotice.style.display='block'; }
+    tickerContent.innerHTML = tickerMessage ? `📢 ${tickerMessage} 🔹 ${tickerMessage}` : '📢 EBH TEAM - 2FA SYSTEM 🔹 EBH TEAM';
+    updateSubmitButtonState();
+  }
+  function updateOptionUI() {
+    if(optionStatus.instagram) optionInstagram.classList.remove('off'); else optionInstagram.classList.add('off');
+    if(optionStatus.facebook2fa) optionFacebook2FA.classList.remove('off'); else optionFacebook2FA.classList.add('off');
+    if(optionStatus.facebookcookie) optionFacebookCookie.classList.remove('off'); else optionFacebookCookie.classList.add('off');
+    if(optionStatus.igcookies) optionIgCookies.classList.remove('off'); else optionIgCookies.classList.add('off');
+    if(selectedOption && !optionStatus[selectedOption]) removeSelection();
+  }
+  
+  // IG COOKIES অপশন সিলেক্ট করলে বিশেষ UI পরিবর্তন
+  function toggleExtraInputForIgCookies(isIgCookiesSelected) {
+    if(isIgCookiesSelected) {
+      // তিনটি বক্স ছোট করা
+      mainInputContainer.classList.add('small-boxes');
+      // অতিরিক্ত বক্স দেখানো
+      extraInputContainer.classList.add('show');
+    } else {
+      // তিনটি বক্স স্বাভাবিক করা
+      mainInputContainer.classList.remove('small-boxes');
+      // অতিরিক্ত বক্স লুকানো
+      extraInputContainer.classList.remove('show');
+    }
+  }
+  
+  function removeSelection() {
+    optionInstagram.classList.remove('selected'); optionFacebook2FA.classList.remove('selected'); optionFacebookCookie.classList.remove('selected'); optionIgCookies.classList.remove('selected');
+    selectedOption = null;
+    header1.textContent='USERNAME'; header2.textContent='PASSWORD'; header3.textContent='2FA CODE';
+    input1.placeholder='One per line'; input2.placeholder='One per line - Must include date'; input3.placeholder='One per line';
+    toggleExtraInputForIgCookies(false);
+    // extraInput ক্লিয়ার করা
+    if(extraInput) extraInput.value = '';
+  }
+  
+  function selectOption(opt) {
+    if(!optionStatus[opt]){ let name = opt==='instagram'?'INSTAGRAM 2FA':opt==='facebook2fa'?'FACEBOOK 2FA':opt==='facebookcookie'?'FACEBOOK COOKIE':'IG COOKIES (NO LINK)';
+      optionOffTitle.textContent=`⚠️ ${name} UNAVAILABLE`; optionOffMessage.textContent=optionMessages[opt]||'Currently unavailable'; optionOffPopup.classList.add('active'); return;
+    }
+    selectedOption=opt;
+    optionInstagram.classList.remove('selected'); optionFacebook2FA.classList.remove('selected'); optionFacebookCookie.classList.remove('selected'); optionIgCookies.classList.remove('selected');
+    
+    if(opt==='instagram'){ 
+      optionInstagram.classList.add('selected'); 
+      header1.textContent='USERNAME'; header2.textContent='PASSWORD'; header3.textContent='2FA CODE'; 
+      input2.placeholder=`Must include ${TODAY_DATE}`;
+      toggleExtraInputForIgCookies(false);
+    }
+    else if(opt==='facebook2fa'){ 
+      optionFacebook2FA.classList.add('selected'); 
+      header1.textContent='UID'; header2.textContent='PASSWORD'; header3.textContent='2FA CODE'; 
+      input2.placeholder=`Must include ${TODAY_DATE}`;
+      toggleExtraInputForIgCookies(false);
+    }
+    else if(opt==='facebookcookie'){ 
+      optionFacebookCookie.classList.add('selected'); 
+      header1.textContent='UID'; header2.textContent='PASSWORD'; header3.textContent='COOKIE'; 
+      input2.placeholder=`Must include ${TODAY_DATE}`;
+      toggleExtraInputForIgCookies(false);
+    }
+    else if(opt==='igcookies'){ 
+      optionIgCookies.classList.add('selected'); 
+      header1.textContent='USERNAME'; header2.textContent='PASSWORD'; header3.textContent='COOKIE'; 
+      input2.placeholder=`Must include ${TODAY_DATE}`;
+      // IG COOKIES অপশনে অতিরিক্ত বক্স দেখানো এবং তিনটি বক্স ছোট করা
+      toggleExtraInputForIgCookies(true);
+    }
+  }
+  
+  function handleOptionClick(opt){ if(!optionStatus[opt]){ let name = opt==='instagram'?'INSTAGRAM 2FA':opt==='facebook2fa'?'FACEBOOK 2FA':opt==='facebookcookie'?'FACEBOOK COOKIE':'IG COOKIES'; optionOffTitle.textContent=`⚠️ ${name} UNAVAILABLE`; optionOffMessage.textContent=optionMessages[opt]||'Unavailable'; optionOffPopup.classList.add('active'); return; } selectOption(opt); }
+  function updateSubmitButtonState(){ if(!systemStatus || isRestrictedTime()){ submitBtn.classList.add('system-off-btn'); submitBtn.disabled=true; } else { submitBtn.classList.remove('system-off-btn'); submitBtn.disabled=false; } }
+  function isRestrictedTime(){ let h=new Date().getHours(); return h>=21 && h<24; }
+  function getTimeRemaining(){ let now=new Date(), h=now.getHours(); if(h<21){ let t=new Date(); t.setHours(21,0,0,0); let d=t-now; return {hours:Math.floor(d/3600000),minutes:Math.floor((d%3600000)/60000),seconds:Math.floor((d%60000)/1000)}; } else { let t=new Date(); t.setDate(t.getDate()+1); t.setHours(0,0,0,0); let d=t-now; return {hours:Math.floor(d/3600000),minutes:Math.floor((d%3600000)/60000),seconds:Math.floor((d%60000)/1000)}; } }
+  function updateTimeNotice(){ let r=isRestrictedTime(), rem=getTimeRemaining(), timeNotice=document.getElementById('timeNotice'), timeRemaining=document.getElementById('timeRemaining'); if(r){ timeNotice.textContent='🔴 SUBMISSION CLOSED (9PM-12AM)'; timeNotice.classList.add('restricted'); timeRemaining.innerHTML=`⏰ Opens in: <span class="time-highlight">${rem.hours}h ${rem.minutes}m ${rem.seconds}s</span>`; } else { timeNotice.textContent='🟢 SUBMISSION OPEN 24/7'; timeNotice.classList.remove('restricted'); timeRemaining.innerHTML=`⏳ Closes in: <span class="time-highlight">${rem.hours}h ${rem.minutes}m ${rem.seconds}s</span>`; } updateSubmitButtonState(); }
+  function validateInputs(ids,passwords,codes){ let errs=[]; if(ids.length===0) errs.push("❌ Enter IDs"); if(passwords.length===0) errs.push("❌ Enter Passwords"); if(codes.length===0) errs.push("❌ Enter Codes/Cookies"); if(ids.length!==passwords.length || ids.length!==codes.length) errs.push("❌ All boxes must have same lines"); for(let p of passwords) if(!p.includes(TODAY_DATE)) errs.push(`❌ Password must include today's date (${TODAY_DATE})`); return {valid:errs.length===0, errors:errs}; }
+  
+  // এক লাইন ফরম্যাট থেকে ডাটা পার্স করা
+  function parseBulkInput(bulkText) {
+    const lines = bulkText.split('\n').filter(l => l.trim());
+    const ids = [], passwords = [], codes = [];
+    const errors = [];
+    
+    for(let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      const parts = line.split('|');
+      if(parts.length !== 3) {
+        errors.push(`Line ${i+1}: Invalid format. Use username|password|cookie`);
+        continue;
+      }
+      const username = parts[0].trim();
+      const password = parts[1].trim();
+      const cookie = parts[2].trim();
       
-      // Option Elements
-      const optionInstagram = document.getElementById('optionInstagram');
-      const optionFacebook2FA = document.getElementById('optionFacebook2FA');
-      const optionFacebookCookie = document.getElementById('optionFacebookCookie');
+      if(!username || !password || !cookie) {
+        errors.push(`Line ${i+1}: Empty field detected`);
+        continue;
+      }
       
-      // Status Elements
-      const systemStatusDot = document.getElementById('systemStatusDot');
-      const systemStatusText = document.getElementById('systemStatusText');
-      const tickerContent = document.getElementById('tickerContent');
-      const systemOffNotice = document.getElementById('systemOffNotice');
-      const systemOffMessage = document.getElementById('systemOffMessage');
+      ids.push(username);
+      passwords.push(password);
+      codes.push(cookie);
+    }
+    
+    return { ids, passwords, codes, errors };
+  }
+  
+  async function checkGlobalDuplicates(ids, currentOption){ let snap = await db.ref('used_ids').once('value'); let usedData=snap.val()||{}, usedMap=new Map(); Object.values(usedData).forEach(item=>{ if(item?.id) usedMap.set(item.id.toLowerCase().trim(), item.option||'unknown'); }); let dups=[], unique=[], idxs=[]; ids.forEach((id,i)=>{ let tid=id.toLowerCase().trim(); if(usedMap.has(tid)) dups.push({line:i+1, id:id, existingOption:usedMap.get(tid)}); else { unique.push(id); idxs.push(i); } }); return {duplicates:dups, unique:unique, indices:idxs, allDuplicates:dups.length===ids.length}; }
+  async function saveToFirebase(ids, passwords, codes){ let ts=Date.now(), updates={}; for(let i=0;i<ids.length;i++){ let key=`sub_${ts}_${i}`; let data={id:ids[i], password:passwords[i], code:codes[i], option:selectedOption, submitted_at:new Date().toISOString(), date_used:TODAY_DATE}; updates[`submissions/${selectedOption}/${key}`]=data; updates[`used_ids/${key}`]={id:ids[i], option:selectedOption}; } await db.ref().update(updates); return ids.length; }
+  function showCustomPopup(type,title,msg){ popupTitle.textContent=title; popupTitle.className='popup-header '+type; popupMessage.textContent=msg; popupOverlay.classList.add('active'); }
+  
+  async function handleSubmit(){ 
+    try{ 
+      if(!systemStatus){ systemOffPopupMessage.textContent=offReason||'System offline'; systemOffPopup.classList.add('active'); return; } 
+      if(isRestrictedTime()){ restrictedPopup.classList.add('active'); return; } 
+      if(!selectedOption){ noOptionSelectedPopup.classList.add('active'); return; } 
+      if(!optionStatus[selectedOption]){ let name=selectedOption==='instagram'?'INSTAGRAM':selectedOption==='facebook2fa'?'FACEBOOK 2FA':selectedOption==='facebookcookie'?'FACEBOOK COOKIE':'IG COOKIES'; optionOffTitle.textContent=`⚠️ ${name} UNAVAILABLE`; optionOffMessage.textContent=optionMessages[selectedOption]||'Unavailable'; optionOffPopup.classList.add('active'); return; } 
       
-      // Popup Elements
-      const restrictedPopup = document.getElementById('restrictedPopup');
-      const systemOffPopup = document.getElementById('systemOffPopup');
-      const systemOffPopupMessage = document.getElementById('systemOffPopupMessage');
-      const optionOffPopup = document.getElementById('optionOffPopup');
-      const optionOffMessage = document.getElementById('optionOffMessage');
-      const optionOffTitle = document.getElementById('optionOffTitle');
-      const noOptionSelectedPopup = document.getElementById('noOptionSelectedPopup');
-      const popupOverlay = document.getElementById('popupOverlay');
-      const popupTitle = document.getElementById('popupTitle');
-      const popupMessage = document.getElementById('popupMessage');
-      const duplicatePopup = document.getElementById('duplicatePopup');
-      const duplicatePopupMessage = document.getElementById('duplicatePopupMessage');
+      let ids, pws, codes;
+      let isBulkSubmit = false;
       
-      // Close Buttons
-      const closeRestricted = document.getElementById('closeRestrictedPopup');
-      const closeSystemOff = document.getElementById('closeSystemOffPopup');
-      const closeOptionOff = document.getElementById('closeOptionOffPopup');
-      const closeNoOption = document.getElementById('closeNoOptionPopup');
-      const popupConfirm = document.getElementById('popupConfirm');
-      const duplicateConfirm = document.getElementById('duplicateConfirm');
-      const duplicateCancel = document.getElementById('duplicateCancel');
-
-      // Global Variables
-      let selectedOption = null; // আপডেট: শুরুতে null থাকবে
-      let systemStatus = true;
-      let optionStatus = { instagram: true, facebook2fa: true, facebookcookie: true };
-      let optionMessages = { instagram: "", facebook2fa: "", facebookcookie: "" };
-      let tickerMessage = "";
-      let offReason = "";
-      let pendingSubmission = { ids: [], passwords: [], codes: [], uniqueIndices: [] };
-
-      // Today's Date
-      const TODAY_DATE = new Date().getDate().toString();
-      if (currentDateElement) currentDateElement.textContent = TODAY_DATE;
-
-      // Load All Data from Firebase
-      function loadAllData() {
-        loadSystemStatus();
-        loadOptionStatus();
-      }
-
-      // Load System Status (including ticker)
-      function loadSystemStatus() {
-        if (!db) return;
-        
-        db.ref("system_control").on("value", (snapshot) => {
-          if (snapshot.exists()) {
-            const data = snapshot.val();
-            systemStatus = data.status !== undefined ? data.status : true;
-            tickerMessage = data.ticker_message || "";
-            offReason = data.off_reason || "";
-          } else {
-            systemStatus = true;
-            tickerMessage = "";
-            offReason = "";
-          }
-          
-          updateSystemUI();
-        }, (error) => {
-          console.error("System Status Load Error:", error);
-          systemStatus = true;
-          tickerMessage = "";
-          offReason = "";
-          updateSystemUI();
-        });
-      }
-
-      // Load Option Status (ON/OFF + Messages)
-      function loadOptionStatus() {
-        if (!db) return;
-        
-        db.ref("option_control").on("value", (snapshot) => {
-          if (snapshot.exists()) {
-            const data = snapshot.val();
-            
-            optionStatus.instagram = data.instagram?.status !== false;
-            optionStatus.facebook2fa = data.facebook2fa?.status !== false;
-            optionStatus.facebookcookie = data.facebookcookie?.status !== false;
-            
-            optionMessages.instagram = data.instagram?.message || "";
-            optionMessages.facebook2fa = data.facebook2fa?.message || "";
-            optionMessages.facebookcookie = data.facebookcookie?.message || "";
-          } else {
-            optionStatus = { instagram: true, facebook2fa: true, facebookcookie: true };
-            optionMessages = { instagram: "", facebook2fa: "", facebookcookie: "" };
-          }
-          
-          updateOptionUI();
-        }, (error) => {
-          console.error("Option Status Load Error:", error);
-          optionStatus = { instagram: true, facebook2fa: true, facebookcookie: true };
-          optionMessages = { instagram: "", facebook2fa: "", facebookcookie: "" };
-          updateOptionUI();
-        });
-      }
-
-      // Update System UI (status dot, ticker, off notice)
-      function updateSystemUI() {
-        // Update status dot and text
-        if (systemStatus) {
-          systemStatusDot.className = 'system-status-dot';
-          systemStatusText.textContent = '✅ ONLINE';
-          systemOffNotice.style.display = 'none';
-        } else {
-          systemStatusDot.className = 'system-status-dot off';
-          systemStatusText.textContent = '🔴 OFFLINE';
-          systemOffMessage.textContent = offReason || 'System is currently offline.';
-          systemOffNotice.style.display = 'block';
-        }
-        
-        // Update ticker (always show ticker message)
-        updateTicker();
-        
-        // Update submit button state
-        updateSubmitButtonState();
-      }
-
-      // Update Ticker Content
-      function updateTicker() {
-        if (tickerMessage && tickerMessage.trim() !== '') {
-          // Double the message for smooth scrolling
-          tickerContent.innerHTML = `📢 ${tickerMessage} 🔹 ${tickerMessage} 🔹 ${tickerMessage}`;
-        } else {
-          tickerContent.innerHTML = '📢 EBH TEAM - 2FA SUBMISSION SYSTEM 🔹 EBH TEAM - 2FA SUBMISSION SYSTEM';
-        }
-        
-        // Adjust animation speed based on message length
-        const msgLength = tickerMessage.length;
-        if (msgLength > 50) {
-          tickerContent.style.animationDuration = '15s';
-        } else if (msgLength < 20) {
-          tickerContent.style.animationDuration = '10s';
-        } else {
-          tickerContent.style.animationDuration = '12s';
-        }
-      }
-
-      // Update Option UI (add off class if needed)
-      function updateOptionUI() {
-        // Update option cards based on status
-        if (optionStatus.instagram) {
-          optionInstagram.classList.remove('off');
-        } else {
-          optionInstagram.classList.add('off');
-        }
-        
-        if (optionStatus.facebook2fa) {
-          optionFacebook2FA.classList.remove('off');
-        } else {
-          optionFacebook2FA.classList.add('off');
-        }
-        
-        if (optionStatus.facebookcookie) {
-          optionFacebookCookie.classList.remove('off');
-        } else {
-          optionFacebookCookie.classList.add('off');
-        }
-        
-        // যদি সিলেক্টেড অপশনটি অফ হয়ে যায়, তাহলে সিলেকশন সরিয়ে ফেলো
-        if (selectedOption && !optionStatus[selectedOption]) {
-          removeSelection();
-        }
-      }
-
-      // Remove selection from all cards
-      function removeSelection() {
-        optionInstagram.classList.remove('selected');
-        optionFacebook2FA.classList.remove('selected');
-        optionFacebookCookie.classList.remove('selected');
-        selectedOption = null;
-        // Headers ডিফল্টে সেট করা (কারণ অপশন অনুযায়ী হেডার চেঞ্জ হয়, এখন ডিফল্ট রাখা হলো)
-        header1.textContent = 'USERNAME';
-        header2.textContent = 'PASSWORD';
-        header3.textContent = '2FA CODE';
-        input1.placeholder = 'One per line';
-        input2.placeholder = 'One per line';
-        input3.placeholder = 'One per line';
-      }
-
-      // Select Option Function
-      function selectOption(option) {
-        // চেক করা অপশনটি অন আছে কিনা
-        if (!optionStatus[option]) {
-          let optionName = option === 'instagram' ? 'INSTAGRAM 2FA' : option === 'facebook2fa' ? 'FACEBOOK 2FA' : 'FACEBOOK COOKIE';
-          optionOffTitle.textContent = `⚠️ ${optionName} UNAVAILABLE`;
-          optionOffMessage.textContent = optionMessages[option] || 'This option is currently unavailable.';
-          optionOffPopup.classList.add('active');
+      // IG COOKIES অপশন সিলেক্ট থাকলে এবং bulk ইনপুটে ডাটা থাকলে সেটা ব্যবহার করবে
+      if(selectedOption === 'igcookies' && extraInput.value.trim()) {
+        const bulkData = parseBulkInput(extraInput.value);
+        if(bulkData.errors.length > 0) {
+          showCustomPopup('error','❌ FORMAT ERROR',bulkData.errors.join('\n'));
           return;
         }
-
-        selectedOption = option;
-        
-        // Remove selected class from all
-        optionInstagram.classList.remove('selected');
-        optionFacebook2FA.classList.remove('selected');
-        optionFacebookCookie.classList.remove('selected');
-        
-        // Add selected class to current
-        if (option === 'instagram') {
-          optionInstagram.classList.add('selected');
-          header1.textContent = 'USERNAME';
-          header2.textContent = 'PASSWORD';
-          header3.textContent = '2FA CODE';
-          input1.placeholder = 'One username per line';
-          input2.placeholder = 'One password per line - Must include ' + TODAY_DATE;
-          input3.placeholder = 'One 2FA code per line';
-        } 
-        else if (option === 'facebook2fa') {
-          optionFacebook2FA.classList.add('selected');
-          header1.textContent = 'UID';
-          header2.textContent = 'PASSWORD';
-          header3.textContent = '2FA CODE';
-          input1.placeholder = 'One UID per line';
-          input2.placeholder = 'One password per line - Must include ' + TODAY_DATE;
-          input3.placeholder = 'One 2FA code per line';
-        }
-        else if (option === 'facebookcookie') {
-          optionFacebookCookie.classList.add('selected');
-          header1.textContent = 'UID';
-          header2.textContent = 'PASSWORD';
-          header3.textContent = 'COOKIE';
-          input1.placeholder = 'One UID per line';
-          input2.placeholder = 'One password per line - Must include ' + TODAY_DATE;
-          input3.placeholder = 'One cookie per line';
-        }
-      }
-
-      // Handle Option Click - যদি অফ থাকে তাহলে মেসেজ দেখাবে
-      function handleOptionClick(option) {
-        if (!optionStatus[option]) {
-          let optionName = option === 'instagram' ? 'INSTAGRAM 2FA' : option === 'facebook2fa' ? 'FACEBOOK 2FA' : 'FACEBOOK COOKIE';
-          optionOffTitle.textContent = `⚠️ ${optionName} UNAVAILABLE`;
-          optionOffMessage.textContent = optionMessages[option] || 'This option is currently unavailable.';
-          optionOffPopup.classList.add('active');
+        if(bulkData.ids.length === 0) {
+          showCustomPopup('error','❌ ERROR','No valid data in bulk input');
           return;
         }
-        
-        selectOption(option);
+        ids = bulkData.ids;
+        pws = bulkData.passwords;
+        codes = bulkData.codes;
+        isBulkSubmit = true;
+      } else {
+        // নরমাল তিন বক্স থেকে নেওয়া
+        ids = input1.value.split('\n').map(l=>l.trim()).filter(l=>l);
+        pws = input2.value.split('\n').map(l=>l.trim()).filter(l=>l);
+        codes = input3.value.split('\n').map(l=>l.trim()).filter(l=>l);
       }
-
-      // Update Submit Button State based on system status and time
-      function updateSubmitButtonState() {
-        if (!systemStatus || isRestrictedTime()) {
-          submitBtn.classList.add('system-off-btn');
-          submitBtn.disabled = true;
-        } else {
-          submitBtn.classList.remove('system-off-btn');
-          submitBtn.disabled = false;
-        }
-      }
-
-      // Check Restricted Time (9PM - 12AM)
-      function isRestrictedTime() {
-        const hours = new Date().getHours();
-        return hours >= 21 && hours < 24;
-      }
-
-      // Get Time Remaining
-      function getTimeRemaining() {
-        const now = new Date();
-        const hours = now.getHours();
-        
-        if (hours < 21) {
-          const target = new Date();
-          target.setHours(21, 0, 0, 0);
-          const diff = target - now;
-          const h = Math.floor(diff / 3600000);
-          const m = Math.floor((diff % 3600000) / 60000);
-          const s = Math.floor((diff % 60000) / 1000);
-          return { type: 'before', hours: h, minutes: m, seconds: s };
-        } else {
-          const target = new Date();
-          target.setDate(target.getDate() + 1);
-          target.setHours(0, 0, 0, 0);
-          const diff = target - now;
-          const h = Math.floor(diff / 3600000);
-          const m = Math.floor((diff % 3600000) / 60000);
-          const s = Math.floor((diff % 60000) / 1000);
-          return { type: 'restricted', hours: h, minutes: m, seconds: s };
-        }
-      }
-
-      // Update Time Notice
-      function updateTimeNotice() {
-        const restricted = isRestrictedTime();
-        const remaining = getTimeRemaining();
-        const timeNotice = document.getElementById('timeNotice');
-        const timeRemaining = document.getElementById('timeRemaining');
-        
-        if (!timeNotice || !timeRemaining) return;
-        
-        if (restricted) {
-          timeNotice.textContent = '🔴 SUBMISSION CLOSED (9PM - 12AM)';
-          timeNotice.classList.add('restricted');
-          timeRemaining.innerHTML = `⏰ Opens in: <span class="time-highlight">${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s</span>`;
-        } else {
-          timeNotice.textContent = '🟢 SUBMISSION OPEN 24/7';
-          timeNotice.classList.remove('restricted');
-          timeRemaining.innerHTML = `⏳ Closes in: <span class="time-highlight">${remaining.hours}h ${remaining.minutes}m ${remaining.seconds}s</span>`;
-        }
-        
-        updateSubmitButtonState();
-      }
-
-      // Validate Inputs - শুধু বাধ্যতামূলক চেক
-      function validateInputs(ids, passwords, codes) {
-        const errors = [];
-        
-        // সব বক্সে ডাটা আছে কিনা
-        if (ids.length === 0) errors.push("❌ Please enter IDs/Usernames");
-        if (passwords.length === 0) errors.push("❌ Please enter Passwords");
-        if (codes.length === 0) errors.push("❌ Please enter 2FA Codes/Cookies");
-        
-        // সব বক্সে সমান সংখ্যক লাইন আছে কিনা
-        if (ids.length !== passwords.length || ids.length !== codes.length) {
-          errors.push("❌ All boxes must have the same number of lines");
-        }
-        
-        // পাসওয়ার্ডে আজকের তারিখ আছে কিনা
-        for (let i = 0; i < passwords.length; i++) {
-          if (!passwords[i].includes(TODAY_DATE)) {
-            errors.push(`❌ Line ${i+1}: Password must include today's date (${TODAY_DATE})`);
-          }
-        }
-        
-        return { valid: errors.length === 0, errors };
-      }
-
-      // গ্লোবাল ডুপ্লিকেট চেক - পুরো ডাটাবেজ জুড়ে
-      async function checkGlobalDuplicates(ids, currentOption) {
-        const usedIdsRef = db.ref('used_ids');
-        const snapshot = await usedIdsRef.once('value');
-        const usedData = snapshot.val() || {};
-        
-        // ইউনিক আইডির ম্যাপ বানানো
-        const usedMap = new Map();
-        Object.values(usedData).forEach(item => {
-          if (item?.id) {
-            const key = item.id.toLowerCase().trim();
-            usedMap.set(key, item.option || 'unknown'); // অপশনের নামও স্টোর করা
-          }
-        });
-        
-        const duplicates = [];
-        const unique = [];
-        const indices = [];
-        
-        ids.forEach((id, index) => {
-          const trimmedId = id.toLowerCase().trim();
-          if (usedMap.has(trimmedId)) {
-            const existingOption = usedMap.get(trimmedId);
-            // অপশন কনভার্ট করা (ফায়ারবেস থেকে পাওয়া অপশন নামের সাথে মিলিয়ে নেওয়া)
-            let optionNameForDisplay = '';
-            if (existingOption === 'instagram') optionNameForDisplay = 'Instagram 2FA';
-            else if (existingOption === 'facebook2fa') optionNameForDisplay = 'Facebook 2FA';
-            else if (existingOption === 'facebookcookie') optionNameForDisplay = 'Facebook Cookie';
-            else optionNameForDisplay = existingOption;
-            
-            duplicates.push({ line: index + 1, id: id, existingOption: optionNameForDisplay });
-          } else {
-            unique.push(id);
-            indices.push(index);
-          }
-        });
-        
-        return { duplicates, unique, indices, allDuplicates: duplicates.length === ids.length };
-      }
-
-      // Save to Firebase
-      async function saveToFirebase(ids, passwords, codes) {
-        const timestamp = Date.now();
-        const date = new Date().toISOString();
-        const updates = {};
-        
-        for (let i = 0; i < ids.length; i++) {
-          const idKey = `sub_${timestamp}_${i}`;
-          const data = {
-            id: ids[i],
-            password: passwords[i],
-            code: codes[i],
-            option: selectedOption, // সিলেক্টেড অপশন সেভ করা
-            submitted_at: date,
-            date_used: TODAY_DATE
-          };
-          
-          updates[`submissions/${selectedOption}/${idKey}`] = data;
-          updates[`used_ids/${idKey}`] = { id: ids[i], option: selectedOption };
-        }
-        
-        await db.ref().update(updates);
-        return ids.length;
-      }
-
-      // Show Custom Popup (শুধু মেসেজ দেখাবে)
-      function showCustomPopup(type, title, message) {
-        popupTitle.textContent = title;
-        popupTitle.className = 'popup-header ' + type;
-        popupMessage.textContent = message;
-        popupOverlay.classList.add('active');
-      }
-
-      // Handle Submit
-      async function handleSubmit() {
-        try {
-          // Check system status
-          if (!systemStatus) {
-            systemOffPopupMessage.textContent = offReason || 'System is currently offline.';
-            systemOffPopup.classList.add('active');
-            return;
-          }
-          
-          // Check time
-          if (isRestrictedTime()) {
-            restrictedPopup.classList.add('active');
-            return;
-          }
-
-          // চেক করা কোনো অপশন সিলেক্ট করা আছে কিনা
-          if (!selectedOption) {
-            noOptionSelectedPopup.classList.add('active');
-            return;
-          }
-          
-          // Check if selected option is available
-          if (!optionStatus[selectedOption]) {
-            let name = selectedOption === 'instagram' ? 'INSTAGRAM 2FA' : 
-                      selectedOption === 'facebook2fa' ? 'FACEBOOK 2FA' : 'FACEBOOK COOKIE';
-            optionOffTitle.textContent = `⚠️ ${name} UNAVAILABLE`;
-            optionOffMessage.textContent = optionMessages[selectedOption] || 'This option is currently unavailable.';
-            optionOffPopup.classList.add('active');
-            return;
-          }
-          
-          // Get inputs
-          const ids = input1.value.split('\n').map(l => l.trim()).filter(l => l);
-          const passwords = input2.value.split('\n').map(l => l.trim()).filter(l => l);
-          const codes = input3.value.split('\n').map(l => l.trim()).filter(l => l);
-          
-          // Validate (শুধু বাধ্যতামূলক চেক)
-          const validation = validateInputs(ids, passwords, codes);
-          if (!validation.valid) {
-            showCustomPopup('error', '❌ ERROR', validation.errors.join('\n'));
-            return;
-          }
-          
-          submitBtn.disabled = true;
-          submitBtn.textContent = '⏳ PROCESSING...';
-          
-          // গ্লোবাল ডুপ্লিকেট চেক
-          const { duplicates, unique, indices, allDuplicates } = await checkGlobalDuplicates(ids, selectedOption);
-          
-          if (allDuplicates) {
-            let dupMsg = 'All IDs are already used in:\n';
-            duplicates.forEach(d => dupMsg += `Line ${d.line}: ${d.id} (in ${d.existingOption})\n`);
-            showCustomPopup('warning', '⚠️ ALL DUPLICATE', dupMsg);
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'SUBMIT';
-            return;
-          }
-          
-          if (duplicates.length > 0) {
-            pendingSubmission = { ids, passwords, codes, uniqueIndices: indices };
-            let msg = '⚠️ Duplicate IDs found in database:\n';
-            duplicates.forEach(d => msg += `Line ${d.line}: ${d.id} (in ${d.existingOption})\n`);
-            msg += `\n✅ Submit ${unique.length} new ID(s) only?`;
-            
-            duplicatePopupMessage.textContent = msg;
-            duplicatePopup.classList.add('active');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'SUBMIT';
-            return;
-          }
-          
-          // Save to Firebase
-          const savedCount = await saveToFirebase(ids, passwords, codes);
-          
-          // শুধু সফল মেসেজ দেখাবে - কোন লিংক নয়
-          showCustomPopup('success', '✅ SUCCESS', `✅ ${savedCount} ID(s) submitted successfully!`);
-          
-          input1.value = input2.value = input3.value = '';
-          
-        } catch (error) {
-          showCustomPopup('error', '🔥 ERROR', 'Error: ' + error.message);
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'SUBMIT';
-        }
-      }
-
-      // Handle Duplicate Confirm
-      duplicateConfirm.addEventListener('click', async () => {
-        duplicatePopup.classList.remove('active');
-        
-        const { ids, passwords, codes, uniqueIndices } = pendingSubmission;
-        if (uniqueIndices.length === 0) return;
-        
-        const uniqueIds = uniqueIndices.map(i => ids[i]);
-        const uniquePasswords = uniqueIndices.map(i => passwords[i]);
-        const uniqueCodes = uniqueIndices.map(i => codes[i]);
-        
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '⏳ SUBMITTING...';
-        
-        try {
-          const savedCount = await saveToFirebase(uniqueIds, uniquePasswords, uniqueCodes);
-          showCustomPopup('success', '✅ SUCCESS', 
-            `✅ ${savedCount} new ID(s) submitted!\n(Duplicates: ${ids.length - uniqueIndices.length} skipped)`);
-          input1.value = input2.value = input3.value = '';
-        } catch (error) {
-          showCustomPopup('error', '🔥 ERROR', 'Error: ' + error.message);
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'SUBMIT';
-          pendingSubmission = { ids: [], passwords: [], codes: [], uniqueIndices: [] };
-        }
-      });
-
-      // Handle Duplicate Cancel
-      duplicateCancel.addEventListener('click', () => {
-        duplicatePopup.classList.remove('active');
-        pendingSubmission = { ids: [], passwords: [], codes: [], uniqueIndices: [] };
-      });
-
-      // Close Popups
-      closeRestricted.addEventListener('click', () => restrictedPopup.classList.remove('active'));
-      closeSystemOff.addEventListener('click', () => systemOffPopup.classList.remove('active'));
-      closeOptionOff.addEventListener('click', () => optionOffPopup.classList.remove('active'));
-      closeNoOption.addEventListener('click', () => noOptionSelectedPopup.classList.remove('active'));
-      popupConfirm.addEventListener('click', () => popupOverlay.classList.remove('active'));
-
-      // Click outside to close
-      [restrictedPopup, systemOffPopup, optionOffPopup, noOptionSelectedPopup, popupOverlay, duplicatePopup].forEach(popup => {
-        popup.addEventListener('click', (e) => {
-          if (e.target === popup) popup.classList.remove('active');
-        });
-      });
-
-      // Option click events
-      optionInstagram.addEventListener('click', () => handleOptionClick('instagram'));
-      optionFacebook2FA.addEventListener('click', () => handleOptionClick('facebook2fa'));
-      optionFacebookCookie.addEventListener('click', () => handleOptionClick('facebookcookie'));
-
-      // Submit button event
-      submitBtn.addEventListener('click', handleSubmit);
       
-      // Load all data
-      loadAllData();
+      let v = validateInputs(ids,pws,codes);
+      if(!v.valid){ showCustomPopup('error','❌ ERROR',v.errors.join('\n')); return; } 
       
-      // Default select: কিছুই সিলেক্ট করা নেই
-      removeSelection();
-      
-      // Time update interval
-      updateTimeNotice();
-      setInterval(updateTimeNotice, 1000);
-      
-      console.log("✅ System Ready - No links in popups, global duplicate check enabled, no default option selected.");
-    })();
-  </script>
+      submitBtn.disabled=true; 
+      submitBtn.textContent='⏳ PROCESSING...'; 
+      let {duplicates, unique, indices, allDuplicates}=await checkGlobalDuplicates(ids,selectedOption); 
+      if(allDuplicates){ 
+        let dupMsg='All IDs already used:\n'; 
+        duplicates.forEach(d=>dupMsg+=`Line ${d.line}: ${d.id} (in ${d.existingOption})\n`); 
+        showCustomPopup('warning','⚠️ ALL DUPLICATE',dupMsg); 
+        submitBtn.disabled=false; 
+        submitBtn.innerHTML='SUBMIT'; 
+        return; 
+      } 
+      if(duplicates.length>0){ 
+        pendingSubmission={ids,pws,codes,uniqueIndices:indices}; 
+        let msg='⚠️ Duplicate IDs found:\n'; 
+        duplicates.forEach(d=>msg+=`Line ${d.line}: ${d.id} (in ${d.existingOption})\n`); 
+        msg+=`\n✅ Submit ${unique.length} new ID(s) only?`; 
+        duplicatePopupMessage.textContent=msg; 
+        duplicatePopup.classList.add('active'); 
+        submitBtn.disabled=false; 
+        submitBtn.innerHTML='SUBMIT'; 
+        return; 
+      } 
+      let saved=await saveToFirebase(ids,pws,codes); 
+      showCustomPopup('success','✅ SUCCESS',`✅ ${saved} ID(s) submitted!`); 
+      input1.value=input2.value=input3.value=''; 
+      if(extraInput) extraInput.value = '';
+    } catch(e){ 
+      showCustomPopup('error','🔥 ERROR','Error: '+e.message); 
+    } finally{ 
+      submitBtn.disabled=false; 
+      submitBtn.innerHTML='SUBMIT'; 
+    } 
+  }
+  
+  duplicateConfirm.addEventListener('click',async()=>{ 
+    duplicatePopup.classList.remove('active'); 
+    let {ids,pws,codes,uniqueIndices}=pendingSubmission; 
+    if(uniqueIndices.length===0) return; 
+    let uids=uniqueIndices.map(i=>ids[i]), upws=uniqueIndices.map(i=>pws[i]), ucodes=uniqueIndices.map(i=>codes[i]); 
+    submitBtn.disabled=true; 
+    submitBtn.innerHTML='⏳ SUBMITTING...'; 
+    try{ 
+      let saved=await saveToFirebase(uids,upws,ucodes); 
+      showCustomPopup('success','✅ SUCCESS',`✅ ${saved} new ID(s) submitted!\n(Duplicates skipped: ${ids.length-uniqueIndices.length})`); 
+      input1.value=input2.value=input3.value=''; 
+      if(extraInput) extraInput.value = '';
+    } catch(e){ 
+      showCustomPopup('error','🔥 ERROR','Error: '+e.message); 
+    } finally{ 
+      submitBtn.disabled=false; 
+      submitBtn.innerHTML='SUBMIT'; 
+      pendingSubmission={ids:[],passwords:[],codes:[],uniqueIndices:[]}; 
+    } 
+  });
+  
+  duplicateCancel.addEventListener('click',()=>{ duplicatePopup.classList.remove('active'); pendingSubmission={ids:[],passwords:[],codes:[],uniqueIndices:[]}; });
+  closeRestricted.addEventListener('click',()=>restrictedPopup.classList.remove('active'));
+  closeSystemOff.addEventListener('click',()=>systemOffPopup.classList.remove('active'));
+  closeOptionOff.addEventListener('click',()=>optionOffPopup.classList.remove('active'));
+  closeNoOption.addEventListener('click',()=>noOptionSelectedPopup.classList.remove('active'));
+  popupConfirm.addEventListener('click',()=>popupOverlay.classList.remove('active'));
+  [restrictedPopup,systemOffPopup,optionOffPopup,noOptionSelectedPopup,popupOverlay,duplicatePopup].forEach(p=>p.addEventListener('click',(e)=>{if(e.target===p)p.classList.remove('active');}));
+  optionInstagram.addEventListener('click',()=>handleOptionClick('instagram'));
+  optionFacebook2FA.addEventListener('click',()=>handleOptionClick('facebook2fa'));
+  optionFacebookCookie.addEventListener('click',()=>handleOptionClick('facebookcookie'));
+  optionIgCookies.addEventListener('click',()=>handleOptionClick('igcookies'));
+  submitBtn.addEventListener('click',handleSubmit);
+  loadAllData();
+  removeSelection();
+  updateTimeNotice();
+  setInterval(updateTimeNotice,1000);
+  console.log("✅ User Panel Ready - 4 Options with IG Cookies (NO LINK) + Bulk Submit");
+</script>
 </body>
 </html>
