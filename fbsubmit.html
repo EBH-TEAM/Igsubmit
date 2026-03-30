@@ -590,7 +590,7 @@
   <div class="input-container" id="mainInputContainer">
     <div class="input-box"><div class="box-header" id="header1">USERNAME</div><textarea class="box-textarea" id="input1" placeholder="One per line"></textarea></div>
     <div class="input-box"><div class="box-header" id="header2">PASSWORD</div><textarea class="box-textarea" id="input2" placeholder="One per line - Must include date"></textarea></div>
-    <div class="input-box"><div class="box-header" id="header3">2FA KEY </div><textarea class="box-textarea" id="input3" placeholder="One per line"></textarea></div>
+    <div class="input-box"><div class="box-header" id="header3">2FA KEY</div><textarea class="box-textarea" id="input3" placeholder="One per line"></textarea></div>
   </div>
 
   <!-- অতিরিক্ত লম্বা ইনপুট বক্স - এক লাইন সাবমিটের জন্য (শুধু IG COOKIES অপশনে দেখাবে) -->
@@ -702,8 +702,12 @@
   function removeSelection() {
     optionInstagram.classList.remove('selected'); optionFacebook2FA.classList.remove('selected'); optionFacebookCookie.classList.remove('selected'); optionIgCookies.classList.remove('selected');
     selectedOption = null;
-    header1.textContent='USERNAME'; header2.textContent='PASSWORD'; header3.textContent='2FA CODE';
-    input1.placeholder='One per line'; input2.placeholder='One per line - Must include date'; input3.placeholder='One per line';
+    header1.textContent='USERNAME'; 
+    header2.textContent='PASSWORD'; 
+    header3.textContent='2FA KEY';
+    input1.placeholder='One per line'; 
+    input2.placeholder='One per line - Must include date'; 
+    input3.placeholder='One per line';
     toggleExtraInputForIgCookies(false);
     // extraInput ক্লিয়ার করা
     if(extraInput) extraInput.value = '';
@@ -718,25 +722,33 @@
     
     if(opt==='instagram'){ 
       optionInstagram.classList.add('selected'); 
-      header1.textContent='USERNAME'; header2.textContent='PASSWORD'; header3.textContent='2FA CODE'; 
+      header1.textContent='USERNAME'; 
+      header2.textContent='PASSWORD'; 
+      header3.textContent='2FA KEY'; 
       input2.placeholder=`Must include ${TODAY_DATE}`;
       toggleExtraInputForIgCookies(false);
     }
     else if(opt==='facebook2fa'){ 
       optionFacebook2FA.classList.add('selected'); 
-      header1.textContent='UID'; header2.textContent='PASSWORD'; header3.textContent='2FA CODE'; 
+      header1.textContent='UID'; 
+      header2.textContent='PASSWORD'; 
+      header3.textContent='2FA KEY'; 
       input2.placeholder=`Must include ${TODAY_DATE}`;
       toggleExtraInputForIgCookies(false);
     }
     else if(opt==='facebookcookie'){ 
       optionFacebookCookie.classList.add('selected'); 
-      header1.textContent='UID'; header2.textContent='PASSWORD'; header3.textContent='COOKIE'; 
+      header1.textContent='UID'; 
+      header2.textContent='PASSWORD'; 
+      header3.textContent='COOKIES'; 
       input2.placeholder=`Must include ${TODAY_DATE}`;
       toggleExtraInputForIgCookies(false);
     }
     else if(opt==='igcookies'){ 
       optionIgCookies.classList.add('selected'); 
-      header1.textContent='USERNAME'; header2.textContent='PASSWORD'; header3.textContent='COOKIE'; 
+      header1.textContent='USERNAME'; 
+      header2.textContent='PASSWORD'; 
+      header3.textContent='COOKIES'; 
       input2.placeholder=`Must include ${TODAY_DATE}`;
       // IG COOKIES অপশনে অতিরিক্ত বক্স দেখানো এবং তিনটি বক্স ছোট করা
       toggleExtraInputForIgCookies(true);
@@ -890,7 +902,7 @@
   removeSelection();
   updateTimeNotice();
   setInterval(updateTimeNotice,1000);
-  console.log("✅ User Panel Ready - 4 Options with IG Cookies (NO LINK) + Bulk Submit");
+  console.log("✅ User Panel Ready - 4 Options with 2FA KEY label");
 </script>
 </body>
 </html>
