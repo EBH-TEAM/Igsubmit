@@ -52,49 +52,169 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
       position: relative;
+      width: 100%;
     }
 
-    .logo-icon {
-      font-size: 28px;
-      background: linear-gradient(135deg, #22c55e, #3b82f6, #f97316);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 0 12px #22c55e);
-      animation: rotateSlow 8s infinite linear;
-      will-change: transform;
-    }
-
-    .logo-text {
-      font-size: 30px;
-      font-weight: 900;
-      background: linear-gradient(90deg, #22c55e, #3b82f6, #22c55e);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: 1px;
-      animation: shine 4s infinite alternate;
+    .sponsor-box {
       position: relative;
+      width: auto;
+      min-width: 350px;
+      max-width: calc(100% - 6mm);
+      height: auto;
+      background: linear-gradient(145deg, #1a1a1a, #000000);
+      border: 2px solid #ffaa00;
+      border-radius: 12px;
+      padding: 8px 20px;
+      box-shadow: 0 0 30px rgba(255, 170, 0, 0.5);
+      overflow: hidden;
+      margin: 0 3mm;
+      transform: scale(0.75);
     }
 
-    .logo-badge {
+    .shimmer {
       position: absolute;
-      top: -12px;
-      right: -38px;
-      background: linear-gradient(90deg, #f97316, #eab308);
-      color: #0b1220;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 3px 9px;
-      border-radius: 20px;
-      transform: rotate(12deg);
-      box-shadow: 0 0 20px #f97316;
-      animation: badgePop 2s infinite ease-in-out;
-      white-space: nowrap;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: shimmer 3s infinite;
     }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      20% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    .text-container {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .sponsor-text {
+      position: absolute;
+      font-weight: 900;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-align: center;
+      width: 100%;
+      opacity: 0;
+      filter: blur(0);
+      transform-origin: center;
+    }
+
+    .text-ebh {
+      color: #ffaa00;
+      text-shadow: 0 0 20px #ffaa00, 0 0 40px #ff6600;
+      font-size: 32px;
+      letter-spacing: 2px;
+      animation: sequenceOne 8s infinite;
+    }
+
+    .text-members {
+      color: #00ffff;
+      text-shadow: 0 0 20px #00ffff, 0 0 40px #0099ff;
+      font-size: 36px;
+      animation: sequenceTwo 8s infinite;
+    }
+
+    .text-slogan {
+      color: #ff66ff;
+      text-shadow: 0 0 20px #ff66ff, 0 0 40px #ff00ff;
+      font-size: 32px;
+      animation: sequenceThree 8s infinite;
+    }
+
+    .text-bengali {
+      color: #66ff66;
+      text-shadow: 0 0 20px #66ff66, 0 0 40px #00ff00;
+      font-size: 34px;
+      font-family: 'Hind Siliguri', 'Arial Black', sans-serif;
+      animation: sequenceFour 8s infinite;
+    }
+
+    @keyframes sequenceOne {
+        0% { opacity: 0; transform: translateX(-300px) scale(0.5); }
+        5% { opacity: 1; transform: translateX(20px) scale(1.1); }
+        10% { transform: translateX(0) scale(1); }
+        20% { opacity: 1; transform: translateX(0) scale(1); }
+        25% { opacity: 0; transform: translateX(300px) scale(0.5); }
+        100% { opacity: 0; transform: translateX(300px) scale(0.5); }
+    }
+
+    @keyframes sequenceTwo {
+        0%, 24% { opacity: 0; transform: translateX(300px) scale(0.5); }
+        25% { opacity: 0; transform: translateX(300px) scale(0.5); }
+        30% { opacity: 1; transform: translateX(-20px) scale(1.1); }
+        35% { transform: translateX(0) scale(1); }
+        45% { opacity: 1; transform: translateX(0) scale(1); }
+        50% { opacity: 0; transform: translateX(-300px) scale(0.5); }
+        100% { opacity: 0; transform: translateX(-300px) scale(0.5); }
+    }
+
+    @keyframes sequenceThree {
+        0%, 49% { opacity: 0; transform: translateY(100px) scale(0.3); }
+        50% { opacity: 0; transform: translateY(100px) scale(0.3); }
+        55% { opacity: 1; transform: translateY(-15px) scale(1.1); }
+        60% { transform: translateY(5px) scale(1); }
+        63% { transform: translateY(-3px) scale(1); }
+        65% { transform: translateY(0) scale(1); }
+        70% { opacity: 1; transform: translateY(0) scale(1); }
+        75% { opacity: 0; transform: translateY(-100px) scale(0.3); }
+        100% { opacity: 0; transform: translateY(-100px) scale(0.3); }
+    }
+
+    @keyframes sequenceFour {
+        0%, 74% { opacity: 0; transform: scale(0) rotate(0deg); }
+        75% { opacity: 0; transform: scale(0) rotate(0deg); }
+        80% { opacity: 1; transform: scale(1.2) rotate(10deg); }
+        85% { transform: scale(1) rotate(-5deg); }
+        88% { transform: scale(1) rotate(2deg); }
+        90% { transform: scale(1) rotate(0deg); }
+        95% { opacity: 1; transform: scale(1) rotate(0deg); }
+        100% { opacity: 0; transform: scale(0) rotate(360deg); }
+    }
+
+    .sponsor-bar {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ffaa00, #ff6600, #ffaa00, transparent);
+      animation: barGlow 1.5s infinite;
+    }
+
+    @keyframes barGlow {
+      0%, 100% { opacity: 0.5; transform: scaleX(0.8); }
+      50% { opacity: 1; transform: scaleX(1); }
+    }
+
+    .tv-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0px, rgba(255,255,255,0.02) 1px, transparent 2px);
+      pointer-events: none;
+      animation: tvStatic 8s infinite;
+      z-index: 20;
+    }
+
+    @keyframes tvStatic {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.2; }
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@700&display=swap');
 
     /* ULTRA SMOOTH SCROLLER */
     .scrolling-message-container {
@@ -177,11 +297,88 @@
       margin-bottom: 6px;
     }
 
+    /* এডিটর কন্টেইনারের জন্য রিলেটিভ পজিশন */
     .editor-container {
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
+    /* ===== সার্ভার স্ট্যাটাস ইন্ডিকেটর - ইনপুট বক্সের উপরে ডান কোণায় ===== */
+    .server-status-indicator {
+      position: absolute;
+      top: -28px;
+      right: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      padding: 4px 12px;
+      border-radius: 30px;
+      z-index: 100;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    
+    .status-dot.online {
+      background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+      animation: pulseDot 1.5s infinite;
+    }
+    
+    .status-dot.offline {
+      background: #ef4444;
+      box-shadow: 0 0 6px #ef4444;
+      animation: pulseDotRed 1.5s infinite;
+    }
+    
+    .status-dot.checking {
+      background: #fbbf24;
+      box-shadow: 0 0 6px #fbbf24;
+      animation: pulseDotYellow 0.8s infinite;
+    }
+    
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+    
+    @keyframes pulseDotRed {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+    
+    @keyframes pulseDotYellow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+    
+    .status-text {
+      color: #e5e7eb;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    
+    .status-text.online-text {
+      color: #22c55e;
+    }
+    
+    .status-text.offline-text {
+      color: #ef4444;
+    }
+
+    /* তিনটি ইনপুট বক্স - ছোট সাইজ */
     .editor {
       display: grid;
       grid-template-columns: auto 1fr;
@@ -189,19 +386,19 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
-      min-height: 170px;
-      max-height: 210px;
+      min-height: 130px;
+      max-height: 160px;
     }
 
     .line-numbers {
       background: #0c1322;
       color: var(--muted);
-      padding: 12px 6px;
-      min-width: 42px;
+      padding: 8px 4px;
+      min-width: 38px;
       text-align: right;
       font-family: 'SF Mono', monospace;
-      font-size: 11px;
-      line-height: 1.5;
+      font-size: 10px;
+      line-height: 1.4;
       border-right: 1px solid var(--border);
       white-space: pre;
       user-select: none;
@@ -225,14 +422,14 @@
 
     .column-header {
       background: #1a2635;
-      padding: 8px 10px;
-      font-size: 11px;
+      padding: 5px 6px;
+      font-size: 10px;
       font-weight: 600;
       color: var(--accent);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
     }
 
     .column-textarea {
@@ -240,10 +437,10 @@
       background: transparent;
       color: var(--text);
       border: none;
-      padding: 10px;
+      padding: 6px 8px;
       font-family: 'SF Mono', monospace;
-      font-size: 12px;
-      line-height: 1.45;
+      font-size: 10px;
+      line-height: 1.35;
       resize: none;
       outline: none;
       white-space: pre;
@@ -252,6 +449,135 @@
 
     .column-textarea::placeholder {
       color: #3a465a;
+      font-size: 9px;
+    }
+
+    /* অতিরিক্ত লম্বা ইনপুট বক্স - হাইডেন/শো কন্ট্রোল */
+    .extra-input-container {
+      margin-top: 12px;
+      transition: all 0.3s ease;
+    }
+    
+    /* হাইডেন ক্লাস */
+    .extra-input-container.hidden-bulk {
+      display: none;
+    }
+
+    /* আরো বাটনের স্টাইল - সম্পূর্ণ নতুন, ডিজাইন ম্যাচ করে */
+    .toggle-bulk-btn {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--accent);
+      border-radius: 40px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      margin-bottom: 8px;
+      width: auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    
+    .toggle-bulk-btn:hover {
+      background: var(--accent);
+      color: #0f172a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(34,197,94,0.4);
+    }
+    
+    .toggle-bulk-btn i {
+      font-size: 14px;
+    }
+    
+    .bulk-header-area {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    
+    .bulk-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-2);
+      letter-spacing: 0.5px;
+    }
+
+    .extra-input-box {
+      background: #0b1220;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .extra-box-header {
+      background: linear-gradient(135deg, #1a2a3a, #0f1a2a);
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      border-bottom: 2px solid var(--accent);
+      text-transform: uppercase;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    .extra-box-header i {
+      margin-right: 6px;
+    }
+
+    /* ===== বাল্ক টেক্সটএরিয়া - এক লাইনে থাকবে, হরাইজন্টাল স্ক্রল ===== */
+    .extra-box-textarea {
+      width: 100%;
+      background: rgba(10, 20, 30, 0.6);
+      color: var(--text);
+      border: none;
+      padding: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+      min-height: 120px;
+      white-space: pre;           /* এক লাইনে থাকবে */
+      overflow-x: auto;          /* হরাইজন্টাল স্ক্রল */
+      overflow-y: auto;          /* ভার্টিক্যাল স্ক্রল */
+      word-wrap: normal;         /* র‍্যাপ না করা */
+      word-break: normal;        /* ব্রেক না করা */
+    }
+    
+    /* কাস্টম হরাইজন্টাল স্ক্রলবার স্টাইল */
+    .extra-box-textarea::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    .extra-box-textarea::-webkit-scrollbar-track {
+      background: #1a2635;
+      border-radius: 10px;
+    }
+    
+    .extra-box-textarea::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 10px;
+    }
+
+    .format-hint {
+      padding: 6px 12px;
+      font-size: 10px;
+      color: var(--accent-2);
+      background: rgba(249, 115, 22, 0.1);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .format-hint i {
+      margin-right: 4px;
     }
 
     .actions {
@@ -305,7 +631,6 @@
       margin-top: 8px;
     }
 
-    /* ===== বাটন রো - পাসওয়ার্ড সেভ + ক্লিয়ার বাটন ===== */
     .button-row {
       display: flex;
       gap: 8px;
@@ -345,7 +670,6 @@
       background: linear-gradient(135deg, #16a34a, #15803d);
     }
 
-    /* ===== ক্লিয়ার বাটন - নতুন যোগ করা হয়েছে ===== */
     .clear-btn {
       flex: 1;
       background: linear-gradient(135deg, #ef4444, #dc2626);
@@ -393,7 +717,6 @@
       overflow: hidden;
     }
 
-    /* WINNER CARD - যখন উইনার থাকে */
     .winner-card {
       background: linear-gradient(145deg, #1e293b, #0f172a);
       border-radius: 16px;
@@ -478,7 +801,6 @@
       text-shadow: 0 0 15px #22c55e;
     }
 
-    /* PLACEHOLDER CARD - যখন কোনো উইনার নেই */
     .winner-placeholder {
       background: linear-gradient(145deg, #1a2635, #0f172a);
       border-radius: 16px;
@@ -549,7 +871,6 @@
       text-shadow: 0 0 15px gold;
     }
 
-    /* hidden counters */
     #summary {
       display: none !important;
     }
@@ -658,22 +979,49 @@
     .popup-notification.error .popup-title { background: linear-gradient(90deg,#ef4444,#f87171); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .popup-notification.warning .popup-title { background: linear-gradient(90deg,#f97316,#fbbf24); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-    @keyframes rotateSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes shine { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
-    @keyframes badgePop { 0%,100% { transform: rotate(12deg) scale(1); } 50% { transform: rotate(12deg) scale(1.15); } }
-    @keyframes softBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes gradientShift { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(10deg); } }
     @keyframes pulseBg { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
 
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: #1a2635; }
     ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
   
-    /* অডিও এলিমেন্ট সম্পূর্ণ লুকানো থাকবে */
     audio {
       display: none;
     }
-    /* কোনো সতর্কতা বা বাটন দেখানো হবে না */
+
+    /* ===== ড্র্যাগেবল টেলিগ্রাম ফ্লোটিং বাটন ===== */
+    .telegram-drag-btn {
+      position: fixed;
+      width: 55px;
+      height: 55px;
+      background: linear-gradient(145deg, #229ed9, #1a76a4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      z-index: 9999;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.2);
+      transition: box-shadow 0.2s ease, transform 0.05s ease;
+      user-select: none;
+      touch-action: none;
+    }
+    
+    .telegram-drag-btn:active {
+      cursor: grabbing;
+      transform: scale(0.98);
+    }
+    
+    .telegram-drag-btn i {
+      font-size: 32px;
+      color: white;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+    
+    .telegram-drag-btn:hover {
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(255, 255, 255, 0.3);
+      transform: scale(1.02);
+    }
   </style>
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -685,8 +1033,17 @@
 
 <div class="header">
   <div class="logo-container">
-    <span class="logo-icon">⚡</span>
-    <span class="logo-text">EBH TEAM <span class="logo-badge">is BEST</span></span>
+    <div class="sponsor-box">
+        <div class="shimmer"></div>
+        <div class="text-container">
+            <div class="sponsor-text text-ebh">EARNING BY HABIB</div>
+            <div class="sponsor-text text-members">🔥 TEAM EBH 🔥</div>
+            <div class="sponsor-text text-slogan">✦ ইউনিক ফ্যামিলি ✦</div>
+            <div class="sponsor-text text-bengali">আমার টিম আমার শক্তি❤️‍🔥</div>
+        </div>
+        <div class="sponsor-bar"></div>
+        <div class="tv-effect"></div>
+    </div>
   </div>
 </div>
 
@@ -695,39 +1052,67 @@
   <div class="scroller-track" id="scrollerTrack"></div>
 </div>
 
-<!-- অডিও এলিমেন্ট - এটি ইউজারকে দেখানো হবে না। Force Autoplay সক্রিয়। -->
+<!-- অডিও এলিমেন্ট -->
 <audio id="backgroundAudio" preload="auto" style="display: none;"></audio>
 
 <main class="layout">
-  <!-- INPUT SECTION -->
+  
+  <!-- INPUT SECTION - স্ট্যাটাস ইন্ডিকেটর উপরে ডান কোণায় -->
   <div class="editor-container">
-    <div class="panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg> Input (three columns)</div>
+    <div class="server-status-indicator" id="serverStatusIndicator">
+      <span class="status-dot" id="statusDot"></span>
+      <span class="status-text" id="statusText">🔍 চেক হচ্ছে...</span>
+    </div>
+    <div class="panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Input (three columns)</div>
     <div class="editor">
       <div class="line-numbers" id="sourceLines">1</div>
       <div class="three-box-wrapper">
         <div class="input-column">
-          <div class="column-header"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Username</div>
-          <textarea class="column-textarea" id="usernameBox" placeholder="Enter usernames&#10;one per line"></textarea>
+          <div class="column-header"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Username</div>
+          <textarea class="column-textarea" id="usernameBox" placeholder="Enter usernames
+one per line"></textarea>
         </div>
         <div class="input-column">
-          <div class="column-header"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Password</div>
-          <textarea class="column-textarea" id="passwordBox" placeholder="Enter passwords&#10;one per line"></textarea>
+          <div class="column-header"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Password</div>
+          <textarea class="column-textarea" id="passwordBox" placeholder="Enter passwords
+one per line"></textarea>
         </div>
         <div class="input-column">
-          <div class="column-header"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> Cookie</div>
-          <textarea class="column-textarea" id="cookieBox" placeholder="Enter cookies&#10;one per line"></textarea>
+          <div class="column-header"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg> Cookie</div>
+          <textarea class="column-textarea" id="cookieBox" placeholder="Enter cookies
+one per line"></textarea>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== বাটন রো - পাসওয়ার্ড সেভ + ক্লিয়ার বাটন (একসাথে) ===== -->
+  <!-- বাল্ক সাবমিট এলাকা: টগল বাটন + হাইডেন কন্টেইনার -->
+  <div class="extra-input-container" id="extraInputContainer">
+    <div class="bulk-header-area">
+      <span class="bulk-title"><i class="fas fa-layer-group"></i> BULK SUBMIT (One Line Format)</span>
+      <button type="button" id="toggleBulkBtn" class="toggle-bulk-btn">
+        <i class="fas fa-chevron-down" id="toggleIcon"></i> <span id="toggleBtnText">Show Box</span>
+      </button>
+    </div>
+    <div id="bulkContent" class="extra-input-box" style="display: none;">
+      <div class="extra-box-header">
+        <i class="fas fa-layer-group"></i> BULK SUBMIT (One Line Format)
+      </div>
+      <textarea class="extra-box-textarea" id="extraInput" placeholder="username|password|cookie
+user2|pass2|cookie2
+user3|pass3|cookie3"></textarea>
+      <div class="format-hint">
+        <i class="fas fa-info-circle"></i> Format: username | password | cookie (use pipe | to separate)
+      </div>
+    </div>
+  </div>
+
+  <!-- বাটন রো -->
   <div class="button-row">
     <button class="password-save-btn" id="savePasswordBtn">
       <i class="fas fa-save"></i>
       <span id="saveBtnText">পাসওয়ার্ড সেভ করুন</span>
     </button>
-    
     <button class="clear-btn" id="clearBtn">
       <i class="fas fa-eraser"></i>
       <span id="clearBtnText">ক্লিয়ার</span>
@@ -736,7 +1121,7 @@
 
   <div class="actions">
     <button id="processBtn">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"></path><path d="M21 12H11"></path><path d="M7 16l-4-4 4-4"></path><path d="M3 12h10"></path></svg>
       CONVERT & PUSH
     </button>
     <div class="helper">One click convert & auto push. Save only if API push succeeds.</div>
@@ -744,34 +1129,33 @@
 
   <!-- Winner Section -->
   <div class="editor-container">
-    <div class="panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Today's Winner</div>
+    <div class="panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> Today's Winner</div>
     <div class="winner-container" id="winnerContainer">
-      <!-- Content will be dynamically loaded here -->
       <div id="winnerDynamicContent"></div>
     </div>
   </div>
 
-  <!-- hidden counter -->
   <div id="summary"><span id="okCount">0</span><span id="failCount">0</span></div>
 
-  <!-- push result line -->
   <div class="push-result">
     <div id="pushResult" class="tag">Ready to process</div>
   </div>
 
-  <!-- status list -->
   <div class="status-list" id="statusList"></div>
 </main>
 
-<!-- hidden output -->
 <textarea id="target" style="display: none;"></textarea>
 
-<!-- popup -->
 <div id="popupNotification" class="popup-notification">
   <div class="popup-icon" id="popupIcon">✅</div>
   <div class="popup-title" id="popupTitle">Success</div>
   <div class="popup-message" id="popupMessage"></div>
   <button class="popup-button" id="popupCloseBtn">CLOSE</button>
+</div>
+
+<!-- ড্র্যাগেবল টেলিগ্রাম বাটন -->
+<div id="telegramDragBtn" class="telegram-drag-btn">
+  <i class="fab fa-telegram-plane"></i>
 </div>
 
 <script>
@@ -788,12 +1172,12 @@
       try {
         const localMsg = localStorage.getItem(STORAGE_KEY);
         if (localMsg && localMsg.trim() !== '') return localMsg;
-      } catch(e) { /* সাইলেন্ট */ }
+      } catch(e) { }
       
       try {
         const sessionMsg = sessionStorage.getItem(STORAGE_KEY);
         if (sessionMsg && sessionMsg.trim() !== '') return sessionMsg;
-      } catch(e) { /* সাইলেন্ট */ }
+      } catch(e) { }
       
       try {
         const cookie = document.cookie.split('; ').find(row => row.startsWith(STORAGE_KEY + '='));
@@ -801,21 +1185,18 @@
           const cookieMsg = decodeURIComponent(cookie.split('=')[1]);
           if (cookieMsg.trim() !== '') return cookieMsg;
         }
-      } catch(e) { /* সাইলেন্ট */ }
+      } catch(e) { }
       
       return DEFAULT_MESSAGE;
     },
     
     setMessage: function(newMessage) {
       if (!newMessage || newMessage.trim() === '') return false;
-      
       const cleanMsg = newMessage.trim();
-      
       try {
         localStorage.setItem(STORAGE_KEY, cleanMsg);
         sessionStorage.setItem(STORAGE_KEY, cleanMsg);
         document.cookie = `${STORAGE_KEY}=${encodeURIComponent(cleanMsg)}; path=/; max-age=31536000; SameSite=Lax`;
-        
         try {
           if (window.db) {
             window.db.ref("settings/scrolling_message").set({
@@ -825,12 +1206,9 @@
             });
           }
         } catch(e) {}
-        
         this.notifyAllTabs(cleanMsg);
-        
         return true;
       } catch(e) {
-        console.warn('Storage error:', e);
         return false;
       }
     },
@@ -842,24 +1220,20 @@
           try { localStorage.removeItem('_ebh_trigger_' + Date.now()); } catch(e) {}
         }, 100);
       } catch(e) {}
-      
       window.dispatchEvent(new CustomEvent('ebh_message_updated', { detail: { message: message } }));
     },
     
     onMessageUpdate: function(callback) {
       if (!callback) return;
-      
       window.addEventListener('storage', function(e) {
         if (e.key && e.key.startsWith('_ebh_trigger_')) {
           const msg = EBH_MessageSync.getCurrentMessage();
           callback(msg);
         }
       });
-      
       window.addEventListener('ebh_message_updated', function(e) {
         callback(e.detail.message);
       });
-      
       try {
         if (window.db) {
           window.db.ref("settings/scrolling_message").on('value', (snapshot) => {
@@ -873,7 +1247,6 @@
           });
         }
       } catch(e) {}
-      
       let lastMsg = this.getCurrentMessage();
       setInterval(() => {
         const currentMsg = this.getCurrentMessage();
@@ -900,40 +1273,31 @@
       } else {
         passwordBox.value = '';
       }
-    } catch(e) {
-      console.warn('Failed to load password:', e);
-    }
+    } catch(e) {}
   }
 
   function savePassword() {
     const password = passwordBox.value.trim();
-
     try {
       if (password === '') {
         localStorage.removeItem(PASSWORD_STORAGE_KEY);
-        
         const originalText = saveBtnText.textContent;
         saveBtnText.textContent = 'মুছে ফেলা হয়েছে';
         savePasswordBtn.classList.add('saved');
-        
         setTimeout(() => {
           saveBtnText.textContent = originalText;
           savePasswordBtn.classList.remove('saved');
         }, 1500);
-        
       } else {
         localStorage.setItem(PASSWORD_STORAGE_KEY, password);
-        
         const originalText = saveBtnText.textContent;
         saveBtnText.textContent = 'সেভ হয়েছে!';
         savePasswordBtn.classList.add('saved');
-        
         setTimeout(() => {
           saveBtnText.textContent = originalText;
           savePasswordBtn.classList.remove('saved');
         }, 1500);
       }
-      
     } catch(e) {
       alert('পাসওয়ার্ড সেভ করতে সমস্যা হয়েছে');
     }
@@ -943,26 +1307,22 @@
   loadSavedPassword();
 
   // ============================================
-  // ক্লিয়ার বাটন ফাংশন - নতুন যোগ করা হয়েছে
+  // ক্লিয়ার বাটন ফাংশন - তিন বক্স + বাল্ক বক্স ক্লিয়ার করবে (বাল্ক বক্স হাইডেন থাকলেও ক্লিয়ার হবে)
   // ============================================
   const usernameBox = document.getElementById('usernameBox');
   const cookieBox = document.getElementById('cookieBox');
+  const extraInput = document.getElementById('extraInput');
   const clearBtn = document.getElementById('clearBtn');
   const clearBtnText = document.getElementById('clearBtnText');
 
   function clearFields() {
-    // ইউজারনেম এবং কুকি বক্স ক্লিয়ার (পাসওয়ার্ড অপরিবর্তিত)
     usernameBox.value = '';
     cookieBox.value = '';
-    
-    // লাইন নাম্বার আপডেট
+    if (extraInput) extraInput.value = '';
     updateLineNumbers();
-    
-    // বাটনে এনিমেশন
     const originalText = clearBtnText.textContent;
     clearBtnText.textContent = 'ক্লিয়ার হয়েছে!';
     clearBtn.classList.add('cleared');
-    
     setTimeout(() => {
       clearBtnText.textContent = originalText;
       clearBtn.classList.remove('cleared');
@@ -970,6 +1330,33 @@
   }
 
   clearBtn.addEventListener('click', clearFields);
+
+  // ============================================
+  // টগল বাটন: বাল্ক কন্টেন্ট দেখানো/লুকানো
+  // ============================================
+  const toggleBulkBtn = document.getElementById('toggleBulkBtn');
+  const bulkContent = document.getElementById('bulkContent');
+  const toggleIcon = document.getElementById('toggleIcon');
+  const toggleBtnText = document.getElementById('toggleBtnText');
+
+  if (toggleBulkBtn && bulkContent) {
+    toggleBulkBtn.addEventListener('click', () => {
+      const isHidden = bulkContent.style.display === 'none';
+      if (isHidden) {
+        bulkContent.style.display = 'block';
+        toggleIcon.className = 'fas fa-chevron-up';
+        toggleBtnText.textContent = 'Hide Box';
+      } else {
+        bulkContent.style.display = 'none';
+        toggleIcon.className = 'fas fa-chevron-down';
+        toggleBtnText.textContent = 'Show Box';
+      }
+    });
+    // শুরুতে হাইডেন রাখা
+    bulkContent.style.display = 'none';
+    toggleIcon.className = 'fas fa-chevron-down';
+    toggleBtnText.textContent = 'Show Box';
+  }
 
   // ============================================
   // ফায়ারবেস ইনিশিয়ালাইজ
@@ -1000,38 +1387,36 @@
   const okSpan = document.getElementById('okCount');
   const failSpan = document.getElementById('failCount');
   const scrollerTrack = document.getElementById('scrollerTrack');
-  
   const winnerDynamicContent = document.getElementById('winnerDynamicContent');
-  
   const popup = document.getElementById('popupNotification');
   const popupIcon = document.getElementById('popupIcon');
   const popupTitle = document.getElementById('popupTitle');
   const popupMessage = document.getElementById('popupMessage');
   const popupClose = document.getElementById('popupCloseBtn');
+  
+  // ===== সার্ভার স্ট্যাটাস এলিমেন্টস =====
+  const statusDot = document.getElementById('statusDot');
+  const statusText = document.getElementById('statusText');
 
   // ============================================
-  // WINNER FUNCTIONS
+  // WINNER FUNCTIONS (অপরিবর্তিত)
   // ============================================
   
   function loadWinnerData() {
     if (!window.db) return;
-    
     window.db.ref("settings/daily_winner").once("value").then(snapshot => {
       if (snapshot.exists()) {
         const winnerData = snapshot.val();
-        
         winnerDynamicContent.innerHTML = `
           <div class="winner-card">
             <div class="winner-header">
               <i class="fas fa-trophy"></i>
               <span>🏆 Today Winner 🏆</span>
             </div>
-            
             <div class="winner-username-box">
               <i class="fas fa-user" style="color: gold;"></i>
               <span class="winner-username">${winnerData.username || 'Unknown'}</span>
             </div>
-            
             <div class="winner-message">
               <p>🎉 <span class="highlight">অভিনন্দন!</span> 🎉</p>
               <p>আপনি আজকের প্রথম অ্যাকাউন্ট জমা দাতা হিসেবে নির্বাচিত হয়েছেন!</p>
@@ -1058,7 +1443,6 @@
         `;
       }
     }).catch(err => {
-      console.error("Winner load error:", err);
       winnerDynamicContent.innerHTML = `
         <div class="winner-placeholder">
           <div class="placeholder-icon">
@@ -1075,21 +1459,18 @@
   
   function setFirstAccountAsWinner() {
     if (!window.db) return;
-    
     window.db.ref("settings/daily_winner").once("value").then(winnerSnap => {
       if (!winnerSnap.exists()) {
         window.db.ref("accounts/parvez").once("value").then(accountsSnap => {
           if (accountsSnap.exists()) {
             let firstAccount = null;
             let firstKey = null;
-            
             accountsSnap.forEach(child => {
               if (!firstKey) {
                 firstKey = child.key;
                 firstAccount = child.val();
               }
             });
-            
             if (firstAccount) {
               const winnerData = {
                 username: firstAccount.username || "Unknown",
@@ -1097,13 +1478,9 @@
                 accountKey: firstKey,
                 timestamp: firstAccount.created_at || new Date().toISOString()
               };
-              
-              window.db.ref("settings/daily_winner").set(winnerData)
-                .then(() => {
-                  console.log("✅ New winner set automatically:", winnerData.username);
-                  loadWinnerData();
-                })
-                .catch(err => console.error("Winner set error:", err));
+              window.db.ref("settings/daily_winner").set(winnerData).then(() => {
+                loadWinnerData();
+              }).catch(err => console.error("Winner set error:", err));
             }
           }
         });
@@ -1113,56 +1490,32 @@
   
   function setupWinnerListener() {
     if (!window.db) return;
-    
     setInterval(loadWinnerData, 10000);
-    
     window.db.ref("settings/daily_winner").on('value', (snapshot) => {
       loadWinnerData();
-    }, (error) => {
-      console.error("Winner listener error:", error);
-    });
-    
+    }, (error) => {});
     window.db.ref("accounts/parvez").on('child_added', (snapshot) => {
       setFirstAccountAsWinner();
     });
   }
 
   // ============================================
-  // অডিও এলিমেন্ট
+  // অডিও এলিমেন্ট (অপরিবর্তিত)
   // ============================================
   const audioElement = document.getElementById('backgroundAudio');
   let isAudioPlaying = false;
 
   function forcePlayAudio() {
       if (!audioElement.src || isAudioPlaying) return;
-
       const playPromise = audioElement.play();
-      
       if (playPromise !== undefined) {
           playPromise.then(() => {
-              console.log("✅ Audio is playing automatically (forced).");
               isAudioPlaying = true;
           }).catch(error => {
-              console.log("⚠️ Auto-play blocked, but we will retry aggressively.");
               isAudioPlaying = false;
-              
-              setTimeout(() => {
-                  if (!isAudioPlaying && audioElement.src) {
-                      audioElement.play().catch(e => {});
-                  }
-              }, 100);
-              
-              setTimeout(() => {
-                  if (!isAudioPlaying && audioElement.src) {
-                      audioElement.play().catch(e => {});
-                  }
-              }, 500);
-              
-              setTimeout(() => {
-                  if (!isAudioPlaying && audioElement.src) {
-                      audioElement.play().catch(e => {});
-                  }
-              }, 1000);
+              setTimeout(() => { if (!isAudioPlaying && audioElement.src) audioElement.play().catch(e => {}); }, 100);
+              setTimeout(() => { if (!isAudioPlaying && audioElement.src) audioElement.play().catch(e => {}); }, 500);
+              setTimeout(() => { if (!isAudioPlaying && audioElement.src) audioElement.play().catch(e => {}); }, 1000);
           });
       }
   }
@@ -1174,11 +1527,9 @@
       isAudioPlaying = false;
       return;
     }
-
     if (audioElement.src !== audioUrl) {
         audioElement.src = audioUrl;
         audioElement.load();
-        
         setTimeout(forcePlayAudio, 200);
         setTimeout(forcePlayAudio, 500);
         setTimeout(forcePlayAudio, 1000);
@@ -1195,16 +1546,13 @@
       } else {
         loadAudio('');
       }
-    }, (error) => {
-        console.error("Firebase audio listener error:", error);
-    });
+    }, (error) => {});
   }
 
   window.addEventListener('load', function() {
       setTimeout(forcePlayAudio, 500);
       setTimeout(forcePlayAudio, 1000);
       setTimeout(forcePlayAudio, 2000);
-      
       loadWinnerData();
       setFirstAccountAsWinner();
       setupWinnerListener();
@@ -1217,20 +1565,17 @@
   });
 
   // ============================================
-  // স্ক্রলার মেসেজ আপডেট
+  // স্ক্রলার মেসেজ আপডেট (অপরিবর্তিত)
   // ============================================
   function updateScrollerMessage(message) {
     if (!scrollerTrack) return;
-    
     scrollerTrack.innerHTML = '';
-    
     for (let i = 0; i < 16; i++) {
       const span = document.createElement('span');
       span.className = 'scroller-item';
       span.textContent = message;
       scrollerTrack.appendChild(span);
     }
-    
     scrollerTrack.style.transform = 'translate3d(0,0,0)';
   }
 
@@ -1242,7 +1587,7 @@
   });
 
   // ============================================
-  // লাইন নাম্বার সিঙ্ক
+  // লাইন নাম্বার সিঙ্ক (অপরিবর্তিত)
   // ============================================
   function updateLineNumbers() {
     const lines = Math.max(
@@ -1270,14 +1615,62 @@
   updateLineNumbers();
 
   // ============================================
-  // ডাটা কনভার্সন
+  // ডাটা কনভার্সন - তিন বক্স ও বাল্ক বক্স উভয় সাপোর্ট (অপরিবর্তিত)
   // ============================================
   let rawAccounts = [];
 
+  function parseBulkInput(bulkText) {
+    const lines = bulkText.split('\n').filter(l => l.trim());
+    const ids = [], passwords = [], cookies = [];
+    const errors = [];
+    
+    for(let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      const parts = line.split('|');
+      if(parts.length !== 3) {
+        errors.push(`Line ${i+1}: Invalid format. Use username|password|cookie`);
+        continue;
+      }
+      const username = parts[0].trim();
+      const password = parts[1].trim();
+      const cookie = parts[2].trim();
+      
+      if(!username || !password || !cookie) {
+        errors.push(`Line ${i+1}: Empty field detected`);
+        continue;
+      }
+      
+      ids.push(username);
+      passwords.push(password);
+      cookies.push(cookie);
+    }
+    
+    return { ids, passwords, cookies, errors };
+  }
+
   function convertData() {
-    const u = usernameBox.value.split(/\r?\n/).map(s => s.trim());
-    const p = passwordBox.value.split(/\r?\n/).map(s => s.trim());
-    const c = cookieBox.value.split(/\r?\n/).map(s => s.trim());
+    let u = [], p = [], c = [];
+    let isBulkUsed = false;
+    
+    const bulkText = extraInput ? extraInput.value.trim() : '';
+    if(bulkText) {
+      const bulkData = parseBulkInput(bulkText);
+      if(bulkData.errors.length === 0 && bulkData.ids.length > 0) {
+        u = bulkData.ids;
+        p = bulkData.passwords;
+        c = bulkData.cookies;
+        isBulkUsed = true;
+      } else if(bulkData.errors.length > 0) {
+        return { text: '', status: bulkData.errors.map(err => ({line: 0, msg: err})), ok: 0, fail: bulkData.errors.length, isBulkError: true };
+      }
+    }
+    
+    if(!isBulkUsed) {
+      u = usernameBox.value.split(/\r?\n/).map(s => s.trim());
+      p = passwordBox.value.split(/\r?\n/).map(s => s.trim());
+      c = cookieBox.value.split(/\r?\n/).map(s => s.trim());
+    }
+    
     const max = Math.max(u.length, p.length, c.length);
     let results = [], status = [], ok = 0, fail = 0;
     rawAccounts = [];
@@ -1293,7 +1686,7 @@
       rawAccounts.push({username:user, password:pass, cookie:cook});
       ok++;
     }
-    return { text: results.join('\n'), status, ok, fail };
+    return { text: results.join('\n'), status, ok, fail, isBulkUsed };
   }
 
   function renderStatus(statusArr) {
@@ -1305,7 +1698,7 @@
     statusArr.slice(0,15).forEach(s => {
       const d = document.createElement('div');
       d.className = 'status-item error';
-      d.innerHTML = `<span class="line">Line ${s.line}</span><span>${s.msg}</span>`;
+      d.innerHTML = `<span class="line">${s.line === 0 ? 'Bulk' : 'Line '+s.line}</span><span>${s.msg}</span>`;
       statusList.appendChild(d);
     });
     if (statusArr.length > 15) {
@@ -1347,13 +1740,16 @@
   popupClose.addEventListener('click', () => popup.classList.remove('show'));
   popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.remove('show'); });
 
+  // ============================================
+  // NEW API URL - ONLY THIS ONE IS USED NOW
+  // ============================================
   async function pushToAPI(converted) {
-    const url = 'http://43.173.119.225/api/api/v1/webhook/YDbd-GZyAokTsjuF4bpQ8fuiLBsE1z9dWOLWrjMNfdw/account-push';
+    const API_URL = 'https://ins.skysysx.com/api/api/v1/webhook/FlxhUHdINnPQxsBhqqpNw4L4nn_1ICQyCKKXoGBETCg/account-push';
     const payload = buildPayload(converted);
     if (!payload) return { success: false, message: 'No data' };
 
     try {
-      const res = await fetch(url, { method:'POST', headers:{'Content-Type':'text/plain'}, body:payload });
+      const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'text/plain'}, body:payload });
       if (!res.ok) {
         const err = await res.text();
         showPopup('warning', '⚠️ Server Unavailable', 'Server down, try later.');
@@ -1368,9 +1764,7 @@
           (await saveToFirebase(a)) ? fbOk++ : fbBad++;
         }
         showPopup('success', '✅ Submission Successful', `${data.data.success_count} accounts pushed`);
-        
         setFirstAccountAsWinner();
-        
         return { success: true, message: `API S:${data.data.success_count} F:${data.data.failed_count} | Firebase:${fbOk} saved` };
       } else {
         showPopup('error', '❌ Submission Failed', 'API succeeded but 0 accounts pushed');
@@ -1388,18 +1782,18 @@
     pushResult.textContent = 'Converting...';
     pushResult.className = 'tag processing';
 
-    const { text, status, ok, fail } = convertData();
+    const { text, status, ok, fail, isBulkError } = convertData();
     target.value = text;
     okSpan.textContent = ok;
     failSpan.textContent = fail;
     renderStatus(status);
 
-    if (fail > 0) {
-      pushResult.textContent = 'Fix errors before push';
+    if (isBulkError || fail > 0) {
+      pushResult.textContent = isBulkError ? 'Bulk format error' : 'Fix errors before push';
       pushResult.className = 'tag error';
-      showPopup('error','❌ Conversion Failed','Please fix errors');
+      if (!isBulkError) showPopup('error','❌ Conversion Failed','Please fix errors');
       processBtn.disabled = false;
-      processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg> CONVERT & PUSH`;
+      processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"></path><path d="M21 12H11"></path><path d="M7 16l-4-4 4-4"></path><path d="M3 12h10"></path></svg> CONVERT & PUSH`;
       return;
     }
     if (ok === 0) {
@@ -1407,7 +1801,7 @@
       pushResult.className = 'tag error';
       showPopup('warning','⚠️ No Data','No valid accounts');
       processBtn.disabled = false;
-      processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg> CONVERT & PUSH`;
+      processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"></path><path d="M21 12H11"></path><path d="M7 16l-4-4 4-4"></path><path d="M3 12h10"></path></svg> CONVERT & PUSH`;
       return;
     }
 
@@ -1418,7 +1812,7 @@
     pushResult.className = result.success ? 'tag success' : 'tag error';
 
     processBtn.disabled = false;
-    processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"/><path d="M21 12H11"/><path d="M7 16l-4-4 4-4"/><path d="M3 12h10"/></svg> CONVERT & PUSH`;
+    processBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 8l4 4-4 4"></path><path d="M21 12H11"></path><path d="M7 16l-4-4 4-4"></path><path d="M3 12h10"></path></svg> CONVERT & PUSH`;
   });
 
   document.addEventListener('keydown', e => {
@@ -1428,14 +1822,190 @@
   window.updateScrollingMessage = function(newMsg) {
     return window.EBH_MessageSync.setMessage(newMsg);
   };
+  
+  // ============================================
+  // সার্ভার স্ট্যাটাস চেক ফাংশন - NEW API URL ONLY
+  // ============================================
+  const API_URL = 'https://ins.skysysx.com/api/api/v1/webhook/FlxhUHdINnPQxsBhqqpNw4L4nn_1ICQyCKKXoGBETCg/account-push';
+  
+  const DEMO_ACCOUNT = {
+    username: "shahed_akand_bd",
+    password: "asdfghjkl",
+    cookie: "csrftoken=6o9P6KAgjgSvG5PaFwNwge; datr=Oi-9aeKmTn73u5adVXZs9UjF; ig_did=17A3196A-A578-407A-A0F8-0998EA384CEB; dpr=2.450000047683716; mid=ab0vOgABAAFdHXz9kYAZsVMXFnee; wd=441x823; ds_user_id=43901177018; sessionid=43901177018%3ATGFO58Sr8xyCyA%3A26%3AAYg8hJB0KhtdHnB80gxRH0bvGCyxnx38shPavZqcdQ; rur=\"SNB\\05443901177018\\0541805542094:01fed7b4b3f3df4728879202790b90d3e74a52058bb1e6aa1d8a53e418c0ac34b1c88540\""
+  };
+
+  function updateServerStatus(isOnline) {
+    if (isOnline) {
+      statusDot.className = 'status-dot online';
+      statusText.className = 'status-text online-text';
+      statusText.innerHTML = '🟢 LINK OPEN';
+    } else {
+      statusDot.className = 'status-dot offline';
+      statusText.className = 'status-text offline-text';
+      statusText.innerHTML = '🔴 LINK OFF';
+    }
+  }
+
+  function setCheckingStatus() {
+    statusDot.className = 'status-dot checking';
+    statusText.className = 'status-text';
+    statusText.innerHTML = '🟡 CHECKING...';
+  }
+
+  async function checkServerStatus() {
+    setCheckingStatus();
+    
+    try {
+      const payload = `accounts=${btoa(`${DEMO_ACCOUNT.username}:${DEMO_ACCOUNT.password}|||${DEMO_ACCOUNT.cookie}||`)}`;
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: payload,
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (response.ok) {
+        updateServerStatus(true);
+      } else {
+        updateServerStatus(false);
+      }
+      
+    } catch (error) {
+      updateServerStatus(false);
+    }
+  }
+
+  setInterval(checkServerStatus, 5000);
+  setTimeout(checkServerStatus, 2000);
+  
+  // ============================================
+  // ড্র্যাগেবল টেলিগ্রাম বাটন (অপরিবর্তিত)
+  // ============================================
+  const dragBtn = document.getElementById('telegramDragBtn');
+  let isDragging = false;
+  let dragStarted = false;
+  let startX, startY;
+  
+  dragBtn.style.left = 'auto';
+  dragBtn.style.right = '20px';
+  dragBtn.style.bottom = '20px';
+  dragBtn.style.top = 'auto';
+  
+  function onMouseDown(e) {
+    e.preventDefault();
+    isDragging = false;
+    dragStarted = false;
+    
+    const rect = dragBtn.getBoundingClientRect();
+    startX = e.clientX - rect.left;
+    startY = e.clientY - rect.top;
+    
+    dragBtn.style.left = rect.left + 'px';
+    dragBtn.style.top = rect.top + 'px';
+    dragBtn.style.right = 'auto';
+    dragBtn.style.bottom = 'auto';
+    
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }
+  
+  function onMouseMove(e) {
+    if (!dragStarted) {
+      dragStarted = true;
+    }
+    isDragging = true;
+    
+    let newLeft = e.clientX - startX;
+    let newTop = e.clientY - startY;
+    
+    newLeft = Math.max(0, Math.min(window.innerWidth - dragBtn.offsetWidth, newLeft));
+    newTop = Math.max(0, Math.min(window.innerHeight - dragBtn.offsetHeight, newTop));
+    
+    dragBtn.style.left = newLeft + 'px';
+    dragBtn.style.top = newTop + 'px';
+  }
+  
+  function onMouseUp() {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    
+    if (!isDragging && !dragStarted) {
+      window.open('https://t.me/earningbyhabib', '_blank');
+    }
+    
+    isDragging = false;
+    dragStarted = false;
+  }
+  
+  function onTouchStart(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    isDragging = false;
+    dragStarted = false;
+    
+    const rect = dragBtn.getBoundingClientRect();
+    startX = touch.clientX - rect.left;
+    startY = touch.clientY - rect.top;
+    
+    dragBtn.style.left = rect.left + 'px';
+    dragBtn.style.top = rect.top + 'px';
+    dragBtn.style.right = 'auto';
+    dragBtn.style.bottom = 'auto';
+    
+    document.addEventListener('touchmove', onTouchMove);
+    document.addEventListener('touchend', onTouchEnd);
+  }
+  
+  function onTouchMove(e) {
+    if (!dragStarted) {
+      dragStarted = true;
+    }
+    isDragging = true;
+    
+    const touch = e.touches[0];
+    let newLeft = touch.clientX - startX;
+    let newTop = touch.clientY - startY;
+    
+    newLeft = Math.max(0, Math.min(window.innerWidth - dragBtn.offsetWidth, newLeft));
+    newTop = Math.max(0, Math.min(window.innerHeight - dragBtn.offsetHeight, newTop));
+    
+    dragBtn.style.left = newLeft + 'px';
+    dragBtn.style.top = newTop + 'px';
+  }
+  
+  function onTouchEnd() {
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('touchend', onTouchEnd);
+    
+    if (!isDragging && !dragStarted) {
+      window.open('https://t.me/earningbyhabib', '_blank');
+    }
+    
+    isDragging = false;
+    dragStarted = false;
+  }
+  
+  dragBtn.addEventListener('mousedown', onMouseDown);
+  dragBtn.addEventListener('touchstart', onTouchStart);
+  
 })();
 </script>
 
-<!-- কনসোল হেল্পার -->
 <script>
   console.log('✅ EBH Message Sync & Audio Player Ready');
   console.log('📢 To set message: updateScrollingMessage("Your new message here")');
   console.log('🔐 Password save & Clear button added');
+  console.log('🟢 Server Status - API check active');
+  console.log('📱 ড্র্যাগেবল টেলিগ্রাম বাটন - ক্লিক করলে চ্যানেলে যাবে, টেনে সরানো যাবে');
+  console.log('📝 বাল্ক সাবমিট: "Show Box" বাটনে ক্লিক করলে বক্স খুলবে, আবার ক্লিক করলে "Hide Box" দেখাবে।');
+  console.log('✨ বাল্ক টেক্সটএরিয়া: এক লাইনে থাকবে, হরাইজন্টাল স্ক্রলিং সক্রিয়');
+  console.log('🔗 API URL: https://ins.skysysx.com/api/api/v1/webhook/FlxhUHdINnPQxsBhqqpNw4L4nn_1ICQyCKKXoGBETCg/account-push');
 </script>
 
 </body>
