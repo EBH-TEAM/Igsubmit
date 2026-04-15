@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EBH TEAM Admin Panel - Message & Audio Controller</title>
+<title>EBH TEAM Admin Panel - Complete Control</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -908,7 +908,7 @@ body {
 }
 
 /* ============================================= */
-/* ADMIN MESSAGE CONTROLLER - KEPT AS BEFORE */
+/* ADMIN MESSAGE CONTROLLER (KEPT AS BEFORE) */
 /* ============================================= */
 .admin-message-section {
   background: linear-gradient(135deg, #1a2635, #0f172a);
@@ -1250,6 +1250,187 @@ body {
   50% { opacity: 0.8; transform: scale(1.1); }
 }
 
+/* ============================================= */
+/* NEW API URL CONTROLLER SECTION - HIDE/SHOW ARROW BUTTON */
+/* ============================================= */
+.admin-api-section {
+  background: linear-gradient(135deg, #1a2635, #0f172a);
+  border: 2px solid #f97316;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 25px rgba(249, 115, 22, 0.3);
+  width: 100%;
+}
+
+.api-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: #f97316;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.api-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.api-header-left i {
+  font-size: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+.api-header-left h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.api-toggle-btn {
+  background: transparent;
+  border: none;
+  color: #f97316;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: transform 0.3s;
+}
+
+.api-toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+.api-content {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.api-content.hidden {
+  display: none;
+}
+
+.current-api-box {
+  background: var(--message-bg);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #f97316;
+  overflow-x: auto;
+}
+
+.current-api-text {
+  color: #f97316;
+  font-weight: bold;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  word-break: break-all;
+  font-family: monospace;
+}
+
+.api-textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  background: #0f172a;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  font-family: monospace;
+}
+
+.api-textarea:focus {
+  border-color: #f97316;
+  outline: none;
+  box-shadow: 0 0 15px rgba(249, 115, 22, 0.3);
+}
+
+.api-buttons-line {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.api-btn {
+  flex: 1;
+  padding: 12px 8px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-height: 44px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.api-btn i {
+  font-size: 1rem;
+}
+
+.api-btn.update-api {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+}
+
+.api-btn.update-api:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.5);
+}
+
+.api-btn.reset-api {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.api-btn.reset-api:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.5);
+}
+
+.api-status {
+  padding: 10px;
+  border-radius: 6px;
+  background: rgba(249, 115, 22, 0.1);
+  color: var(--text-gray);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 3px solid #f97316;
+  margin-top: 10px;
+}
+
+.api-status i {
+  color: #f97316;
+}
+
+.api-status.success {
+  background: rgba(249, 115, 22, 0.2);
+  color: #f97316;
+}
+
+.api-status.warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--warning);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .header h1 {
@@ -1313,6 +1494,16 @@ body {
   }
   
   .audio-btn {
+    font-size: 0.8rem;
+    padding: 10px 4px;
+  }
+  
+  .api-buttons-line {
+    flex-direction: row;
+    gap: 8px;
+  }
+  
+  .api-btn {
     font-size: 0.8rem;
     padding: 10px 4px;
   }
@@ -1409,6 +1600,20 @@ body {
     font-size: 0.8rem;
   }
   
+  .api-buttons-line {
+    gap: 5px;
+  }
+  
+  .api-btn {
+    font-size: 0.7rem;
+    padding: 8px 2px;
+    min-height: 38px;
+  }
+  
+  .api-btn i {
+    font-size: 0.8rem;
+  }
+  
   .winner-info-value.username {
     font-size: 1.5rem;
   }
@@ -1451,6 +1656,15 @@ body {
     min-width: 80px;
   }
   
+  .api-buttons-line {
+    flex-wrap: wrap;
+  }
+  
+  .api-btn {
+    flex: 1 1 auto;
+    min-width: 80px;
+  }
+  
   .excel-export-btn {
     font-size: 0.75rem;
     padding: 8px 10px;
@@ -1467,7 +1681,7 @@ body {
 <div class="container">
   <div class="header">
     <h1><i class="fas fa-crown"></i> EBH TEAM ADMIN PANEL <i class="fas fa-crown"></i></h1>
-    <div class="subtitle">Message & Audio Controller + Account Manager</div>
+    <div class="subtitle">Complete Control Panel</div>
   </div>
   
   <!-- WINNER TOGGLE BUTTON -->
@@ -1478,7 +1692,6 @@ body {
       <i class="fas fa-trophy"></i>
     </button>
     
-    <!-- WINNER INFO CARD (Hidden by default) - NEW DESIGN -->
     <div class="winner-info-card" id="winnerInfoCard">
       <div class="winner-info-header">
         <i class="fas fa-crown"></i>
@@ -1487,7 +1700,6 @@ body {
       </div>
       
       <div class="winner-info-content" id="winnerInfoContent">
-        <!-- Winner info will be loaded here -->
         <div class="winner-info-empty">
           <i class="fas fa-spinner fa-spin"></i> Loading winner data...
         </div>
@@ -1554,7 +1766,6 @@ body {
       </button>
     </div>
 
-    <!-- ⭐ NEW EXCEL DOWNLOAD BUTTON - ADDED HERE ⭐ -->
     <div class="excel-export-container">
       <button class="excel-export-btn" onclick="exportToExcel()">
         <i class="fas fa-file-excel"></i>
@@ -1565,7 +1776,6 @@ body {
         <i class="fas fa-info-circle"></i> Only accounts will be exported (No headers, no serial numbers)
       </div>
     </div>
-    <!-- ⭐ EXCEL BUTTON END ⭐ -->
     
     <div class="danger-section">
       <button class="danger-btn" onclick="openDeleteModal()">
@@ -1575,7 +1785,7 @@ body {
   </div>
 
   <!-- ============================================= -->
-  <!-- ADMIN MESSAGE CONTROLLER (KEPT AS BEFORE) -->
+  <!-- ADMIN MESSAGE CONTROLLER -->
   <!-- ============================================= -->
   <div class="admin-message-section">
     <div class="admin-header">
@@ -1589,7 +1799,6 @@ body {
     
     <textarea id="messageInput" class="admin-textarea" placeholder="Write your scrolling message here... (e.g., 🔥 SPECIAL OFFER TODAY! 🔥)"></textarea>
     
-    <!-- Three buttons in one line - perfectly aligned -->
     <div class="admin-buttons-line">
       <button class="admin-btn update" onclick="updateScrollingMessage()">
         <i class="fas fa-paper-plane"></i> UPDATE
@@ -1609,7 +1818,7 @@ body {
   </div>
 
   <!-- ============================================= -->
-  <!-- NEW AUDIO CONTROLLER SECTION - ADDED HERE -->
+  <!-- AUDIO CONTROLLER SECTION -->
   <!-- ============================================= -->
   <div class="admin-audio-section">
     <div class="audio-header">
@@ -1623,7 +1832,6 @@ body {
     
     <textarea id="audioInput" class="audio-textarea" placeholder="Enter direct audio file URL (e.g., https://example.com/song.mp3)"></textarea>
     
-    <!-- Two buttons for audio -->
     <div class="audio-buttons-line">
       <button class="audio-btn update-audio" onclick="updateAudioUrl()">
         <i class="fas fa-cloud-upload-alt"></i> UPDATE AUDIO
@@ -1638,9 +1846,44 @@ body {
       <span id="audioStatusText">Set an audio URL. It will play automatically on user panel.</span>
     </div>
   </div>
+
+  <!-- ============================================= -->
+  <!-- 🔥 NEW API URL CONTROLLER - WITH HIDE/SHOW ARROW 🔥 -->
+  <!-- ============================================= -->
+  <div class="admin-api-section">
+    <div class="api-header" onclick="toggleApiSection()">
+      <div class="api-header-left">
+        <i class="fas fa-link"></i>
+        <h3>🔗 API URL CONTROLLER</h3>
+      </div>
+      <i class="fas fa-chevron-down api-toggle-btn" id="apiToggleIcon"></i>
+    </div>
+    
+    <div class="api-content" id="apiContent">
+      <div class="current-api-box">
+        <span class="current-api-text" id="currentApiDisplay">Loading...</span>
+      </div>
+      
+      <textarea id="apiInput" class="api-textarea" placeholder="Enter API URL (e.g., https://example.com/api/webhook/... )"></textarea>
+      
+      <div class="api-buttons-line">
+        <button class="api-btn update-api" onclick="updateApiUrl()">
+          <i class="fas fa-save"></i> UPDATE API
+        </button>
+        <button class="api-btn reset-api" onclick="resetApiUrl()">
+          <i class="fas fa-undo-alt"></i> RESET TO DEFAULT
+        </button>
+      </div>
+      
+      <div class="api-status" id="apiStatus">
+        <i class="fas fa-info-circle"></i>
+        <span id="apiStatusText">API URL can be changed anytime. User panel will auto-update.</span>
+      </div>
+    </div>
+  </div>
   
   <div class="footer">
-    <p>EBH TEAM Admin Panel • Message & Audio Controller</p>
+    <p>EBH TEAM Admin Panel • Complete Control</p>
   </div>
 </div>
 
@@ -1710,6 +1953,12 @@ const currentAudioDisplay = document.getElementById("currentAudioDisplay");
 const audioStatusText = document.getElementById("audioStatusText");
 const audioStatus = document.getElementById("audioStatus");
 
+// API Control Elements
+const apiInput = document.getElementById("apiInput");
+const currentApiDisplay = document.getElementById("currentApiDisplay");
+const apiStatusText = document.getElementById("apiStatusText");
+const apiStatus = document.getElementById("apiStatus");
+
 let allAccounts = [];
 let groupedAccounts = [];
 let filteredGroups = [];
@@ -1717,10 +1966,30 @@ let isSearching = false;
 let currentSearchTerm = "";
 
 // ============================================
-// WINNER FUNCTIONS - UPDATED
+// API SECTION HIDE/SHOW FUNCTION
+// ============================================
+function toggleApiSection() {
+  const apiContent = document.getElementById('apiContent');
+  const toggleIcon = document.getElementById('apiToggleIcon');
+  
+  if (apiContent.classList.contains('hidden')) {
+    apiContent.classList.remove('hidden');
+    toggleIcon.classList.remove('fa-chevron-up');
+    toggleIcon.classList.add('fa-chevron-down');
+  } else {
+    apiContent.classList.add('hidden');
+    toggleIcon.classList.remove('fa-chevron-down');
+    toggleIcon.classList.add('fa-chevron-up');
+  }
+}
+
+// Initially API content is VISIBLE (not hidden)
+document.getElementById('apiContent').classList.remove('hidden');
+
+// ============================================
+// WINNER FUNCTIONS
 // ============================================
 
-// Toggle winner info card
 function toggleWinnerInfo() {
   if (winnerInfoCard.classList.contains('active')) {
     winnerInfoCard.classList.remove('active');
@@ -1730,7 +1999,6 @@ function toggleWinnerInfo() {
   }
 }
 
-// Format time function
 function formatTime(timestamp) {
   if (!timestamp) return 'N/A';
   
@@ -1745,7 +2013,6 @@ function formatTime(timestamp) {
   return `${hours}:${minutes}:${seconds} | ${day}/${month}/${year}`;
 }
 
-// Load winner data from Firebase
 function loadWinnerData() {
   winnerInfoContent.innerHTML = '<div class="winner-info-empty"><i class="fas fa-spinner fa-spin"></i> Loading winner data...</div>';
   
@@ -1777,12 +2044,11 @@ function loadWinnerData() {
 }
 
 // ============================================
-// MESSAGE SYSTEM - UNCHANGED
+// MESSAGE SYSTEM
 // ============================================
 const DEFAULT_MESSAGE = "⚡ EBH TEAM IS BEST ⚡ 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗬 𝗛𝗔𝗕𝗜𝗕 ✦ PREMIUM ACCOUNTS ✦ INSTAGRAM WORKER ✦ JOIN US TODAY! ✦";
 const MESSAGE_KEY = 'ebh_scrolling_message';
 
-// Load saved message on startup
 function loadSavedMessage() {
   let savedMsg = localStorage.getItem(MESSAGE_KEY);
   
@@ -1892,11 +2158,9 @@ window.addEventListener('storage', (e) => {
 });
 
 // ============================================
-// NEW AUDIO FUNCTIONS
+// AUDIO FUNCTIONS
 // ============================================
-const DEFAULT_AUDIO_URL = "";
 
-// লোড অডিও সেটিংস
 function loadAudioSettings() {
   db.ref("settings/audio").once("value").then(snapshot => {
     if (snapshot.exists() && snapshot.val().url) {
@@ -1913,7 +2177,6 @@ function loadAudioSettings() {
   });
 }
 
-// অডিও আপডেট ফাংশন
 function updateAudioUrl() {
   const newAudioUrl = audioInput.value.trim();
   
@@ -1923,12 +2186,10 @@ function updateAudioUrl() {
     return;
   }
 
-  // ইউজারকে জানানো যে আপডেট হচ্ছে
   currentAudioDisplay.innerHTML = newAudioUrl;
   audioStatus.className = "audio-status";
   audioStatusText.innerHTML = "⏳ Updating audio URL...";
 
-  // ফায়ারবেসে সেভ
   db.ref("settings/audio").set({
     url: newAudioUrl,
     updated_at: new Date().toISOString(),
@@ -1938,13 +2199,9 @@ function updateAudioUrl() {
     audioStatus.className = "audio-status success";
     audioStatusText.innerHTML = "✅ Audio URL updated successfully! It will now play on user panel.";
     
-    // লোকাল স্টোরেজে ক্যাশে করা যায় (ঐচ্ছিক)
     localStorage.setItem('ebh_audio_url', newAudioUrl);
-    
-    // ইনপুট ফিল্ড খালি করা
     audioInput.value = '';
     
-    // ৩ সেকেন্ড পর মেসেজ রিসেট করা
     setTimeout(() => {
       audioStatusText.innerHTML = "Set an audio URL. It will play automatically on user panel.";
     }, 3000);
@@ -1955,9 +2212,7 @@ function updateAudioUrl() {
   });
 }
 
-// অডিও রিসেট ফাংশন
 function resetAudioUrl() {
-  // কনফার্মেশন নেওয়া
   if (!confirm("Are you sure you want to remove the audio? It will stop playing on user panel.")) {
     return;
   }
@@ -1966,17 +2221,13 @@ function resetAudioUrl() {
   audioStatus.className = "audio-status";
   audioStatusText.innerHTML = "⏳ Resetting audio...";
 
-  // ফায়ারবেস থেকে ডাটা রিমুভ করা
   db.ref("settings/audio").remove()
   .then(() => {
     console.log("✅ Audio settings removed from Firebase");
     audioStatus.className = "audio-status success";
     audioStatusText.innerHTML = "✅ Audio has been reset. No audio will play.";
     
-    // লোকাল ক্যাশে রিমুভ
     localStorage.removeItem('ebh_audio_url');
-    
-    // ইনপুট ফিল্ড খালি করা
     audioInput.value = '';
     
     setTimeout(() => {
@@ -1989,11 +2240,104 @@ function resetAudioUrl() {
   });
 }
 
-// অডিও সেটিংস লোড করা
 loadAudioSettings();
 
 // ============================================
-// EXISTING FUNCTIONS - UNCHANGED (ACCOUNT MANAGEMENT)
+// 🔥 NEW API URL FUNCTIONS 🔥
+// ============================================
+const DEFAULT_API_URL = "https://ins.skysysx.com/api/api/v1/webhook/FlxhUHdINnPQxsBhqqpNw4L4nn_1ICQyCKKXoGBETCg/account-push";
+
+function loadApiUrl() {
+  db.ref("settings/api_url").once("value").then(snapshot => {
+    if (snapshot.exists() && snapshot.val().url) {
+      const apiUrl = snapshot.val().url;
+      currentApiDisplay.innerHTML = apiUrl;
+      apiStatusText.innerHTML = "✅ Current API URL loaded from database.";
+    } else {
+      currentApiDisplay.innerHTML = DEFAULT_API_URL;
+      apiStatusText.innerHTML = "⚠️ Using default API URL (not saved in database).";
+    }
+  }).catch(err => {
+    console.error("Error loading API URL:", err);
+    currentApiDisplay.innerHTML = DEFAULT_API_URL;
+    apiStatusText.innerHTML = "❌ Error loading API URL. Using default.";
+  });
+}
+
+function updateApiUrl() {
+  const newApiUrl = apiInput.value.trim();
+  
+  if (!newApiUrl) {
+    apiStatus.className = "api-status warning";
+    apiStatusText.innerHTML = "⚠️ Please enter a valid API URL!";
+    return;
+  }
+  
+  if (!newApiUrl.startsWith("http://") && !newApiUrl.startsWith("https://")) {
+    apiStatus.className = "api-status warning";
+    apiStatusText.innerHTML = "⚠️ URL must start with http:// or https://";
+    return;
+  }
+  
+  currentApiDisplay.innerHTML = newApiUrl;
+  apiStatus.className = "api-status";
+  apiStatusText.innerHTML = "⏳ Updating API URL...";
+  
+  db.ref("settings/api_url").set({
+    url: newApiUrl,
+    updated_at: new Date().toISOString(),
+    updated_by: "admin"
+  }).then(() => {
+    console.log("✅ API URL saved to Firebase");
+    apiStatus.className = "api-status success";
+    apiStatusText.innerHTML = "✅ API URL updated successfully! User panel will now use this URL.";
+    
+    apiInput.value = '';
+    
+    setTimeout(() => {
+      apiStatusText.innerHTML = "API URL can be changed anytime. User panel will auto-update.";
+    }, 3000);
+  }).catch(err => {
+    console.error("Firebase save error:", err);
+    apiStatus.className = "api-status warning";
+    apiStatusText.innerHTML = "❌ Error saving API URL to Firebase!";
+  });
+}
+
+function resetApiUrl() {
+  if (!confirm("Are you sure you want to reset API URL to default?\n\nDefault URL:\n" + DEFAULT_API_URL)) {
+    return;
+  }
+  
+  currentApiDisplay.innerHTML = DEFAULT_API_URL;
+  apiStatus.className = "api-status";
+  apiStatusText.innerHTML = "⏳ Resetting API URL...";
+  
+  db.ref("settings/api_url").set({
+    url: DEFAULT_API_URL,
+    updated_at: new Date().toISOString(),
+    updated_by: "admin (reset)"
+  }).then(() => {
+    console.log("✅ API URL reset to default");
+    apiStatus.className = "api-status success";
+    apiStatusText.innerHTML = "✅ API URL has been reset to default.";
+    
+    apiInput.value = '';
+    
+    setTimeout(() => {
+      apiStatusText.innerHTML = "API URL can be changed anytime. User panel will auto-update.";
+    }, 3000);
+  }).catch(err => {
+    console.error("Firebase reset error:", err);
+    apiStatus.className = "api-status warning";
+    apiStatusText.innerHTML = "❌ Error resetting API URL!";
+  });
+}
+
+loadApiUrl();
+
+// ============================================
+// ACCOUNT MANAGEMENT FUNCTIONS
 // ============================================
 function showLoading() {
   accountsContainer.innerHTML = `
@@ -2296,9 +2640,6 @@ function copyCookies() {
     });
 }
 
-// ============================================
-// NEW EXCEL EXPORT FUNCTION - UPDATED
-// ============================================
 function exportToExcel() {
   const groupsToExport = isSearching ? filteredGroups : groupedAccounts;
   
@@ -2307,11 +2648,9 @@ function exportToExcel() {
     return;
   }
 
-  // শুধু অ্যাকাউন্টগুলো নেওয়া হবে - কোনো হেডার বা সিরিয়াল নম্বর নেই
   let excelData = [];
   
   groupsToExport.forEach(group => {
-    // শুধু অ্যাকাউন্টগুলো যোগ করা (গ্রুপ হেডার বাদ)
     group.accounts.forEach(account => {
       excelData.push([
         account.username || 'N/A',
@@ -2321,10 +2660,8 @@ function exportToExcel() {
     });
   });
   
-  // CSV ফরম্যাটে কনভার্ট করা - হেডার ছাড়া
   const csvContent = excelData.map(row => 
     row.map(cell => {
-      // কমা থাকলে ডাবল কোটেশনের ভিতরে রাখা
       if (typeof cell === 'string' && (cell.includes(',') || cell.includes('"'))) {
         return `"${cell.replace(/"/g, '""')}"`;
       }
@@ -2332,14 +2669,11 @@ function exportToExcel() {
     }).join(',')
   ).join('\n');
   
-  // ব্লব তৈরি করা
-  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' }); // \uFEFF for BOM
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
   
-  // ডাউনলোড লিংক তৈরি
   const link = document.createElement('a');
   const url = URL.createObjectURL(blob);
   
-  // ফাইলের নাম তৈরি (বর্তমান তারিখ ও সময় সহ)
   const now = new Date();
   const dateStr = now.toLocaleDateString('bn').replace(/\//g, '-');
   const timeStr = now.toLocaleTimeString('bn').replace(/:/g, '-');
@@ -2352,7 +2686,6 @@ function exportToExcel() {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
   
-  // বাটনে এনিমেশন
   const exportBtn = document.querySelector('.excel-export-btn');
   const originalHTML = exportBtn.innerHTML;
   exportBtn.innerHTML = '<i class="fas fa-check-circle"></i> DOWNLOADED! <i class="fas fa-file-excel"></i>';
@@ -2417,10 +2750,8 @@ function deleteAllData() {
     
     updateStats();
     
-    // ডিলিট করার পর উইনার রিসেট
     db.ref("settings/daily_winner").remove().catch(err => console.error(err));
     
-    // উইনার কার্ড বন্ধ করা
     winnerInfoCard.classList.remove('active');
     
     setTimeout(() => {
@@ -2464,7 +2795,6 @@ document.addEventListener('DOMContentLoaded', function() {
   loadData();
   setInterval(loadData, 120000);
   
-  // প্রতি ৩০ সেকেন্ডে উইনার ডাটা আপডেট করা
   setInterval(() => {
     if (winnerInfoCard.classList.contains('active')) {
       loadWinnerData();
@@ -2474,4 +2804,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 </body>
-</html>
+        </html>
