@@ -3,31 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>EBH Team - Admin Panel (4 Options + Excel Export)</title>
+<title>EBH Team - Admin Panel</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <style>
 :root {
-  --primary: #ff3385;
-  --primary-dark: #e61a6b;
-  --secondary: #ff9933;
-  --accent: #6b5fff;
-  --danger: #ff4d6d;
-  --success: #2ecc71;
-  --dark-bg: #0a0f1e;
-  --card-bg: #16202e;
-  --text-light: #f5f9ff;
-  --text-gray: #b0c4de;
-  --border-color: #2a3a55;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #3b82f6;
+  --accent: #60a5fa;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --dark-bg: #0f172a;
+  --card-bg: #1e293b;
+  --text-light: #f8fafc;
+  --text-gray: #94a3b8;
+  --border-color: #334155;
   --shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-  --instagram-gradient: linear-gradient(145deg, #ff3385, #ff9933, #6b5fff);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   background: var(--dark-bg);
@@ -35,118 +30,24 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
   padding: 10px;
-  background-image: radial-gradient(circle at 30% 10%, rgba(255, 51, 133, 0.2), transparent 40%);
 }
 
-/* Login Page Styles */
-.login-container {
-  max-width: 400px;
-  margin: 50px auto;
-  background: var(--card-bg);
-  border-radius: 20px;
-  padding: 30px 25px;
-  box-shadow: var(--shadow);
-  border: 1px solid rgba(255, 51, 133, 0.3);
-  display: block;
-}
-
-.login-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.login-header h1 {
-  background: var(--instagram-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-}
-
-.login-header p {
-  color: var(--text-gray);
-  font-size: 0.9rem;
-}
-
-.input-group {
-  margin-bottom: 20px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--text-gray);
-  font-size: 0.9rem;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 15px;
-  background: rgba(10, 15, 30, 0.8);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  color: var(--text-light);
-  font-size: 1rem;
-  transition: all 0.3s;
-}
-
-.input-group input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(255, 51, 133, 0.2);
-}
-
-.login-btn {
-  width: 100%;
-  padding: 15px;
-  background: var(--instagram-gradient);
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 0 #b3476b;
-  transform: translateY(-2px);
-}
-
-.login-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #b3476b;
-}
-
-.error-msg {
-  color: var(--danger);
-  text-align: center;
-  margin-top: 15px;
-  font-size: 0.9rem;
-  display: none;
-}
-
-/* Admin Panel Styles */
 .admin-container {
-  max-width: 500px;
+  max-width: 100%;
   margin: 0 auto;
-  display: none;
+  display: block;
+  overflow-x: auto;
 }
 
 .header {
   text-align: center;
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 2px solid transparent;
-  border-image: var(--instagram-gradient);
-  border-image-slice: 1;
-  position: relative;
+  border-bottom: 2px solid var(--primary);
 }
 
 .header h1 {
-  background: var(--instagram-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--primary);
   font-size: 1.4rem;
   display: flex;
   align-items: center;
@@ -155,25 +56,21 @@ body {
   flex-wrap: wrap;
 }
 
-.logout-btn {
-  background: transparent;
-  border: 1px solid var(--danger);
-  color: var(--danger);
-  padding: 6px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-left: 10px;
-}
-
-.logout-btn:hover {
-  background: rgba(255, 77, 109, 0.1);
-}
-
 .option-tabs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+  background: var(--card-bg);
+  padding: 8px;
+  border-radius: 40px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+}
+
+.option-tabs-row2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 6px;
   margin-bottom: 15px;
   background: var(--card-bg);
@@ -190,7 +87,7 @@ body {
   background: transparent;
   color: var(--text-gray);
   font-weight: 700;
-  font-size: 10px;
+  font-size: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,10 +97,10 @@ body {
 }
 
 .option-tab.active {
-  background: rgba(255, 51, 133, 0.2);
+  background: rgba(37, 99, 235, 0.2);
   color: var(--primary);
   border-color: var(--primary);
-  box-shadow: 0 0 15px rgba(255, 51, 133, 0.3);
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
 }
 
 .stats-card {
@@ -216,35 +113,13 @@ body {
   justify-content: space-between;
   align-items: center;
   border-left: 4px solid var(--primary);
-  border: 1px solid rgba(255, 51, 133, 0.2);
+  border: 1px solid rgba(37, 99, 235, 0.2);
 }
 
-.stat {
-  text-align: center;
-  flex: 1;
-}
-
-.stat .number {
-  font-size: 1.4rem;
-  font-weight: 800;
-  background: var(--instagram-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  display: block;
-}
-
-.stat .label {
-  font-size: 0.65rem;
-  color: var(--text-gray);
-  text-transform: uppercase;
-}
-
-.divider {
-  width: 1px;
-  height: 30px;
-  background: var(--border-color);
-}
+.stat { text-align: center; flex: 1; }
+.stat .number { font-size: 1.4rem; font-weight: 800; color: var(--primary); display: block; }
+.stat .label { font-size: 0.65rem; color: var(--text-gray); text-transform: uppercase; }
+.divider { width: 1px; height: 30px; background: var(--border-color); }
 
 .search-section {
   background: var(--card-bg);
@@ -252,37 +127,32 @@ body {
   padding: 12px;
   margin-bottom: 12px;
   box-shadow: var(--shadow);
-  border: 1px solid rgba(255, 153, 51, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-.search-container {
-  position: relative;
-}
-
+.search-container { position: relative; }
 .search-container input {
   width: 100%;
   padding: 12px 15px;
   padding-right: 75px;
   border-radius: 10px;
   border: 1px solid var(--border-color);
-  background: rgba(10, 15, 30, 0.8);
+  background: rgba(15, 23, 42, 0.8);
   color: var(--text-light);
   font-size: 14px;
   height: 44px;
 }
-
 .search-container input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(255, 51, 133, 0.2);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
-
 .search-btn {
   position: absolute;
   right: 5px;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--instagram-gradient);
+  background: var(--primary);
   color: white;
   border: none;
   padding: 8px 14px;
@@ -294,7 +164,7 @@ body {
   font-weight: 700;
   font-size: 0.75rem;
   height: 34px;
-  box-shadow: 0 4px 10px rgba(255, 51, 133, 0.3);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
 }
 
 .main-card {
@@ -303,7 +173,8 @@ body {
   padding: 15px 12px;
   margin-bottom: 15px;
   box-shadow: var(--shadow);
-  border: 1px solid rgba(107, 95, 255, 0.2);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  overflow-x: auto;
 }
 
 .card-header {
@@ -311,20 +182,11 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 
-.card-title {
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.card-title i {
-  color: var(--primary);
-  font-size: 1.2rem;
-}
-
+.card-title { font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.card-title i { color: var(--primary); font-size: 1.2rem; }
 .refresh-btn {
   background: transparent;
   border: 1px solid var(--primary);
@@ -340,24 +202,26 @@ body {
 }
 
 .accounts-container {
-  background: rgba(10, 15, 30, 0.6);
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border-color);
   border-radius: 14px;
   margin-bottom: 12px;
-  max-height: 280px;
+  max-height: 400px;
   overflow-y: auto;
   min-height: 150px;
+  overflow-x: auto;
 }
 
 .table-container {
   width: 100%;
   display: table;
   border-collapse: collapse;
+  min-width: 500px;
 }
 
 .table-header {
   display: table-row;
-  background: rgba(22, 32, 46, 0.95);
+  background: rgba(30, 41, 59, 0.95);
   position: sticky;
   top: 0;
   border-bottom: 2px solid var(--primary);
@@ -367,31 +231,22 @@ body {
   display: table-cell;
   padding: 10px 6px;
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   white-space: nowrap;
   position: sticky;
   top: 0;
-  background: rgba(22, 32, 46, 0.95);
+  background: rgba(30, 41, 59, 0.95);
   border-right: 1px solid var(--border-color);
 }
+.header-cell:last-child { border-right: none; }
 
-.header-cell:last-child {
-  border-right: none;
-}
-
-.account-row {
-  display: table-row;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.account-row:hover {
-  background: rgba(255, 51, 133, 0.1);
-}
+.account-row { display: table-row; border-bottom: 1px solid var(--border-color); }
+.account-row:hover { background: rgba(37, 99, 235, 0.1); }
 
 .password-group-header {
   display: table-row;
-  background: rgba(255, 51, 133, 0.15);
+  background: rgba(37, 99, 235, 0.15);
   border-bottom: 2px solid var(--primary);
   border-top: 2px solid var(--primary);
   font-weight: bold;
@@ -416,10 +271,7 @@ body {
   position: relative;
   overflow: hidden;
 }
-
-.row-cell:last-child {
-  border-right: none;
-}
+.row-cell:last-child { border-right: none; }
 
 .cell-content {
   position: absolute;
@@ -433,89 +285,43 @@ body {
   overflow-x: auto;
   white-space: nowrap;
   font-family: 'Courier New', monospace;
-  font-size: 0.8rem;
-}
-
-.serial-cell {
-  width: 40px;
-  min-width: 40px;
-  max-width: 40px;
-  text-align: center;
-  color: var(--text-gray);
-  font-weight: 600;
-  position: sticky;
-  left: 0;
-  background: rgba(10, 15, 30, 0.9);
-  z-index: 1;
-}
-
-.username-cell {
-  width: 120px;
-  min-width: 120px;
-  max-width: 120px;
-  font-weight: 600;
-  color: var(--primary);
-}
-
-.password-cell {
-  width: 120px;
-  min-width: 120px;
-  max-width: 120px;
-  font-weight: 600;
-  color: var(--secondary);
-}
-
-.twofa-cell {
-  width: 180px;
-  min-width: 180px;
-  max-width: 180px;
   font-size: 0.75rem;
-  color: var(--accent);
 }
+
+.serial-cell { width: 40px; min-width: 40px; text-align: center; position: sticky; left: 0; background: rgba(15, 23, 42, 0.9); z-index: 1; }
 
 .count-display {
   text-align: right;
   padding: 8px 12px;
   font-size: 0.7rem;
   color: var(--text-gray);
-  background: rgba(10, 15, 30, 0.8);
+  background: rgba(15, 23, 42, 0.8);
   border-top: 1px solid var(--border-color);
   border-radius: 0 0 14px 14px;
   margin-bottom: 12px;
 }
 
-.copy-buttons-container {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 15px 0 10px;
-  flex-wrap: wrap;
-}
-
-.copy-btn-square {
-  width: 70px;
-  height: 70px;
-  border-radius: 16px;
+.copy-single-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   border: none;
+  border-radius: 50px;
+  padding: 14px 24px;
   cursor: pointer;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  transition: all 0.3s;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(255, 255, 255, 0.2) inset;
+  gap: 12px;
+  font-size: 1rem;
+  font-weight: 800;
+  width: 100%;
+  max-width: 280px;
+  margin: 15px auto;
   color: white;
-  text-transform: uppercase;
+  box-shadow: 0 8px 0 #1e3a8a;
+  transition: 0.05s linear;
 }
+.copy-single-btn:active { transform: translateY(2px); box-shadow: 0 4px 0 #1e3a8a; }
 
-.username-btn-square { background: radial-gradient(circle at 30% 30%, #8a7aff, #4a3aff); box-shadow: 0 8px 0 #2a1faa; }
-.password-btn-square { background: radial-gradient(circle at 30% 30%, #ffaa55, #ff7b1a); box-shadow: 0 8px 0 #b35500; }
-.twofa-btn-square { background: radial-gradient(circle at 30% 30%, #ff6699, #d61a5e); box-shadow: 0 8px 0 #991144; }
-
-/* NEW BIG EXCEL BUTTON */
 .excel-download-container {
   display: flex;
   justify-content: center;
@@ -525,21 +331,21 @@ body {
   background: linear-gradient(145deg, #1e6b3b, #0e4a28);
   border: none;
   border-radius: 60px;
-  padding: 16px 28px;
+  padding: 14px 24px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  font-size: 1rem;
+  gap: 12px;
+  font-size: 0.9rem;
   font-weight: 800;
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
   color: white;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.3);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
   transition: 0.2s;
 }
-.excel-download-btn i { font-size: 1.8rem; }
+.excel-download-btn i { font-size: 1.5rem; }
 .excel-download-btn:active { transform: scale(0.97); }
 
 .delete-buttons-container {
@@ -548,14 +354,7 @@ body {
   gap: 10px;
   margin: 15px 0 5px;
 }
-
-.delete-row {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
+.delete-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 .delete-btn {
   background: transparent;
   border: 1.5px solid var(--danger);
@@ -572,16 +371,8 @@ body {
   min-width: 140px;
   flex: 1;
 }
-
-.delete-btn:hover {
-  background: rgba(255, 77, 109, 0.1);
-}
-
-.delete-btn.danger-solid {
-  background: var(--danger);
-  color: white;
-  border-color: var(--danger);
-}
+.delete-btn:hover { background: rgba(239, 68, 68, 0.1); }
+.delete-btn.danger-solid { background: var(--danger); color: white; border-color: var(--danger); }
 
 .system-control-card {
   background: var(--card-bg);
@@ -589,7 +380,7 @@ body {
   padding: 15px 12px;
   margin-bottom: 15px;
   box-shadow: var(--shadow);
-  border: 1px solid rgba(46, 204, 113, 0.3);
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .control-header {
@@ -600,221 +391,103 @@ body {
   padding-bottom: 10px;
   border-bottom: 1px solid var(--border-color);
 }
-
-.control-header i {
-  font-size: 1.3rem;
-  color: var(--success);
-}
-
-.control-header h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-light);
-  flex: 1;
-}
+.control-header i { font-size: 1.3rem; color: var(--success); }
+.control-header h3 { font-size: 1rem; font-weight: 700; color: var(--text-light); flex: 1; }
 
 .system-wide-switch {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(10, 15, 30, 0.6);
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 15px;
   margin-bottom: 20px;
   border-left: 4px solid var(--success);
 }
-
-.system-wide-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.system-wide-info i {
-  font-size: 24px;
-  color: var(--success);
-}
-
-.system-wide-info span {
-  font-weight: 700;
-  font-size: 16px;
-}
-
+.system-wide-info { display: flex; align-items: center; gap: 12px; }
+.system-wide-info i { font-size: 24px; color: var(--success); }
+.system-wide-info span { font-weight: 700; font-size: 14px; }
 .system-switch-btn {
   background: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-light);
-  padding: 10px 25px;
+  padding: 8px 20px;
   border-radius: 30px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
 }
-
-.system-switch-btn.on {
-  background: rgba(46, 204, 113, 0.2);
-  border-color: var(--success);
-  color: var(--success);
-}
-
-.system-switch-btn.off {
-  background: rgba(255, 77, 109, 0.2);
-  border-color: var(--danger);
-  color: var(--danger);
-}
+.system-switch-btn.on { background: rgba(34, 197, 94, 0.2); border-color: var(--success); color: var(--success); }
+.system-switch-btn.off { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: var(--danger); }
 
 .option-control-card {
-  background: rgba(10, 15, 30, 0.6);
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border-color);
   border-radius: 14px;
-  padding: 12px;
-  margin-bottom: 12px;
+  padding: 10px;
+  margin-bottom: 10px;
   border-left: 4px solid;
 }
-
-.option-control-card[data-option="instagram"] { border-left-color: var(--primary); }
-.option-control-card[data-option="facebook2fa"] { border-left-color: var(--secondary); }
-.option-control-card[data-option="facebookcookie"] { border-left-color: var(--accent); }
-.option-control-card[data-option="igcookies"] { border-left-color: #ff99cc; }
-
 .option-control-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
-
-.option-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 14px;
-}
-
+.option-title { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 11px; }
 .option-switch-btn {
   background: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-light);
-  padding: 8px 18px;
+  padding: 5px 12px;
   border-radius: 30px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  gap: 5px;
+  font-size: 10px;
   font-weight: 600;
 }
-
-.option-switch-btn.on {
-  background: rgba(46, 204, 113, 0.2);
-  border-color: var(--success);
-  color: var(--success);
-}
-
-.option-switch-btn.off {
-  background: rgba(255, 77, 109, 0.2);
-  border-color: var(--danger);
-  color: var(--danger);
-}
-
-.option-message-box {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px dashed var(--border-color);
-}
-
+.option-switch-btn.on { background: rgba(34, 197, 94, 0.2); border-color: var(--success); color: var(--success); }
+.option-switch-btn.off { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: var(--danger); }
+.option-message-box { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color); }
 .option-message-box textarea {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
   background: rgba(0, 0, 0, 0.3);
   color: var(--text-light);
-  font-size: 12px;
-  min-height: 60px;
+  font-size: 11px;
+  min-height: 50px;
   resize: vertical;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
-
 .save-option-msg-btn {
   border: none;
   color: white;
-  padding: 6px 15px;
+  padding: 5px 12px;
   border-radius: 6px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
+  background: var(--primary);
 }
-
 .option-preview {
-  background: rgba(46, 204, 113, 0.05);
+  background: rgba(34, 197, 94, 0.05);
   border-left: 3px solid var(--success);
-  padding: 8px;
-  margin-top: 8px;
+  padding: 6px;
+  margin-top: 6px;
   border-radius: 0 6px 6px 0;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   word-break: break-word;
-}
-
-.system-messages {
-  margin-top: 20px;
-}
-
-.message-box {
-  background: rgba(10, 15, 30, 0.6);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 15px;
-}
-
-.message-box label {
-  font-weight: 700;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.message-box textarea {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: rgba(0, 0, 0, 0.3);
-  color: var(--text-light);
-  font-size: 13px;
-  min-height: 80px;
-  resize: vertical;
-  margin-bottom: 10px;
-}
-
-.save-msg-btn {
-  border: none;
-  color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.preview-msg {
-  background: rgba(46, 204, 113, 0.1);
-  border-left: 3px solid var(--success);
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 0 8px 8px 0;
-  font-size: 0.85rem;
 }
 
 .footer {
@@ -843,12 +516,7 @@ body {
   transition: all 0.3s;
   padding: 20px;
 }
-
-.modal-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
-
+.modal-overlay.active { opacity: 1; visibility: visible; }
 .modal {
   background: var(--card-bg);
   border-radius: 20px;
@@ -858,45 +526,18 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   border: 1px solid var(--danger);
 }
-
-.modal-header {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.modal-header i {
-  font-size: 2.5rem;
-  color: var(--danger);
-  margin-bottom: 10px;
-}
-
-.modal-header h2 {
-  color: var(--danger);
-  font-size: 1.4rem;
-  font-weight: 800;
-}
-
-.modal-body p {
-  margin-bottom: 10px;
-  line-height: 1.5;
-  font-size: 0.9rem;
-}
-
+.modal-header { text-align: center; margin-bottom: 15px; }
+.modal-header i { font-size: 2.5rem; color: var(--danger); margin-bottom: 10px; }
+.modal-header h2 { color: var(--danger); font-size: 1.4rem; font-weight: 800; }
+.modal-body p { margin-bottom: 10px; line-height: 1.5; font-size: 0.9rem; }
 .warning-text {
-  background: rgba(255, 77, 109, 0.1);
+  background: rgba(239, 68, 68, 0.1);
   border-left: 4px solid var(--danger);
   padding: 12px;
   border-radius: 8px;
   margin-top: 12px;
 }
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 20px;
-}
-
+.modal-actions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
 .modal-btn {
   padding: 12px 15px;
   border-radius: 10px;
@@ -906,18 +547,8 @@ body {
   font-size: 0.85rem;
   min-width: 120px;
 }
-
-.modal-btn-cancel {
-  background: transparent;
-  border: 1.5px solid var(--border-color);
-  color: var(--text-light);
-}
-
-.modal-btn-danger {
-  background: var(--danger);
-  color: white;
-  border: 1.5px solid var(--danger);
-}
+.modal-btn-cancel { background: transparent; border: 1.5px solid var(--border-color); color: var(--text-light); }
+.modal-btn-danger { background: var(--danger); color: white; border: 1.5px solid var(--danger); }
 
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: var(--dark-bg); }
@@ -925,112 +556,475 @@ body {
 </style>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
-<div id="loginSection" class="login-container">
-  <div class="login-header"><h1><i class="fas fa-crown"></i> EBH ADMIN</h1><p>Enter your credentials</p></div>
-  <div class="input-group"><label>Email</label><input type="email" id="email" value="52662800jh@gmail.com"></div>
-  <div class="input-group"><label>Password</label><input type="password" id="password" placeholder="••••••••"></div>
-  <button class="login-btn" onclick="login()"><i class="fas fa-sign-in-alt"></i> LOGIN</button>
-  <div class="error-msg" id="errorMsg">Invalid credentials</div>
-  <div class="footer" style="margin-top:20px;"><p>EBH TEAM • Admin Access Only</p></div>
-</div>
-
 <div id="adminSection" class="admin-container">
-  <div class="header"><h1><i class="fas fa-crown"></i> EBH ADMIN PANEL <i class="fas fa-shield-alt"></i><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> LOGOUT</button></h1></div>
+  <div class="header"><h1><i class="fas fa-crown"></i> EBH ADMIN PANEL <i class="fas fa-shield-alt"></i></h1></div>
+  
   <div class="option-tabs">
     <button class="option-tab active" data-option="instagram" onclick="switchOption('instagram')"><i class="fab fa-instagram"></i> IG 2FA</button>
-    <button class="option-tab" data-option="facebook2fa" onclick="switchOption('facebook2fa')"><i class="fab fa-facebook"></i> FB 2FA</button>
-    <button class="option-tab" data-option="facebookcookie" onclick="switchOption('facebookcookie')"><i class="fas fa-cookie-bite"></i> FB COOKIE</button>
-    <button class="option-tab" data-option="igcookies" onclick="switchOption('igcookies')"><i class="fas fa-cookie-bite"></i> IG COOKIE</button>
+    <button class="option-tab" data-option="fb0fnd2fa" onclick="switchOption('fb0fnd2fa')"><i class="fab fa-facebook"></i> FB 0FND 2FA</button>
+    <button class="option-tab" data-option="fb0fndcookie" onclick="switchOption('fb0fndcookie')"><i class="fas fa-cookie-bite"></i> FB 0FND COOKIE</button>
+    <button class="option-tab" data-option="fbpc1000" onclick="switchOption('fbpc1000')"><i class="fas fa-desktop"></i> PC 1000×</button>
   </div>
+  
+  <div class="option-tabs-row2">
+    <button class="option-tab" data-option="fbhotmail0fnd" onclick="switchOption('fbhotmail0fnd')"><i class="fab fa-facebook"></i> FB Hotmail 0FND</button>
+    <button class="option-tab" data-option="fbhotmail30" onclick="switchOption('fbhotmail30')"><i class="fab fa-facebook"></i> FB Hotmail 30+</button>
+    <button class="option-tab" data-option="fbpc6155" onclick="switchOption('fbpc6155')"><i class="fas fa-desktop"></i> FB PC 61-55</button>
+  </div>
+  
   <div class="stats-card"><div class="stat"><span class="number" id="totalCount">0</span><span class="label" id="totalLabel">TOTAL</span></div><div class="divider"></div><div class="stat"><span class="number" id="groupCount">0</span><span class="label" id="groupLabel">GROUPS</span></div><div class="divider"></div><div class="stat"><span class="number" id="lastUpdate">-</span><span class="label">UPDATED</span></div></div>
   <div id="searchResultCard" class="stats-card" style="display:none;"><div class="stat"><span class="number" id="searchCount">0</span><span class="label" id="searchLabel">Search Results</span></div></div>
-  <div class="search-section"><div class="search-container"><input type="text" id="searchInput" placeholder="🔍 Search Username, Password or 2FA/Cookie..."><button class="search-btn" onclick="searchData()"><i class="fas fa-search"></i> FIND</button></div></div>
+  <div class="search-section"><div class="search-container"><input type="text" id="searchInput" placeholder="🔍 Search..."><button class="search-btn" onclick="searchData()"><i class="fas fa-search"></i> FIND</button></div></div>
   <div class="main-card">
-    <div class="card-header"><h2 class="card-title"><i class="fas" id="optionIcon"></i> <span id="optionTitle">INSTAGRAM 2FA ACCOUNTS</span></h2><button class="refresh-btn" onclick="refreshCurrentOption()"><i class="fas fa-sync-alt"></i> REFRESH</button></div>
+    <div class="card-header"><h2 class="card-title"><i class="fas" id="optionIcon"></i> <span id="optionTitle">IG 2FA</span></h2><button class="refresh-btn" onclick="refreshCurrentOption()"><i class="fas fa-sync-alt"></i> REFRESH</button></div>
     <div class="accounts-container" id="accountsContainer"><div style="padding:30px;text-align:center;">Loading...</div></div>
     <div class="count-display" id="countDisplay">0 accounts in 0 groups</div>
     
-    <div class="copy-buttons-container"><button class="copy-btn-square username-btn-square" onclick="copyUsernames()"><i class="fas fa-user"></i><span id="copyUserLabel">USER</span></button><button class="copy-btn-square password-btn-square" onclick="copyPasswords()"><i class="fas fa-key"></i><span>PASS</span></button><button class="copy-btn-square twofa-btn-square" onclick="copyTwoFA()"><i class="fas fa-shield-alt"></i><span id="copyCodeLabel">2FA</span></button></div>
+    <button class="copy-single-btn" onclick="copyAllDataTabSeparated()"><i class="fas fa-copy"></i> 📋 কপি (ট্যাব সেপারেটেড)</button>
     
-    <!-- EXCEL DOWNLOAD BIG BUTTON (exactly as requested) -->
-    <div class="excel-download-container"><button class="excel-download-btn" onclick="downloadExcelFile()"><i class="fas fa-file-excel"></i> এক্সেল ডাউনলোড (XLSX)</button></div>
+    <div class="excel-download-container"><button class="excel-download-btn" onclick="downloadExcelFile()"><i class="fas fa-file-excel"></i> এক্সেল ডাউনলোড</button></div>
     
-    <div class="delete-buttons-container"><div class="delete-row"><button class="delete-btn" onclick="openDeleteModal('current')"><i class="fas fa-trash-alt"></i> DELETE <span id="deleteOptionName">INSTAGRAM</span></button><button class="delete-btn danger-solid" onclick="openDeleteModal('all')"><i class="fas fa-database"></i> DELETE ALL DATA</button></div></div>
+    <div class="delete-buttons-container"><div class="delete-row"><button class="delete-btn" onclick="openDeleteModal('current')"><i class="fas fa-trash-alt"></i> DELETE <span id="deleteOptionName">IG 2FA</span></button><button class="delete-btn danger-solid" onclick="openDeleteModal('all')"><i class="fas fa-database"></i> DELETE ALL DATA</button></div></div>
   </div>
-  <div class="system-control-card"><div class="control-header"><i class="fas fa-toggle-on"></i><h3>SYSTEM CONTROL (User Panel ON/OFF)</h3></div>
+  <div class="system-control-card"><div class="control-header"><i class="fas fa-toggle-on"></i><h3>SYSTEM CONTROL</h3></div>
   <div class="system-wide-switch"><div class="system-wide-info"><i class="fas fa-power-off"></i><span>SYSTEM WIDE STATUS</span></div><button class="system-switch-btn" id="systemSwitchBtn" onclick="toggleSystemStatus()"><i class="fas" id="systemSwitchIcon"></i><span id="systemSwitchText">Loading...</span></button></div>
-  <div class="option-controls">
-    <div class="option-control-card" data-option="instagram"><div class="option-control-header"><div class="option-title"><i class="fab fa-instagram"></i> INSTAGRAM 2FA</div><button class="option-switch-btn" id="instagramSwitchBtn" onclick="toggleOptionStatus('instagram')"><i class="fas" id="instagramSwitchIcon"></i><span id="instagramSwitchText">Loading...</span></button></div><div class="option-message-box"><textarea id="instagramMessage" placeholder="মেসেজ লিখুন"></textarea><div class="option-message-actions"><button class="save-option-msg-btn" onclick="saveOptionMessage('instagram')" style="background:var(--primary);"><i class="fas fa-save"></i> সেভ করুন</button></div><div class="option-preview" id="instagramPreview"><strong><i class="fas fa-eye"></i> প্রিভিউ:</strong><span id="instagramPreviewText">কোন মেসেজ নেই</span></div></div></div>
-    <div class="option-control-card" data-option="facebook2fa"><div class="option-control-header"><div class="option-title"><i class="fab fa-facebook"></i> FACEBOOK 2FA</div><button class="option-switch-btn" id="facebook2faSwitchBtn" onclick="toggleOptionStatus('facebook2fa')"><i class="fas" id="facebook2faSwitchIcon"></i><span id="facebook2faSwitchText">Loading...</span></button></div><div class="option-message-box"><textarea id="facebook2faMessage" placeholder="মেসেজ লিখুন"></textarea><div class="option-message-actions"><button class="save-option-msg-btn" onclick="saveOptionMessage('facebook2fa')" style="background:var(--secondary);"><i class="fas fa-save"></i> সেভ করুন</button></div><div class="option-preview" id="facebook2faPreview"><strong><i class="fas fa-eye"></i> প্রিভিউ:</strong><span id="facebook2faPreviewText">কোন মেসেজ নেই</span></div></div></div>
-    <div class="option-control-card" data-option="facebookcookie"><div class="option-control-header"><div class="option-title"><i class="fas fa-cookie-bite"></i> FACEBOOK COOKIE</div><button class="option-switch-btn" id="facebookcookieSwitchBtn" onclick="toggleOptionStatus('facebookcookie')"><i class="fas" id="facebookcookieSwitchIcon"></i><span id="facebookcookieSwitchText">Loading...</span></button></div><div class="option-message-box"><textarea id="facebookcookieMessage" placeholder="মেসেজ লিখুন"></textarea><div class="option-message-actions"><button class="save-option-msg-btn" onclick="saveOptionMessage('facebookcookie')" style="background:var(--accent);"><i class="fas fa-save"></i> সেভ করুন</button></div><div class="option-preview" id="facebookcookiePreview"><strong><i class="fas fa-eye"></i> প্রিভিউ:</strong><span id="facebookcookiePreviewText">কোন মেসেজ নেই</span></div></div></div>
-    <div class="option-control-card" data-option="igcookies"><div class="option-control-header"><div class="option-title"><i class="fas fa-cookie-bite"></i> IG COOKIES (NO LINK)</div><button class="option-switch-btn" id="igcookiesSwitchBtn" onclick="toggleOptionStatus('igcookies')"><i class="fas" id="igcookiesSwitchIcon"></i><span id="igcookiesSwitchText">Loading...</span></button></div><div class="option-message-box"><textarea id="igcookiesMessage" placeholder="মেসেজ লিখুন"></textarea><div class="option-message-actions"><button class="save-option-msg-btn" onclick="saveOptionMessage('igcookies')" style="background:#ff99cc;"><i class="fas fa-save"></i> সেভ করুন</button></div><div class="option-preview" id="igcookiesPreview"><strong><i class="fas fa-eye"></i> প্রিভিউ:</strong><span id="igcookiesPreviewText">কোন মেসেজ নেই</span></div></div></div>
-  </div>
-  <div class="system-messages"><div class="message-box" style="border-left:4px solid var(--secondary);"><label style="color:var(--secondary);"><i class="fas fa-scroll"></i> টিকার মেসেজ</label><textarea id="tickerMessage" placeholder="টিকারের মেসেজ"></textarea><div class="message-actions"><button class="save-msg-btn" onclick="saveTickerMessage()" style="background:var(--secondary);"><i class="fas fa-save"></i> সেভ করুন</button></div><div class="preview-msg" style="border-left-color:var(--secondary);"><strong style="color:var(--secondary);">প্রিভিউ:</strong><span id="tickerPreview">কোন মেসেজ নেই</span></div></div><div class="message-box" style="border-left:4px solid var(--danger);"><label style="color:var(--danger);"><i class="fas fa-exclamation-triangle"></i> সিস্টেম বন্ধের কারণ</label><textarea id="offReasonMessage" placeholder="কারণ লিখুন"></textarea><div class="message-actions"><button class="save-msg-btn" onclick="saveOffReasonMessage()" style="background:var(--danger);"><i class="fas fa-save"></i> সেভ করুন</button></div><div class="preview-msg" style="border-left-color:var(--danger);"><strong style="color:var(--danger);">প্রিভিউ:</strong><span id="offReasonPreview">কোন কারণ নেই</span></div></div></div></div>
-  <div class="footer"><p>EBH TEAM • ADMIN PANEL • 4 Options Support</p></div>
+  <div class="option-controls" id="optionControls"></div>
+  <div class="footer"><p>EBH TEAM • ADMIN PANEL • 7 Options</p></div>
 </div>
 
 <div class="modal-overlay" id="deleteModal"><div class="modal"><div class="modal-header"><i class="fas fa-exclamation-triangle"></i><h2 id="deleteModalTitle">DELETE DATA?</h2></div><div class="modal-body"><p id="deleteModalMessage">Are you sure?</p><p><strong id="deleteCount">0</strong> accounts will be deleted.</p><div class="warning-text"><p><i class="fas fa-exclamation-circle"></i> <strong>WARNING:</strong> Cannot be undone.</p></div></div><div class="modal-actions"><button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">CANCEL</button><button class="modal-btn modal-btn-danger" onclick="confirmDelete()">DELETE</button></div></div></div>
 
 <script>
-const firebaseConfig = { apiKey: "AIzaSyCI4HPJ_mqhqmDjKHQr3Cd302rO2Tud1Go", authDomain: "mtwork-fc469.firebaseapp.com", databaseURL: "https://mtwork-fc469-default-rtdb.firebaseio.com", projectId: "mtwork-fc469", storageBucket: "mtwork-fc469.firebasestorage.app", messagingSenderId: "351935919939", appId: "1:351935919939:web:7ad33f6c3e6e4de26f21f6" };
+const firebaseConfig = {
+  apiKey: "AIzaSyCI4HPJ_mqhqmDjKHQr3Cd302rO2Tud1Go",
+  authDomain: "mtwork-fc469.firebaseapp.com",
+  databaseURL: "https://mtwork-fc469-default-rtdb.firebaseio.com",
+  projectId: "mtwork-fc469",
+  storageBucket: "mtwork-fc469.firebasestorage.app",
+  messagingSenderId: "351935919939",
+  appId: "1:351935919939:web:7ad33f6c3e6e4de26f21f6"
+};
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth(), db = firebase.database();
+const db = firebase.database();
 
-let allAccounts = { instagram: [], facebook2fa: [], facebookcookie: [], igcookies: [] };
-let groupedAccounts = { instagram: [], facebook2fa: [], facebookcookie: [], igcookies: [] };
+let allAccounts = {
+  instagram: [], fb0fnd2fa: [], fb0fndcookie: [], fbpc1000: [],
+  fbhotmail0fnd: [], fbhotmail30: [], fbpc6155: []
+};
+let groupedAccounts = {};
 let filteredGroups = [], currentOption = 'instagram', isSearching = false, currentSearchTerm = "", deleteTarget = '';
-let systemStatus = true, optionStatus = { instagram: true, facebook2fa: true, facebookcookie: true, igcookies: true }, optionMessages = { instagram: "", facebook2fa: "", facebookcookie: "", igcookies: "" }, tickerMessageText = "", offReasonText = "";
+let systemStatus = true, optionStatus = {}, optionMessages = {};
 
-auth.onAuthStateChanged(user => { if(user && user.email === '52662800jh@gmail.com') { document.getElementById('loginSection').style.display='none'; document.getElementById('adminSection').style.display='block'; loadAllData(); } else { document.getElementById('loginSection').style.display='block'; document.getElementById('adminSection').style.display='none'; } });
-function login() { const email=document.getElementById('email').value, pwd=document.getElementById('password').value; if(!email||!pwd){ document.getElementById('errorMsg').textContent='Fill all fields'; document.getElementById('errorMsg').style.display='block'; return; } auth.signInWithEmailAndPassword(email,pwd).then(cred=>{ if(cred.user.email==='52662800jh@gmail.com') document.getElementById('errorMsg').style.display='none'; else { auth.signOut(); document.getElementById('errorMsg').textContent='Unauthorized'; document.getElementById('errorMsg').style.display='block'; } }).catch(e=>{ document.getElementById('errorMsg').textContent=e.message; document.getElementById('errorMsg').style.display='block'; }); }
-function logout(){ auth.signOut(); }
-async function loadDataFromPaths(opt){ let data=[]; let newPath=`submissions/${opt}`; let oldPath=""; if(opt==='instagram') oldPath="instagram_2fa_submissions"; else if(opt==='facebook2fa') oldPath="facebook_2fa_submissions"; else if(opt==='facebookcookie') oldPath="facebook_cookie_submissions"; else if(opt==='igcookies') oldPath="ig_cookies_submissions"; try{ const snapNew=await db.ref(newPath).once('value'); if(snapNew.exists()) Object.values(snapNew.val()).forEach(d=>{ data.push({ username:d.id||d.username||d.uid||'N/A', password:d.password||'N/A', code:d.code||d.cookie||d.twofa||'N/A' }); }); const snapOld=await db.ref(oldPath).once('value'); if(snapOld.exists()) Object.values(snapOld.val()).forEach(d=>{ data.push({ username:d.username||d.uid||d.user||d.id||'N/A', password:d.password||d.pass||'N/A', code:d.cookie_2fa||d.twofa||d.cookie||d.code||'N/A' }); }); }catch(e){} return data; }
-function groupAccountsByPassword(accounts){ let groups={}; accounts.forEach(acc=>{ let p=acc.password||"NO_PASSWORD"; if(!groups[p]) groups[p]=[]; groups[p].push(acc); }); return Object.keys(groups).map(p=>({ password:p, accounts:groups[p], count:groups[p].length })).sort((a,b)=>b.count-a.count); }
-function renderAccountsTable(groups){ if(!groups||groups.length===0){ document.getElementById('accountsContainer').innerHTML=`<div style="padding:40px;text-align:center;color:var(--text-gray);"><i class="fas fa-database" style="font-size:3rem;"></i><p>No accounts</p></div>`; return; } let html=`<div class="table-container"><div class="table-header"><div class="header-cell serial-cell">#</div><div class="header-cell username-cell">${currentOption==='instagram'||currentOption==='igcookies'?'USERNAME':'UID'}</div><div class="header-cell password-cell">PASSWORD</div><div class="header-cell twofa-cell">${currentOption==='facebookcookie'||currentOption==='igcookies'?'COOKIE':'2FA CODE'}</div></div>`; let idx=0; groups.forEach(g=>{ if(g.accounts.length){ html+=`<div class="password-group-header"><div class="row-cell serial-cell"><div class="cell-content">📁</div></div><div class="row-cell username-cell"><div class="cell-content"><i class="fas fa-key"></i> <strong>${g.password}</strong> <span class="group-count">${g.count}</span></div></div><div class="row-cell password-cell"><div class="cell-content"></div></div><div class="row-cell twofa-cell"><div class="cell-content"></div></div></div>`; g.accounts.forEach(acc=>{ idx++; html+=`<div class="account-row"><div class="row-cell serial-cell"><div class="cell-content">${idx}</div></div><div class="row-cell username-cell"><div class="cell-content">${acc.username||'N/A'}</div></div><div class="row-cell password-cell"><div class="cell-content">${acc.password||'N/A'}</div></div><div class="row-cell twofa-cell"><div class="cell-content">${acc.code||'N/A'}</div></div></div>`; }); } }); html+=`</div>`; document.getElementById('accountsContainer').innerHTML=html; }
-function updateStats(){ let total=allAccounts[currentOption].length, groups=groupedAccounts[currentOption].length, searchRes=filteredGroups.reduce((s,g)=>s+g.accounts.length,0); document.getElementById('totalCount').innerText=total; document.getElementById('groupCount').innerText=groups; if(isSearching && currentSearchTerm){ document.getElementById('searchCount').innerText=searchRes; document.getElementById('searchLabel').innerHTML=`${searchRes} results for "${currentSearchTerm}"`; document.getElementById('searchResultCard').style.display='flex'; } else document.getElementById('searchResultCard').style.display='none'; document.getElementById('countDisplay').innerHTML=`${isSearching?searchRes:total} accounts in ${isSearching?filteredGroups.length:groups} groups`; }
-function setupRealtimeListener(opt){ document.getElementById('accountsContainer').innerHTML=`<div style="padding:30px;text-align:center;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>`; loadDataFromPaths(opt).then(data=>{ allAccounts[opt]=data.filter((acc,i,self)=>i===self.findIndex(a=>a.username===acc.username&&a.password===acc.password&&a.code===acc.code)); groupedAccounts[opt]=groupAccountsByPassword(allAccounts[opt]); if(!isSearching) filteredGroups=[...groupedAccounts[opt]]; else searchData(false); renderAccountsTable(filteredGroups); updateStats(); document.getElementById('lastUpdate').innerText=new Date().toLocaleTimeString(); }); db.ref(`submissions/${opt}`).on('value',()=>{ loadDataFromPaths(opt).then(data=>{ allAccounts[opt]=data.filter((acc,i,self)=>i===self.findIndex(a=>a.username===acc.username&&a.password===acc.password&&a.code===acc.code)); groupedAccounts[opt]=groupAccountsByPassword(allAccounts[opt]); if(!isSearching) filteredGroups=[...groupedAccounts[opt]]; else searchData(false); renderAccountsTable(filteredGroups); updateStats(); document.getElementById('lastUpdate').innerText=new Date().toLocaleTimeString(); }); }); }
-function refreshCurrentOption(){ setupRealtimeListener(currentOption); }
-function switchOption(opt){ if(opt===currentOption) return; currentOption=opt; document.querySelectorAll('.option-tab').forEach(t=>{ if(t.dataset.option===opt) t.classList.add('active'); else t.classList.remove('active'); }); updateUIBasedOnOption(); isSearching=false; currentSearchTerm=""; document.getElementById('searchInput').value=""; document.getElementById('searchResultCard').style.display='none'; setupRealtimeListener(opt); }
-function updateUIBasedOnOption(){ let map={instagram:{icon:'fab fa-instagram',title:'INSTAGRAM 2FA ACCOUNTS',userLabel:'USER',codeLabel:'2FA',total:'INSTA',del:'INSTAGRAM'},facebook2fa:{icon:'fab fa-facebook',title:'FACEBOOK 2FA ACCOUNTS',userLabel:'UID',codeLabel:'2FA',total:'FB2FA',del:'FB 2FA'},facebookcookie:{icon:'fas fa-cookie-bite',title:'FACEBOOK COOKIE ACCOUNTS',userLabel:'UID',codeLabel:'COOKIE',total:'COOKIE',del:'FB COOKIE'},igcookies:{icon:'fas fa-cookie-bite',title:'IG COOKIES (NO LINK) ACCOUNTS',userLabel:'USER',codeLabel:'COOKIE',total:'IG COOKIE',del:'IG COOKIE'}}; let m=map[currentOption]; document.getElementById('optionIcon').className=m.icon; document.getElementById('optionTitle').innerText=m.title; document.getElementById('copyUserLabel').innerText=m.userLabel; document.getElementById('copyCodeLabel').innerText=m.codeLabel; document.getElementById('totalLabel').innerText=m.total; document.getElementById('groupLabel').innerText='GROUPS'; document.getElementById('deleteOptionName').innerText=m.del; }
-function searchData(showAlert=true){ let term=document.getElementById('searchInput').value.trim().toLowerCase(); if(!term){ isSearching=false; currentSearchTerm=""; filteredGroups=[...groupedAccounts[currentOption]]; renderAccountsTable(filteredGroups); updateStats(); return; } filteredGroups=groupedAccounts[currentOption].map(g=>{ let matches=g.accounts.filter(a=>(a.username&&a.username.toLowerCase().includes(term))||(a.password&&a.password.toLowerCase().includes(term))||(a.code&&a.code.toLowerCase().includes(term))); if(matches.length) return {password:g.password, accounts:matches, count:matches.length}; return null; }).filter(g=>g!==null); isSearching=true; currentSearchTerm=term; renderAccountsTable(filteredGroups); updateStats(); }
-function copyUsernames(){ let txt=(isSearching?filteredGroups:groupedAccounts[currentOption]).flatMap(g=>g.accounts.map(a=>a.username||"N/A")).join("\n"); navigator.clipboard.writeText(txt).then(()=>alert('Usernames copied!')); }
-function copyPasswords(){ let txt=(isSearching?filteredGroups:groupedAccounts[currentOption]).flatMap(g=>g.accounts.map(a=>a.password||"N/A")).join("\n"); navigator.clipboard.writeText(txt).then(()=>alert('Passwords copied!')); }
-function copyTwoFA(){ let txt=(isSearching?filteredGroups:groupedAccounts[currentOption]).flatMap(g=>g.accounts.map(a=>a.code||"N/A")).join("\n"); navigator.clipboard.writeText(txt).then(()=>alert('2FA/Cookie copied!')); }
+const optionConfig = {
+  instagram: { name: 'IG 2FA', icon: 'fab fa-instagram', cols: ['USERNAME', 'PASSWORD', '2FA'], paths: ['submissions/instagram', 'instagram_2fa_submissions'] },
+  fb0fnd2fa: { name: 'FB 0FND 2FA', icon: 'fab fa-facebook', cols: ['UID', 'PASSWORD', '2FA'], paths: ['submissions/fb0fnd2fa', 'facebook_2fa_submissions'] },
+  fb0fndcookie: { name: 'FB 0FND COOKIE', icon: 'fas fa-cookie-bite', cols: ['UID', 'PASSWORD', 'COOKIE'], paths: ['submissions/fb0fndcookie', 'facebook_cookie_submissions'] },
+  fbpc1000: { name: 'PC 1000×', icon: 'fas fa-desktop', cols: ['UID', 'PASSWORD', '2FA'], paths: ['submissions/fbpc1000', 'fb_pc1000_submissions'] },
+  fbhotmail0fnd: { name: 'FB Hotmail 0FND', icon: 'fab fa-facebook', cols: ['UID', 'PASSWORD', '2FA', 'HOTMAIL'], paths: ['submissions/fbhotmail0fnd', 'fb_hotmail0fnd_submissions'] },
+  fbhotmail30: { name: 'FB Hotmail 30+', icon: 'fab fa-facebook', cols: ['UID', 'PASSWORD', '2FA', 'COOKIES', 'HOTMAIL'], paths: ['submissions/fbhotmail30', 'fb_hotmail30_submissions'] },
+  fbpc6155: { name: 'FB PC 61-55', icon: 'fas fa-desktop', cols: ['UID', 'PASSWORD', '2FA'], paths: ['submissions/fbpc6155', 'fb_pc6155_submissions'] }
+};
 
-// EXCEL DOWNLOAD: only username, password, 2FA/cookie columns (serial number automatically, but no header text, pure rows)
+async function loadDataFromPaths(opt) {
+  let data = [];
+  let config = optionConfig[opt];
+  if (!config) return data;
+  
+  try {
+    for (let path of config.paths) {
+      const snap = await db.ref(path).once('value');
+      if (snap.exists()) {
+        Object.values(snap.val()).forEach(d => {
+          let item = { 
+            uid: d.id || d.username || d.uid || d.user || 'N/A', 
+            password: d.password || d.pass || 'N/A' 
+          };
+          
+          if (opt === 'fb0fndcookie') {
+            item.cookie = d.code || d.cookie || d.cookie_2fa || 'N/A';
+          } 
+          else if (opt === 'fbpc1000') {
+            item.code = d.code || d.twofa || d.cookie_2fa || 'N/A';
+          }
+          else if (opt === 'fbhotmail0fnd') { 
+            item.code = d.code || d.twofa || 'N/A'; 
+            item.hotmail = d.hotmail || d.full_hotmail || 'N/A'; 
+          } 
+          else if (opt === 'fbhotmail30') { 
+            item.code = d.code || d.twofa || 'N/A'; 
+            item.cookie = d.cookie || 'N/A'; 
+            item.hotmail = d.hotmail || d.full_hotmail || 'N/A'; 
+          } 
+          else {
+            item.code = d.code || d.twofa || d.cookie_2fa || d.cookie || 'N/A';
+          }
+          data.push(item);
+        });
+      }
+    }
+  } catch(e) { console.log(e); }
+  
+  data = data.filter((item, index, self) => 
+    index === self.findIndex(t => t.uid === item.uid && t.password === item.password)
+  );
+  return data;
+}
+
+function groupAccountsByPassword(accounts) {
+  let groups = {};
+  accounts.forEach(acc => {
+    let p = acc.password || "NO_PASSWORD";
+    if (!groups[p]) groups[p] = [];
+    groups[p].push(acc);
+  });
+  return Object.keys(groups).map(p => ({ password: p, accounts: groups[p], count: groups[p].length })).sort((a, b) => b.count - a.count);
+}
+
+function renderAccountsTable(groups) {
+  if (!groups || groups.length === 0) {
+    document.getElementById('accountsContainer').innerHTML = `<div style="padding:40px;text-align:center;color:var(--text-gray);"><i class="fas fa-database" style="font-size:3rem;"></i><p>No accounts</p></div>`;
+    return;
+  }
+  let config = optionConfig[currentOption];
+  let cols = config.cols;
+  let html = `<div class="table-container"><div class="table-header"><div class="header-cell serial-cell">#</div>`;
+  cols.forEach(col => { html += `<div class="header-cell">${col}</div>`; });
+  html += `</div>`;
+  let idx = 0;
+  groups.forEach(g => {
+    if (g.accounts.length) {
+      html += `<div class="password-group-header"><div class="row-cell serial-cell"><div class="cell-content">📁</div></div><div class="row-cell"><div class="cell-content"><i class="fas fa-key"></i> <strong>${g.password}</strong> <span class="group-count">${g.count}</span></div></div>`;
+      for (let i = 1; i < cols.length; i++) { html += `<div class="row-cell"><div class="cell-content"></div></div>`; }
+      html += `</div>`;
+      g.accounts.forEach(acc => {
+        idx++;
+        html += `<div class="account-row"><div class="row-cell serial-cell"><div class="cell-content">${idx}</div></div>`;
+        cols.forEach(col => {
+          let val = 'N/A';
+          if (col === 'USERNAME' || col === 'UID') val = acc.uid || 'N/A';
+          else if (col === 'PASSWORD') val = acc.password || 'N/A';
+          else if (col === '2FA') val = acc.code || 'N/A';
+          else if (col === 'COOKIE' || col === 'COOKIES') val = acc.cookie || acc.code || 'N/A';
+          else if (col === 'HOTMAIL') val = acc.hotmail || 'N/A';
+          html += `<div class="row-cell"><div class="cell-content">${val}</div></div>`;
+        });
+        html += `</div>`;
+      });
+    }
+  });
+  html += `</div>`;
+  document.getElementById('accountsContainer').innerHTML = html;
+}
+
+function updateStats() {
+  let total = allAccounts[currentOption]?.length || 0;
+  let groups = groupedAccounts[currentOption]?.length || 0;
+  let searchRes = filteredGroups?.reduce((s, g) => s + g.accounts.length, 0) || 0;
+  document.getElementById('totalCount').innerText = total;
+  document.getElementById('groupCount').innerText = groups;
+  if (isSearching && currentSearchTerm) {
+    document.getElementById('searchCount').innerText = searchRes;
+    document.getElementById('searchLabel').innerHTML = `${searchRes} results for "${currentSearchTerm}"`;
+    document.getElementById('searchResultCard').style.display = 'flex';
+  } else document.getElementById('searchResultCard').style.display = 'none';
+  document.getElementById('countDisplay').innerHTML = `${isSearching ? searchRes : total} accounts in ${isSearching ? filteredGroups.length : groups} groups`;
+}
+
+function setupRealtimeListener(opt) {
+  document.getElementById('accountsContainer').innerHTML = `<div style="padding:30px;text-align:center;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>`;
+  const loadData = () => {
+    loadDataFromPaths(opt).then(data => {
+      allAccounts[opt] = data;
+      groupedAccounts[opt] = groupAccountsByPassword(allAccounts[opt]);
+      if (!isSearching) filteredGroups = [...groupedAccounts[opt]];
+      else searchData(false);
+      renderAccountsTable(filteredGroups);
+      updateStats();
+      document.getElementById('lastUpdate').innerText = new Date().toLocaleTimeString();
+    });
+  };
+  loadData();
+  let config = optionConfig[opt];
+  if (config) {
+    for (let path of config.paths) {
+      db.ref(path).on('value', () => { loadData(); });
+    }
+  }
+}
+
+function refreshCurrentOption() { setupRealtimeListener(currentOption); }
+
+function switchOption(opt) {
+  if (opt === currentOption) return;
+  currentOption = opt;
+  document.querySelectorAll('.option-tab').forEach(t => {
+    if (t.dataset.option === opt) t.classList.add('active');
+    else t.classList.remove('active');
+  });
+  updateUIBasedOnOption();
+  isSearching = false;
+  currentSearchTerm = "";
+  document.getElementById('searchInput').value = "";
+  document.getElementById('searchResultCard').style.display = 'none';
+  setupRealtimeListener(opt);
+}
+
+function updateUIBasedOnOption() {
+  let config = optionConfig[currentOption];
+  document.getElementById('optionIcon').className = config.icon;
+  document.getElementById('optionTitle').innerText = config.name;
+  document.getElementById('totalLabel').innerHTML = config.name.substring(0, 8);
+  document.getElementById('deleteOptionName').innerHTML = config.name;
+}
+
+function searchData(showAlert = true) {
+  let term = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!term) {
+    isSearching = false;
+    currentSearchTerm = "";
+    filteredGroups = [...groupedAccounts[currentOption]];
+    renderAccountsTable(filteredGroups);
+    updateStats();
+    return;
+  }
+  filteredGroups = groupedAccounts[currentOption].map(g => {
+    let matches = g.accounts.filter(a => {
+      return Object.values(a).some(v => v && v.toString().toLowerCase().includes(term));
+    });
+    if (matches.length) return { password: g.password, accounts: matches, count: matches.length };
+    return null;
+  }).filter(g => g !== null);
+  isSearching = true;
+  currentSearchTerm = term;
+  renderAccountsTable(filteredGroups);
+  updateStats();
+}
+
+function copyAllDataTabSeparated() {
+  let accountsToCopy = (isSearching && currentSearchTerm) ? filteredGroups.flatMap(g => g.accounts) : allAccounts[currentOption];
+  if (!accountsToCopy?.length) { alert('No data to copy!'); return; }
+  let config = optionConfig[currentOption];
+  let headers = config.cols;
+  let rows = [headers];
+  accountsToCopy.forEach(acc => {
+    let row = headers.map(h => {
+      if (h === 'USERNAME' || h === 'UID') return acc.uid || 'N/A';
+      if (h === 'PASSWORD') return acc.password || 'N/A';
+      if (h === '2FA') return acc.code || 'N/A';
+      if (h === 'COOKIE' || h === 'COOKIES') return acc.cookie || acc.code || 'N/A';
+      if (h === 'HOTMAIL') return acc.hotmail || 'N/A';
+      return 'N/A';
+    });
+    rows.push(row);
+  });
+  let tabSeparated = rows.map(row => row.join('\t')).join('\n');
+  navigator.clipboard.writeText(tabSeparated).then(() => {
+    alert(`✅ ${accountsToCopy.length} entries copied!`);
+  }).catch(() => alert('Copy failed'));
+}
+
 function downloadExcelFile() {
   let accountsToExport = (isSearching && currentSearchTerm) ? filteredGroups.flatMap(g => g.accounts) : allAccounts[currentOption];
-  if(!accountsToExport.length){ alert('No data to export!'); return; }
-  const rows = accountsToExport.map((acc, index) => [index+1, acc.username || 'N/A', acc.password || 'N/A', acc.code || 'N/A']);
-  const wsData = [rows];
+  if (!accountsToExport?.length) { alert('No data to export!'); return; }
+  let config = optionConfig[currentOption];
+  let headers = config.cols;
+  let rows = [headers];
+  accountsToExport.forEach(acc => {
+    let row = headers.map(h => {
+      if (h === 'USERNAME' || h === 'UID') return acc.uid || 'N/A';
+      if (h === 'PASSWORD') return acc.password || 'N/A';
+      if (h === '2FA') return acc.code || 'N/A';
+      if (h === 'COOKIE' || h === 'COOKIES') return acc.cookie || acc.code || 'N/A';
+      if (h === 'HOTMAIL') return acc.hotmail || 'N/A';
+      return 'N/A';
+    });
+    rows.push(row);
+  });
   const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{wch:8},{wch:30},{wch:30},{wch:45}];
+  ws['!cols'] = headers.map(() => ({ wch: 15 }));
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, `EBH_${currentOption}`);
   XLSX.writeFile(wb, `EBH_${currentOption}_data.xlsx`);
 }
-function loadSystemStatus(){ db.ref("system_control").on("value",snap=>{ if(snap.exists()){ let d=snap.val(); systemStatus=d.status!==undefined?d.status:true; tickerMessageText=d.ticker_message||""; offReasonText=d.off_reason||""; } document.getElementById('tickerMessage').value=tickerMessageText; document.getElementById('offReasonMessage').value=offReasonText; document.getElementById('tickerPreview').innerText=tickerMessageText||"কোন মেসেজ নেই"; document.getElementById('offReasonPreview').innerText=offReasonText||"কোন কারণ নেই"; updateSystemSwitch(systemStatus); }); }
-function updateSystemSwitch(status){ let btn=document.getElementById('systemSwitchBtn'), icon=document.getElementById('systemSwitchIcon'), txt=document.getElementById('systemSwitchText'); if(status){ btn.className='system-switch-btn on'; icon.className='fas fa-toggle-on'; txt.innerText='SYSTEM ON'; } else { btn.className='system-switch-btn off'; icon.className='fas fa-toggle-off'; txt.innerText='SYSTEM OFF'; } }
-function toggleSystemStatus(){ systemStatus=!systemStatus; updateSystemSwitch(systemStatus); db.ref("system_control").update({status:systemStatus, ticker_message:tickerMessageText, off_reason:offReasonText}); }
-function loadOptionStatus(){ db.ref("option_control").on("value",snap=>{ if(snap.exists()){ let d=snap.val(); optionStatus.instagram=d.instagram?.status!==false; optionStatus.facebook2fa=d.facebook2fa?.status!==false; optionStatus.facebookcookie=d.facebookcookie?.status!==false; optionStatus.igcookies=d.igcookies?.status!==false; optionMessages.instagram=d.instagram?.message||""; optionMessages.facebook2fa=d.facebook2fa?.message||""; optionMessages.facebookcookie=d.facebookcookie?.message||""; optionMessages.igcookies=d.igcookies?.message||""; } updateOptionUI(); }); }
-function updateOptionUI(){ updateOptionSwitch('instagram',optionStatus.instagram); document.getElementById('instagramMessage').value=optionMessages.instagram; document.getElementById('instagramPreviewText').innerText=optionMessages.instagram||"কোন মেসেজ নেই"; updateOptionSwitch('facebook2fa',optionStatus.facebook2fa); document.getElementById('facebook2faMessage').value=optionMessages.facebook2fa; document.getElementById('facebook2faPreviewText').innerText=optionMessages.facebook2fa||"কোন মেসেজ নেই"; updateOptionSwitch('facebookcookie',optionStatus.facebookcookie); document.getElementById('facebookcookieMessage').value=optionMessages.facebookcookie; document.getElementById('facebookcookiePreviewText').innerText=optionMessages.facebookcookie||"কোন মেসেজ নেই"; updateOptionSwitch('igcookies',optionStatus.igcookies); document.getElementById('igcookiesMessage').value=optionMessages.igcookies; document.getElementById('igcookiesPreviewText').innerText=optionMessages.igcookies||"কোন মেসেজ নেই"; }
-function updateOptionSwitch(opt,status){ let btn,icon,txt; if(opt==='instagram'){ btn=document.getElementById('instagramSwitchBtn'); icon=document.getElementById('instagramSwitchIcon'); txt=document.getElementById('instagramSwitchText'); } else if(opt==='facebook2fa'){ btn=document.getElementById('facebook2faSwitchBtn'); icon=document.getElementById('facebook2faSwitchIcon'); txt=document.getElementById('facebook2faSwitchText'); } else if(opt==='facebookcookie'){ btn=document.getElementById('facebookcookieSwitchBtn'); icon=document.getElementById('facebookcookieSwitchIcon'); txt=document.getElementById('facebookcookieSwitchText'); } else { btn=document.getElementById('igcookiesSwitchBtn'); icon=document.getElementById('igcookiesSwitchIcon'); txt=document.getElementById('igcookiesSwitchText'); } if(status){ btn.className='option-switch-btn on'; icon.className='fas fa-toggle-on'; txt.innerText='ON'; } else { btn.className='option-switch-btn off'; icon.className='fas fa-toggle-off'; txt.innerText='OFF'; } }
-function toggleOptionStatus(opt){ optionStatus[opt]=!optionStatus[opt]; updateOptionSwitch(opt, optionStatus[opt]); db.ref(`option_control/${opt}`).update({status:optionStatus[opt], message:optionMessages[opt]||""}); }
-function saveOptionMessage(opt){ let msg=document.getElementById(`${opt}Message`).value.trim(); optionMessages[opt]=msg; document.getElementById(`${opt}PreviewText`).innerText=msg||"কোন মেসেজ নেই"; db.ref(`option_control/${opt}/message`).set(msg); alert('Message saved'); }
-function saveTickerMessage(){ let msg=document.getElementById('tickerMessage').value.trim(); tickerMessageText=msg; document.getElementById('tickerPreview').innerText=msg||"কোন মেসেজ নেই"; db.ref("system_control/ticker_message").set(msg); alert('Ticker updated'); }
-function saveOffReasonMessage(){ let msg=document.getElementById('offReasonMessage').value.trim(); offReasonText=msg; document.getElementById('offReasonPreview').innerText=msg||"কোন কারণ নেই"; db.ref("system_control/off_reason").set(msg); alert('Off reason saved'); }
-function openDeleteModal(target){ deleteTarget=target; if(target==='current'){ if(allAccounts[currentOption].length===0){ alert('No data to delete!'); return; } document.getElementById('deleteModalTitle').innerText=`DELETE ${currentOption.toUpperCase()} DATA?`; document.getElementById('deleteModalMessage').innerText=`Delete all ${currentOption} data?`; document.getElementById('deleteCount').innerText=allAccounts[currentOption].length; } else { let total=allAccounts.instagram.length+allAccounts.facebook2fa.length+allAccounts.facebookcookie.length+allAccounts.igcookies.length; if(total===0){ alert('No data!'); return; } document.getElementById('deleteModalTitle').innerText='DELETE ALL DATA?'; document.getElementById('deleteModalMessage').innerText='Delete ALL accounts from all options?'; document.getElementById('deleteCount').innerText=total; } document.getElementById('deleteModal').classList.add('active'); }
-function closeDeleteModal(){ document.getElementById('deleteModal').classList.remove('active'); }
-function confirmDelete(){ closeDeleteModal(); if(deleteTarget==='current') deleteCurrentOptionData(); else deleteAllData(); }
-function deleteCurrentOptionData(){ let paths=[]; if(currentOption==='instagram') paths=["instagram_2fa_submissions","submissions/instagram"]; else if(currentOption==='facebook2fa') paths=["facebook_2fa_submissions","submissions/facebook2fa"]; else if(currentOption==='facebookcookie') paths=["facebook_cookie_submissions","submissions/facebookcookie"]; else paths=["ig_cookies_submissions","submissions/igcookies"]; db.ref('used_ids').once('value').then(snap=>{ let updates={}; if(snap.exists()) snap.forEach(ch=>{ let d=ch.val(); if(d.option===currentOption) updates[`used_ids/${ch.key}`]=null; }); paths.forEach(p=>{ updates[p]=null; }); return db.ref().update(updates); }).then(()=>{ allAccounts[currentOption]=[]; groupedAccounts[currentOption]=[]; filteredGroups=[]; isSearching=false; document.getElementById('searchInput').value=''; renderAccountsTable([]); updateStats(); alert(`All ${currentOption} data deleted!`); setupRealtimeListener(currentOption); }).catch(e=>{ alert('Delete failed'); setupRealtimeListener(currentOption); }); }
-function deleteAllData(){ let allPaths=["instagram_2fa_submissions","facebook_2fa_submissions","facebook_cookie_submissions","ig_cookies_submissions","submissions/instagram","submissions/facebook2fa","submissions/facebookcookie","submissions/igcookies","used_ids"]; let updates={}; allPaths.forEach(p=>{ updates[p]=null; }); db.ref().update(updates).then(()=>{ allAccounts={instagram:[],facebook2fa:[],facebookcookie:[],igcookies:[]}; groupedAccounts={instagram:[],facebook2fa:[],facebookcookie:[],igcookies:[]}; filteredGroups=[]; isSearching=false; document.getElementById('searchInput').value=''; renderAccountsTable([]); updateStats(); alert('ALL DATA DELETED!'); setupRealtimeListener(currentOption); }).catch(e=>alert('Delete all failed')); }
-function loadAllData(){ loadSystemStatus(); loadOptionStatus(); setupRealtimeListener(currentOption); updateUIBasedOnOption(); }
-document.getElementById('searchInput').addEventListener('keyup', e=>{ if(e.key==='Enter') searchData(); if(e.target.value.trim()==='' && isSearching){ isSearching=false; currentSearchTerm=''; filteredGroups=[...groupedAccounts[currentOption]]; renderAccountsTable(filteredGroups); updateStats(); document.getElementById('searchResultCard').style.display='none'; } });
+
+function loadSystemStatus() {
+  db.ref("system_control").on("value", snap => {
+    if (snap.exists()) { let d = snap.val(); systemStatus = d.status !== undefined ? d.status : true; }
+    updateSystemSwitch(systemStatus);
+  });
+}
+
+function updateSystemSwitch(status) {
+  let btn = document.getElementById('systemSwitchBtn'), icon = document.getElementById('systemSwitchIcon'), txt = document.getElementById('systemSwitchText');
+  if (status) { btn.className = 'system-switch-btn on'; icon.className = 'fas fa-toggle-on'; txt.innerText = 'SYSTEM ON'; }
+  else { btn.className = 'system-switch-btn off'; icon.className = 'fas fa-toggle-off'; txt.innerText = 'SYSTEM OFF'; }
+}
+
+function toggleSystemStatus() {
+  systemStatus = !systemStatus;
+  updateSystemSwitch(systemStatus);
+  db.ref("system_control").update({ status: systemStatus });
+}
+
+function loadOptionStatus() {
+  let options = ['instagram', 'fb0fnd2fa', 'fb0fndcookie', 'fbpc1000', 'fbhotmail0fnd', 'fbhotmail30', 'fbpc6155'];
+  options.forEach(opt => { optionStatus[opt] = true; optionMessages[opt] = ""; });
+  db.ref("option_control").on("value", snap => {
+    if (snap.exists()) {
+      let d = snap.val();
+      options.forEach(opt => {
+        if (d[opt]) {
+          optionStatus[opt] = d[opt].status !== false;
+          optionMessages[opt] = d[opt].message || "";
+        }
+      });
+    }
+    renderOptionControls();
+  });
+}
+
+function renderOptionControls() {
+  let options = [
+    { key: 'instagram', label: 'IG 2FA', icon: 'fab fa-instagram', color: 'var(--primary)' },
+    { key: 'fb0fnd2fa', label: 'FB 0FND 2FA', icon: 'fab fa-facebook', color: 'var(--secondary)' },
+    { key: 'fb0fndcookie', label: 'FB 0FND COOKIE', icon: 'fas fa-cookie-bite', color: 'var(--accent)' },
+    { key: 'fbpc1000', label: 'PC 1000×', icon: 'fas fa-desktop', color: '#8b5cf6' },
+    { key: 'fbhotmail0fnd', label: 'FB Hotmail 0FND', icon: 'fab fa-facebook', color: '#ec4899' },
+    { key: 'fbhotmail30', label: 'FB Hotmail 30+', icon: 'fab fa-facebook', color: '#10b981' },
+    { key: 'fbpc6155', label: 'FB PC 61-55', icon: 'fas fa-desktop', color: '#f97316' }
+  ];
+  let html = '';
+  options.forEach(opt => {
+    let isOn = optionStatus[opt.key];
+    let msg = optionMessages[opt.key] || '';
+    html += `<div class="option-control-card" style="border-left-color:${opt.color}">
+      <div class="option-control-header">
+        <div class="option-title"><i class="${opt.icon}"></i> ${opt.label}</div>
+        <button class="option-switch-btn ${isOn ? 'on' : 'off'}" onclick="toggleOptionStatus('${opt.key}')">
+          <i class="fas ${isOn ? 'fa-toggle-on' : 'fa-toggle-off'}"></i><span>${isOn ? 'ON' : 'OFF'}</span>
+        </button>
+      </div>
+      <div class="option-message-box">
+        <textarea id="${opt.key}Message" placeholder="মেসেজ লিখুন">${msg.replace(/</g, '&lt;')}</textarea>
+        <button class="save-option-msg-btn" onclick="saveOptionMessage('${opt.key}')" style="background:${opt.color}"><i class="fas fa-save"></i> সেভ করুন</button>
+        <div class="option-preview"><strong><i class="fas fa-eye"></i> প্রিভিউ:</strong><span>${msg || 'কোন মেসেজ নেই'}</span></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('optionControls').innerHTML = html;
+}
+
+function toggleOptionStatus(opt) {
+  optionStatus[opt] = !optionStatus[opt];
+  db.ref(`option_control/${opt}`).update({ status: optionStatus[opt], message: optionMessages[opt] || "" });
+  renderOptionControls();
+}
+
+function saveOptionMessage(opt) {
+  let msg = document.getElementById(`${opt}Message`).value.trim();
+  optionMessages[opt] = msg;
+  db.ref(`option_control/${opt}/message`).set(msg);
+  renderOptionControls();
+  alert('Message saved');
+}
+
+function openDeleteModal(target) {
+  deleteTarget = target;
+  if (target === 'current') {
+    if (allAccounts[currentOption]?.length === 0) { alert('No data to delete!'); return; }
+    document.getElementById('deleteModalTitle').innerHTML = `DELETE ${optionConfig[currentOption].name.toUpperCase()} DATA?`;
+    document.getElementById('deleteModalMessage').innerHTML = `Delete all ${optionConfig[currentOption].name} data?`;
+    document.getElementById('deleteCount').innerText = allAccounts[currentOption].length;
+  } else {
+    let total = Object.values(allAccounts).reduce((s, a) => s + (a?.length || 0), 0);
+    if (total === 0) { alert('No data!'); return; }
+    document.getElementById('deleteModalTitle').innerHTML = 'DELETE ALL DATA?';
+    document.getElementById('deleteModalMessage').innerHTML = 'Delete ALL accounts from all options?';
+    document.getElementById('deleteCount').innerText = total;
+  }
+  document.getElementById('deleteModal').classList.add('active');
+}
+
+function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('active'); }
+
+function confirmDelete() {
+  closeDeleteModal();
+  if (deleteTarget === 'current') deleteCurrentOptionData();
+  else deleteAllData();
+}
+
+function deleteCurrentOptionData() {
+  let config = optionConfig[currentOption];
+  let paths = [...config.paths];
+  let updates = {};
+  paths.forEach(p => { updates[p] = null; });
+  db.ref('used_ids').once('value').then(snap => {
+    if (snap.exists()) {
+      snap.forEach(ch => {
+        let d = ch.val();
+        if (d.option === currentOption) updates[`used_ids/${ch.key}`] = null;
+      });
+    }
+    return db.ref().update(updates);
+  }).then(() => {
+    allAccounts[currentOption] = [];
+    groupedAccounts[currentOption] = [];
+    filteredGroups = [];
+    isSearching = false;
+    document.getElementById('searchInput').value = '';
+    renderAccountsTable([]);
+    updateStats();
+    alert(`All ${currentOption} data deleted!`);
+    setupRealtimeListener(currentOption);
+  }).catch(e => { alert('Delete failed'); setupRealtimeListener(currentOption); });
+}
+
+function deleteAllData() {
+  let allPaths = [
+    "submissions/instagram", "submissions/fb0fnd2fa", "submissions/fb0fndcookie", 
+    "submissions/fbpc1000", "submissions/fbhotmail0fnd", "submissions/fbhotmail30", 
+    "submissions/fbpc6155", "used_ids",
+    "instagram_2fa_submissions", "facebook_2fa_submissions", "facebook_cookie_submissions",
+    "fb_pc1000_submissions", "fb_hotmail0fnd_submissions", "fb_hotmail30_submissions", "fb_pc6155_submissions"
+  ];
+  let updates = {};
+  allPaths.forEach(p => { updates[p] = null; });
+  db.ref().update(updates).then(() => {
+    Object.keys(allAccounts).forEach(k => { allAccounts[k] = []; groupedAccounts[k] = []; });
+    filteredGroups = [];
+    isSearching = false;
+    document.getElementById('searchInput').value = '';
+    renderAccountsTable([]);
+    updateStats();
+    alert('ALL DATA DELETED!');
+    setupRealtimeListener(currentOption);
+  }).catch(e => alert('Delete all failed'));
+}
+
+function loadAllData() {
+  loadSystemStatus();
+  loadOptionStatus();
+  setupRealtimeListener(currentOption);
+  updateUIBasedOnOption();
+}
+
+document.getElementById('searchInput').addEventListener('keyup', e => {
+  if (e.key === 'Enter') searchData();
+  if (e.target.value.trim() === '' && isSearching) {
+    isSearching = false;
+    currentSearchTerm = '';
+    filteredGroups = [...groupedAccounts[currentOption]];
+    renderAccountsTable(filteredGroups);
+    updateStats();
+    document.getElementById('searchResultCard').style.display = 'none';
+  }
+});
+
+loadAllData();
 </script>
 </body>
 </html>
